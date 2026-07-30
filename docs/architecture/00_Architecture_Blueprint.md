@@ -311,9 +311,16 @@ docs/
 architecture/
     00_Architecture_Blueprint.md
 
+platform/
+    01_Platform.md
+    02_Platform_Runtime_Engine.md
+    03_Platform_Integration.md
+    04_Authentication.md
+
 specifications/
-    Platform.md
     Application_Contract.md
+    Permission_Matrix.md
+    Synchronization.md
     Billing.md
     Product.md
     Customer.md
@@ -324,10 +331,15 @@ specifications/
     AI.md
 
 experiences/
-    JuiceShop.md
-    Cafe.md
-    Hardware.md
-    Medical.md
+    demo/
+        Demo_Experience.md
+        Design_System.md
+        Component_Catalog.md
+        UI_Blueprints.md
+        UI_UX_Enhancements.md
+
+roadmap/
+    Future_Roadmap_V2_V3.md
 ```
 
 ---

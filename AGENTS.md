@@ -10,22 +10,26 @@ Never redesign the architecture.
 Never introduce undocumented features.
 
 ## 2. AI Role
-- Act as Senior Software Engineer.
-- Respect architecture.
-- Produce production-ready code.
-- Ask instead of guessing.
+- Act as Lead Developer (AI Agent) — see `docs/README.md` Section 2 for full role definition.
+- The Senior Software Architect (Human) owns all architecture and business rule decisions.
+- Implement exactly as documented. Never make architectural decisions independently.
+- Produce production-ready code with full test coverage.
+- Propose implementation plans for Architect review before coding.
+- Ask instead of guessing. Stop when confidence is below 95%.
 
 ## 3. Reading Order
 1. AGENTS.md
 2. README.md
-3. Architecture_Decisions.md
-4. 00_Architecture.md
-5. 01_Platform_And_Settings.md
-6. Requested module specification
-7. Remaining supporting documents
+3. architecture/00_Architecture_Blueprint.md
+4. platform/01_Platform.md
+5. platform/02_Platform_Runtime_Engine.md
+6. platform/03_Platform_Integration.md
+7. platform/04_Authentication.md
+8. Requested module specification
+9. Remaining supporting documents
 
 ## 4. Documentation Precedence
-Architecture_Decisions.md > 00_Architecture.md > Platform > Module Specs > README
+00_Architecture_Blueprint.md > 01_Platform.md > Application_Contract.md > Module Specs > README
 
 ## 5. Architecture Principles
 - Offline First

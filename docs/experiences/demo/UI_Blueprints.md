@@ -64,6 +64,35 @@
 
 ---
 
+# 2.1 Startup & Authentication
+
+Startup Screen (Active Session)
+
+```
++-----------------------------------------------------------+
+| Logo                                                      |
++-----------------------------------------------------------+
+| Current User: Ravi                                        |
+|                                                           |
+| [ Continue Billing ]                                      |
+|                                                           |
+| [ Switch User ]                                           |
++-----------------------------------------------------------+
+```
+
+Switch User (Fast PIN Entry)
+
+```
++-----------------------------------------------------------+
+| Select User                                               |
+| [Owner] [Cashier] [Waiter]                                |
++-----------------------------------------------------------+
+| Enter PIN: [ _ _ _ _ ]                                    |
++-----------------------------------------------------------+
+```
+
+---
+
 # 3. Dashboard
 
 Owner Dashboard
@@ -102,12 +131,14 @@ Desktop
 +-------------------+--------------------------------------+----------------------+
 | Categories        | Product Grid                         | Cart                 |
 |                   | Large Product Cards                  | Qty                  |
-|                   | Favorites / Recent                   | Offers               |
+|                   | Favorites / Recent                   | Auto-applied Offers  |
 |                   |                                      | Tax                  |
 +-------------------+--------------------------------------+----------------------+
 | Payment: Cash | Card | UPI | Mixed | Print | Draft | Resume                    |
 +--------------------------------------------------------------------------------+
 ```
+
+*Note: If different offer categories apply, an "Applicable Offers" bottom sheet appears when tapping any Payment option.*
 
 Rules
 

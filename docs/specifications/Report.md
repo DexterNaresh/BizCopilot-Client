@@ -212,16 +212,19 @@ Consumes business data from other modules.
 
 ---
 
-# 13. Dependencies
+# 13. Dependencies & Data Access (Read Layer)
 
-Depends on:
+The Report module owns its own read layer to avoid coupling with other modules' repositories.
 
-- Billing
-- Product
-- Customer
-- Offer
-- Settings
-- Platform abstractions
+**Architecture Flow:**
+Report Module → Report Read Repository → Read-only SQL → SQLite
+
+**Rules:**
+- Report module owns dedicated read-only repositories.
+- Report repositories may join multiple tables.
+- SQLite Views may be used as an implementation optimization but are optional.
+- Report module **never** uses BillingRepository, ProductRepository, or any other business module's repository.
+- Report module **never** writes data.
 
 No module depends on Reports for business logic.
 

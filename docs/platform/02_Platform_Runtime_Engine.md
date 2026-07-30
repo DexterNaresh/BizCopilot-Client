@@ -247,9 +247,22 @@ Monitor:
 - Background worker state
 - Disk availability
 
+# 17. Local Data Lifecycle
+
+To prevent the local SQLite database from growing indefinitely, data follows strict lifecycle states:
+
+**Active → Archived → Deleted**
+
+**Rules (V1):**
+- Never delete unsynchronized data.
+- Data becomes eligible for archiving/deletion only after successful cloud synchronization.
+- Retention period is configurable.
+- Archived data remains available when required for historical reports.
+- Deletion is the final lifecycle stage to free disk space.
+
 ---
 
-# 17. Design Principles
+# 18. Design Principles
 
 - Offline-first
 - Event-driven
@@ -261,7 +274,7 @@ Monitor:
 
 ---
 
-# 18. AI Coding Rules
+# 19. AI Coding Rules
 
 AI agents must:
 

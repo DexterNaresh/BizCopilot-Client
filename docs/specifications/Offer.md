@@ -130,13 +130,49 @@ Load Active Offers
 → Conflict Resolution
 → OfferResult
 
-## 12. Conflict Resolution
+## 12. Conflict Resolution (V1)
 
-- Highest Discount (default)
-- Highest Priority
-- First Match
+BizCopilot V1 follows two simple rules. No priority engine exists.
 
-Stackable offers may be combined.
+### Rule 1 — Same Offer Category
+
+If multiple offers from the **same category** are applicable, the system automatically applies the offer providing the **highest customer benefit**.
+
+No user interaction is required.
+
+*Examples:*
+- Product Offers: 10%, 15%, 20% → **20% automatically applied.**
+- Bill Offers: ₹50 OFF, ₹100 OFF → **₹100 OFF automatically applied.**
+
+Rules:
+- Only one offer may be applied within a category.
+- Highest customer benefit always wins.
+- No priorities. No manual configuration. Fully deterministic.
+
+### Rule 2 — Different Offer Categories
+
+When multiple **different offer categories** are applicable, the billing screen displays an **Applicable Offers** popup.
+
+The billing operator decides which offers to apply:
+- Apply one offer
+- Apply multiple offers
+- Ignore all offers
+
+The operator confirms the final selection before bill completion.
+
+### V1 Design Philosophy
+
+Where automatic decisions are obvious (same offer category), the system resolves them.
+Where business intent may vary (different offer categories), the system presents choices and lets the billing operator decide.
+
+### Deferred to V2
+
+- Auto Apply across categories
+- Ask Every Time configuration
+- Configurable category stacking
+- Maximum discount policies
+- Promotion compatibility matrix
+- Automatic recommendation engine
 
 ## 13. OfferResult
 

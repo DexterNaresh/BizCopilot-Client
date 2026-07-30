@@ -82,12 +82,22 @@ Rules
 
 Bill
 
-- Bill Number
+- BillId (Globally unique client-generated UUID for synchronization)
+- Bill Number (Business-visible invoice number)
 - Date/Time
-- Customer (optional)
+- CustomerId (always populated — never null)
+- DeviceId (Device that generated the bill)
+- CreatedByUserId (Employee)
+- SessionId (Login session)
 - Payment
 - Totals
 - Status
+
+Customer Assignment Rule
+
+Customer selection is optional in the UI.
+Billing always assigns a valid CustomerId.
+If no customer is selected, Billing automatically applies the Walk-In Customer.
 
 Bill Item Snapshot
 
@@ -137,8 +147,12 @@ Flow
 
 Billing
 → Offer Module
-→ Discount Result
-→ Billing applies discount
+→ OfferResult (per category)
+→ Billing applies selected offers
+
+**Same Category:** System auto-applies the highest customer benefit. No operator input.
+
+**Different Categories:** Billing displays an **Applicable Offers** popup. The operator selects which offers to apply (one, many, or none) before bill completion.
 
 UI displays applied offers returned by Billing.
 
@@ -216,21 +230,26 @@ Reports and dashboard should expose override statistics.
 
 ---
 
-# 13. Bill Number
+# 13. Bill Numbering (Device-Based)
 
 Requirements
 
-- Locally generated
-- Offline safe
-- Unique
-- Human readable
-- Future multi-branch compatible
+- Bill Number is NOT the synchronization identifier (BillId is).
+- Bill Number is for display and legal compliance only.
+- Number sequences belong to **devices**, not users.
+- Every registered device maintains its own sequence (e.g., Tablet 1 = TB01-000001, Tablet 2 = TB02-000001).
+- User login never changes numbering.
+- Locally generated and offline safe.
+- Unique within the business.
+- Future multi-branch compatible.
 
 ---
 
 # 14. Business Rules
 
-- Customer is optional.
+- Customer selection is optional in the UI. The database never stores a NULL CustomerId.
+- If no customer is selected, Billing automatically assigns the Walk-In Customer.
+- The Walk-In Customer record is never modified by Billing. Only `Bill.CustomerId` is assigned.
 - Unavailable products cannot be billed.
 - Completed bills cannot be edited.
 - Reprint is always allowed.

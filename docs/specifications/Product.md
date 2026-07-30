@@ -251,6 +251,7 @@ Popularity and recent sales are supplied by Reports, not Product.
 - Archived products cannot be billed.
 - Temporarily unavailable products cannot be added to a bill.
 - Historical bills always use stored product snapshots.
+- **Master Data Sync (V1):** Only the Owner may modify products. If modified offline, changes save locally immediately. The UI must show a "Pending Sync" warning to the Owner. Employee devices will receive the price updates eventually upon next sync.
 
 ---
 

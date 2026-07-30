@@ -18,11 +18,16 @@ Future experiences (Juice Shop, Cafe, Hardware, etc.) reuse the same Business En
 
 # 2. Experience Principles
 
+- **Fastest billing experience with the least navigation** (Core Principle)
+- Optimize for repetition
+- Automatic decisions should remain invisible
+- Ask for decisions as late as possible
+- Never interrupt billing unless user input is genuinely required
+- Administrative complexity must never affect billing speed
 - Offline-first
 - Touch-first
 - Keyboard friendly
 - Responsive
-- Fast billing (3-click goal)
 - Zero duplicated business logic
 - Feature flag driven
 - Role aware (Owner / Employee)
@@ -114,7 +119,8 @@ Features:
 - Camera scanner (feature flag)
 - Cart
 - Quantity editor
-- Automatic offers
+- **Automatic offers (Same category auto-applied)**
+- **Applicable offers popup (Different categories, shown only on payment)**
 - Tax calculation
 - Cash payment
 - Card payment
@@ -167,8 +173,20 @@ Generated through Platform Identity & Sequence Service.
 - Preview
 - Simulation
 - Enable/Disable
-- Priority
-- Stackable
+- Priority (Removed in V1, auto-resolves highest benefit for same category)
+- Stackable (Different categories handled at payment)
+
+# 10.1 Authentication & Startup Experience
+
+**Startup:**
+- Defaults to: `Current User | Continue Billing | Switch User`
+- No unnecessary full login screens
+
+**Switch User:**
+- Tap "Switch User"
+- Select role (Owner, Cashier, Waiter, Manager)
+- Enter 4-digit or 6-digit PIN
+- Return to billing immediately (max two taps + PIN)
 
 ---
 

@@ -4,7 +4,8 @@
 >
 > **Status:** Mandatory Development Process
 >
-> Every developer and AI coding agent must follow this workflow. The goal is consistent, production-ready implementation with minimal rework.
+> This workflow governs how the Senior Software Architect and Lead Developer (AI Agent) collaborate.
+> See `README.md` Section 2 for full role definitions.
 
 ---
 
@@ -38,12 +39,15 @@ Before coding any feature:
 3. platform/01_Platform.md
 4. platform/02_Platform_Runtime_Engine.md
 5. platform/03_Platform_Integration.md
-6. specifications/Application_Contract.md
-7. Target specification (Billing, Product, etc.)
-8. experiences/demo/Demo_Experience.md
-9. experiences/demo/Design_System.md
-10. experiences/demo/Component_Catalog.md
-11. experiences/demo/UI_Blueprints.md
+6. platform/04_Authentication.md
+7. specifications/Application_Contract.md
+8. specifications/Permission_Matrix.md
+9. specifications/Synchronization.md
+10. Target specification (Billing, Product, etc.)
+11. experiences/demo/Demo_Experience.md
+12. experiences/demo/Design_System.md
+13. experiences/demo/Component_Catalog.md
+14. experiences/demo/UI_Blueprints.md
 
 Do not skip steps.
 
@@ -51,25 +55,18 @@ Do not skip steps.
 
 # 4. Module Development Lifecycle
 
-Requirement
-↓
-Read Documentation
-↓
-Architecture Validation
-↓
-Implementation
-↓
-Unit Tests
-↓
-Integration Tests
-↓
-Architecture Review
-↓
-Bug Fixes
-↓
-Approval
-↓
-Freeze
+| Step | Owner | Description |
+|---|---|---|
+| 1. Requirement | Architect | Define what to build |
+| 2. Read Documentation | AI Agent | Read all docs per reading order |
+| 3. Architecture Validation | AI Agent proposes → Architect approves | Confirm approach fits architecture |
+| 4. Implementation | AI Agent | Write production-ready code |
+| 5. Unit Tests | AI Agent | Full test coverage |
+| 6. Integration Tests | AI Agent | Cross-module and offline scenarios |
+| 7. Architecture Review | Architect | Verify no violations |
+| 8. Bug Fixes | AI Agent | Fix issues found in review |
+| 9. Approval | Architect | Accept the module |
+| 10. Freeze | Architect | Mark module as frozen |
 
 ---
 
@@ -85,17 +82,20 @@ Do not:
 
 ---
 
-# 6. AI Implementation Checklist
+# 6. AI Agent Implementation Checklist
 
-Before coding, confirm:
+Before coding, the AI Agent must confirm:
 
-- Architecture understood
-- Platform understood
-- Application Contract understood
-- Target module understood
-- UI references understood (if applicable)
+- [ ] Architecture understood (Blueprint read)
+- [ ] Platform understood (Platform + Runtime + Integration read)
+- [ ] Application Contract understood
+- [ ] Permission Matrix understood
+- [ ] Target module specification understood
+- [ ] UI references understood (if applicable)
+- [ ] Role boundaries understood (see `README.md` Section 2)
+- [ ] Implementation plan proposed and approved by Architect
 
-If anything is unclear, stop and ask.
+If anything is unclear, stop and ask the Architect.
 
 ---
 
@@ -230,3 +230,23 @@ Report only violations. Do not redesign.
 - Experience owns presentation.
 - Application Contract is the only bridge.
 - Small, reviewable increments are preferred over large changes.
+
+---
+
+# 17. Role Assignments Per Stage
+
+| Stage | Architect | AI Agent |
+|---|---|---|
+| Vision & Scope | Defines | Reads |
+| Architecture | Defines & Freezes | Reads & Follows |
+| Specifications | Authors & Approves | Reads & Implements |
+| Implementation Plan | Reviews & Approves | Proposes |
+| Coding | Reviews | Executes |
+| Testing | Reviews results | Writes & Runs |
+| Code Review | Performs | Responds to feedback |
+| Approval & Freeze | Decides | Awaits |
+| Documentation Changes | Approves | Proposes |
+| Bug Fixes | Assigns | Fixes |
+| Refactoring | Approves scope | Executes within scope |
+
+The AI Agent never proceeds to Implementation without Architect approval of the plan.

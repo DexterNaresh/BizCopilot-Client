@@ -93,6 +93,17 @@ Responsibilities
 - Temporary files
 - Log files
 
+**Physical Storage Rules (V1):**
+- Business data must never be stored inside the application binaries.
+- Storage locations are platform-specific:
+  - **Windows (Tauri):** Persistent Application Data Folder (e.g., `%APPDATA%`)
+  - **Android (Capacitor):** Private Application Storage
+- No business module may construct filesystem paths directly.
+- Only `ILocalStorageService` may resolve physical storage locations.
+- Uninstallation behavior:
+  - Windows uninstall should provide an option to "Keep Business Data" or "Delete Business Data".
+  - Android follows standard platform behavior (data is deleted). Users must rely on Cloud Backup before uninstalling.
+
 Provides a platform-independent abstraction over filesystem APIs.
 
 ---

@@ -81,6 +81,13 @@ Never owns:
 - Quick Customer Enabled
 - Require Phone Number
 
+## Employee Authentication (Local)
+
+- Manage Employees
+- Setup Local PIN (4-digit or 6-digit configurable)
+- Setup Password (optional for Owner)
+- Manage Roles
+
 ## Product
 
 - Barcode Enabled
@@ -209,17 +216,89 @@ Consumers include:
 - Changing GST affects only future bills.
 - Changing UPI settings affects future QR generation.
 - Feature changes immediately affect UI availability.
+- **Offline Master Data:** If the Owner changes master data (Settings, Taxes, Products) while offline, changes are saved locally immediately but a warning is shown. Employee devices receive changes during the next synchronization.
 
 ---
 
 # 12. Events
 
-Publishes:
+Settings publishes typed events. Each event is consumed only by the modules that require it.
+The generic `SettingsChanged` event is not used.
 
-- SettingsChanged
-- FeatureEnabled
-- FeatureDisabled
-- PrinterChanged
+---
+
+## TaxSettingsChanged
+
+Triggered when GST enabled/disabled, GST number, tax percentage, or inclusive/exclusive mode changes.
+
+Consumed by:
+- Billing
+
+---
+
+## PaymentSettingsChanged
+
+Triggered when cash, UPI, card, or mixed payment configuration changes, or when merchant UPI details are updated.
+
+Consumed by:
+- Billing
+- Payment Infrastructure
+
+---
+
+## PrinterSettingsChanged
+
+Triggered when printer, paper width, print logo, header, footer, auto-print, or copies configuration changes.
+
+Consumed by:
+- Printing
+- Platform Integration Layer
+
+---
+
+## CustomerCaptureSettingsChanged
+
+Triggered when Customer Capture Policy mode changes (`NEVER` / `OPTIONAL`).
+
+Consumed by:
+- Billing
+- Application Contract
+
+---
+
+## BusinessProfileChanged
+
+Triggered when business name, logo, address, phone, email, currency, or timezone changes.
+
+Consumed by:
+- Printing
+- Report
+- AI Context Builder
+
+---
+
+## FeatureEnabled
+
+Triggered when a feature flag is enabled.
+
+Consumed by:
+- Feature Manager
+- Relevant modules (e.g., Billing if UPI is enabled)
+
+---
+
+## FeatureDisabled
+
+Triggered when a feature flag is disabled.
+
+Consumed by:
+- Feature Manager
+- Relevant modules
+
+---
+
+> **Rule:** Modules must never subscribe to all settings events indiscriminately.
+> Each module subscribes only to the typed events it requires.
 
 ---
 

@@ -10,6 +10,8 @@ The Customer module manages customer information required to support sales.
 
 It is not a CRM system.
 
+---
+
 ## 2. Responsibilities
 
 Owns:
@@ -17,6 +19,7 @@ Owns:
 - Customer profile
 - Customer search
 - Customer status
+- Walk-In Customer seed
 - Customer events
 
 Never owns:
@@ -27,6 +30,8 @@ Never owns:
 - Marketing
 - Analytics
 
+---
+
 ## 3. Scope (V1)
 
 Included:
@@ -36,6 +41,7 @@ Included:
 - Search Customer
 - Attach Customer to Bill
 - Quick Customer
+- Walk-In Customer (system-seeded)
 
 Future:
 - Loyalty
@@ -45,16 +51,21 @@ Future:
 - Addresses
 - GST Profile
 
+---
+
 ## 4. Customer Model
 
-- CustomerId
-- CustomerCode (immutable)
+- CustomerId (ULID)
+- CustomerCode (immutable, e.g. `CUS-000001`)
 - Name
 - Phone (optional)
 - Email (optional)
-- Status
+- Status (`ACTIVE` | `ARCHIVED`)
+- SystemGenerated (boolean)
 - CreatedAt
 - UpdatedAt
+
+---
 
 ## 5. Customer Lifecycle
 
@@ -64,23 +75,78 @@ Rules:
 - Never physically delete customers.
 - Archived customers cannot be used for new bills.
 - Historical bills remain unchanged.
+- System-generated customers cannot be archived, edited, or deleted.
 
-## 6. Walk-in Customer
+---
 
-System customer used when no customer is captured.
+## 6. Walk-In Customer
 
-Benefits:
-- Consistent reporting
-- Simplified analytics
-- Bills always reference a customer
+### Definition
+
+The Walk-In Customer is a **system-seeded customer record** created by the Platform during the first application startup.
+
+It represents any transaction where the business does not capture customer details.
+
+### Properties
+
+| Field | Value |
+|---|---|
+| CustomerCode | `CUS-000000` |
+| Name | `Walk-In Customer` |
+| SystemGenerated | `true` |
+| Status | `ACTIVE` (permanent) |
+
+### Rules
+
+- Seeded once by the Platform on first startup.
+- Cannot be edited.
+- Cannot be deleted.
+- Cannot be archived.
+- Hidden from normal Customer Management screens and search results.
+- Visible in reports to represent anonymous transactions.
+
+### Customer Capture Flow
+
+```
+Bill Created
+    ↓
+CustomerId = Walk-In Customer (default)
+    ↓
+Cashier optionally enters customer details
+    ├── No details entered
+    │       ↓
+    │   Bill completed with Walk-In CustomerId
+    │
+    └── Details entered
+            ↓
+        New Customer record created
+            ↓
+        Bill.CustomerId replaced with new CustomerId
+            ↓
+        Walk-In Customer record remains unchanged
+```
+
+> **Critical Rule:** The Walk-In Customer record is never modified. Only `Bill.CustomerId` is replaced when a customer is captured during a sale.
+
+### Why System-Seeded (Not Nullable)
+
+- Eliminates NULL foreign keys in the Bills table.
+- Consistent reporting — every bill references a real customer record.
+- Simplifies SQL queries — no special NULL handling.
+- Referential integrity preserved at all times.
+- AI and BI context always has a valid customer reference.
+
+---
 
 ## 7. Quick Customer
 
 Minimum details:
-- Name
+- Name (required)
 - Phone (optional)
 
-Designed for fast billing.
+Designed for fast billing when the customer is known but no prior record exists.
+
+---
 
 ## 8. Search
 
@@ -89,31 +155,46 @@ Supports:
 - Name
 - Phone
 
-Phone must be unique if provided.
+Rules:
+- Phone must be unique if provided.
+- Walk-In Customer does not appear in search results.
+
+---
 
 ## 9. Customer Capture Policy
 
-Configured in Settings.
+Configured in Settings (`CustomerCaptureSettingsChanged` event).
 
 Modes:
-- Never
-- Optional
-- Always (future)
+- `NEVER` — Walk-In Customer is always used. No customer UI shown during billing.
+- `OPTIONAL` — Cashier may select or create a customer during billing.
+- `ALWAYS` — Future V2 feature.
+
+---
 
 ## 10. Business Rules
 
-- Customer is optional.
-- Name is required.
+- Customer selection is optional in the UI.
+- The database never stores a NULL CustomerId on a bill.
+- If no customer is selected, Billing automatically assigns the Walk-In Customer.
+- Name is required for any new customer record.
 - Phone is optional.
-- Duplicate names allowed.
-- Unique phone if supplied.
-- Archived customers cannot be selected.
+- Duplicate names are allowed.
+- Phone must be unique if provided.
+- Archived customers cannot be selected for new bills.
+- System-generated customers are immutable.
+
+---
 
 ## 11. Events
 
-- CustomerCreated
-- CustomerUpdated
-- CustomerArchived
+- `CustomerCreated`
+- `CustomerUpdated`
+- `CustomerArchived`
+
+Note: The Walk-In Customer never generates events. It is seeded silently at startup.
+
+---
 
 ## 12. Dependencies
 
@@ -124,6 +205,8 @@ Referenced by:
 
 Depends only on Platform abstractions.
 
+---
+
 ## 13. Extension Points
 
 - Loyalty
@@ -132,9 +215,16 @@ Depends only on Platform abstractions.
 - Wallet
 - Customer Groups
 - Marketing Preferences
+- GST Profile (future — customer-level GST for B2B billing)
+
+---
 
 ## 14. AI Coding Rules
 
 - Keep Customer lightweight.
 - Never implement CRM in V1.
 - Customer Capture Policy belongs to Settings.
+- Never allow NULL CustomerId in a Bill — always use Walk-In Customer as the fallback.
+- Never expose Walk-In Customer in customer management UI.
+- Never modify the Walk-In Customer record. Replace `Bill.CustomerId` only.
+- The Walk-In Customer seed runs once at Platform startup before the application becomes ready.
