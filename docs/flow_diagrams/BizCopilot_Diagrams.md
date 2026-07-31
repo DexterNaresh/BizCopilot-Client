@@ -9,20 +9,20 @@ This diagram shows the rigid layer boundaries. The UI never talks to the databas
 ```mermaid
 flowchart TD
     %% Layers
-    subgraph UI ["User Experience (UI)"]
+    subgraph UI
         D[Desktop Layout]
         T[Tablet Layout]
         M[Mobile Layout]
     end
 
-    subgraph AppContract ["Application Contract"]
+    subgraph Application_Contract
         BC[Billing Contract]
         PC[Product Contract]
         OC[Offer Contract]
         RC[Report Contract]
     end
 
-    subgraph BusinessEngine ["Business Engine"]
+    subgraph Business_Engine
         Bill[Billing Service]
         Prod[Product Service]
         Cust[Customer Service]
@@ -30,30 +30,30 @@ flowchart TD
         Rep[Report Service]
     end
 
-    subgraph PlatformLayer ["Platform Infrastructure"]
-        Auth[Auth & Permissions]
-        Id[Identity & Sequence]
-        Run[Runtime Engine & Sync Queue]
-        Feat[Feature & License Manager]
+    subgraph Platform_Infrastructure
+        Auth["Auth and Permissions"]
+        Id["Identity and Sequence"]
+        Run["Runtime Engine and Sync Queue"]
+        Feat["Feature and License Manager"]
     end
 
-    subgraph Persistence ["Local Data (Offline First)"]
+    subgraph Persistence_Layer
         DB[(SQLite Local DB)]
     end
     
-    subgraph CloudLayer ["Cloud & AI (Optional)"]
+    subgraph Cloud_Layer
         SyncAPI[Spring Boot API]
         CloudDB[(PostgreSQL)]
-        AI[AI Orchestrator / Gemini]
+        AI["AI Orchestrator / Gemini"]
     end
 
     %% Connections
-    UI -- "Commands / Queries" --> AppContract
-    AppContract -- "Validates Permissions" --> Auth
-    AppContract -- "Invokes Business Logic" --> BusinessEngine
-    BusinessEngine -- "Generates IDs / Validates features" --> PlatformLayer
-    BusinessEngine -- "Reads / Writes" --> Persistence
-    Auth -- "Validates PIN/Hash" --> Persistence
+    UI -- "Commands / Queries" --> Application_Contract
+    Application_Contract -- "Validates Permissions" --> Auth
+    Application_Contract -- "Invokes Business Logic" --> Business_Engine
+    Business_Engine -- "Generates IDs / Validates features" --> Platform_Infrastructure
+    Business_Engine -- "Reads / Writes" --> Persistence_Layer
+    Auth -- "Validates PIN/Hash" --> Persistence_Layer
     
     Run -- "Async Background Sync" --> SyncAPI
     SyncAPI --> CloudDB
@@ -68,11 +68,11 @@ flowchart TD
     classDef cloud fill:#2563eb,stroke:#fff,color:#fff;
     
     class UI ui;
-    class AppContract contract;
-    class BusinessEngine business;
-    class PlatformLayer platform;
-    class Persistence data;
-    class CloudLayer cloud;
+    class Application_Contract contract;
+    class Business_Engine business;
+    class Platform_Infrastructure platform;
+    class Persistence_Layer data;
+    class Cloud_Layer cloud;
 ```
 
 ## 2. Core Sales & Offer Flow (The "Fast Billing" Pipeline)
@@ -84,32 +84,32 @@ flowchart TD
     Start([Start New Bill]) --> AddProduct[Scan / Search Product]
     AddProduct --> CheckAvail{Is Product Available?}
     CheckAvail -- No --> Error[Show Error]
-    CheckAvail -- Yes --> BuildCart[Add to Cart & Calculate Base Line Totals]
+    CheckAvail -- Yes --> BuildCart["Add to Cart and Calculate Base Line Totals"]
     
     BuildCart --> CheckOffers[Fetch Active Offers]
     
     CheckOffers --> CatCheck{Same Category Offers Only?}
     
-    CatCheck -- Yes (Rule 1) --> AutoApply[System Auto-Applies Highest Customer Benefit]
-    AutoApply --> CalcTax[Calculate Tax & Grand Total]
+    CatCheck -- Yes Rule 1 --> AutoApply[System Auto-Applies Highest Customer Benefit]
+    AutoApply --> CalcTax["Calculate Tax and Grand Total"]
     
-    CatCheck -- No (Rule 2) --> Deferred[Defer Application]
+    CatCheck -- No Rule 2 --> Deferred[Defer Application]
     Deferred --> CalcTax
     
     CalcTax --> TapPay[Cashier Taps Pay]
     
     TapPay --> HasMulti{Were Offers Deferred?}
-    HasMulti -- Yes --> Popup[Show 'Applicable Offers' Bottom Sheet]
+    HasMulti -- Yes --> Popup["Show Applicable Offers Bottom Sheet"]
     Popup --> ApplySel[Operator Selects Offers]
     ApplySel --> Recalc[Recalculate Grand Total]
     Recalc --> PayMethod[Select Payment Method]
     
     HasMulti -- No --> PayMethod
     
-    PayMethod --> GenID[Platform Generates BillId (UUID) & BillNumber]
+    PayMethod --> GenID["Platform Generates BillId UUID and BillNumber"]
     GenID --> Save[Save Completed Bill to SQLite]
     Save --> Queue[Queue Event for Async Sync]
-    Queue --> Print[Print Receipt / Success UI]
+    Queue --> Print["Print Receipt / Success UI"]
     Print --> Finish([Ready for Next Bill])
 
     %% Styling
@@ -130,16 +130,16 @@ This flowchart illustrates the G11 Local User Management rules, showing the offl
 
 ```mermaid
 flowchart TD
-    Launch([App Launch]) --> CheckLocal[Check Local Settings / DB]
+    Launch([App Launch]) --> CheckLocal["Check Local Settings / DB"]
     
     CheckLocal --> HasSession{Is there an Active Session?}
     
-    HasSession -- Yes --> ShowCurrent[Show Startup UI:\nCurrent User: Ravi]
+    HasSession -- Yes --> ShowCurrent["Show Startup UI: Current User Ravi"]
     ShowCurrent --> Choice{Cashier Action}
     
-    Choice -- Taps 'Continue Billing' --> BillScreen[Go Directly to Billing Screen]
+    Choice -- Taps Continue Billing --> BillScreen[Go Directly to Billing Screen]
     
-    Choice -- Taps 'Switch User' --> UserList[Show Local User List\n(Owner, Cashier, Waiter)]
+    Choice -- Taps Switch User --> UserList["Show Local User List: Owner, Cashier, Waiter"]
     HasSession -- No --> UserList
     
     UserList --> SelectUser[Select User]
@@ -157,7 +157,7 @@ flowchart TD
     Contract --> Perm{Has Permission?}
     
     Perm -- Yes --> Exec[Execute Business Logic]
-    Perm -- No --> Denied[Throw PERMISSION_DENIED Error]
+    Perm -- No --> Denied[Throw PERMISSION DENIED Error]
 
     %% Styling
     classDef start fill:#0f172a,stroke:#3b82f6,color:#fff,stroke-width:2px;
