@@ -7,32 +7,32 @@ flowchart TD
     Start([Start New Bill]) --> AddProduct[Scan / Search Product]
     AddProduct --> CheckAvail{Is Product Available?}
     CheckAvail -- No --> Error[Show Error]
-    CheckAvail -- Yes --> BuildCart[Add to Cart & Calculate Base Line Totals]
+    CheckAvail -- Yes --> BuildCart["Add to Cart and Calculate Base Line Totals"]
     
     BuildCart --> CheckOffers[Fetch Active Offers]
     
     CheckOffers --> CatCheck{Same Category Offers Only?}
     
-    CatCheck -- Yes (Rule 1) --> AutoApply[System Auto-Applies Highest Customer Benefit]
-    AutoApply --> CalcTax[Calculate Tax & Grand Total]
+    CatCheck -- Yes Rule 1 --> AutoApply[System Auto-Applies Highest Customer Benefit]
+    AutoApply --> CalcTax["Calculate Tax and Grand Total"]
     
-    CatCheck -- No (Rule 2) --> Deferred[Defer Application]
+    CatCheck -- No Rule 2 --> Deferred[Defer Application]
     Deferred --> CalcTax
     
     CalcTax --> TapPay[Cashier Taps Pay]
     
     TapPay --> HasMulti{Were Offers Deferred?}
-    HasMulti -- Yes --> Popup[Show 'Applicable Offers' Bottom Sheet]
+    HasMulti -- Yes --> Popup["Show Applicable Offers Bottom Sheet"]
     Popup --> ApplySel[Operator Selects Offers]
     ApplySel --> Recalc[Recalculate Grand Total]
     Recalc --> PayMethod[Select Payment Method]
     
     HasMulti -- No --> PayMethod
     
-    PayMethod --> GenID[Platform Generates BillId (UUID) & BillNumber]
+    PayMethod --> GenID["Platform Generates BillId UUID and BillNumber"]
     GenID --> Save[Save Completed Bill to SQLite]
     Save --> Queue[Queue Event for Async Sync]
-    Queue --> Print[Print Receipt / Success UI]
+    Queue --> Print["Print Receipt / Success UI"]
     Print --> Finish([Ready for Next Bill])
 
     %% Styling

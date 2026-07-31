@@ -4,16 +4,16 @@ This flowchart illustrates the G11 Local User Management rules, showing the offl
 
 ```mermaid
 flowchart TD
-    Launch([App Launch]) --> CheckLocal[Check Local Settings / DB]
+    Launch([App Launch]) --> CheckLocal["Check Local Settings / DB"]
     
     CheckLocal --> HasSession{Is there an Active Session?}
     
-    HasSession -- Yes --> ShowCurrent[Show Startup UI:\nCurrent User: Ravi]
+    HasSession -- Yes --> ShowCurrent["Show Startup UI: Current User Ravi"]
     ShowCurrent --> Choice{Cashier Action}
     
-    Choice -- Taps 'Continue Billing' --> BillScreen[Go Directly to Billing Screen]
+    Choice -- Taps Continue Billing --> BillScreen[Go Directly to Billing Screen]
     
-    Choice -- Taps 'Switch User' --> UserList[Show Local User List\n(Owner, Cashier, Waiter)]
+    Choice -- Taps Switch User --> UserList["Show Local User List: Owner, Cashier, Waiter"]
     HasSession -- No --> UserList
     
     UserList --> SelectUser[Select User]
@@ -31,7 +31,7 @@ flowchart TD
     Contract --> Perm{Has Permission?}
     
     Perm -- Yes --> Exec[Execute Business Logic]
-    Perm -- No --> Denied[Throw PERMISSION_DENIED Error]
+    Perm -- No --> Denied[Throw PERMISSION DENIED Error]
 
     %% Styling
     classDef start fill:#0f172a,stroke:#3b82f6,color:#fff,stroke-width:2px;
