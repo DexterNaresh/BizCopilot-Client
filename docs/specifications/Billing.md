@@ -243,6 +243,18 @@ Requirements
 - Unique within the business.
 - Future multi-branch compatible.
 
+### Sequence Generation Rule (Architecture Freeze)
+- The application **MUST NOT** generate the next bill number by querying the Bill table (e.g. `MAX(BillNumber)`).
+- Bill numbers shall be generated from a dedicated `Sequence` table (e.g. `SequenceName: BILL_NUMBER, NextValue: 1259`).
+- **Transaction Flow**:
+  1. `BEGIN TRANSACTION`
+  2. Read `BILL_NUMBER` sequence
+  3. Generate Bill Number
+  4. Insert Bill
+  5. Increment Sequence
+  6. `COMMIT`
+- If the transaction rolls back, the sequence must also roll back. The generation and creation must succeed or fail atomically.
+
 ---
 
 # 14. Business Rules

@@ -1,0 +1,1 @@
+export interface CustomerEntity { customer_id: string; name: string; phone?: any; email?: any; status: 'ACTIVE' | 'ARCHIVED'; is_system?: number; isSystem?: boolean; created_at: string; updated_at?: string; }

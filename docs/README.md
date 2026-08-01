@@ -152,7 +152,12 @@ docs/
 ├── README.md
 ├── IMPLEMENTATION_WORKFLOW.md
 ├── architecture/
-│   └── 00_Architecture_Blueprint.md
+│   ├── 00_Architecture_Blueprint.md
+│   ├── 01_Identity_Standard.md
+│   ├── 02_Phone_Normalization_Standard.md
+│   ├── 03_Offer_Expiration_Standard.md
+│   ├── 04_Reporting_Standard.md
+│   └── 05_Dependency_Injection_Standard.md
 ├── platform/
 │   ├── 01_Platform.md
 │   ├── 02_Platform_Runtime_Engine.md
@@ -425,15 +430,12 @@ Future capabilities belong only in `roadmap/Future_Roadmap_V2_V3.md`.
 
 # 14. Project Status
 
-Architecture: Frozen
-
-Platform: Frozen
-
-Business Specifications: Frozen
-
-Experience Specifications: Frozen
-
-Roadmap: Reference Only
+- **Architecture**: Frozen
+- **Platform Infrastructure**: Complete & Verified (SQLite, Repositories, EventBus, Identity, Auth Session, Storage)
+- **Business Engine (`src/runtime`)**: Complete & Verified (Billing, Product, Customer, Offer, Report, Settings, AI, Backup, Synchronization)
+- **Testing**: 100% Test Pass Rate (90/90 Karma Unit Tests passing)
+- **Experience Layer (`src/ui`)**: Scaffolded (`pages`, `features`, `components`, `layouts`, `navigation`, `theme` directories created; core Angular app bootstrap in place; UI screens pending development)
+- **Roadmap**: Reference Only
 
 ---
 

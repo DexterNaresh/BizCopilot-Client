@@ -1,0 +1,1 @@
+export interface ProductEntity { product_id: string; product_code?: string; name: string; price: number; category?: string | null; barcode?: string | null; available: number; status: 'ACTIVE' | 'ARCHIVED'; created_at: string; updated_at?: string | null; }

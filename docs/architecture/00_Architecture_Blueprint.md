@@ -56,7 +56,6 @@ Single Angular codebase deployed as:
 - Android Tablet using Capacitor
 - Future: macOS using Tauri
 - Future: iOS/iPadOS using Capacitor
-- Future: Browser
 
 Deployment wrappers change. Business logic does not.
 

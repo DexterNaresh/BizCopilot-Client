@@ -55,13 +55,13 @@ Future:
 
 ## 4. Customer Model
 
-- CustomerId (ULID)
+- CustomerId (UUIDv7 or ULID)
 - CustomerCode (immutable, e.g. `CUS-000001`)
 - Name
-- Phone (optional)
+- Phone (optional, UNIQUE)
 - Email (optional)
 - Status (`ACTIVE` | `ARCHIVED`)
-- SystemGenerated (boolean)
+- IsSystem (boolean)
 - CreatedAt
 - UpdatedAt
 
@@ -93,7 +93,7 @@ It represents any transaction where the business does not capture customer detai
 |---|---|
 | CustomerCode | `CUS-000000` |
 | Name | `Walk-In Customer` |
-| SystemGenerated | `true` |
+| IsSystem | `true` |
 | Status | `ACTIVE` (permanent) |
 
 ### Rules
@@ -135,6 +135,11 @@ Cashier optionally enters customer details
 - Simplifies SQL queries — no special NULL handling.
 - Referential integrity preserved at all times.
 - AI and BI context always has a valid customer reference.
+
+### Customer Identity & Phone Updates
+- `CustomerId` must be generated locally using a globally unique algorithm (UUID v7 or ULID). Sequential IDs are prohibited to avoid offline collisions.
+- `PhoneNumber` is the business identifier, but NOT a foreign key. All relations (bills, loyalty) use `CustomerId`.
+- If a customer changes their phone number, only `Customer.PhoneNumber` is updated. `CustomerId` never changes.
 
 ---
 
