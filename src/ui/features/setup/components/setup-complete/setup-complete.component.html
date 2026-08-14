@@ -1,0 +1,35 @@
+<div class="nav-header">
+  <button class="btn-back" disabled>
+    <!-- Back is disabled here since setup is done -->
+    <img src="assets/icons/startup/arrow_back.svg" alt="Back" style="opacity: 0" />
+  </button>
+</div>
+
+<div class="success-header">
+  <div class="success-icon-wrapper">
+    <div class="confetti">
+      <!-- Confetti would typically be a background image or SVG particles -->
+    </div>
+    <div class="success-circle">
+      <img src="assets/icons/startup/check_circle.svg" alt="Success" class="icon" />
+    </div>
+  </div>
+  
+  <h1 class="title">Setup Complete!</h1>
+  <p class="subtitle">Your business has been set up successfully.<br/>You can now start using BizCopilot.</p>
+</div>
+
+<div class="business-card">
+  <div class="card-icon">
+    <img src="assets/icons/startup/store.svg" alt="Store" />
+  </div>
+  <div class="card-info">
+    <h2>{{ facade.businessName() || 'Demo Business' }}</h2>
+    <p>{{ facade.businessType() || 'Retail Business' }}</p>
+  </div>
+</div>
+
+<button class="btn-primary" (click)="goToLogin()">
+  <span>Go to Login</span>
+  <img src="assets/icons/startup/arrow_forward.svg" alt="Login" class="btn-icon" />
+</button>

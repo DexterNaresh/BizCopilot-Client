@@ -1,0 +1,32 @@
+<div class="login-card">
+  <!-- Card Header -->
+  <div class="card-header">
+    <h2 class="title">Enter PIN</h2>
+    <p class="subtitle">Use your 4-digit PIN to login and<br/>continue to your business.</p>
+  </div>
+
+  <!-- PIN Indicators -->
+  <div class="pin-dots">
+    <div class="dot-box" *ngFor="let isFilled of facade.pinArray()" [class.error]="facade.state() === AuthState.Error">
+      <div class="dot" *ngIf="isFilled"></div>
+    </div>
+  </div>
+
+  <!-- Keypad -->
+  <app-pin-keypad class="keypad-wrapper"></app-pin-keypad>
+
+  <!-- Divider -->
+  <div class="divider" *ngIf="facade.isBiometricAvailable()"></div>
+
+  <!-- Fingerprint -->
+  <app-fingerprint-login *ngIf="facade.isBiometricAvailable()"></app-fingerprint-login>
+
+  <!-- Error / Loading State Overlay -->
+  <div class="overlay" *ngIf="facade.state() === AuthState.Authenticating">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <div class="error-msg" *ngIf="facade.state() === AuthState.Error">
+    {{ facade.error() }}
+  </div>
+</div>

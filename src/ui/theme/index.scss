@@ -1,0 +1,39 @@
+@import 'variables';
+@import 'typography';
+@import 'breakpoints';
+@import 'mixins';
+@import 'material-overrides';
+
+// Global resets and defaults
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, app-root {
+  height: 100%;
+  width: 100%;
+  background-color: var(--color-bg-canvas);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button {
+  font-family: inherit;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+input, textarea {
+  font-family: inherit;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24;
+}

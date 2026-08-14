@@ -252,3 +252,40 @@ Components never access repositories, SQLite or Platform services directly.
 - Use composition over duplication.
 - Keep components stateless where practical.
 - Business logic belongs outside the UI.
+
+---
+
+# 19. Component Contracts & ViewModel Definitions
+
+All components must strictly adhere to the following contract structure:
+- **Inputs (`@Input`)**: Must only accept ViewModels or primitives. Domain Entities (e.g., `Product`) must never be passed directly to UI components.
+- **Outputs (`@Output`)**: Must emit standard semantic events (e.g., `(itemAdded)`, `(checkoutInitiated)`) rather than raw DOM events.
+- **ViewModels**: Must be readonly and flattened. (e.g., `export interface ProductViewModel { id: string; displayPrice: string; stockBadge: string; }`).
+
+---
+
+# 20. Angular Signals Usage
+
+BizCopilot V1 relies entirely on Angular Signals for reactive state:
+- **UI State**: Use `signal()` for local component state (e.g., `isExpanded = signal(false)`).
+- **Derived State**: Use `computed()` for values derived from Facades or local signals (e.g., `cartTotal = computed(() => this.cart().reduce(...))`).
+- **Facade State**: Facades must expose readonly Signals to the UI, never BehaviorSubjects or raw Observables.
+
+---
+
+# 21. Interaction & Animation Specifications
+
+- **Micro-interactions**: Use `150ms ease-in-out` for hover states and button presses.
+- **Drawer / Bottom Sheets**: Use `300ms cubic-bezier(0.4, 0, 0.2, 1)` for slide-in animations.
+- **Feedback**: Emit haptic feedback (via browser API if available) on primary actions (Add to Cart, Pay).
+
+---
+
+# 22. Accessibility (A11y) & Keyboard Specs
+
+- **Focus Management**: Focus must be trapped inside active Dialogs and Bottom Sheets.
+- **ARIA Labels**: All icon-only buttons must have `aria-label` attributes.
+- **Keyboard Shortcuts**: 
+  - `Ctrl + /` (or `/` outside inputs): Focus global search.
+  - `Escape`: Close active dialog or sheet.
+  - `Enter`: Confirm primary action in forms.

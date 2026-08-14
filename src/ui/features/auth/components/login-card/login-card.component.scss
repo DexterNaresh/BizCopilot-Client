@@ -1,0 +1,99 @@
+.login-card {
+  padding: 24px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 599px) {
+    padding: 24px 0;
+  }
+
+  .card-header {
+    text-align: center;
+    margin-bottom: 16px;
+
+    .title {
+      font-size: 24px; // 24-28px / 700
+      font-weight: 700;
+      color: var(--color-text-primary);
+      margin-bottom: 4px;
+    }
+
+    .subtitle {
+      font-size: 14px; // 15-17px / 400-500
+      font-weight: 400;
+      color: var(--color-text-secondary);
+      line-height: 1.4;
+    }
+  }
+
+  .pin-dots {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 16px;
+
+    .dot-box {
+      width: 44px;
+      height: 44px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-input); // 10-14px
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &.error {
+        border-color: var(--color-error);
+      }
+
+      .dot {
+        width: 12px;
+        height: 12px;
+        background-color: var(--color-primary);
+        border-radius: 50%;
+      }
+    }
+  }
+
+  .keypad-wrapper {
+    margin-bottom: 16px;
+  }
+
+  .divider {
+    height: 1px;
+    background-color: var(--color-border);
+    margin: 0 16px 16px 16px;
+  }
+
+  .error-msg {
+    color: var(--color-error);
+    font-size: 14px;
+    text-align: center;
+    margin-top: 16px;
+    white-space: pre-line;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(255, 255, 255, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-card);
+    z-index: 10;
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid var(--color-primary-light);
+      border-top-color: var(--color-primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

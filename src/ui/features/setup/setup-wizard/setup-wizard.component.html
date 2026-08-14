@@ -1,0 +1,72 @@
+<div class="setup-layout">
+  <!-- Desktop/Tablet Navbar -->
+  <header class="desktop-header">
+    <div class="brand">
+      <div class="brand-icon">
+        <img src="assets/icons/startup/store.svg" alt="BizCopilot" />
+      </div>
+      <span class="brand-text">BizCopilot</span>
+    </div>
+    <button class="help-button">
+      <img src="assets/icons/startup/help.svg" alt="Help" />
+      <span>Help</span>
+    </button>
+  </header>
+
+  <!-- Global Setup Header (Desktop) -->
+  <div class="global-header">
+    <h1>Let's set up your business</h1>
+    <p>A few quick steps to get BizCopilot ready.</p>
+  </div>
+
+  <!-- Desktop Stepper -->
+  <div class="desktop-stepper">
+    <!-- Step 1 -->
+    <div class="step" [class.active]="facade.currentStep() === SetupStep.BusinessDetails" [class.done]="facade.currentStep() === SetupStep.OwnerPin || facade.currentStep() === SetupStep.Complete">
+      <div class="step-circle">1</div>
+      <span class="step-label">Business Details</span>
+    </div>
+    <div class="step-line" [class.active]="facade.currentStep() === SetupStep.OwnerPin || facade.currentStep() === SetupStep.Complete"></div>
+
+    <!-- Step 2 -->
+    <div class="step" [class.active]="facade.currentStep() === SetupStep.OwnerPin" [class.done]="facade.currentStep() === SetupStep.Complete">
+      <div class="step-circle">2</div>
+      <span class="step-label">Create Owner PIN</span>
+    </div>
+    <div class="step-line" [class.active]="facade.currentStep() === SetupStep.Complete"></div>
+
+    <!-- Step 3 -->
+    <div class="step" [class.active]="facade.currentStep() === SetupStep.Complete">
+      <div class="step-circle">3</div>
+      <span class="step-label">Setup Complete</span>
+    </div>
+  </div>
+
+  <!-- Card Container for Content -->
+  <div class="setup-card-container">
+    <ng-container [ngSwitch]="facade.currentStep()">
+      <app-business-details *ngSwitchCase="SetupStep.BusinessDetails"></app-business-details>
+      <app-create-owner-pin *ngSwitchCase="SetupStep.OwnerPin"></app-create-owner-pin>
+      <app-setup-complete *ngSwitchCase="SetupStep.Complete"></app-setup-complete>
+    </ng-container>
+  </div>
+
+  <!-- Security Footer -->
+  <div class="security-footer">
+    <img src="assets/icons/startup/shield.svg" alt="Secure" />
+    <span>Your data is 100% secure and private.</span>
+  </div>
+
+  <!-- Mobile Progress Indicators (hidden on desktop) -->
+  <div class="progress-dots mobile-only" *ngIf="facade.currentStep() !== SetupStep.Complete">
+    <div class="dot" [class.active]="facade.currentStep() === SetupStep.BusinessDetails"></div>
+    <div class="dot" [class.active]="facade.currentStep() === SetupStep.OwnerPin"></div>
+    <div class="dot"></div>
+  </div>
+  
+  <div class="progress-dots mobile-only" *ngIf="facade.currentStep() === SetupStep.Complete">
+    <div class="dot"></div>
+    <div class="dot"></div>
+    <div class="dot active"></div>
+  </div>
+</div>

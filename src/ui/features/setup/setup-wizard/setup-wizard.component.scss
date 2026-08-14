@@ -1,0 +1,247 @@
+// Breakpoint for Mobile to Tablet/Desktop
+@media (max-width: 599px) {
+  .desktop-header, .global-header, .desktop-stepper {
+    display: none !important;
+  }
+  .setup-layout {
+    background-color: var(--color-surface);
+  }
+}
+@media (min-width: 600px) {
+  .mobile-only {
+    display: none !important;
+  }
+  .setup-layout {
+    background-color: var(--color-bg-canvas);
+  }
+}
+
+.setup-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  align-items: center;
+}
+
+// -----------------------------------------------------------------------------
+// Desktop Navbar
+// -----------------------------------------------------------------------------
+.desktop-header {
+  width: 100%;
+  height: 64px;
+  background-color: var(--color-surface);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 32px;
+  border-bottom: 1px solid var(--color-border);
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      background-color: var(--color-primary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        width: 20px;
+        height: 20px;
+        filter: brightness(0) invert(1);
+      }
+    }
+
+    .brand-text {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+    }
+  }
+
+  .help-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: none;
+    border: none;
+    color: var(--color-text-secondary);
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+
+    img {
+      width: 20px;
+      height: 20px;
+      opacity: 0.7;
+    }
+
+    &:hover {
+      color: var(--color-text-primary);
+      img { opacity: 1; }
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Global Setup Header
+// -----------------------------------------------------------------------------
+.global-header {
+  margin-top: 24px;
+  margin-bottom: 24px;
+  text-align: left;
+  width: 100%;
+  max-width: 800px;
+  padding: 0 24px;
+
+  h1 {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    margin-bottom: 4px;
+  }
+  p {
+    font-size: 16px;
+    color: var(--color-text-secondary);
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Desktop Stepper
+// -----------------------------------------------------------------------------
+.desktop-stepper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 24px;
+
+  .step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .step-circle {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: var(--color-bg-canvas);
+      border: 2px solid var(--color-border);
+      color: var(--color-text-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .step-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-text-secondary);
+    }
+
+    &.done {
+      .step-circle {
+        border-color: var(--color-primary);
+        color: var(--color-primary);
+      }
+      .step-label {
+        color: var(--color-primary);
+      }
+    }
+
+    &.active {
+      .step-circle {
+        background-color: var(--color-primary);
+        border-color: var(--color-primary);
+        color: white;
+      }
+      .step-label {
+        color: var(--color-text-primary);
+      }
+    }
+  }
+
+  .step-line {
+    flex: 1;
+    height: 2px;
+    background-color: var(--color-border);
+    margin: 0 16px;
+
+    &.active {
+      background-color: var(--color-primary);
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Card Container & Content
+// -----------------------------------------------------------------------------
+.setup-card-container {
+  width: 100%;
+  max-width: 480px; /* Tablet/Desktop constraint */
+  background-color: var(--color-surface);
+  display: flex;
+  flex-direction: column;
+
+  @media (min-width: 600px) {
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    padding: 24px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 599px) {
+    padding: 24px;
+    flex: 1;
+  }
+}
+
+.progress-dots {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  padding: 16px 0;
+  margin-top: auto;
+
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--color-border);
+    transition: background-color 0.3s;
+
+    &.active {
+      background-color: var(--color-primary);
+    }
+  }
+}
+
+// -----------------------------------------------------------------------------
+// Security Footer
+// -----------------------------------------------------------------------------
+.security-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  margin-top: auto;
+  margin-bottom: 12px;
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  font-weight: 500;
+
+  img {
+    width: 18px;
+    height: 18px;
+    opacity: 0.7;
+  }
+}
+

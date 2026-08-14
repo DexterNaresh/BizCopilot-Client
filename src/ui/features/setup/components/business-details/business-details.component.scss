@@ -1,0 +1,154 @@
+.header {
+  text-align: center;
+  margin-bottom: 32px;
+  
+  .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 24px;
+    
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background-color: var(--color-primary);
+      border-radius: 8px;
+      padding: 8px;
+      // Note: SVG icon styling in a real app might use CSS masks. 
+      // For now, we assume the SVG is white.
+    }
+    .logo-text {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+    }
+  }
+
+  .title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin-bottom: 8px;
+  }
+
+  .subtitle {
+    font-size: 16px;
+    color: var(--color-text-secondary);
+  }
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  label {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+
+  .input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    .input-icon {
+      position: absolute;
+      left: 12px;
+      width: 20px;
+      height: 20px;
+      opacity: 0.5;
+    }
+
+    input, select {
+      width: 100%;
+      height: 48px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-input);
+      padding: 0 16px 0 44px;
+      font-size: 16px;
+      color: var(--color-text-primary);
+      outline: none;
+      transition: border-color 0.2s;
+
+      &:focus {
+        border-color: var(--color-primary);
+      }
+    }
+  }
+  
+  .select-wrapper {
+    select {
+      padding: 0 16px;
+      appearance: none;
+      background: url('data:image/svg+xml;utf8,<svg fill="%236B7280" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>') no-repeat right 12px center;
+    }
+  }
+}
+
+.info-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background-color: var(--color-primary-light);
+  padding: 16px;
+  border-radius: var(--radius-key);
+  margin-top: 8px;
+
+  .info-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  p {
+    font-size: 14px;
+    color: var(--color-text-primary);
+    line-height: 1.4;
+  }
+}
+
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 56px;
+  background-color: var(--color-primary);
+  color: white;
+  border-radius: var(--radius-key);
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 16px;
+  transition: background-color 0.2s;
+
+  &:hover:not(:disabled) {
+    background-color: var(--color-primary-hover);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .btn-icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.error-msg {
+  color: var(--color-error);
+  font-size: 14px;
+  text-align: center;
+  margin-top: 8px;
+}

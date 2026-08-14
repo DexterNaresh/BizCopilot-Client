@@ -1,0 +1,19 @@
+<div class="keypad">
+  <div class="keypad-row" *ngFor="let row of keypadRows">
+    <button class="keypad-btn" *ngFor="let key of row" (click)="onKeypadPress(key.num)">
+      <span class="num">{{ key.num }}</span>
+      <span class="alpha" *ngIf="key.alpha">{{ key.alpha }}</span>
+    </button>
+  </div>
+  <div class="keypad-row">
+    <button class="keypad-btn action-btn" (click)="onBackspace()" aria-label="Backspace">
+      <img src="assets/icons/startup/backspace.svg" alt="Backspace" />
+    </button>
+    <button class="keypad-btn" (click)="onKeypadPress('0')">
+      <span class="num">0</span>
+    </button>
+    <button class="keypad-btn action-btn text-action" (click)="onClear()" aria-label="Clear">
+      Clear
+    </button>
+  </div>
+</div>

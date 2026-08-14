@@ -375,3 +375,88 @@ AI → AI Contract
 - Respect Feature Flags and Permissions.
 - Keep business modules independent of UI.
 - Future business-specific experiences must reuse this architecture.
+
+---
+
+# 23. Mobile UI Visual Reference
+
+## Purpose
+
+The mobile UI reference images define the intended visual language for BizCopilot V1. They serve as the primary design reference for developers and AI coding agents to ensure a premium, modern, and visually consistent experience.
+
+---
+
+## Design Principles
+
+- **Fastest Billing Experience**: Streamlined workflows with zero friction.
+- **Less Navigation**: Flattened hierarchies to keep the user focused.
+- **Touch-First Design**: Large touch targets suitable for POS environments.
+- **Offline First**: Always available and functional without an internet connection.
+- **AI Assisted**: Intelligent insights and operations available on demand.
+- **Progressive Disclosure**: Advanced features only appear when necessary.
+- **Material-inspired, custom branded UI**: Built on modern SaaS enterprise standards.
+- **Mobile-first architecture**: Optimized for one-hand usage and smaller screens.
+
+---
+
+## Screen Mapping
+
+The visual reference screens map directly to the underlying Runtime modules as follows:
+
+| Screen          | Runtime Module      |
+| --------------- | ------------------- |
+| First Run Setup | Platform / Settings |
+| Login           | Authentication      |
+| Dashboard       | Reports             |
+| Billing         | Billing             |
+| Products        | Product             |
+| Customers       | Customer            |
+| Offers          | Offer               |
+| Reports         | Reports             |
+| AI Assistant    | AI                  |
+| Settings        | Settings            |
+
+---
+
+## Navigation Flow
+
+1. **First Run Setup** → **PIN Setup** → **Login**
+2. **Login** → **Dashboard** (Owner) or **Billing** (Employee)
+3. **Dashboard** → **Billing** / **Products** / **More Menu**
+4. **Billing** ↔ **Cart** (Bottom Sheet) ↔ **Payment** ↔ **Offer Selection**
+5. **More Menu (Drawer)** → **Reports**, **Customers**, **Offers**, **Settings**, **Backup**, **AI Assistant**
+6. **Global** → **AI Chat** (Floating Drawer/FAB)
+
+---
+
+## Responsive Notes
+
+While these references depict the **mobile** experience, the exact same UI architecture adapts fluidly across devices:
+- **Mobile**: Bottom navigation, bottom sheets, full-screen forms.
+- **Tablet**: Split workspaces, compact navigation bars.
+- **Desktop**: Left sidebar navigation, right contextual panels.
+- *Deployment*: APK and Windows EXE remain the primary targets.
+
+---
+
+## Component References
+
+Consistent visual language is achieved by reusing core components:
+
+- **Search Bar**: Used in Billing, Products, Customers.
+- **Product Card**: Grid display with image, price, and code.
+- **Bottom Sheet**: Used for Cart summary and Offer selection.
+- **Status Badge**: Offline, Sync, and System Health indicators.
+- **Cart Summary**: Sticky panel summarizing totals and discounts.
+- **AI Drawer**: Slide-out panel for chat and insights.
+- **Dashboard Cards**: Key metrics (Sales, Profit, Trends).
+- **Floating Action Button (FAB)**: Primary contextual actions (Add Product, AI).
+
+---
+
+## Developer Notes
+
+> [!IMPORTANT]
+> These images are **visual references only**.
+> 
+> Business logic must continue to reside exclusively in the Runtime layer through the approved Application Contracts. The UI implementation must never infer business rules from the mockups. Design references dictate *form*, while the Application Contract dictates *function*.

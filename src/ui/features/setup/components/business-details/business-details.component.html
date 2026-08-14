@@ -1,0 +1,55 @@
+<div class="header">
+  <div class="logo">
+    <img src="assets/icons/startup/store.svg" alt="BizCopilot Logo" class="logo-icon" />
+    <span class="logo-text">BizCopilot</span>
+  </div>
+  
+  <h1 class="title">Welcome to BizCopilot!</h1>
+  <p class="subtitle">Let's set up your business to get started.</p>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container">
+  
+  <div class="form-group">
+    <label for="businessName">Business Name *</label>
+    <div class="input-wrapper">
+      <img src="assets/icons/startup/store.svg" alt="Store Icon" class="input-icon" />
+      <input id="businessName" type="text" formControlName="businessName" placeholder="Enter business name" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="ownerName">Owner Name *</label>
+    <div class="input-wrapper">
+      <img src="assets/icons/startup/info.svg" alt="User Icon" class="input-icon" />
+      <input id="ownerName" type="text" formControlName="ownerName" placeholder="Enter owner name" />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="businessType">Business Type *</label>
+    <div class="input-wrapper select-wrapper">
+      <select id="businessType" formControlName="businessType">
+        <option value="" disabled selected>Select business type</option>
+        <option value="retail">Retail</option>
+        <option value="services">Services</option>
+        <option value="fnb">Food & Beverage</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="info-box">
+    <img src="assets/icons/startup/info.svg" alt="Info" class="info-icon" />
+    <p>You can always change these details later in Settings.</p>
+  </div>
+
+  <button type="submit" class="btn-primary" [disabled]="facade.isLoading()">
+    <span>{{ facade.isLoading() ? 'Saving...' : 'Next' }}</span>
+    <img src="assets/icons/startup/arrow_forward.svg" alt="Next" class="btn-icon" *ngIf="!facade.isLoading()" />
+  </button>
+  
+  <div class="error-msg" *ngIf="facade.error()">
+    {{ facade.error() }}
+  </div>
+
+</form>

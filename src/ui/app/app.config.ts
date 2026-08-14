@@ -8,6 +8,7 @@ import { productProviders } from '@runtime/product/product.providers';
 import { customerProviders } from '@runtime/customer/customer.providers';
 import { offerProviders } from '@runtime/offer/offer.providers';
 import { reportProviders } from '@runtime/report/report.providers';
+import { startupProviders } from '@runtime/startup/startup.providers';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,6 +18,7 @@ export const appConfig: ApplicationConfig = {
     ...productProviders,
     ...customerProviders,
     ...offerProviders,
-    ...reportProviders
+    ...reportProviders,
+    ...startupProviders
   ]
 };

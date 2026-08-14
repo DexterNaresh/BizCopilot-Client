@@ -1,0 +1,49 @@
+<div class="nav-header">
+  <button class="btn-back" (click)="goBack()">
+    <img src="assets/icons/startup/arrow_back.svg" alt="Back" />
+    <span>Back</span>
+  </button>
+</div>
+
+<div class="lock-header">
+  <div class="lock-circle">
+    <img src="assets/icons/startup/lock.svg" alt="Lock" />
+  </div>
+  <h1 class="title">Create Owner PIN</h1>
+  <p class="subtitle">This PIN will be used to securely login<br/>and access your business.</p>
+</div>
+
+<div class="pin-dots">
+  <div class="dot-box" *ngFor="let isFilled of pinArray()">
+    <div class="dot" *ngIf="isFilled"></div>
+  </div>
+</div>
+
+<div class="keypad">
+  <div class="keypad-row" *ngFor="let row of keypadRows">
+    <button class="keypad-btn" *ngFor="let key of row" (click)="onKeypadPress(key.num)">
+      <span class="num">{{ key.num }}</span>
+      <span class="alpha" *ngIf="key.alpha">{{ key.alpha }}</span>
+    </button>
+  </div>
+  <div class="keypad-row">
+    <button class="keypad-btn action-btn" (click)="onBackspace()">
+      <img src="assets/icons/startup/backspace.svg" alt="Backspace" />
+    </button>
+    <button class="keypad-btn" (click)="onKeypadPress('0')">
+      <span class="num">0</span>
+    </button>
+    <button class="keypad-btn action-btn text-action" (click)="onClear()">
+      Clear
+    </button>
+  </div>
+</div>
+
+<button class="btn-primary" [disabled]="pinLength() !== 4 || facade.isLoading()" (click)="confirmPin()">
+  <span>{{ facade.isLoading() ? 'Confirming...' : 'Confirm PIN' }}</span>
+  <img src="assets/icons/startup/arrow_forward.svg" alt="Next" class="btn-icon" *ngIf="!facade.isLoading()" />
+</button>
+
+<div class="error-msg" *ngIf="facade.error()">
+  {{ facade.error() }}
+</div>
