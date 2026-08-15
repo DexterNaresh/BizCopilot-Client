@@ -1,4 +1,5 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 export enum AuthState {
   Idle = 'idle',
@@ -11,6 +12,8 @@ export enum AuthState {
   providedIn: 'root'
 })
 export class AuthFacade {
+  private router = inject(Router);
+
   // State
   public pin = signal<string>('');
   public state = signal<AuthState>(AuthState.Idle);
@@ -66,6 +69,7 @@ export class AuthFacade {
       if (this.pin() === '1234') {
         this.state.set(AuthState.Success);
         console.log('Authentication Successful! Navigating to Role-based Home...');
+        this.router.navigate(['/home']);
       } else {
         this.state.set(AuthState.Error);
         this.error.set('Incorrect PIN.\nPlease try again.');

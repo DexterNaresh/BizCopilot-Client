@@ -1,0 +1,73 @@
+<div class="sheet-backdrop" (click)="close.emit()"></div>
+<div class="sheet-container">
+  <div class="sheet-header">
+    <div class="drag-handle"></div>
+    <div class="header-content">
+      <div class="sheet-title">More</div>
+      <button class="close-btn" (click)="close.emit()" aria-label="Close More menu">
+        <div class="nav-icon" style="-webkit-mask-image: url('assets/icons/navigation/close.svg'); mask-image: url('assets/icons/navigation/close.svg');"></div>
+      </button>
+    </div>
+  </div>
+  
+  <div class="sheet-content">
+    <div class="sheet-section">
+      <div class="section-title">BUSINESS</div>
+      <a routerLink="/offers" routerLinkActive="active" class="sheet-item" (click)="close.emit()" aria-label="Open Offers">
+        <div class="icon-container"><div class="nav-icon" style="-webkit-mask-image: url('assets/icons/navigation/offers.svg'); mask-image: url('assets/icons/navigation/offers.svg');"></div></div>
+        <span class="label">Offers</span>
+        <div class="chevron" style="-webkit-mask-image: url('assets/icons/navigation/chevron-right.svg'); mask-image: url('assets/icons/navigation/chevron-right.svg');"></div>
+      </a>
+      <a routerLink="/reports" routerLinkActive="active" class="sheet-item hide-on-tablet" (click)="close.emit()" aria-label="Open Reports">
+        <div class="icon-container"><div class="nav-icon" style="-webkit-mask-image: url('assets/icons/navigation/reports.svg'); mask-image: url('assets/icons/navigation/reports.svg');"></div></div>
+        <span class="label">Reports</span>
+        <div class="chevron" style="-webkit-mask-image: url('assets/icons/navigation/chevron-right.svg'); mask-image: url('assets/icons/navigation/chevron-right.svg');"></div>
+      </a>
+      <a routerLink="/ai-assistant" routerLinkActive="active" class="sheet-item" (click)="close.emit()" aria-label="Open AI Assistant">
+        <div class="icon-container"><div class="nav-icon" style="-webkit-mask-image: url('assets/icons/navigation/ai-assistant.svg'); mask-image: url('assets/icons/navigation/ai-assistant.svg');"></div></div>
+        <span class="label">AI Assistant</span>
+        <div class="chevron" style="-webkit-mask-image: url('assets/icons/navigation/chevron-right.svg'); mask-image: url('assets/icons/navigation/chevron-right.svg');"></div>
+      </a>
+    </div>
+
+    <div class="sheet-section">
+      <div class="section-title">MANAGEMENT</div>
+      <a routerLink="/settings" routerLinkActive="active" class="sheet-item" (click)="close.emit()" aria-label="Open Settings">
+        <div class="icon-container"><div class="nav-icon" style="-webkit-mask-image: url('assets/icons/navigation/settings.svg'); mask-image: url('assets/icons/navigation/settings.svg');"></div></div>
+        <span class="label">Settings</span>
+        <div class="chevron" style="-webkit-mask-image: url('assets/icons/navigation/chevron-right.svg'); mask-image: url('assets/icons/navigation/chevron-right.svg');"></div>
+      </a>
+      <a routerLink="/backup-sync" routerLinkActive="active" class="sheet-item" (click)="close.emit()" aria-label="Open Backup & Sync">
+        <div class="icon-container"><div class="nav-icon" style="-webkit-mask-image: url('assets/icons/navigation/backup-sync.svg'); mask-image: url('assets/icons/navigation/backup-sync.svg');"></div></div>
+        <span class="label">Backup & Sync</span>
+        <div class="chevron" style="-webkit-mask-image: url('assets/icons/navigation/chevron-right.svg'); mask-image: url('assets/icons/navigation/chevron-right.svg');"></div>
+      </a>
+      <a routerLink="/users" routerLinkActive="active" class="sheet-item" (click)="close.emit()" aria-label="Open Users">
+        <div class="icon-container"><div class="nav-icon" style="-webkit-mask-image: url('assets/icons/navigation/customers.svg'); mask-image: url('assets/icons/navigation/customers.svg');"></div></div>
+        <span class="label">Users</span>
+        <div class="chevron" style="-webkit-mask-image: url('assets/icons/navigation/chevron-right.svg'); mask-image: url('assets/icons/navigation/chevron-right.svg');"></div>
+      </a>
+    </div>
+
+    <div class="sheet-section">
+      <div class="section-title">SUPPORT</div>
+      <a routerLink="/help" routerLinkActive="active" class="sheet-item" (click)="close.emit()" aria-label="Open Help & Support">
+        <div class="icon-container"><div class="nav-icon" style="-webkit-mask-image: url('assets/icons/navigation/help.svg'); mask-image: url('assets/icons/navigation/help.svg');"></div></div>
+        <span class="label">Help & Support</span>
+        <div class="chevron" style="-webkit-mask-image: url('assets/icons/navigation/chevron-right.svg'); mask-image: url('assets/icons/navigation/chevron-right.svg');"></div>
+      </a>
+      <a routerLink="/whats-new" routerLinkActive="active" class="sheet-item" (click)="close.emit()" aria-label="Open What's New">
+        <div class="icon-container"><div class="nav-icon" style="-webkit-mask-image: url('assets/icons/navigation/whats-new.svg'); mask-image: url('assets/icons/navigation/whats-new.svg');"></div></div>
+        <span class="label">What's New</span>
+        <div class="chevron" style="-webkit-mask-image: url('assets/icons/navigation/chevron-right.svg'); mask-image: url('assets/icons/navigation/chevron-right.svg');"></div>
+      </a>
+    </div>
+
+    <div class="logout-section">
+      <button class="logout-button" (click)="close.emit()" aria-label="Logout">
+        <div class="nav-icon" style="-webkit-mask-image: url('assets/icons/navigation/logout.svg'); mask-image: url('assets/icons/navigation/logout.svg');"></div>
+        <span>Logout</span>
+      </button>
+    </div>
+  </div>
+</div>

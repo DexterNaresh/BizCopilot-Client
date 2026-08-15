@@ -11,7 +11,9 @@
   padding: 0;
 }
 
-html, body, app-root {
+html,
+body,
+app-root {
   height: 100%;
   width: 100%;
   background-color: var(--color-bg-canvas);
@@ -26,14 +28,15 @@ button {
   cursor: pointer;
 }
 
-input, textarea {
+input,
+textarea {
   font-family: inherit;
 }
 
 .material-symbols-outlined {
   font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24;
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 24;
 }

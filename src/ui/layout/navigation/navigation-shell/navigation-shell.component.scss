@@ -1,0 +1,52 @@
+.navigation-shell-layout {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: var(--color-bg-canvas);
+}
+
+.desktop-sidebar {
+  flex-shrink: 0;
+  display: none; // Hidden on mobile/tablet by default
+  z-index: 100;
+  border-right: 1px solid var(--color-border);
+}
+
+.main-workspace {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  position: relative;
+}
+
+.bottom-navigation {
+  flex-shrink: 0;
+  z-index: 100;
+  border-top: 1px solid var(--color-border);
+}
+
+// Breakpoints
+@media (max-width: 1023px) {
+  // Mobile / Tablet: column layout
+  .navigation-shell-layout {
+    flex-direction: column;
+  }
+}
+
+@media (min-width: 1024px) {
+  // Desktop / POS
+  .navigation-shell-layout {
+    flex-direction: row; // Sidebar left, workspace right
+  }
+
+  .desktop-sidebar {
+    display: block; // Show sidebar
+    width: var(--nav-desktop-width, 248px);
+  }
+
+  .bottom-navigation {
+    display: none !important; // Hide bottom nav on desktop
+  }
+}

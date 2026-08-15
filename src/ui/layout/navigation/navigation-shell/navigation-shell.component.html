@@ -1,0 +1,15 @@
+<div class="navigation-shell-layout">
+  <!-- Desktop Sidebar -->
+  <app-desktop-sidebar class="desktop-sidebar"></app-desktop-sidebar>
+
+  <!-- Main Workspace (Router Outlet projected here) -->
+  <main class="main-workspace">
+    <ng-content></ng-content>
+  </main>
+
+  <!-- Mobile/Tablet Bottom Navigation -->
+  <app-bottom-navigation class="bottom-navigation" (openMore)="openMoreSheet()"></app-bottom-navigation>
+</div>
+
+<!-- Mobile/Tablet More Bottom Sheet Overlay -->
+<app-more-bottom-sheet *ngIf="isMoreSheetOpen()" (close)="closeMoreSheet()"></app-more-bottom-sheet>
