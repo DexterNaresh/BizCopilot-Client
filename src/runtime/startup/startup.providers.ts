@@ -1,15 +1,10 @@
 import { Provider } from '@angular/core';
-import { SaveBusinessDetailsUseCase } from '../../application/use-cases/startup/save-business-details.use-case';
-import { CreateOwnerPinUseCase } from '../../application/use-cases/startup/create-owner-pin.use-case';
-import { TemporarySaveBusinessDetailsAdapter, TemporaryCreateOwnerPinAdapter } from './adapters/temporary-startup.adapter';
+import { SetupApplication } from '../../application/contracts/setup.application';
+import { TemporarySetupApplicationAdapter } from './adapters/temporary-startup.adapter';
 
 export const startupProviders: Provider[] = [
   {
-    provide: SaveBusinessDetailsUseCase,
-    useClass: TemporarySaveBusinessDetailsAdapter
-  },
-  {
-    provide: CreateOwnerPinUseCase,
-    useClass: TemporaryCreateOwnerPinAdapter
+    provide: SetupApplication,
+    useClass: TemporarySetupApplicationAdapter
   }
 ];
