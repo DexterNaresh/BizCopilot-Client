@@ -1,0 +1,20 @@
+<div class="grid-container">
+  <ng-container *ngIf="products.length > 0; else emptyGrid">
+    <app-product-card 
+      *ngFor="let product of products"
+      [product]="product"
+      (toggleFavourite)="onToggleFavourite($event)"
+      (markAvailability)="onMarkAvailability($event)"
+      (edit)="onEdit($event)"
+      (delete)="onDelete($event)">
+    </app-product-card>
+  </ng-container>
+  <ng-template #emptyGrid>
+    <div class="empty-state">
+      <div class="empty-content">
+        <span class="material-symbols-rounded">inventory_2</span>
+        <h3>No products found</h3>
+      </div>
+    </div>
+  </ng-template>
+</div>

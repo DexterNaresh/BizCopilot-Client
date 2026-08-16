@@ -1,0 +1,56 @@
+<div class="product-card" [class.unavailable]="product.availability === 'unavailable'">
+  <div class="image-container">
+    <ng-container *ngIf="product.image; else imagePlaceholder">
+      <img [src]="product.image" [alt]="product.name">
+    </ng-container>
+    <ng-template #imagePlaceholder>
+      <div class="image-placeholder">
+        <span class="material-symbols-rounded">photo_camera</span>
+      </div>
+    </ng-template>
+  </div>
+
+  <div class="info-container">
+    <!-- Row 1 -->
+    <div class="info-row name-row">
+      <h3>{{product.name}}</h3>
+      <div class="menu-container">
+        <button class="icon-btn menu-btn" (click)="toggleMenu($event)">
+          <span class="material-symbols-rounded">more_vert</span>
+        </button>
+        
+        <ng-container *ngIf="isMenuOpen">
+          <div class="dropdown-menu">
+            <button class="menu-item" (click)="onEdit($event)">
+              <span class="material-symbols-rounded">edit</span> Edit Product
+            </button>
+            <button class="menu-item" (click)="onToggleAvailability($event)">
+              <span class="material-symbols-rounded">{{product.availability === 'available' ? 'block' : 'check_circle'}}</span>
+              Mark {{product.availability === 'available' ? 'Unavailable' : 'Available'}}
+            </button>
+            <button class="menu-item text-danger" (click)="onDelete($event)">
+              <span class="material-symbols-rounded">delete_outline</span> Delete Product
+            </button>
+          </div>
+          <div class="menu-backdrop" (click)="closeMenu()"></div>
+        </ng-container>
+      </div>
+    </div>
+
+    <!-- Row 2 -->
+    <div class="info-row category-row">
+      <span class="category-name">{{product.categoryName}}</span>
+      <span class="status-badge" [class.available]="product.availability === 'available'">
+        {{product.availability === 'available' ? 'Available' : 'Unavailable'}}
+      </span>
+    </div>
+
+    <!-- Row 3 -->
+    <div class="info-row price-row">
+      <span class="price">₹{{product.sellingPrice | number:'1.2-2'}}</span>
+      <button class="icon-btn fav-btn" [class.active]="product.favourite" (click)="onToggleFavourite($event)">
+        <span class="material-symbols-rounded">{{product.favourite ? 'star' : 'star_outline'}}</span>
+      </button>
+    </div>
+  </div>
+</div>

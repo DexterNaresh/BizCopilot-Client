@@ -1,0 +1,43 @@
+@use '../../../../theme/variables' as var;
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr); // Exactly 6 for Desktop
+  gap: 16px;
+  width: 100%;
+
+  @media (max-width: 1023px) {
+    grid-template-columns: repeat(4, 1fr); // Exactly 4 for Tablet
+    gap: 12px;
+  }
+
+  @media (max-width: 599px) {
+    grid-template-columns: repeat(2, 1fr); // Exactly 2 for Mobile
+    gap: 8px;
+  }
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  padding: 64px 0;
+  text-align: center;
+  
+  .empty-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: var(--color-text-secondary);
+
+    span {
+      font-size: 48px;
+      opacity: 0.5;
+      margin-bottom: 12px;
+    }
+
+    h3 {
+      margin: 0;
+      color: var(--color-text-primary);
+    }
+  }
+}
+

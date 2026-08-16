@@ -1,0 +1,104 @@
+<div class="category-workspace">
+
+  <!-- Desktop Header -->
+  <div class="page-header desktop-only">
+    <div class="header-left">
+      <h1>Categories</h1>
+      <p class="subtitle">Organize your products with categories for better management.</p>
+    </div>
+    <div class="header-right">
+      <button class="btn-primary add-btn" (click)="onAddCategory()">
+        <span class="material-symbols-rounded">add</span>
+        Add New Category
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Header -->
+  <div class="mobile-header mobile-only">
+    <div class="title-group">
+      <h1>Categories</h1>
+      <p class="subtitle">Organize your products</p>
+    </div>
+    <button class="icon-btn primary-icon" (click)="onAddCategory()">
+      <span class="material-symbols-rounded">add</span>
+    </button>
+  </div>
+
+  <div class="controls-section">
+    <div class="search-box">
+      <span class="material-symbols-rounded">search</span>
+      <input type="text" placeholder="Search categories by name..." [value]="facade.searchQuery()"
+        (input)="onSearchChange($event)" />
+    </div>
+
+    <div class="status-filter">
+      <div class="select-wrapper">
+        <select [value]="facade.statusFilter()" (change)="onStatusChange($event)">
+          <option value="all">All Status</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+        <span class="material-symbols-rounded">expand_more</span>
+      </div>
+    </div>
+
+    <!-- Mobile Sort Control -->
+    <div class="mobile-sort-filter">
+      <div class="select-wrapper">
+        <select #mobileSort
+          (change)="onSortChange({ field: $any(mobileSort.value), direction: facade.sortDirection() })">
+          <option value="name" [selected]="facade.sortField() === 'name'">Sort by Name</option>
+          <option value="productCount" [selected]="facade.sortField() === 'productCount'">Sort by Products</option>
+          <option value="status" [selected]="facade.sortField() === 'status'">Sort by Status</option>
+          <option value="createdAt" [selected]="facade.sortField() === 'createdAt'">Sort by Date</option>
+        </select>
+        <span class="material-symbols-rounded">expand_more</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-section">
+
+    <!-- Loading State -->
+    <div class="loading-state" *ngIf="facade.isLoading()">
+      <p>Loading categories...</p>
+    </div>
+
+    <!-- Error State -->
+    <div class="error-state" *ngIf="facade.error()">
+      <p>{{ facade.error() }}</p>
+      <button class="btn-primary" (click)="facade.loadCategories()">Try Again</button>
+    </div>
+
+    <!-- Desktop / Tablet Table View -->
+    <div class="desktop-view" *ngIf="!facade.isLoading() && !facade.error()">
+      <app-category-table [categories]="facade.categories()" [sortField]="facade.sortField()"
+        [sortDirection]="facade.sortDirection()" (edit)="onEditCategory($event)" (delete)="onDeleteCategory($event)"
+        (sortChange)="onSortChange($event)">
+      </app-category-table>
+    </div>
+
+    <!-- Mobile Card View -->
+    <div class="mobile-view" *ngIf="!facade.isLoading() && !facade.error()">
+      <app-category-list-item *ngFor="let cat of facade.categories()" [category]="cat" (edit)="onEditCategory($event)"
+        (delete)="onDeleteCategory($event)">
+      </app-category-list-item>
+
+      <div class="empty-state" *ngIf="facade.categories().length === 0">
+        <div class="empty-content">
+          <span class="material-symbols-rounded">category</span>
+          <h3>No categories found</h3>
+          <p>Try a different category name or add a new category.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-section" *ngIf="!facade.isLoading() && !facade.error()">
+    <app-category-pagination [page]="facade.page()" [pageSize]="facade.pageSize()" [totalCount]="facade.totalCount()"
+      (pageChange)="onPageChange($event)" (pageSizeChange)="onPageSizeChange($event)">
+    </app-category-pagination>
+  </div>
+
+</div>

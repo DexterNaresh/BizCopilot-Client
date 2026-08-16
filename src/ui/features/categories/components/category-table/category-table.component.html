@@ -1,0 +1,66 @@
+<div class="table-wrapper">
+  <table class="category-table">
+    <thead>
+      <tr>
+        <th (click)="onSort('name')" class="sortable">
+          <div class="th-content">
+            Category Name
+            <span class="material-symbols-rounded sort-icon" [class.active]="sortField === 'name'">{{ getSortIcon('name') }}</span>
+          </div>
+        </th>
+        <th (click)="onSort('productCount')" class="sortable">
+          <div class="th-content">
+            Products
+            <span class="material-symbols-rounded sort-icon" [class.active]="sortField === 'productCount'">{{ getSortIcon('productCount') }}</span>
+          </div>
+        </th>
+        <th (click)="onSort('status')" class="sortable">
+          <div class="th-content">
+            Status
+            <span class="material-symbols-rounded sort-icon" [class.active]="sortField === 'status'">{{ getSortIcon('status') }}</span>
+          </div>
+        </th>
+        <th (click)="onSort('createdAt')" class="sortable">
+          <div class="th-content">
+            Created On
+            <span class="material-symbols-rounded sort-icon" [class.active]="sortField === 'createdAt'">{{ getSortIcon('createdAt') }}</span>
+          </div>
+        </th>
+        <th class="actions-th">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let cat of categories">
+        <td class="name-col">
+          <div class="category-name-wrapper">
+            <div class="icon-container" [class.inactive]="cat.status === 'inactive'">
+              <span class="material-symbols-rounded">{{ cat.icon || 'category' }}</span>
+            </div>
+            <span class="name-text">{{ cat.name }}</span>
+          </div>
+        </td>
+        <td>{{ cat.productCount }}</td>
+        <td>
+          <span class="status-badge" [class.active]="cat.status === 'active'" [class.inactive]="cat.status === 'inactive'">
+            {{ cat.status === 'active' ? 'Active' : 'Inactive' }}
+          </span>
+        </td>
+        <td class="date-col">
+          <div class="date-text">{{ cat.createdAt | date:'dd MMM yyyy' }}</div>
+          <div class="time-text">{{ cat.createdAt | date:'hh:mm a' }}</div>
+        </td>
+        <td class="actions-col">
+          <app-category-actions [category]="cat" (edit)="onEdit($event)" (delete)="onDelete($event)"></app-category-actions>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <div class="empty-state" *ngIf="categories.length === 0">
+    <div class="empty-content">
+      <span class="material-symbols-rounded">category</span>
+      <h3>No categories found</h3>
+      <p>Try a different category name or add a new category.</p>
+    </div>
+  </div>
+</div>

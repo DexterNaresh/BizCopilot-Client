@@ -1,0 +1,78 @@
+<div class="table-container">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Category</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th class="fav-col"><span class="material-symbols-rounded">star</span></th>
+        <th>Updated On</th>
+        <th class="actions-col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="products.length > 0; else emptyTable">
+        <tr *ngFor="let product of products" [class.unavailable]="product.availability === 'unavailable'">
+          <td>
+            <div class="prod-name">
+              <ng-container *ngIf="product.image; else thumbPlaceholder">
+                <img [src]="product.image" class="prod-thumb" [alt]="product.name">
+              </ng-container>
+              <ng-template #thumbPlaceholder>
+                <div class="thumb-placeholder"><span class="material-symbols-rounded">photo_camera</span></div>
+              </ng-template>
+              <span class="name-text">{{product.name}}</span>
+            </div>
+          </td>
+          <td class="text-muted">{{product.categoryName}}</td>
+          <td class="price-text">₹{{product.sellingPrice | number:'1.2-2'}}</td>
+          <td>
+            <span class="status-badge" [class.available]="product.availability === 'available'">
+              {{product.availability === 'available' ? 'Available' : 'Unavailable'}}
+            </span>
+          </td>
+          <td class="fav-col">
+            <button class="icon-btn fav-btn" [class.active]="product.favourite" (click)="onToggleFavourite(product)">
+              <span class="material-symbols-rounded">{{product.favourite ? 'star' : 'star_outline'}}</span>
+            </button>
+          </td>
+          <td class="text-muted">Today</td>
+          <td class="actions-col">
+            <div class="menu-container">
+              <button class="icon-btn" (click)="toggleMenu($event, product.id)">
+                <span class="material-symbols-rounded">more_vert</span>
+              </button>
+
+              <div class="dropdown-menu" *ngIf="openMenuId === product.id">
+                <button class="menu-item" (click)="onEdit($event, product)">
+                  <span class="material-symbols-rounded">edit</span> Edit Product
+                </button>
+                <button class="menu-item" (click)="onToggleAvailability($event, product)">
+                  <span class="material-symbols-rounded">{{product.availability === 'available' ? 'block' :
+                    'check_circle'}}</span>
+                  Mark {{product.availability === 'available' ? 'Unavailable' : 'Available'}}
+                </button>
+                <button class="menu-item text-danger" (click)="onDelete($event, product)">
+                  <span class="material-symbols-rounded">delete_outline</span> Delete Product
+                </button>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+      <ng-template #emptyTable>
+        <tr>
+          <td colspan="7" class="empty-state">
+            <div class="empty-content">
+              <span class="material-symbols-rounded">inventory_2</span>
+              <h3>No products found</h3>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+</div>
+
+<div class="menu-backdrop" *ngIf="openMenuId" (click)="closeMenu()"></div>

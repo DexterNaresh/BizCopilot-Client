@@ -1,0 +1,47 @@
+<div class="pagination-container">
+  
+  <div class="rows-per-page">
+    <label for="pageSize">Rows per page</label>
+    <div class="select-wrapper">
+      <select id="pageSize" [ngModel]="pageSize" (ngModelChange)="onPageSizeChange($event)">
+        <option *ngFor="let option of pageSizeOptions" [value]="option">{{ option }}</option>
+      </select>
+      <span class="material-symbols-rounded">expand_more</span>
+    </div>
+  </div>
+
+  <div class="page-controls">
+    <button class="nav-btn" 
+            [disabled]="page === 1" 
+            (click)="onPageChange(page - 1)"
+            aria-label="Previous Page">
+      <span class="material-symbols-rounded">chevron_left</span>
+    </button>
+    
+    <div class="pages desktop-pages">
+      <button *ngFor="let p of pages" 
+              class="page-btn" 
+              [class.active]="p === page"
+              (click)="onPageChange(p)">
+        {{ p }}
+      </button>
+    </div>
+    
+    <div class="pages mobile-pages">
+      <span class="mobile-page-text">{{ page }} / {{ totalPages }}</span>
+    </div>
+
+    <button class="nav-btn" 
+            [disabled]="page === totalPages" 
+            (click)="onPageChange(page + 1)"
+            aria-label="Next Page">
+      <span class="material-symbols-rounded">chevron_right</span>
+    </button>
+  </div>
+
+  <div class="result-count">
+    <span class="desktop-text">Showing {{ showingStart }}–{{ showingEnd }} of {{ totalCount }} categories</span>
+    <span class="mobile-text">Showing {{ showingStart }}–{{ showingEnd }} of {{ totalCount }}</span>
+  </div>
+
+</div>

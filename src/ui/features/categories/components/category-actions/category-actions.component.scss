@@ -1,0 +1,44 @@
+.actions-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--color-text-secondary, #6B7280);
+
+  .material-symbols-rounded {
+    font-size: 20px;
+  }
+
+  &:hover {
+    background: var(--color-surface-hover, #F3F4F6);
+    color: var(--color-text-primary, #111827);
+  }
+
+  &.edit-btn:hover {
+    color: var(--color-primary, #5B3BEB);
+    background: rgba(91, 59, 235, 0.1);
+  }
+
+  &.delete-btn:hover {
+    color: var(--color-error, #DC2626);
+    background: rgba(220, 38, 38, 0.1);
+  }
+
+  /* Touch target size for mobile */
+  @media (max-width: 767px) {
+    width: 40px;
+    height: 40px;
+  }
+}

@@ -1,0 +1,218 @@
+<div class="page-container">
+  <!-- Desktop Header -->
+  <div class="page-header desktop-only">
+    <div class="header-left">
+      <h1>Products</h1>
+      <p class="subtitle">Manage your product catalog and keep it up to date.</p>
+    </div>
+    <div class="header-right">
+      <button class="btn-primary" (click)="openAddProduct()">
+        <span class="material-symbols-rounded">add</span>
+        Add New Product
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Header -->
+  <div class="mobile-header mobile-only">
+    <div class="title-group">
+      <h1>Products</h1>
+      <p class="subtitle">Manage your catalog</p>
+    </div>
+    <button class="icon-btn primary-icon" (click)="openAddProduct()">
+      <span class="material-symbols-rounded">add</span>
+    </button>
+  </div>
+
+  <!-- Main Content Layout -->
+  <div class="main-layout">
+    <div class="content-body">
+      
+      <!-- Toolbar Row 1: Search & Category -->
+      <div class="toolbar search-row">
+        <div class="search-box">
+          <span class="material-symbols-rounded">search</span>
+          <input 
+            type="text" 
+            placeholder="Search product by name or barcode..." 
+            [value]="facade.searchQuery()"
+            (input)="onSearch($event)">
+        </div>
+        <div class="category-dropdown-wrapper desktop-only">
+          <select class="category-select" [value]="facade.categoryFilter()" (change)="onCategoryFilterChange($event)">
+            <option value="all">All Categories</option>
+            <option *ngFor="let cat of facade.categories()" [value]="cat.id">{{cat.name}}</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Toolbar Row 2: Status Filters & View Toggle -->
+      <div class="filter-bar">
+        <div class="filter-group scrollable-x">
+          <button class="filter-chip" [class.active]="facade.availabilityFilter() === 'all'" (click)="onFilterAvailability('all')">
+            All Products <span class="count">{{facade.totalCount()}}</span>
+          </button>
+          <button class="filter-chip" [class.active]="facade.availabilityFilter() === 'available'" (click)="onFilterAvailability('available')">
+            Available <span class="count available">{{facade.availableCount()}}</span>
+          </button>
+          <button class="filter-chip" [class.active]="facade.availabilityFilter() === 'unavailable'" (click)="onFilterAvailability('unavailable')">
+            Unavailable <span class="count unavailable">{{facade.unavailableCount()}}</span>
+          </button>
+          <button class="filter-chip favourite-chip" [class.active]="facade.favouriteOnly()" (click)="onToggleFavouriteFilter()">
+            <span class="material-symbols-rounded">star</span> Favourites <span class="count">{{facade.favouriteCount()}}</span>
+          </button>
+        </div>
+
+        <div class="view-toggle desktop-only">
+          <button class="toggle-btn" [class.active]="facade.viewMode() === 'grid'" (click)="onViewModeChange('grid')">
+            <span class="material-symbols-rounded">grid_view</span> Grid View
+          </button>
+          <button class="toggle-btn" [class.active]="facade.viewMode() === 'table'" (click)="onViewModeChange('table')">
+            <span class="material-symbols-rounded">view_list</span> Table View
+          </button>
+        </div>
+      </div>
+
+      <!-- Loading / Error -->
+      <div class="error-banner" *ngIf="facade.error()">
+        <span class="material-symbols-rounded">error</span>
+        {{facade.error()}}
+      </div>
+
+      <!-- Grid / Table View -->
+      <div class="view-container">
+        <div class="loading-spinner" *ngIf="facade.isLoading(); else loadedContent">
+          <span class="material-symbols-rounded">refresh</span> Loading...
+        </div>
+        
+        <ng-template #loadedContent>
+          <ng-container *ngIf="facade.viewMode() === 'grid'; else tableView">
+            <app-product-grid 
+              [products]="facade.products()"
+              (toggleFavourite)="onToggleFavourite($event)"
+              (markAvailability)="onMarkAvailability($event)"
+              (edit)="onEditProduct($event)"
+              (delete)="onDeleteProduct($event)">
+            </app-product-grid>
+          </ng-container>
+          <ng-template #tableView>
+            <app-product-table 
+              [products]="facade.products()"
+              (toggleFavourite)="onToggleFavourite($event)"
+              (markAvailability)="onMarkAvailability($event)"
+              (edit)="onEditProduct($event)"
+              (delete)="onDeleteProduct($event)">
+            </app-product-table>
+          </ng-template>
+        </ng-template>
+      </div>
+
+      <!-- Pagination Footer -->
+      <div class="pagination-footer" *ngIf="facade.totalCount() > 0">
+        <div class="pagination-rows">
+          Rows per page: 
+          <select>
+            <option>12</option>
+            <option>24</option>
+            <option>48</option>
+          </select>
+        </div>
+        <div class="pagination-controls">
+          <button class="page-btn"><span class="material-symbols-rounded">chevron_left</span></button>
+          <button class="page-btn active">1</button>
+          <button class="page-btn">2</button>
+          <button class="page-btn">3</button>
+          <span class="page-ellipsis">...</span>
+          <button class="page-btn">13</button>
+          <button class="page-btn"><span class="material-symbols-rounded">chevron_right</span></button>
+        </div>
+        <div class="pagination-summary">
+          Showing 1 to {{ facade.products().length }} of {{ facade.totalCount() }} products
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right Sidebar (Desktop) -->
+    <div class="right-sidebar desktop-only">
+      
+      <!-- Quick Actions -->
+      <div class="sidebar-panel">
+        <h3 class="panel-title">Quick Actions</h3>
+        <div class="action-list">
+          <button class="list-action-btn" (click)="navigateToCategories()">
+            <span class="material-symbols-rounded icon">folder</span>
+            <span class="label">Categories</span>
+            <span class="material-symbols-rounded chevron">chevron_right</span>
+          </button>
+          <button class="list-action-btn">
+            <span class="material-symbols-rounded icon">upload</span>
+            <span class="label">Import Products</span>
+            <span class="material-symbols-rounded chevron">chevron_right</span>
+          </button>
+          <button class="list-action-btn">
+            <span class="material-symbols-rounded icon">download</span>
+            <span class="label">Export Products</span>
+            <span class="material-symbols-rounded chevron">chevron_right</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Product Summary -->
+      <div class="sidebar-panel">
+        <h3 class="panel-title">Product Summary</h3>
+        <div class="summary-list">
+          <div class="summary-row">
+            <span class="label">Total Products</span>
+            <span class="value">{{facade.totalCount()}}</span>
+          </div>
+          <div class="summary-row">
+            <span class="label">Available</span>
+            <span class="value success">{{facade.availableCount()}}</span>
+          </div>
+          <div class="summary-row">
+            <span class="label">Unavailable</span>
+            <span class="value danger">{{facade.unavailableCount()}}</span>
+          </div>
+          <div class="summary-row">
+            <span class="label">Categories</span>
+            <span class="value">{{facade.categories().length}}</span>
+          </div>
+          <div class="summary-row">
+            <span class="label">Favourites</span>
+            <span class="value">{{facade.favouriteCount()}}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tips -->
+      <div class="sidebar-panel tips-panel">
+        <h3 class="panel-title"><span class="material-symbols-rounded icon">lightbulb</span> Tips</h3>
+        <ul class="tips-list">
+          <li>Use search or filters to quickly find products.</li>
+          <li>Mark favourites to show in billing faster.</li>
+          <li>Keep your product catalog updated for accurate billing.</li>
+        </ul>
+      </div>
+
+      <!-- Upcoming (V2 & V3) -->
+      <div class="sidebar-panel upcoming-panel">
+        <div class="upcoming-header">
+          <h3 class="panel-title">Upcoming (V2 & V3)</h3>
+          <span class="badge">Planned</span>
+        </div>
+        <ul class="upcoming-list">
+          <li>Inventory Management (V2)</li>
+          <li>Purchase Price & Stock (V2)</li>
+          <li>Supplier & Variants (V2)</li>
+          <li>Advanced Pricing (V3)</li>
+          <li>Stock Alerts (V3)</li>
+        </ul>
+        <button class="link-btn">View Roadmap <span class="material-symbols-rounded">arrow_forward</span></button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<app-add-product-overlay *ngIf="isAddProductOpen" (close)="closeAddProduct()"></app-add-product-overlay>

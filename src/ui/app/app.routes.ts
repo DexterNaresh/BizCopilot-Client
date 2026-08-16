@@ -27,6 +27,7 @@ export const routes: Routes = [
       { path: 'home', component: HomeComponent },
       { path: 'billing', component: BillingComponent },
       { path: 'products', component: ProductsComponent },
+      { path: 'categories', loadChildren: () => import('../features/categories/categories.routes').then(m => m.routes) },
       { path: 'customers', component: CustomersComponent },
       { path: 'reports', component: ReportsComponent },
       { path: 'offers', component: OffersComponent },

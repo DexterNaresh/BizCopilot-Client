@@ -1,0 +1,105 @@
+.category-card {
+  background: var(--color-surface, #FFFFFF);
+  border: 1px solid var(--color-border, #E5E7EB);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: box-shadow 0.2s;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &:active {
+    background: var(--color-surface-hover, #F9FAFB);
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    
+    .category-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .icon-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        background: rgba(91, 59, 235, 0.1);
+        color: var(--color-primary, #5B3BEB);
+
+        &.inactive {
+          background: rgba(107, 114, 128, 0.1);
+          color: var(--color-text-secondary, #6B7280);
+        }
+
+        .material-symbols-rounded {
+          font-size: 24px;
+        }
+      }
+
+      .name-text {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--color-text-primary, #111827);
+      }
+    }
+
+    .card-actions {
+      /* Uses category-actions component styling */
+    }
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding-left: 52px; /* Align with text (40px icon + 12px gap) */
+
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      .info-label {
+        font-size: 14px;
+        color: var(--color-text-secondary, #6B7280);
+      }
+
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 12px;
+        font-weight: 600;
+
+        &.active {
+          background: #DCFCE7;
+          color: #16A34A;
+        }
+
+        &.inactive {
+          background: #FEE2E2;
+          color: #DC2626;
+        }
+      }
+    }
+
+    .date-row {
+      margin-top: 4px;
+      .info-label {
+        font-size: 12px;
+      }
+    }
+  }
+}

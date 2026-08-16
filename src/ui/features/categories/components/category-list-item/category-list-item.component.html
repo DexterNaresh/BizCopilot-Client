@@ -1,0 +1,26 @@
+<div class="category-card">
+  <div class="card-header">
+    <div class="category-info">
+      <div class="icon-container" [class.inactive]="category.status === 'inactive'">
+        <span class="material-symbols-rounded">{{ category.icon || 'category' }}</span>
+      </div>
+      <span class="name-text">{{ category.name }}</span>
+    </div>
+    <div class="card-actions">
+      <app-category-actions [category]="category" (edit)="onEdit($event)" (delete)="onDelete($event)"></app-category-actions>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="info-row">
+      <span class="info-label">{{ category.productCount }} Products</span>
+      <span class="status-badge" [class.active]="category.status === 'active'" [class.inactive]="category.status === 'inactive'">
+        {{ category.status === 'active' ? 'Active' : 'Inactive' }}
+      </span>
+    </div>
+    
+    <div class="info-row date-row">
+      <span class="info-label">Created {{ category.createdAt | date:'dd MMM yyyy' }}</span>
+    </div>
+  </div>
+</div>
