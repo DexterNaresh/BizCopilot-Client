@@ -75,14 +75,15 @@
     <div class="desktop-view" *ngIf="!facade.isLoading() && !facade.error()">
       <app-category-table [categories]="facade.categories()" [sortField]="facade.sortField()"
         [sortDirection]="facade.sortDirection()" (edit)="onEditCategory($event)" (delete)="onDeleteCategory($event)"
-        (sortChange)="onSortChange($event)">
+        (sortChange)="onSortChange($event)"
+        (toggleStatus)="onToggleCategoryStatus($event.category, $event.status)">
       </app-category-table>
     </div>
 
     <!-- Mobile Card View -->
     <div class="mobile-view" *ngIf="!facade.isLoading() && !facade.error()">
       <app-category-list-item *ngFor="let cat of facade.categories()" [category]="cat" (edit)="onEditCategory($event)"
-        (delete)="onDeleteCategory($event)">
+        (delete)="onDeleteCategory($event)" (toggleStatus)="onToggleCategoryStatus($event.category, $event.status)">
       </app-category-list-item>
 
       <div class="empty-state" *ngIf="facade.categories().length === 0">

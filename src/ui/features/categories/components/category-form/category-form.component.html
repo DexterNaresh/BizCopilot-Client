@@ -1,36 +1,67 @@
 <div class="form-card">
-  <div class="form-header">
-    <h2>{{ title }}</h2>
-  </div>
-
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
     
-    <div class="form-group">
-      <label for="categoryName">Category Name <span class="required">*</span></label>
-      <input type="text" 
-             id="categoryName" 
-             formControlName="name" 
-             placeholder="e.g. Beverages"
-             [class.invalid]="form.get('name')?.invalid && form.get('name')?.touched" />
-      <div class="error-message" *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
-        Category name is required
+    <div class="form-body">
+      <div class="form-group">
+        <label for="categoryName">Category Name <span class="required">*</span></label>
+        <input type="text" 
+               id="categoryName" 
+               formControlName="name" 
+               placeholder="e.g. Beverages, Snacks, Desserts"
+               [class.invalid]="form.get('name')?.invalid && form.get('name')?.touched" />
+        <div class="error-message" *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
+          Category name is required
+        </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label for="categoryStatus">Status</label>
-      <div class="select-wrapper">
-        <select id="categoryStatus" formControlName="status">
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
-        </select>
-        <span class="material-symbols-rounded">expand_more</span>
+      <div class="form-group">
+        <label for="categoryDescription">Description <span class="optional">(Optional)</span></label>
+        <textarea 
+               id="categoryDescription" 
+               formControlName="description" 
+               placeholder="Enter a short description for this category"
+               rows="3"
+               [class.invalid]="form.get('description')?.invalid && form.get('description')?.touched"></textarea>
+        <div class="helper-text">
+          Helps you and your team understand this category better.
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Icon <span class="optional">(Optional)</span></label>
+        <div class="icon-selection-area">
+          <button type="button" class="icon-selector-btn" (click)="toggleIconPicker()" aria-label="Select Icon">
+            <span class="material-symbols-rounded selected-icon-display">{{ form.get('icon')?.value }}</span>
+          </button>
+          
+          <app-category-icon-picker 
+            *ngIf="isIconPickerOpen"
+            [selectedIcon]="form.get('icon')?.value"
+            (iconSelect)="onIconSelect($event)"
+            (close)="toggleIconPicker()">
+          </app-category-icon-picker>
+        </div>
+      </div>
+
+      <div class="form-group status-group">
+        <label>Status</label>
+        <div class="status-control-wrapper">
+          <app-category-status-toggle
+            [status]="form.get('status')?.value || 'inactive'"
+            (statusChange)="onStatusChange($event)">
+          </app-category-status-toggle>
+          <div class="status-helper-text">
+            Active categories will be available while adding products.
+          </div>
+        </div>
       </div>
     </div>
 
     <div class="form-actions">
-      <button type="button" class="btn-cancel" (click)="onCancel()">Cancel</button>
-      <button type="submit" class="btn-primary" [disabled]="form.invalid">{{ submitLabel }}</button>
+      <button type="button" class="btn-cancel" (click)="onCancel()" [disabled]="isSaving">Cancel</button>
+      <button type="submit" class="btn-primary" [disabled]="form.invalid || isSaving">
+        {{ isSaving ? savingLabel : submitLabel }}
+      </button>
     </div>
     
   </form>

@@ -1,0 +1,46 @@
+<div class="bizcopilot-dialog-surface" [ngClass]="config.variant" role="dialog" [attr.aria-labelledby]="'dialog-title'">
+  
+  <div class="dialog-header">
+    <div class="header-icon-title">
+      <div class="semantic-icon-wrapper">
+        <span class="material-symbols-rounded semantic-icon" aria-hidden="true">{{ getIconName() }}</span>
+      </div>
+      <h2 id="dialog-title" class="dialog-title">{{ config.title }}</h2>
+    </div>
+    
+    <button class="btn-close" (click)="onClose()" [disabled]="isLoading()" aria-label="Close dialog">
+      <span class="material-symbols-rounded">close</span>
+    </button>
+  </div>
+
+  <div class="dialog-content">
+    <p class="dialog-message">{{ config.message }}</p>
+    
+    <!-- Optional Warning Block -->
+    <div class="warning-block" *ngIf="config.warningMessage">
+      <span class="material-symbols-rounded warning-icon">warning</span>
+      <p class="warning-text">{{ config.warningMessage }}</p>
+    </div>
+
+    <!-- Error State -->
+    <div class="error-block" *ngIf="error()">
+      <span class="material-symbols-rounded error-icon">error</span>
+      <p class="error-text">{{ error() }}</p>
+    </div>
+  </div>
+
+  <div class="dialog-actions">
+    <button class="btn-cancel" (click)="onCancel()" [disabled]="isLoading()">
+      {{ getCancelLabel() }}
+    </button>
+    <button class="btn-confirm" (click)="onConfirm()" [disabled]="isLoading()">
+      <ng-container *ngIf="!isLoading()">
+        {{ getConfirmLabel() }}
+      </ng-container>
+      <ng-container *ngIf="isLoading()">
+        <span class="loading-spinner"></span>
+        Processing...
+      </ng-container>
+    </button>
+  </div>
+</div>

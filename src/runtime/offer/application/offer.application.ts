@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+﻿import { Injectable } from '@angular/core';
 import { OfferService } from '@runtime/offer/offer.service';
 import { IPermissionService } from '@shared/abstractions/permission.service.interface';
 import { ISessionService } from '@shared/abstractions/session.service.interface';
-import { ApplicationResponse } from '@runtime/billing/application/dto/sales.dto';
+import { ApplicationResponse } from '@application/contracts/sales/sales.dto';
 import { OfferEntity } from '../models/offer.entity';
 import { OfferCreateRequest, OfferUpdateRequest, OfferStatusRequest, OfferInfo } from '@runtime/offer/application/dto/offer.dto';
 

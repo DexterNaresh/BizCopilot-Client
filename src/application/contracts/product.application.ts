@@ -11,7 +11,7 @@ export interface ProductDto {
   availability: 'available' | 'unavailable';
   favourite: boolean;
   barcode?: string;
-  unit: string;
+  type: 'QTY' | 'KG' | 'LTR' | 'METER' | 'PACK';
   description?: string;
   createdAt: string;
   updatedAt: string;
@@ -26,7 +26,7 @@ export interface SaveProductCommand {
   availability: 'available' | 'unavailable';
   favourite: boolean;
   barcode?: string;
-  unit: string;
+  type: 'QTY' | 'KG' | 'LTR' | 'METER' | 'PACK';
   description?: string;
 }
 

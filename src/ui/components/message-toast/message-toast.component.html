@@ -1,0 +1,24 @@
+<div class="toast-wrapper" [ngClass]="config.type" @toastAnimation>
+  <div class="toast-content">
+    <span class="material-symbols-rounded toast-icon" aria-hidden="true">{{ getIconName() }}</span>
+    
+    <div class="toast-body">
+      <div class="toast-title">{{ config.title }}</div>
+      <div class="toast-message" *ngIf="config.message">{{ config.message }}</div>
+    </div>
+    
+    <div class="toast-actions" *ngIf="config.action || config.dismissible !== false">
+      <button class="btn-action" *ngIf="config.action" (click)="onActionClick()">
+        {{ config.action }}
+      </button>
+      
+      <button class="btn-close" *ngIf="config.dismissible !== false" (click)="onClose()" aria-label="Dismiss notification">
+        <span class="material-symbols-rounded">close</span>
+      </button>
+    </div>
+  </div>
+  
+  <div class="progress-bar-container">
+    <div class="progress-bar" [style.width.%]="progress"></div>
+  </div>
+</div>

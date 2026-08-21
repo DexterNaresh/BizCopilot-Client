@@ -2,18 +2,17 @@
 
 .grid-container {
   display: grid;
-  grid-template-columns: repeat(6, 1fr); // Exactly 6 for Desktop
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 16px;
   width: 100%;
 
   @media (max-width: 1023px) {
-    grid-template-columns: repeat(4, 1fr); // Exactly 4 for Tablet
     gap: 12px;
   }
 
   @media (max-width: 599px) {
-    grid-template-columns: repeat(2, 1fr); // Exactly 2 for Mobile
     gap: 8px;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
   }
 }
 

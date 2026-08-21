@@ -2,7 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { ProductService } from '@runtime/product/product.service';
 import { IPermissionService } from '@shared/abstractions/permission.service.interface';
 import { ISessionService } from '@shared/abstractions/session.service.interface';
-import { ApplicationResponse } from '@runtime/billing/application/dto/sales.dto';
+import { ApplicationResponse } from '@application/contracts/sales/sales.dto';
 import { ProductEntity } from '../models/product.entity';
 import { ProductCreateRequest, ProductUpdateRequest, ProductArchiveRequest, ProductAvailabilityRequest, ProductInfo } from '@runtime/product/application/dto/product.dto';
 
@@ -51,6 +51,8 @@ export class ProductApplication {
       product_id: entity.product_id,
       product_code: entity.product_code,
       name: entity.name,
+      type: entity.type,
+      description: entity.description,
       price: entity.price,
       category: entity.category,
       barcode: entity.barcode,

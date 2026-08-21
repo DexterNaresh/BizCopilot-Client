@@ -8,5 +8,6 @@ export interface ProductViewModel {
   availability: 'available' | 'unavailable';
   favourite: boolean;
   barcode?: string;
-  unit: string;
+  type: 'QTY' | 'KG' | 'LTR' | 'METER' | 'PACK';
+  description?: string;
 }

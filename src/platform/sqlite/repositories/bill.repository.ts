@@ -41,4 +41,8 @@ export class SqliteBillRepository extends BaseRepository<BillEntity> implements 
     
     return { bill, items };
   }
+
+  override update(id: string, bill: BillEntity): void {
+    super.update(id, bill);
+  }
 }

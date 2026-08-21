@@ -1,32 +1,42 @@
 <div class="form-page-workspace">
-  
-  <div class="back-nav">
-    <button class="btn-back" (click)="onCancel()">
-      <span class="material-symbols-rounded">arrow_back</span>
-      Back to Categories
-    </button>
-  </div>
-
-  <div class="form-container">
-    <!-- Show Loading if edit mode and category not found yet -->
-    <div class="loading-state" *ngIf="mode === 'edit' && !category() && facade.isLoading()">
-      <p>Loading category details...</p>
+  <div class="form-page-content">
+    
+    <div class="back-nav">
+      <button class="btn-back" (click)="onCancel()" aria-label="Back to Categories">
+        <span class="material-symbols-rounded">arrow_back</span>
+        Categories
+      </button>
     </div>
 
-    <div class="error-state" *ngIf="mode === 'edit' && !category() && !facade.isLoading()">
-      <p>Category not found.</p>
-      <button class="btn-primary" (click)="onCancel()">Return to Categories</button>
+    <div class="form-header-area">
+      <h1 class="page-title">{{ mode === 'create' ? 'Add New Category' : 'Edit Category' }}</h1>
+      <p class="page-subtitle">
+        {{ mode === 'create' ? 'Create a category to organize your products.' : 'Update the details of your existing category.' }}
+      </p>
     </div>
 
-    <!-- Render Form if create mode, or if edit mode and category is loaded -->
-    <ng-container *ngIf="mode === 'create' || (mode === 'edit' && category())">
-      <app-category-form 
-        [mode]="mode" 
-        [category]="category()" 
-        (save)="onSave($event)" 
-        (cancel)="onCancel()">
-      </app-category-form>
-    </ng-container>
-  </div>
+    <div class="form-container">
+      <!-- Show Loading if edit mode and category not found yet -->
+      <div class="loading-state" *ngIf="mode === 'edit' && !category() && facade.isLoading()">
+        <p>Loading category details...</p>
+      </div>
 
+      <div class="error-state" *ngIf="mode === 'edit' && !category() && !facade.isLoading()">
+        <p>Category not found.</p>
+        <button class="btn-primary" (click)="onCancel()">Return to Categories</button>
+      </div>
+
+      <!-- Render Form if create mode, or if edit mode and category is loaded -->
+      <ng-container *ngIf="mode === 'create' || (mode === 'edit' && category())">
+        <app-category-form 
+          [mode]="mode" 
+          [category]="category()" 
+          [isSaving]="facade.isSaving()"
+          (save)="onSave($event)" 
+          (cancel)="onCancel()">
+        </app-category-form>
+      </ng-container>
+    </div>
+
+  </div>
 </div>

@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+﻿import { Injectable } from '@angular/core';
 import { BackupService } from '@runtime/backup/backup.service';
 import { IPermissionService } from '@shared/abstractions/permission.service.interface';
 import { ISessionService } from '@shared/abstractions/session.service.interface';
-import { ApplicationResponse } from '@runtime/billing/application/dto/sales.dto';
+import { ApplicationResponse } from '@application/contracts/sales/sales.dto';
 import { BackupHealth, BackupMode, BackupRestoreResult } from '@runtime/backup/backup.model';
 
 @Injectable({

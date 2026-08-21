@@ -62,6 +62,22 @@ export class CategoryListComponent implements OnInit {
     }
   }
 
+  async onToggleCategoryStatus(category: CategoryViewModel, newStatus: 'active' | 'inactive') {
+    if (newStatus === 'inactive') {
+      if (!confirm(`Deactivate Category?\n\nAre you sure you want to deactivate this category?`)) {
+        return;
+      }
+    }
+
+    await this.facade.saveCategory({
+      id: category.id,
+      name: category.name,
+      description: category.description,
+      icon: category.icon,
+      status: newStatus
+    });
+  }
+
   onSearchChange(event: any) {
     this.facade.setSearchQuery(event.target.value);
   }

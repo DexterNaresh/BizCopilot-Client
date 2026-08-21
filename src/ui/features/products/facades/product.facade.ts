@@ -27,8 +27,13 @@ export class ProductFacade {
   private _favouriteOnly = signal<boolean>(false);
   private _viewMode = signal<ProductViewMode>('grid');
 
+  // Pagination State
+  private _currentPage = signal<number>(1);
+  private _pageSize = signal<number>(12);
+  private _isUserOverriddenPageSize = signal<boolean>(false);
+
   // Computed
-  products = computed(() => {
+  filteredProducts = computed(() => {
     let result = this._products();
     
     // Apply availability filter
@@ -60,6 +65,27 @@ export class ProductFacade {
     return result;
   });
 
+  totalPages = computed(() => {
+    const count = this.filteredProducts().length;
+    const size = this._pageSize();
+    return count === 0 ? 0 : Math.ceil(count / size);
+  });
+
+  currentPage = computed(() => {
+    const current = this._currentPage();
+    const total = this.totalPages();
+    if (total === 0) return 1;
+    return Math.min(Math.max(1, current), total);
+  });
+
+  products = computed(() => {
+    const all = this.filteredProducts();
+    const page = this.currentPage();
+    const size = this._pageSize();
+    const start = (page - 1) * size;
+    return all.slice(start, start + size);
+  });
+
   categories = computed(() => this._categories());
   isLoading = computed(() => this._isLoading());
   error = computed(() => this._error());
@@ -69,9 +95,10 @@ export class ProductFacade {
   categoryFilter = computed(() => this._categoryFilter());
   favouriteOnly = computed(() => this._favouriteOnly());
   viewMode = computed(() => this._viewMode());
+  pageSize = computed(() => this._pageSize());
 
   // Aggregate counts
-  totalCount = computed(() => this._products().length);
+  totalCount = computed(() => this.filteredProducts().length);
   availableCount = computed(() => this._products().filter(p => p.availability === 'available').length);
   unavailableCount = computed(() => this._products().filter(p => p.availability === 'unavailable').length);
   favouriteCount = computed(() => this._products().filter(p => p.favourite).length);
@@ -97,7 +124,8 @@ export class ProductFacade {
           availability: p.availability,
           favourite: p.favourite,
           barcode: p.barcode,
-          unit: p.unit
+          type: p.type,
+          description: p.description
         })));
       } else {
         this._error.set(result.error.message);
@@ -124,22 +152,58 @@ export class ProductFacade {
   // Filters & Controls
   setSearchQuery(query: string) {
     this._searchQuery.set(query);
+    this._currentPage.set(1);
   }
 
   setAvailabilityFilter(filter: ProductFilter) {
     this._availabilityFilter.set(filter);
+    this._currentPage.set(1);
   }
 
   setCategoryFilter(categoryId: string) {
     this._categoryFilter.set(categoryId);
+    this._currentPage.set(1);
   }
 
   toggleFavouriteFilter() {
     this._favouriteOnly.update(v => !v);
+    this._currentPage.set(1);
   }
 
   setViewMode(mode: ProductViewMode) {
     this._viewMode.set(mode);
+    // Do not reset page on view mode switch, but responsive defaults might change
+  }
+
+  setViewportResponsiveDefault(viewport: 'desktop' | 'tablet' | 'mobile') {
+    if (this._isUserOverriddenPageSize()) return;
+
+    let defaultSize = 12;
+    const mode = this._viewMode();
+
+    if (mode === 'grid') {
+       if (viewport === 'desktop') defaultSize = 12;
+       if (viewport === 'tablet') defaultSize = 8;
+       if (viewport === 'mobile') defaultSize = 4;
+    } else {
+       if (viewport === 'desktop') defaultSize = 12;
+       if (viewport === 'tablet') defaultSize = 10;
+       if (viewport === 'mobile') defaultSize = 8;
+    }
+    
+    this._pageSize.set(defaultSize);
+  }
+
+  setPageSize(size: number) {
+    this._pageSize.set(size);
+    this._isUserOverriddenPageSize.set(true);
+    this._currentPage.set(1);
+  }
+
+  setPage(page: number) {
+    if (page >= 1 && page <= this.totalPages()) {
+      this._currentPage.set(page);
+    }
   }
 
   // Actions

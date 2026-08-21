@@ -41,9 +41,10 @@
         </td>
         <td>{{ cat.productCount }}</td>
         <td>
-          <span class="status-badge" [class.active]="cat.status === 'active'" [class.inactive]="cat.status === 'inactive'">
-            {{ cat.status === 'active' ? 'Active' : 'Inactive' }}
-          </span>
+          <app-category-status-toggle 
+            [status]="cat.status" 
+            (statusChange)="onToggleStatus(cat, $event)">
+          </app-category-status-toggle>
         </td>
         <td class="date-col">
           <div class="date-text">{{ cat.createdAt | date:'dd MMM yyyy' }}</div>

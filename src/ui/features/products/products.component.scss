@@ -4,9 +4,8 @@
 .page-container {
   display: flex;
   flex-direction: column;
-  height: 100vh; // Strict viewport height
+  min-height: 100vh;
   background: var(--color-bg-canvas);
-  overflow: hidden;
 }
 
 .page-header {
@@ -81,14 +80,14 @@
 .main-layout {
   flex: 1;
   display: flex;
-  overflow: hidden; // Parent handles overflow explicitly
   padding: 16px 24px;
   gap: 24px;
   background: var(--color-bg-canvas);
 
   @media (max-width: 1023px) {
     padding: 16px;
-    gap: 0;
+    gap: 16px;
+    flex-direction: column; // Reflow sidebar
   }
 }
 
@@ -96,8 +95,8 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  overflow: hidden; // Prevents outer scrolling
   gap: 16px;
+  min-width: 0; // Prevent flex blowout
 }
 
 /* Toolbar Row 1: Search */
@@ -200,18 +199,109 @@
   }
 }
 
-.category-dropdown-wrapper {
-  .category-select {
+/* Filter Popover Styles */
+.filter-dropdown-wrapper {
+  position: relative;
+
+  .btn-filter {
+    display: flex;
+    align-items: center;
+    gap: 8px;
     height: 48px;
-    padding: 0 32px 0 16px;
+    padding: 0 16px;
     border-radius: 12px;
     border: 1px solid var(--color-border);
     background: var(--color-surface);
+    color: var(--color-text-primary);
     font-size: 14px;
     font-weight: 500;
-    color: var(--color-text-primary);
-    outline: none;
     cursor: pointer;
+    
+    &.active {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      background: var(--color-primary-light, rgba(91, 59, 235, 0.05));
+    }
+  }
+}
+
+.filter-popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 280px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  z-index: 100;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  @media (max-width: 767px) {
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    border-radius: 20px 20px 0 0;
+    border-bottom: none;
+    z-index: 1000;
+    padding: 24px;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.15);
+  }
+
+  .popover-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h3 { margin: 0; font-size: 18px; }
+  }
+
+  .popover-body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .filter-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    label { font-size: 13px; font-weight: 600; color: var(--color-text-secondary); }
+    
+    .form-select {
+      height: 40px;
+      padding: 0 12px;
+      border-radius: 8px;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      font-size: 14px;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-primary);
+      cursor: pointer;
+    }
+  }
+}
+
+.filter-backdrop {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: 90;
+  @media (max-width: 767px) {
+    background: rgba(0,0,0,0.4);
+    z-index: 999;
   }
 }
 
@@ -254,14 +344,7 @@
 /* View Container (Scrollable Area) */
 .view-container {
   flex: 1;
-  overflow-y: auto;
-  padding-right: 8px; // Space for custom scrollbar
-  min-height: 0; // Essential for flex-child scrolling
-
-  &::-webkit-scrollbar { width: 6px; }
-  &::-webkit-scrollbar-track { background: transparent; }
-  &::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 4px; }
-  &::-webkit-scrollbar-thumb:hover { background: #9CA3AF; }
+  width: 100%;
 }
 
 .error-banner {
@@ -346,6 +429,11 @@
         background: var(--color-bg-canvas);
       }
 
+      &[disabled] {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
       &.active {
         background: var(--color-primary);
         color: white;
@@ -372,16 +460,17 @@
   }
 }
 
-/* Right Sidebar (Desktop) */
+/* Right Sidebar */
 .right-sidebar {
   width: 260px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  overflow-y: auto; // Sidebar can scroll independently if content is tall
-  padding-right: 4px;
-  min-height: 0;
+
+  @media (max-width: 1023px) {
+    width: 100%;
+  }
 
   &::-webkit-scrollbar { width: 4px; }
   &::-webkit-scrollbar-track { background: transparent; }

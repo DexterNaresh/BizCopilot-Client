@@ -1,0 +1,136 @@
+@import '../../../ui/theme/index';
+
+.toast-wrapper {
+  position: relative;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-key); // Wait, spec says "Toast: rounded card". --radius-card is 24px, --radius-key is 12px. Let's use 12px, 24px is quite large for a toast. I'll use 12px for now. Actually let's use 12px.
+  border-radius: var(--radius-key);
+  box-shadow: var(--shadow-card);
+  overflow: hidden; // for progress bar
+  pointer-events: auto;
+  
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  
+  // Semantic Colors Setup
+  &.success {
+    --toast-accent: var(--color-success);
+    --toast-bg-subtle: rgba(22, 163, 74, 0.05);
+  }
+  
+  &.info {
+    --toast-accent: #3B82F6; // Blue semantic (not in variables, so explicitly defining)
+    --toast-bg-subtle: rgba(59, 130, 246, 0.05);
+  }
+  
+  &.warning {
+    --toast-accent: #F59E0B; // Orange semantic
+    --toast-bg-subtle: rgba(245, 158, 11, 0.05);
+  }
+  
+  &.error {
+    --toast-accent: var(--color-error);
+    --toast-bg-subtle: rgba(220, 38, 38, 0.05);
+  }
+  
+  &.undo {
+    --toast-accent: var(--color-primary); // BizCopilot Purple
+    --toast-bg-subtle: var(--color-primary-light);
+  }
+
+  background-color: var(--toast-bg-subtle, var(--color-surface));
+}
+
+.toast-content {
+  display: flex;
+  align-items: flex-start;
+  padding: var(--spacing-md);
+  gap: var(--spacing-md);
+}
+
+.toast-icon {
+  font-size: 24px;
+  color: var(--toast-accent);
+  flex-shrink: 0;
+  margin-top: 2px; // align with first line of text
+}
+
+.toast-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0; // prevent flex blowout on long text
+}
+
+.toast-title {
+  font-weight: 600;
+  color: var(--color-text-primary);
+  font-size: 14px;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.toast-message {
+  color: var(--color-text-secondary);
+  font-size: 13px;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.toast-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  flex-shrink: 0;
+  margin-left: var(--spacing-sm);
+}
+
+.btn-action {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-primary);
+  background: transparent;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--radius-key);
+  transition: background-color 0.2s;
+  
+  &:hover {
+    background-color: var(--color-primary-light);
+  }
+}
+
+.btn-close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: var(--color-text-muted);
+  transition: all 0.2s;
+  
+  .material-symbols-rounded {
+    font-size: 20px;
+  }
+  
+  &:hover {
+    background-color: rgba(0,0,0,0.05);
+    color: var(--color-text-primary);
+  }
+}
+
+.progress-bar-container {
+  height: 3px;
+  width: 100%;
+  background-color: transparent;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: var(--toast-accent);
+  transition: width 0.1s linear; // smooth but tight transition for RAF updates
+  opacity: 0.6;
+}

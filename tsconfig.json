@@ -7,7 +7,8 @@
       "@ui/*": ["src/ui/*"],
       "@runtime/*": ["src/runtime/*"],
       "@platform/*": ["src/platform/*"],
-      "@shared/*": ["src/shared/*"]
+      "@shared/*": ["src/shared/*"],
+      "@application/*": ["src/application/*"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

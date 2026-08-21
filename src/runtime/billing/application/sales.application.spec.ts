@@ -5,7 +5,7 @@ import { EventBusService } from '@platform/eventbus/event-bus.service';
 import { SessionService } from '@platform/authentication/session.service';
 import { PermissionManager } from '@platform/authentication/permission.service';
 import { TestBed } from '@angular/core/testing';
-import { SalesApplication } from './sales.application';
+import { SalesApplication } from '@application/contracts/sales/sales.application';
 import { BillingService } from '@runtime/billing/billing.service';
 import { IPermissionService } from '@shared/abstractions/permission.service.interface';
 import { ISessionService } from '@shared/abstractions/session.service.interface';

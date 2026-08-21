@@ -23,6 +23,9 @@
       font-weight: 600;
       color: var(--color-text-secondary);
       background: var(--color-bg-canvas);
+      position: sticky;
+      top: 0;
+      z-index: 10;
     }
 
     td {
@@ -75,21 +78,21 @@
       }
     }
 
-    .fav-col {
-      width: 60px;
-      text-align: center;
-
-      span {
-        font-size: 18px;
-        vertical-align: middle;
-      }
+    .idx-col {
+      width: 48px;
     }
 
     .actions-col {
-      width: 80px;
+      width: 140px;
       text-align: right;
     }
   }
+}
+
+.inline-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 4px;
 }
 
 .icon-btn {
@@ -109,66 +112,14 @@
   &:hover:not(.fav-btn) {
     color: var(--color-primary);
   }
-}
 
-.text-muted { color: var(--color-text-secondary); }
-
-// Menu Logic
-.menu-container {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-  padding: 8px 0;
-  min-width: 200px;
-  z-index: 100;
-  display: flex;
-  flex-direction: column;
-
-  .menu-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 10px 16px;
-    background: none;
-    border: none;
-    width: 100%;
-    text-align: left;
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--color-text-primary);
-    cursor: pointer;
-
-    span {
-      color: var(--color-text-secondary);
-      font-size: 20px;
-    }
-
-    &:hover { background: var(--color-bg-canvas); }
-
-    &.text-danger {
-      color: var(--color-error);
-      span { color: var(--color-error); }
-    }
+  &.text-danger {
+    color: var(--color-text-secondary);
+    &:hover { color: var(--color-error); }
   }
 }
 
-.menu-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 99;
-}
+.text-muted { color: var(--color-text-secondary); }
 
 .empty-state {
   padding: 48px 0 !important;

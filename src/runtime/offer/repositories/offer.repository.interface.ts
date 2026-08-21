@@ -4,6 +4,7 @@ import { OfferEntity } from '../models/offer.entity';
 export abstract class IOfferRepository {
   abstract findById(id: string): OfferEntity | null;
   abstract findActiveByCategory(category: string): OfferEntity[];
+  abstract findAllActive(): OfferEntity[];
   abstract saveNewOffer(offer: OfferEntity): OfferEntity;
   abstract update(id: string, offer: OfferEntity): void;
 }

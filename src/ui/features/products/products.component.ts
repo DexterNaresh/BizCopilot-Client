@@ -1,36 +1,61 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, HostListener, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ProductFacade, ProductViewMode, ProductFilter } from './facades/product.facade';
 import { ProductGridComponent } from './components/product-grid/product-grid.component';
 import { ProductTableComponent } from './components/product-table/product-table.component';
-import { AddProductOverlayComponent } from './components/add-product-overlay/add-product-overlay.component';
+import { AddEditProductModalService } from './components/add-edit-product-modal/add-edit-product-modal.service';
 import { ProductViewModel } from './ui-models/product-view.model';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, ProductGridComponent, ProductTableComponent, AddProductOverlayComponent],
+  imports: [CommonModule, ProductGridComponent, ProductTableComponent],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss']
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, OnDestroy {
   facade = inject(ProductFacade);
   private router = inject(Router);
+  private addEditModalService = inject(AddEditProductModalService);
 
-  isAddProductOpen = false;
+  isFilterOpen = false;
+  math = Math;
+
+
+  private mqlMobile = window.matchMedia('(max-width: 767px)');
+  private mqlTablet = window.matchMedia('(min-width: 768px) and (max-width: 1023px)');
 
   ngOnInit() {
     this.facade.loadInitialData();
+    this.updateViewportDefault();
+    
+    // Add listeners
+    this.mqlMobile.addEventListener('change', this.handleResize);
+    this.mqlTablet.addEventListener('change', this.handleResize);
   }
+
+  ngOnDestroy() {
+    this.mqlMobile.removeEventListener('change', this.handleResize);
+    this.mqlTablet.removeEventListener('change', this.handleResize);
+  }
+
+  private handleResize = () => {
+    this.updateViewportDefault();
+  };
+
+  private updateViewportDefault() {
+    let viewport: 'desktop' | 'tablet' | 'mobile' = 'desktop';
+    if (this.mqlMobile.matches) viewport = 'mobile';
+    else if (this.mqlTablet.matches) viewport = 'tablet';
+    
+    this.facade.setViewportResponsiveDefault(viewport);
+  }
+
 
   // Header Actions
-  openAddProduct() {
-    this.isAddProductOpen = true;
-  }
-
-  closeAddProduct() {
-    this.isAddProductOpen = false;
+  async openAddProduct() {
+    await this.addEditModalService.openAdd();
   }
 
   navigateToCategories() {
@@ -58,6 +83,56 @@ export class ProductsComponent implements OnInit {
 
   onViewModeChange(mode: ProductViewMode) {
     this.facade.setViewMode(mode);
+    this.updateViewportDefault(); // Re-calc default for new mode
+  }
+
+  // Filter Popover
+  toggleFilter() {
+    this.isFilterOpen = !this.isFilterOpen;
+  }
+  
+  closeFilter() {
+    this.isFilterOpen = false;
+  }
+
+  // Pagination Logic
+  onPageSizeChange(event: Event) {
+    const select = event.target as HTMLSelectElement;
+    this.facade.setPageSize(Number(select.value));
+  }
+
+  goToPage(page: number) {
+    this.facade.setPage(page);
+  }
+
+  previousPage() {
+    this.facade.setPage(this.facade.currentPage() - 1);
+  }
+
+  nextPage() {
+    this.facade.setPage(this.facade.currentPage() + 1);
+  }
+
+  getPageNumbers(): number[] {
+    const total = this.facade.totalPages();
+    const current = this.facade.currentPage();
+    
+    if (total <= 5) {
+      return Array.from({ length: total }, (_, i) => i + 1);
+    }
+    
+    // Simple sliding window
+    let start = Math.max(1, current - 2);
+    let end = Math.min(total, current + 2);
+    
+    if (start === 1) end = 5;
+    if (end === total) start = total - 4;
+    
+    const pages = [];
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+    return pages;
   }
 
   // Card / Table Actions
@@ -69,9 +144,8 @@ export class ProductsComponent implements OnInit {
     this.facade.toggleProductAvailability(event.product.id, event.availability);
   }
 
-  onEditProduct(product: ProductViewModel) {
-    // Open edit modal (in future could be the same overlay initialized with product data)
-    console.log('Edit product', product);
+  async onEditProduct(product: ProductViewModel) {
+    await this.addEditModalService.openEdit(product);
   }
 
   async onDeleteProduct(product: ProductViewModel) {

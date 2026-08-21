@@ -46,6 +46,7 @@ Forbidden:
 ## 4. Application Services
 
 SalesApplication
+- Evaluate Offers
 - Complete Sale
 - Cancel Sale
 - Reprint Bill

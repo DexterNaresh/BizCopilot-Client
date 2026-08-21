@@ -14,6 +14,7 @@ export class CategoryFacade {
   // State
   private _categories = signal<CategoryViewModel[]>([]);
   private _isLoading = signal<boolean>(false);
+  private _isSaving = signal<boolean>(false);
   private _error = signal<string | null>(null);
   
   // Filtering
@@ -86,6 +87,7 @@ export class CategoryFacade {
   // Derived properties
   totalCount = computed(() => this.filteredCategories().length);
   isLoading = computed(() => this._isLoading());
+  isSaving = computed(() => this._isSaving());
   error = computed(() => this._error());
   
   searchQuery = computed(() => this._searchQuery());
@@ -147,9 +149,9 @@ export class CategoryFacade {
 
   saveCategory(command: SaveCategoryCommand): Promise<boolean> {
     return new Promise((resolve) => {
-      this._isLoading.set(true);
+      this._isSaving.set(true);
       this.categoryApp.saveCategory(command).subscribe(result => {
-        this._isLoading.set(false);
+        this._isSaving.set(false);
         if (result.success) {
           this.loadCategories(); // reload list
           resolve(true);

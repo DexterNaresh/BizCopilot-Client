@@ -1,0 +1,13 @@
+<div class="status-toggle-wrapper" (click)="toggleStatus($event)">
+  <span class="status-badge" [class.active]="status === 'active'" [class.inactive]="status === 'inactive'">
+    {{ status === 'active' ? 'Active' : 'Inactive' }}
+  </span>
+  <button 
+    type="button" 
+    class="toggle-switch" 
+    [class.is-on]="status === 'active'"
+    [attr.aria-label]="status === 'active' ? 'Deactivate category' : 'Activate category'"
+    [attr.aria-pressed]="status === 'active'">
+    <span class="toggle-thumb"></span>
+  </button>
+</div>

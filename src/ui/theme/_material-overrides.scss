@@ -1,2 +1,22 @@
 // Material Design Overrides
 // Add Angular Material component overrides here if required
+
+.bizcopilot-dialog-backdrop {
+  background: var(--color-overlay);
+  backdrop-filter: blur(2px);
+}
+
+.bizcopilot-dialog-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: var(--spacing-md);
+  box-sizing: border-box;
+
+  @media (max-width: 768px) {
+    padding: 0;
+    align-items: flex-end; // Bottom sheet on mobile
+  }
+}

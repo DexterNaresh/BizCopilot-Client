@@ -21,6 +21,11 @@ export class SqliteOfferRepository extends BaseRepository<OfferEntity> implement
     return this.db.query<OfferEntity>(sql, [category]);
   }
 
+  findAllActive(): OfferEntity[] {
+    const sql = `SELECT * FROM ${this.tableName} WHERE status = 'ACTIVE'`;
+    return this.db.query<OfferEntity>(sql, []);
+  }
+
   saveNewOffer(offer: OfferEntity): OfferEntity {
     this.create(offer);
     return offer;

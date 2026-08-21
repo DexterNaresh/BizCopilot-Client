@@ -14,9 +14,10 @@
   <div class="card-body">
     <div class="info-row">
       <span class="info-label">{{ category.productCount }} Products</span>
-      <span class="status-badge" [class.active]="category.status === 'active'" [class.inactive]="category.status === 'inactive'">
-        {{ category.status === 'active' ? 'Active' : 'Inactive' }}
-      </span>
+      <app-category-status-toggle
+        [status]="category.status"
+        (statusChange)="onToggleStatus(category, $event)">
+      </app-category-status-toggle>
     </div>
     
     <div class="info-row date-row">

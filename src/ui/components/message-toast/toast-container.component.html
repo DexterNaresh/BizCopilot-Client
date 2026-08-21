@@ -1,0 +1,7 @@
+<div class="toast-stack-container" [@listAnimation]="visibleToasts().length">
+  <app-message-toast 
+    *ngFor="let toast of visibleToasts()" 
+    [config]="toast" 
+    (dismiss)="onDismiss(toast.id!)">
+  </app-message-toast>
+</div>

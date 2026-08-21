@@ -79,6 +79,8 @@ export class DatabaseService implements IDatabaseService {
         product_id TEXT PRIMARY KEY,
         product_code TEXT NOT NULL UNIQUE,
         name TEXT NOT NULL,
+        type TEXT NOT NULL DEFAULT 'QTY',
+        description TEXT,
         price REAL NOT NULL,
         category TEXT,
         barcode TEXT UNIQUE,
@@ -129,9 +131,12 @@ export class DatabaseService implements IDatabaseService {
         bill_item_id TEXT PRIMARY KEY,
         bill_id TEXT NOT NULL,
         product_id TEXT NOT NULL,
+        product_name TEXT NOT NULL DEFAULT 'Unknown Product',
+        product_type TEXT NOT NULL DEFAULT 'QTY',
         quantity REAL NOT NULL,
         price_per_unit REAL NOT NULL,
         discount REAL NOT NULL,
+        tax REAL NOT NULL DEFAULT 0,
         total REAL NOT NULL,
         FOREIGN KEY(bill_id) REFERENCES bills(bill_id),
         FOREIGN KEY(product_id) REFERENCES products(product_id)
@@ -153,5 +158,12 @@ export class DatabaseService implements IDatabaseService {
       INSERT OR IGNORE INTO sequences (sequence_name, next_value) 
       VALUES ('PRODUCT_CODE', 1);
     `);
+
+    // Safe Migrations for existing databases
+    try { this.execute(`ALTER TABLE products ADD COLUMN type TEXT NOT NULL DEFAULT 'QTY'`); } catch(e) {}
+    try { this.execute(`ALTER TABLE products ADD COLUMN description TEXT`); } catch(e) {}
+    try { this.execute(`ALTER TABLE bill_items ADD COLUMN product_name TEXT NOT NULL DEFAULT 'Unknown Product'`); } catch(e) {}
+    try { this.execute(`ALTER TABLE bill_items ADD COLUMN product_type TEXT NOT NULL DEFAULT 'QTY'`); } catch(e) {}
+    try { this.execute(`ALTER TABLE bill_items ADD COLUMN tax REAL NOT NULL DEFAULT 0`); } catch(e) {}
   }
 }

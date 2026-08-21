@@ -1,0 +1,186 @@
+<div class="bizcopilot-modal-surface">
+  <!-- 1. HEADER -->
+  <div class="modal-header">
+    <div class="header-content">
+      <h2 id="dialog-title" class="modal-title">{{ isEditMode ? 'Edit Product' : 'Add Product' }}</h2>
+      <p class="modal-subtitle">{{ isEditMode ? 'Update product information' : 'Add a product to your catalog' }}</p>
+    </div>
+    <button class="icon-btn close-btn" (click)="onCancel()" [disabled]="isSaving()" aria-label="Close dialog">
+      <span class="material-symbols-outlined" aria-hidden="true">close</span>
+    </button>
+  </div>
+
+  <!-- ERROR BANNER -->
+  <div class="error-banner" *ngIf="error()">
+    <span class="material-symbols-outlined error-icon" aria-hidden="true">error</span>
+    <span>{{ error() }}</span>
+  </div>
+
+  <div class="modal-scroll-body">
+    <!-- 2. PRODUCT IMAGE -->
+    <div class="form-group">
+      <label>Product Image <span class="optional">(Optional)</span></label>
+      <div class="image-upload-area" [class.has-image]="!!formData.image">
+
+        <ng-container *ngIf="!formData.image">
+          <div class="upload-placeholder">
+            <span class="material-symbols-outlined" aria-hidden="true">add_photo_alternate</span>
+            <p class="upload-title">Add Image</p>
+            <p class="upload-subtitle">JPG, PNG or WebP<br>Max size 2MB.</p>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="formData.image">
+          <div class="image-preview-container">
+            <img [src]="formData.image" alt="Product preview" class="product-preview-img">
+            <div class="image-actions">
+              <button class="btn-image-action" aria-label="Replace product image">
+                <span class="material-symbols-outlined">image</span> Replace
+              </button>
+              <button class="btn-image-action danger" aria-label="Remove product image"
+                (click)="formData.image = undefined">
+                <span class="material-symbols-outlined">delete</span> Remove
+              </button>
+            </div>
+          </div>
+        </ng-container>
+
+      </div>
+    </div>
+
+    <!-- 3. PRODUCT NAME -->
+    <div class="form-group">
+      <label>Product Name <span class="required">*</span></label>
+      <input type="text" class="form-control" [(ngModel)]="formData.name" placeholder="Enter product name"
+        maxlength="100" autofocus [class.is-invalid]="error() && !formData.name.trim()">
+      <div class="char-counter">{{ formData.name.length }} / 100</div>
+    </div>
+
+    <!-- 4. TYPE / UNIT -->
+    <div class="form-group">
+      <label>Type / Unit <span class="required">*</span></label>
+
+      <div class="type-cards-grid">
+        <!-- QTY -->
+        <button class="type-card" [class.selected]="formData.type === 'QTY'" (click)="onSelectType('QTY')"
+          type="button">
+          <span class="material-symbols-outlined card-icon" aria-hidden="true">tag</span>
+          <div class="card-text">
+            <span class="card-label">Qty</span>
+            <span class="card-sub">By Quantity</span>
+          </div>
+          <span class="material-symbols-outlined check-indicator" *ngIf="formData.type === 'QTY'">check_circle</span>
+        </button>
+
+        <!-- KG -->
+        <button class="type-card" [class.selected]="formData.type === 'KG'" (click)="onSelectType('KG')" type="button">
+          <span class="material-symbols-outlined card-icon" aria-hidden="true">scale</span>
+          <div class="card-text">
+            <span class="card-label">Kg</span>
+            <span class="card-sub">By Weight</span>
+          </div>
+          <span class="material-symbols-outlined check-indicator" *ngIf="formData.type === 'KG'">check_circle</span>
+        </button>
+
+        <!-- LTR -->
+        <button class="type-card" [class.selected]="formData.type === 'LTR'" (click)="onSelectType('LTR')"
+          type="button">
+          <span class="material-symbols-outlined card-icon" aria-hidden="true">water_drop</span>
+          <div class="card-text">
+            <span class="card-label">Ltr</span>
+            <span class="card-sub">By Volume</span>
+          </div>
+          <span class="material-symbols-outlined check-indicator" *ngIf="formData.type === 'LTR'">check_circle</span>
+        </button>
+
+        <!-- METER -->
+        <button class="type-card" [class.selected]="formData.type === 'METER'" (click)="onSelectType('METER')"
+          type="button">
+          <span class="material-symbols-outlined card-icon" aria-hidden="true">straighten</span>
+          <div class="card-text">
+            <span class="card-label">Meter</span>
+            <span class="card-sub">By Length</span>
+          </div>
+          <span class="material-symbols-outlined check-indicator" *ngIf="formData.type === 'METER'">check_circle</span>
+        </button>
+
+        <!-- PACK -->
+        <button class="type-card" [class.selected]="formData.type === 'PACK'" (click)="onSelectType('PACK')"
+          type="button">
+          <span class="material-symbols-outlined card-icon" aria-hidden="true">inventory_2</span>
+          <div class="card-text">
+            <span class="card-label">Pack</span>
+            <span class="card-sub">By Pack</span>
+          </div>
+          <span class="material-symbols-outlined check-indicator" *ngIf="formData.type === 'PACK'">check_circle</span>
+        </button>
+      </div>
+
+      <p class="helper-text type-helper">
+        <ng-container *ngIf="formData.type === 'QTY'">Use this option for items sold as count (e.g., 1, 2,
+          3...)</ng-container>
+        <ng-container *ngIf="formData.type === 'KG'">Quantity will be entered as weight, e.g. 0.560 kg.</ng-container>
+        <ng-container *ngIf="formData.type === 'LTR'">Quantity will be entered as volume, e.g. 0.750 Ltr.</ng-container>
+        <ng-container *ngIf="formData.type === 'METER'">Quantity will be entered as length, e.g. 7.5
+          Meter.</ng-container>
+        <ng-container *ngIf="formData.type === 'PACK'">Quantity will be entered as whole packs.</ng-container>
+      </p>
+    </div>
+
+    <!-- 5. SELLING PRICE -->
+    <div class="form-group">
+      <label>Selling Price <span class="required">*</span></label>
+      <div class="input-with-affixes">
+        <span class="prefix">₹</span>
+        <input type="number" class="form-control" [(ngModel)]="formData.sellingPrice" min="0"
+          placeholder="Enter selling price">
+        <span class="suffix">per {{ priceSuffix }}</span>
+      </div>
+      <p class="helper-text">Enter the selling price for 1 {{ priceSuffix }}</p>
+    </div>
+
+    <!-- 6. DESCRIPTION -->
+    <div class="form-group">
+      <label>Description <span class="optional">(Optional)</span></label>
+      <textarea class="form-control" [(ngModel)]="formData.description" placeholder="Enter product description"
+        maxlength="250" rows="3"></textarea>
+      <div class="char-counter">{{ (formData.description || '').length }} / 250</div>
+    </div>
+
+    <!-- 7. BARCODE -->
+    <div class="form-group">
+      <label>Barcode <span class="optional">(Optional)</span></label>
+      <div class="input-with-icon">
+        <input type="text" class="form-control" [(ngModel)]="formData.barcode" placeholder="Enter or scan barcode">
+        <span class="suffix-icon">
+          <span class="material-symbols-outlined" aria-label="Scan barcode">barcode_scanner</span>
+        </span>
+      </div>
+    </div>
+
+    <!-- 8. CATEGORY -->
+    <div class="form-group">
+      <label>Category <span class="required">*</span></label>
+      <div class="select-wrapper">
+        <span class="material-symbols-outlined prefix-icon" aria-hidden="true">folder</span>
+        <select class="form-control" [(ngModel)]="formData.categoryId"
+          [class.is-invalid]="error() && !formData.categoryId">
+          <option value="" disabled selected>Select category</option>
+          <option *ngFor="let cat of facade.categories()" [value]="cat.id">{{cat.name}}</option>
+        </select>
+        <span class="material-symbols-outlined chevron-icon" aria-hidden="true">expand_more</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 9. FOOTER -->
+  <div class="modal-footer">
+    <button class="btn-cancel" (click)="onCancel()" [disabled]="isSaving()">Cancel</button>
+    <button class="btn-primary" (click)="onSave()" [disabled]="isSaving()">
+      <span class="loading-spinner" *ngIf="isSaving()"></span>
+      <span *ngIf="!isSaving()">{{ isEditMode ? 'Save Changes' : 'Save' }}</span>
+      <span *ngIf="isSaving()">{{ isEditMode ? 'Saving Changes...' : 'Saving...' }}</span>
+    </button>
+  </div>
+</div>

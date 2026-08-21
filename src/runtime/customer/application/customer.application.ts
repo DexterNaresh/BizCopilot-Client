@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+﻿import { Injectable } from '@angular/core';
 import { CustomerService } from '@runtime/customer/customer.service';
 import { IPermissionService } from '@shared/abstractions/permission.service.interface';
 import { ISessionService } from '@shared/abstractions/session.service.interface';
-import { ApplicationResponse } from '@runtime/billing/application/dto/sales.dto';
+import { ApplicationResponse } from '@application/contracts/sales/sales.dto';
 import { CustomerEntity } from '../models/customer.entity';
 import { CustomerCreateRequest, CustomerUpdateRequest, CustomerArchiveRequest, CustomerInfo } from '@runtime/customer/application/dto/customer.dto';
 

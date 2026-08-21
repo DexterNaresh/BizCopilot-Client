@@ -8,10 +8,10 @@ import { ApplicationResult } from '../../../application/contracts/application-re
 })
 export class TemporaryProductAdapter implements ProductApplication {
   private products: ProductDto[] = [
-    { id: 'prod-1', name: 'Cappuccino', categoryId: 'cat-1', categoryName: 'Beverages', sellingPrice: 120, availability: 'available', favourite: true, unit: 'Cup', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: 'prod-2', name: 'Chocolate Cake', categoryId: 'cat-2', categoryName: 'Desserts', sellingPrice: 80, availability: 'available', favourite: false, unit: 'Slice', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: 'prod-3', name: 'Veg Burger', categoryId: 'cat-3', categoryName: 'Food', sellingPrice: 150, availability: 'available', favourite: true, unit: 'Piece', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
-    { id: 'prod-4', name: 'Orange Juice', categoryId: 'cat-1', categoryName: 'Beverages', sellingPrice: 90, availability: 'unavailable', favourite: false, unit: 'Glass', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+    { id: '1', name: 'Almond Milk', categoryId: '101', categoryName: 'Dairy', sellingPrice: 50, availability: 'available', favourite: true, type: 'LTR', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+  { id: '2', name: 'Whole Wheat Bread', categoryId: '102', categoryName: 'Bakery', sellingPrice: 35, availability: 'available', favourite: false, type: 'PACK', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+  { id: '3', name: 'Organic Apples', categoryId: '103', categoryName: 'Fruits', sellingPrice: 120, availability: 'available', favourite: true, type: 'KG', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
+  { id: '4', name: 'Fresh Orange Juice', categoryId: '104', categoryName: 'Beverages', sellingPrice: 80, availability: 'unavailable', favourite: false, type: 'LTR', createdAt: new Date().toISOString(), updatedAt: new Date().toISOString() },
   ];
 
   getProducts(categoryId?: string): Observable<ApplicationResult<ProductDto[]>> {
@@ -51,7 +51,7 @@ export class TemporaryProductAdapter implements ProductApplication {
         availability: command.availability,
         favourite: command.favourite,
         barcode: command.barcode,
-        unit: command.unit,
+        type: command.type,
         description: command.description,
         updatedAt: new Date().toISOString()
       };
@@ -67,7 +67,7 @@ export class TemporaryProductAdapter implements ProductApplication {
         availability: command.availability,
         favourite: command.favourite,
         barcode: command.barcode,
-        unit: command.unit,
+        type: command.type,
         description: command.description,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString()
