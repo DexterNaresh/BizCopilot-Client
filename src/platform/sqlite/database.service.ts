@@ -24,6 +24,7 @@ export class DatabaseService implements IDatabaseService {
     this.db = new SQL.Database();
     this.isInitialized = true;
     this.createCoreTables();
+    this.runMigrations();
   }
 
   execute(sql: string, params: any[] = []): void {
@@ -60,6 +61,21 @@ export class DatabaseService implements IDatabaseService {
     }
   }
 
+  private runMigrations(): void {
+    // Migration: Add 'type' to products
+    const productInfo = this.query<{name: string}>(`PRAGMA table_info(products)`);
+    if (!productInfo.some(c => c.name === 'type')) {
+      this.execute(`ALTER TABLE products ADD COLUMN type TEXT NOT NULL DEFAULT 'QTY'`);
+    }
+
+    // Migration: Add 'product_name' and 'product_type' to bill_items
+    const billItemInfo = this.query<{name: string}>(`PRAGMA table_info(bill_items)`);
+    if (!billItemInfo.some(c => c.name === 'product_name')) {
+      this.execute(`ALTER TABLE bill_items ADD COLUMN product_name TEXT NOT NULL DEFAULT 'Legacy Product'`);
+      this.execute(`ALTER TABLE bill_items ADD COLUMN product_type TEXT NOT NULL DEFAULT 'QTY'`);
+    }
+  }
+
   private createCoreTables(): void {
     this.execute(`
       CREATE TABLE IF NOT EXISTS users (
@@ -79,6 +95,7 @@ export class DatabaseService implements IDatabaseService {
         product_id TEXT PRIMARY KEY,
         product_code TEXT NOT NULL UNIQUE,
         name TEXT NOT NULL,
+        type TEXT NOT NULL DEFAULT 'QTY',
         price REAL NOT NULL,
         category TEXT,
         barcode TEXT UNIQUE,
@@ -129,6 +146,8 @@ export class DatabaseService implements IDatabaseService {
         bill_item_id TEXT PRIMARY KEY,
         bill_id TEXT NOT NULL,
         product_id TEXT NOT NULL,
+        product_name TEXT NOT NULL,
+        product_type TEXT NOT NULL,
         quantity REAL NOT NULL,
         price_per_unit REAL NOT NULL,
         discount REAL NOT NULL,

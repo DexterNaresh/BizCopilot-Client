@@ -38,7 +38,7 @@ describe('ProductApplication', () => {
     permissionSpy.hasPermission.and.returnValue(false);
 
     const result = app.createProduct({
-      name: 'Coffee', price: 5, category: 'Drinks', barcode: '12345', userId: 'user1', sessionId: 's1'
+      name: 'Coffee', type: 'QTY', price: 5, category: 'Drinks', barcode: '12345', userId: 'user1', sessionId: 's1'
     });
 
     expect(result.success).toBeFalse();
@@ -52,7 +52,7 @@ describe('ProductApplication', () => {
     serviceSpy.createProduct.and.returnValue({ product_id: 'uuid-1', name: 'Coffee' } as any);
 
     const result = app.createProduct({
-      name: 'Coffee', price: 5, category: 'Drinks', barcode: '12345', userId: 'user1', sessionId: 's1'
+      name: 'Coffee', type: 'QTY', price: 5, category: 'Drinks', barcode: '12345', userId: 'user1', sessionId: 's1'
     });
 
     expect(result.success).toBeTrue();
@@ -66,7 +66,7 @@ describe('ProductApplication', () => {
     serviceSpy.createProduct.and.throwError('VALIDATION_FAILED: Product name is required.');
 
     const result = app.createProduct({
-      name: '', price: 5, category: 'Drinks', barcode: '12345', userId: 'user1', sessionId: 's1'
+      name: '', type: 'QTY', price: 5, category: 'Drinks', barcode: '12345', userId: 'user1', sessionId: 's1'
     });
 
     expect(result.success).toBeFalse();

@@ -103,6 +103,7 @@ Bill Item Snapshot
 
 - Product Id
 - Product Name
+- Product Type (QTY, KG, LTR, METER, PACK)
 - Unit Price
 - Quantity
 - Discount
@@ -112,6 +113,7 @@ Bill Item Snapshot
 - Final Line Total
 
 Snapshots preserve historical accuracy.
+The product card in the UI and the bill cart reference the **same sale-line quantity state** to guarantee consistency.
 
 ---
 
@@ -132,10 +134,17 @@ Snapshots preserve historical accuracy.
 
 # 7. Pricing Rules
 
+Quantity Entry Rules:
+- Count-based (QTY, PACK): Integer quantities only, adjusted via `[ - ] / [ + ]`.
+- Measurement-based (KG, LTR, METER): Decimal quantities supported, entered via an editable numeric field (no `[ - ] / [ + ]`).
+
+General Pricing Rules:
 - Quantity must be greater than zero.
 - Negative quantities are not allowed.
+- One product -> one selling price. No wholesale, tier, or customer-specific pricing in V1.
 - Pricing uses product snapshot.
 - Completed bill prices never change.
+- Pricing calculations must be deterministic and use safe decimal/money representations.
 
 ---
 

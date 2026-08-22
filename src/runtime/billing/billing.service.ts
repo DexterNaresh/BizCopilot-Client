@@ -75,6 +75,8 @@ export class BillingService {
           bill_item_id: this.IIdentityService.generateId(),
           bill_id: billId,
           product_id: product.product_id,
+          product_name: product.name,
+          product_type: product.type,
           quantity: item.quantity,
           price_per_unit: product.price,
           discount: 0,

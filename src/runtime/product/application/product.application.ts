@@ -51,6 +51,7 @@ export class ProductApplication {
       product_id: entity.product_id,
       product_code: entity.product_code,
       name: entity.name,
+      type: entity.type,
       price: entity.price,
       category: entity.category,
       barcode: entity.barcode,

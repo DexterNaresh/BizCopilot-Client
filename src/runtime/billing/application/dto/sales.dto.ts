@@ -1,9 +1,13 @@
+import { ProductType } from '@runtime/product/models/product.entity';
+
 export interface ApplicationResponse<T = any> { success: boolean; data?: T; error?: { code: string; message: string; }; }
 export interface CompleteSaleRequest { deviceId: any; userId: string; sessionId?: string; items: any[]; customerId?: string; customer_id?: string; paymentMethod?: string; amountPaid: any; }
 
 export interface BillItemInfo {
   bill_item_id?: string;
   product_id?: string;
+  product_name?: string;
+  product_type?: ProductType;
   quantity?: number;
   price_per_unit?: number;
   discount?: number;

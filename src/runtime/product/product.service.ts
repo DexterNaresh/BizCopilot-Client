@@ -32,6 +32,7 @@ export class ProductService {
         product_id: productId,
         product_code: productCode,
         name: request.name,
+        type: request.type || 'QTY',
         price: request.price,
         category: request.category,
         barcode: request.barcode,
@@ -59,6 +60,7 @@ export class ProductService {
     const updatedProduct: ProductEntity = {
       ...existingProduct,
       name: request.name,
+      type: request.type || existingProduct.type,
       price: request.price,
       category: request.category,
       barcode: request.barcode

@@ -102,19 +102,23 @@ Categories organize products only.
 
 # 6. Product Type
 
-Defines how Billing accepts quantity.
+Defines how Billing accepts quantity and how it is represented in the UI.
 
 Supported V1:
 
-- UNIT
-- WEIGHT
-- VOLUME
+- QTY (Count-based, integer)
+- PACK (Count-based, integer)
+- KG (Measurement-based, decimal)
+- LTR (Measurement-based, decimal)
+- METER (Measurement-based, decimal)
 
 Examples
 
-- Water Bottle → UNIT
-- Sugar → WEIGHT
-- Milk → VOLUME
+- Water Bottle → QTY
+- Sugar → KG
+- Milk → LTR
+- Cable → METER
+- Soap Bundle → PACK
 
 ---
 
@@ -122,11 +126,12 @@ Examples
 
 Examples:
 
-- Piece
-- Kg
-- Gram
-- Litre
-- ml
+- Piece (Maps to QTY)
+- Kg (Maps to KG)
+- Gram (Maps to KG, input as decimal)
+- Litre (Maps to LTR)
+- ml (Maps to LTR, input as decimal)
+- Box (Maps to PACK)
 
 Future units may be added without changing Billing.
 
