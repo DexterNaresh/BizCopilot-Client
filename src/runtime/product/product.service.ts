@@ -4,7 +4,7 @@ import { ValidationException } from '@shared/exceptions/validation.exception';
 import { Injectable, Inject } from '@angular/core';
 import { IProductRepository } from './repositories/product.repository.interface';
 import { ProductEntity } from './models/product.entity';
-import { ProductCreateRequest, ProductUpdateRequest, ProductAvailabilityRequest, ProductArchiveRequest } from '@runtime/product/application/dto/product.dto';
+import { ProductCreateRequest, ProductUpdateRequest, ProductAvailabilityRequest, ProductArchiveRequest, ProductFavouriteRequest } from '@runtime/product/application/dto/product.dto';
 import { ITransactionManager } from '@shared/abstractions/transaction-manager.interface';
 import { ISequenceService, SequenceType } from '@shared/abstractions/sequence.service.interface';
 import { ProductCodeFormatter } from './formatting/product-code.formatter';
@@ -36,6 +36,7 @@ export class ProductService {
         price: request.price,
         category: request.category,
         barcode: request.barcode,
+        favourite: 0,
         available: 1,
         status: 'ACTIVE',
         created_at: new Date().toISOString()
@@ -102,6 +103,30 @@ export class ProductService {
 
     this.productRepository.update(updatedProduct.product_id, updatedProduct);
     return updatedProduct;
+  }
+
+  restoreProduct(request: ProductArchiveRequest): ProductEntity {
+    const existingProduct = this.requireProduct(request.product_id);
+    const updatedProduct: ProductEntity = { ...existingProduct, status: 'ACTIVE' };
+    this.productRepository.update(updatedProduct.product_id, updatedProduct);
+    return updatedProduct;
+  }
+
+  updateFavourite(request: ProductFavouriteRequest): ProductEntity {
+    const existingProduct = this.requireProduct(request.product_id);
+    const updatedProduct: ProductEntity = { ...existingProduct, favourite: request.favourite ? 1 : 0 };
+    this.productRepository.update(updatedProduct.product_id, updatedProduct);
+    return updatedProduct;
+  }
+
+  listProducts(status: 'ACTIVE' | 'ARCHIVED'): ProductEntity[] {
+    return this.productRepository.list(status);
+  }
+
+  private requireProduct(productId: string): ProductEntity {
+    const product = this.productRepository.findById(productId);
+    if (!product) throw new Error(`PRODUCT_NOT_FOUND: Product with id ${productId} does not exist.`);
+    return product;
   }
 
   /**

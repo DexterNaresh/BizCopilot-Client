@@ -6,6 +6,7 @@ export abstract class IProductRepository {
   abstract findByIds(ids: string[]): ProductEntity[];
   abstract findByCode(productCode: string): ProductEntity | null;
   abstract findByBarcode(barcode: string): ProductEntity | null;
+  abstract list(status: 'ACTIVE' | 'ARCHIVED'): ProductEntity[];
   abstract saveNewProduct(product: ProductEntity): ProductEntity;
   abstract update(id: string, product: ProductEntity): void;
 }

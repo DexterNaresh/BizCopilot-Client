@@ -4,7 +4,7 @@ import { IPermissionService } from '@shared/abstractions/permission.service.inte
 import { ISessionService } from '@shared/abstractions/session.service.interface';
 import { ApplicationResponse } from '@runtime/billing/application/dto/sales.dto';
 import { ProductEntity } from '../models/product.entity';
-import { ProductCreateRequest, ProductUpdateRequest, ProductArchiveRequest, ProductAvailabilityRequest, ProductInfo } from '@runtime/product/application/dto/product.dto';
+import { ProductCreateRequest, ProductUpdateRequest, ProductArchiveRequest, ProductAvailabilityRequest, ProductFavouriteRequest, ProductInfo } from '@runtime/product/application/dto/product.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +40,18 @@ export class ProductApplication {
     });
   }
 
+  restoreProduct(request: ProductArchiveRequest): ApplicationResponse<ProductInfo> {
+    return this.executeWithPermission(request.userId, 'PRODUCT_ARCHIVE', () => this.mapToInfo(this.productService.restoreProduct(request)));
+  }
+
+  updateFavourite(request: ProductFavouriteRequest): ApplicationResponse<ProductInfo> {
+    return this.executeWithPermission(request.userId, 'PRODUCT_VIEW', () => this.mapToInfo(this.productService.updateFavourite(request)));
+  }
+
+  listProducts(request: { userId: string; status: 'ACTIVE' | 'ARCHIVED' }): ApplicationResponse<ProductInfo[]> {
+    return this.executeWithPermission(request.userId, 'PRODUCT_VIEW', () => this.productService.listProducts(request.status).map(item => this.mapToInfo(item)));
+  }
+
   getProductsByIds(request: { userId: string, productIds: string[] }): ApplicationResponse<ProductInfo[]> {
     return this.executeWithPermission(request.userId, 'PRODUCT_VIEW', () => {
       return this.productService.getProductsByIds(request.productIds).map(e => this.mapToInfo(e));
@@ -55,6 +67,9 @@ export class ProductApplication {
       price: entity.price,
       category: entity.category,
       barcode: entity.barcode,
+      image: entity.image,
+      description: entity.description,
+      favourite: entity.favourite === 1,
       available: entity.available,
       status: entity.status,
       created_at: entity.created_at

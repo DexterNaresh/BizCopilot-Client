@@ -67,6 +67,13 @@ export class DatabaseService implements IDatabaseService {
     if (!productInfo.some(c => c.name === 'type')) {
       this.execute(`ALTER TABLE products ADD COLUMN type TEXT NOT NULL DEFAULT 'QTY'`);
     }
+    if (!productInfo.some(c => c.name === 'favourite')) {
+      this.execute(`ALTER TABLE products ADD COLUMN favourite INTEGER NOT NULL DEFAULT 0`);
+    }
+    if (!productInfo.some(c => c.name === 'image')) {
+      this.execute(`ALTER TABLE products ADD COLUMN image TEXT`);
+      this.execute(`ALTER TABLE products ADD COLUMN description TEXT`);
+    }
 
     // Migration: Add 'product_name' and 'product_type' to bill_items
     const billItemInfo = this.query<{name: string}>(`PRAGMA table_info(bill_items)`);
@@ -99,6 +106,9 @@ export class DatabaseService implements IDatabaseService {
         price REAL NOT NULL,
         category TEXT,
         barcode TEXT UNIQUE,
+        image TEXT,
+        description TEXT,
+        favourite INTEGER NOT NULL DEFAULT 0,
         available INTEGER NOT NULL DEFAULT 1,
         status TEXT NOT NULL DEFAULT 'ACTIVE',
         created_at TEXT NOT NULL

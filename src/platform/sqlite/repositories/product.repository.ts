@@ -33,6 +33,13 @@ export class SqliteProductRepository extends BaseRepository<ProductEntity> imple
     return this.db.queryOne<ProductEntity>(sql, [barcode]);
   }
 
+  list(status: 'ACTIVE' | 'ARCHIVED'): ProductEntity[] {
+    return this.db.query<ProductEntity>(
+      `SELECT * FROM ${this.tableName} WHERE status = ? ORDER BY name COLLATE NOCASE`,
+      [status]
+    );
+  }
+
   saveNewProduct(product: ProductEntity): ProductEntity {
     this.create(product);
     return product;

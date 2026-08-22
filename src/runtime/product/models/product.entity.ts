@@ -8,6 +8,9 @@ export interface ProductEntity {
   price: number;
   category?: string | null;
   barcode?: string | null;
+  image?: string | null;
+  description?: string | null;
+  favourite: number;
   available: number;
   status: 'ACTIVE' | 'ARCHIVED';
   created_at: string;
