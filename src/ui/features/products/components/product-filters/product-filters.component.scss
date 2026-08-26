@@ -1,0 +1,255 @@
+@use '../../../../theme/breakpoints' as *;
+
+:host {
+  display: block;
+}
+
+// ── Search Row ──
+.filters__search-row {
+  display: flex;
+  gap: 12px;
+
+  @include mobile {
+    gap: 12px;
+  }
+}
+
+.filters__search-wrapper {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+}
+
+.filters__search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 22px;
+  color: var(--color-text-secondary);
+
+  @include mobile {
+    font-size: 24px;
+  }
+}
+
+.filters__search-input {
+  width: 100%;
+  height: 44px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  padding: 0 16px 0 44px;
+  font-size: 12px;
+  color: var(--color-text-primary);
+  outline: none;
+  transition: border-color 0.15s ease;
+
+  &::placeholder {
+    color: var(--color-text-secondary);
+  }
+
+  &:focus {
+    border-color: var(--color-primary);
+  }
+
+  @include mobile {
+    height: 55px;
+    border-radius: 12px;
+    padding-left: 48px;
+    font-size: 14px;
+  }
+}
+
+.filters__filter-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  white-space: nowrap;
+
+  .material-symbols-outlined {
+    font-size: 20px;
+  }
+
+  @include mobile {
+    height: 55px;
+    border-radius: 12px;
+    font-size: 14px;
+    min-width: 105px;
+    justify-content: center;
+
+    .material-symbols-outlined {
+      font-size: 24px;
+    }
+  }
+}
+
+// ── Filter Pills ──
+.filters__pills {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+
+  @include mobile {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    margin-top: 16px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
+
+.filters__pill {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 40px;
+  padding: 0 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+
+  @include mobile {
+    height: 50px;
+    border-radius: 12px;
+    padding: 0 20px;
+    font-size: 14px;
+  }
+}
+
+.filters__pill--active {
+  background: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+  box-shadow: 0 5px 14px rgba(91, 59, 235, 0.20);
+}
+
+.filters__pill--selected {
+  background: rgba(91, 59, 235, 0.08);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.filters__pill--dropdown {
+  min-width: 138px;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.filters__pill-badge {
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+
+  @include mobile {
+    font-size: 12px;
+  }
+}
+
+.filters__pill-badge--active {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.filters__pill-badge--success {
+  background: #E8F7EC;
+  color: var(--color-success);
+}
+
+.filters__pill-badge--error {
+  background: #FEECEC;
+  color: var(--color-error);
+}
+
+.filters__pill-badge--neutral {
+  background: #EEF0FB;
+  color: var(--color-text-primary);
+}
+
+.filters__star-icon {
+  font-size: 20px;
+  color: #D97706;
+}
+
+.filters__dropdown-icon {
+  font-size: 20px;
+  color: var(--color-text-secondary);
+}
+
+.filters__pill-label {
+  // inherits from parent
+}
+
+// ── View Toggle ──
+.filters__view-toggle {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+
+  @include mobile {
+    margin-top: 28px;
+    justify-content: flex-end;
+  }
+}
+
+.filters__view-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  background: var(--color-surface);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+
+  .material-symbols-outlined {
+    font-size: 20px;
+  }
+
+  @include mobile {
+    height: 44px;
+    border-radius: 12px;
+    font-size: 13px;
+  }
+}
+
+.filters__view-btn--active {
+  background: rgba(91, 59, 235, 0.08);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.filters__view-btn-label {
+  @include mobile {
+    // On mobile the original HTML shows "Grid" / "Table" (shortened)
+  }
+}

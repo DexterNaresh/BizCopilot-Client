@@ -1,0 +1,201 @@
+:host {
+  display: block;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+// ── Card Base ──
+.sidebar__card {
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  padding: 20px;
+  box-shadow: 0 2px 12px rgba(31, 41, 88, 0.06);
+}
+
+.sidebar__card-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+// ── Quick Actions ──
+.sidebar__actions-list {
+  margin-top: 16px;
+}
+
+.sidebar__action-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-top: 1px solid var(--color-border);
+
+  &:first-child {
+    border-top: none;
+  }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.02);
+  }
+}
+
+.sidebar__action-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.sidebar__action-icon {
+  font-size: 22px;
+  color: var(--color-text-primary);
+}
+
+.sidebar__action-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.sidebar__action-chevron {
+  font-size: 20px;
+  color: var(--color-text-secondary);
+}
+
+// ── Summary ──
+.sidebar__summary-list {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sidebar__summary-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+}
+
+.sidebar__summary-label {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.sidebar__summary-value {
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.sidebar__summary-value--success {
+  color: var(--color-success);
+}
+
+.sidebar__summary-value--error {
+  color: var(--color-error);
+}
+
+// ── Tips ──
+.sidebar__tips-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sidebar__tips-icon {
+  font-size: 22px;
+  color: var(--color-text-primary);
+}
+
+.sidebar__tips-list {
+  margin-top: 16px;
+  padding-left: 20px;
+  list-style: disc;
+  font-size: 10px;
+  line-height: 1.5;
+  color: var(--color-text-primary);
+
+  li {
+    margin-bottom: 12px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+// ── Roadmap ──
+.sidebar__roadmap {
+  border-radius: 12px;
+  border: 1px solid #E8DCFF;
+  background: linear-gradient(135deg, #F6F1FF, #EEE7FF);
+  padding: 20px;
+}
+
+.sidebar__roadmap-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sidebar__roadmap-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.sidebar__roadmap-badge {
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: #DED0FF;
+  font-size: 9px;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.sidebar__roadmap-list {
+  margin-top: 12px;
+  padding-left: 16px;
+  list-style: disc;
+  font-size: 10px;
+  color: var(--color-text-primary);
+
+  li {
+    margin-bottom: 8px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.sidebar__roadmap-link {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-primary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+
+  .material-symbols-outlined {
+    font-size: 16px;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

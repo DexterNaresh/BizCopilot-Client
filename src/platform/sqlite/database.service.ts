@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import initSqlJs, { Database, QueryExecResult } from 'sql.js';
 import { IDatabaseService } from '@shared/abstractions/database.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class DatabaseService implements IDatabaseService {
   private db: Database | null = null;
   private isInitialized = false;

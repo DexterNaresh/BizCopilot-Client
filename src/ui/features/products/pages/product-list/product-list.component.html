@@ -1,0 +1,86 @@
+<!-- Product List Page — Desktop / Tablet / Mobile unified layout -->
+<div class="product-page">
+
+  <!-- Error Banner if Application Contract returns an error -->
+  <div *ngIf="facade.error()" class="mb-4 flex items-center justify-between rounded-lg border border-red-200 bg-red-50 p-4 text-red-700 text-sm">
+    <div class="flex items-center gap-2">
+      <span class="material-symbols-outlined text-[20px]">error</span>
+      <span>{{ facade.error() }}</span>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="product-page__header">
+    <div class="product-page__header-text">
+      <h1 class="product-page__title">Products</h1>
+      <p class="product-page__subtitle">Manage your product catalog and keep it up to date.</p>
+    </div>
+
+    <button class="product-page__add-btn">
+      <span class="material-symbols-outlined">add</span>
+      <span class="product-page__add-btn-label">Add Product</span>
+    </button>
+  </header>
+
+  <!-- Main Grid: Content + Sidebar -->
+  <div class="product-page__grid">
+
+    <!-- Left: Products Area -->
+    <section class="product-page__content-area">
+
+      <!-- Filters -->
+      <biz-product-filters
+        [activeStatusFilter]="facade.activeStatusFilter()"
+        [activeViewMode]="facade.activeViewMode()"
+        [searchQuery]="facade.searchQuery()"
+        [totalProducts]="facade.summary().totalProducts"
+        [availableCount]="facade.summary().availableProducts"
+        [unavailableCount]="facade.summary().unavailableProducts"
+        [favouriteCount]="facade.summary().favouriteProducts"
+        (searchChange)="onSearch($event)"
+        (filterStatusChange)="onFilterStatusChange($event)"
+        (filterFavouritesToggle)="onToggleFavouritesFilter()"
+        (viewModeChange)="onViewModeChange($event)">
+      </biz-product-filters>
+
+      <!-- Product Count (mobile only) -->
+      <div class="product-page__mobile-count">
+        <h2 class="product-page__mobile-count-text">{{ facade.summary().totalProducts }} products</h2>
+      </div>
+
+      <!-- Product Grid -->
+      <div class="product-page__product-grid" *ngIf="facade.activeViewMode() === 'grid'">
+        <biz-product-card
+          *ngFor="let product of facade.products()"
+          [product]="product"
+          (edit)="onEditProduct($event)"
+          (remove)="onDeleteProduct($event)"
+          (toggleAvailability)="onToggleAvailability($event)"
+          (toggleFavourite)="onToggleFavourite($event)">
+        </biz-product-card>
+      </div>
+
+      <!-- Table View Placeholder -->
+      <div class="product-page__table-placeholder" *ngIf="facade.activeViewMode() === 'table'">
+        <span class="material-symbols-outlined">table_rows</span>
+        <span>Table View — Coming Soon</span>
+      </div>
+
+      <!-- Pagination -->
+      <biz-product-pagination
+        [currentPage]="currentPage()"
+        [pageSize]="pageSize()"
+        [totalItems]="facade.products().length"
+        (pageChange)="onPageChange($event)"
+        (pageSizeChange)="onPageSizeChange($event)">
+      </biz-product-pagination>
+
+    </section>
+
+    <!-- Right: Sidebar -->
+    <div class="product-page__sidebar">
+      <biz-product-sidebar [summary]="facade.summary()"></biz-product-sidebar>
+    </div>
+
+  </div>
+</div>

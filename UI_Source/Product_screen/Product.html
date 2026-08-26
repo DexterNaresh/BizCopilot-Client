@@ -1,0 +1,2837 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BizCopilot — Products</title>
+
+    <!-- Frozen BizCopilot icon system:
+       Google Material Symbols Outlined
+       Fill: 0 | Weight: 400 | Grade: 0 | Optical Size: 24 -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:FILL,GRAD,opsz,wght@0,0,24,400" />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: "#f5f3ff",
+                            100: "#ede9fe",
+                            200: "#ddd6fe",
+                            300: "#c4b5fd",
+                            400: "#a78bfa",
+                            500: "#5B3BEB",
+                            600: "#5B3BEB",
+                            700: "#4B2DC7"
+                        },
+                        ink: "#111827",
+                        secondary: "#6B7280",
+                        muted: "#9CA3AF",
+                        line: "#EAECEF",
+                        success: "#16A34A",
+                        error: "#DC2626",
+                        warning: "#D97706"
+                    },
+                    boxShadow: {
+                        card: "0 2px 12px rgba(31,41,88,.06)",
+                        soft: "0 8px 30px rgba(53,31,122,.07)",
+                        button: "0 5px 14px rgba(91,59,235,.20)"
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            margin: 0;
+            min-height: 100%;
+            background: #fbfbfe;
+            color: #111827;
+            font-family:
+                Inter,
+                ui-sans-serif,
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+        }
+
+        button,
+        input,
+        select {
+            font: inherit;
+        }
+
+        .material-symbols-outlined {
+            font-family: "Material Symbols Outlined";
+            font-weight: 400;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: "liga";
+            -webkit-font-smoothing: antialiased;
+            font-feature-settings: "liga";
+            font-variation-settings:
+                "FILL" 0,
+                "GRAD" 0,
+                "opsz" 24,
+                "wght" 400;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            scrollbar-width: none;
+        }
+
+        .toggle {
+            width: 40px;
+            height: 22px;
+            border-radius: 9999px;
+            position: relative;
+            display: inline-block;
+            flex-shrink: 0;
+            background: #dfe3eb;
+        }
+
+        .toggle::after {
+            content: "";
+            position: absolute;
+            top: 3px;
+            width: 16px;
+            height: 16px;
+            border-radius: 9999px;
+            background: #fff;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, .16);
+        }
+
+        .toggle.on {
+            background: #5B3BEB;
+        }
+
+        .toggle.on::after {
+            right: 3px;
+        }
+
+        .toggle.off::after {
+            left: 3px;
+        }
+
+        .mobile-nav {
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ============================================================
+       DESKTOP
+       ============================================================ -->
+    <div class="hidden xl:flex min-h-screen">
+
+        <!-- SIDEBAR -->
+        <aside class="fixed inset-y-0 left-0 z-30 w-[214px] border-r border-[#EAECEF] bg-white">
+            <div class="flex h-full flex-col">
+
+                <!-- Brand -->
+                <div class="flex h-[112px] items-center px-7">
+                    <div class="flex items-center gap-3">
+                        <div
+                            class="flex h-9 w-9 items-center justify-center rounded-[9px] bg-brand-500 text-white shadow-button">
+                            <span class="text-[21px] font-bold">B</span>
+                        </div>
+
+                        <div>
+                            <div class="text-[18px] font-bold tracking-[-.5px] text-[#111827]">
+                                BizCopilot
+                            </div>
+                            <div class="mt-0.5 text-[11px] font-medium text-secondary">
+                                Billing Engine
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="px-3">
+
+                    <a href="#"
+                        class="mb-1 flex h-11 items-center gap-3 rounded-xl px-4 text-[13px] font-medium text-ink">
+                        <span class="material-symbols-outlined text-[22px] text-secondary">home</span>
+                        Dashboard
+                    </a>
+
+                    <a href="#"
+                        class="mb-1 flex h-11 items-center gap-3 rounded-xl px-4 text-[13px] font-medium text-ink">
+                        <span class="material-symbols-outlined text-[22px] text-secondary">receipt_long</span>
+                        Sales
+                    </a>
+
+                    <a href="#"
+                        class="relative mb-1 flex h-11 items-center gap-3 rounded-xl bg-brand-50 px-4 text-[13px] font-semibold text-brand-500">
+                        <span class="absolute left-0 top-2 h-7 w-1 rounded-r-full bg-brand-500"></span>
+                        <span class="material-symbols-outlined text-[22px] text-brand-500">inventory_2</span>
+                        Products
+                    </a>
+
+                    <a href="#"
+                        class="mb-1 flex h-11 items-center gap-3 rounded-xl px-4 text-[13px] font-medium text-ink">
+                        <span class="material-symbols-outlined text-[22px] text-secondary">group</span>
+                        Customers
+                    </a>
+
+                    <a href="#"
+                        class="mb-1 flex h-11 items-center gap-3 rounded-xl px-4 text-[13px] font-medium text-ink">
+                        <span class="material-symbols-outlined text-[22px] text-secondary">local_offer</span>
+                        Offers
+                    </a>
+
+                    <a href="#"
+                        class="mb-1 flex h-11 items-center gap-3 rounded-xl px-4 text-[13px] font-medium text-ink">
+                        <span class="material-symbols-outlined text-[22px] text-secondary">bar_chart</span>
+                        Reports
+                    </a>
+
+                    <a href="#"
+                        class="mb-1 flex h-11 items-center gap-3 rounded-xl px-4 text-[13px] font-medium text-ink">
+                        <span class="material-symbols-outlined text-[22px] text-secondary">settings</span>
+                        Settings
+                    </a>
+
+                </nav>
+
+                <!-- Bottom -->
+                <div class="mt-auto px-3 pb-4">
+
+                    <a href="#"
+                        class="mb-3 flex h-11 items-center gap-3 rounded-xl px-4 text-[12px] font-medium text-ink">
+                        <span class="material-symbols-outlined text-[20px] text-secondary">help</span>
+                        Help & Support
+                    </a>
+
+                    <div class="rounded-xl border border-[#EAECEF] bg-white p-3">
+                        <div class="flex items-center gap-3">
+                            <div
+                                class="flex h-9 w-9 items-center justify-center rounded-full bg-brand-50 text-[12px] font-semibold text-brand-500">
+                                AD
+                            </div>
+
+                            <div class="min-w-0 flex-1">
+                                <div class="truncate text-[11px] font-semibold text-ink">
+                                    Aarav Demo Store
+                                </div>
+                                <div class="text-[10px] text-secondary">
+                                    Owner
+                                </div>
+                            </div>
+
+                            <span class="material-symbols-outlined text-[20px] text-secondary">
+                                expand_more
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 rounded-xl border border-[#EAECEF] bg-white p-3">
+                        <div class="flex items-center gap-2">
+                            <span class="h-2 w-2 rounded-full bg-green-600"></span>
+                            <span class="text-[11px] font-semibold text-ink">
+                                Online
+                            </span>
+                        </div>
+
+                        <div class="mt-1 text-[9px] text-secondary">
+                            Last sync: Just now
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </aside>
+
+        <!-- MAIN -->
+        <main class="ml-[214px] min-h-screen flex-1 px-7 py-7">
+
+            <!-- Header -->
+            <header class="mb-5 flex items-start justify-between">
+                <div>
+                    <h1 class="text-[24px] font-bold tracking-[-.7px] text-[#111827]">
+                        Products
+                    </h1>
+                    <p class="mt-1 text-[13px] text-secondary">
+                        Manage your product catalog and keep it up to date.
+                    </p>
+                </div>
+
+                <button
+                    class="flex h-11 items-center gap-2 rounded-lg bg-brand-500 px-5 text-[13px] font-semibold text-white shadow-button">
+                    <span class="material-symbols-outlined text-[20px]">
+                        add
+                    </span>
+                    Add Product
+                </button>
+            </header>
+
+            <div class="grid grid-cols-[minmax(0,1fr)_248px] gap-4">
+
+                <!-- PRODUCT AREA -->
+                <section class="min-w-0 rounded-xl border border-[#EAECEF] bg-white p-4 shadow-card">
+
+                    <!-- Search -->
+                    <div class="flex gap-3">
+
+                        <div class="relative min-w-0 flex-1">
+                            <span
+                                class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[22px] text-secondary">
+                                search
+                            </span>
+
+                            <input type="text" placeholder="Search by product name or barcode..."
+                                class="h-11 w-full rounded-lg border border-[#EAECEF] bg-white pl-11 pr-4 text-[12px] text-ink outline-none placeholder:text-secondary focus:border-brand-500" />
+                        </div>
+
+                        <button
+                            class="flex h-11 items-center gap-2 rounded-lg border border-[#EAECEF] px-4 text-[12px] font-semibold text-ink">
+                            <span class="material-symbols-outlined text-[20px]">
+                                filter_list
+                            </span>
+                            Filters
+                        </button>
+
+                    </div>
+
+                    <!-- Filters -->
+                    <div class="mt-4 flex flex-wrap items-center gap-3">
+
+                        <button
+                            class="flex h-10 items-center gap-3 rounded-lg bg-brand-500 px-4 text-[12px] font-semibold text-white shadow-button">
+                            All Products
+                            <span class="rounded-md bg-white/15 px-2 py-0.5 text-[11px]">
+                                156
+                            </span>
+                        </button>
+
+                        <button
+                            class="flex h-10 items-center gap-3 rounded-lg border border-[#EAECEF] px-4 text-[12px] font-semibold text-ink">
+                            Available
+                            <span class="rounded-md bg-[#E8F7EC] px-2 py-0.5 text-[11px] text-success">
+                                142
+                            </span>
+                        </button>
+
+                        <button
+                            class="flex h-10 items-center gap-3 rounded-lg border border-[#EAECEF] px-4 text-[12px] font-semibold text-ink">
+                            Unavailable
+                            <span class="rounded-md bg-[#FEECEC] px-2 py-0.5 text-[11px] text-error">
+                                14
+                            </span>
+                        </button>
+
+                        <button
+                            class="flex h-10 items-center gap-3 rounded-lg border border-[#EAECEF] px-4 text-[12px] font-semibold text-ink">
+                            <span class="material-symbols-outlined text-[20px] text-warning">
+                                star
+                            </span>
+                            Favourites
+                            <span class="rounded-md bg-[#EEF0FB] px-2 py-0.5 text-[11px]">
+                                28
+                            </span>
+                        </button>
+
+                        <button
+                            class="flex h-10 min-w-[138px] items-center justify-between gap-4 rounded-lg border border-[#EAECEF] px-4 text-[12px] font-semibold text-ink">
+                            All Categories
+                            <span class="material-symbols-outlined text-[20px] text-secondary">
+                                expand_more
+                            </span>
+                        </button>
+
+                    </div>
+
+                    <!-- View -->
+                    <div class="mt-4 flex justify-end gap-2">
+
+                        <button
+                            class="flex h-10 items-center gap-2 rounded-lg border border-brand-500 bg-brand-50 px-4 text-[12px] font-semibold text-brand-500">
+                            <span class="material-symbols-outlined text-[20px]">
+                                grid_view
+                            </span>
+                            Grid View
+                        </button>
+
+                        <button
+                            class="flex h-10 items-center gap-2 rounded-lg border border-[#EAECEF] px-4 text-[12px] font-semibold text-ink">
+                            <span class="material-symbols-outlined text-[20px]">
+                                table_rows
+                            </span>
+                            Table View
+                        </button>
+
+                    </div>
+
+                    <!-- PRODUCT GRID -->
+                    <div class="mt-4 grid grid-cols-4 gap-4">
+
+                        <!-- Product Card 1 -->
+                        <article class="overflow-hidden rounded-lg border border-[#EAECEF] bg-white shadow-card">
+
+                            <div class="relative h-[113px] bg-[#17100c]">
+                                <img src="https://images.unsplash.com/photo-1572449043416-55f4685c9bb7?auto=format&fit=crop&w=700&q=85"
+                                    class="product-image" alt="Cappuccino" />
+
+                                <button
+                                    class="absolute left-2 top-2 flex h-9 w-9 items-center justify-center rounded-lg bg-white text-brand-500 shadow-sm">
+                                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                                </button>
+
+                                <button
+                                    class="absolute right-2 top-2 flex h-9 w-9 items-center justify-center rounded-lg bg-white text-error shadow-sm">
+                                    <span class="material-symbols-outlined text-[20px]">delete_outline</span>
+                                </button>
+                            </div>
+
+                            <div class="p-3">
+
+                                <div class="flex items-center justify-between">
+                                    <span class="flex items-center gap-2 text-[10px] font-medium text-brand-900">
+                                        <span class="material-symbols-outlined text-[18px] text-brand-500">
+                                            local_cafe
+                                        </span>
+                                        Beverages
+                                    </span>
+
+                                    <button class="flex h-6 w-6 items-center justify-center">
+                                        <span class="material-symbols-outlined text-[22px]">
+                                            star_border
+                                        </span>
+                                    </button>
+                                </div>
+
+                                <h3 class="mt-2 text-[13px] font-semibold text-[#111827]">
+                                    Cappuccino
+                                </h3>
+
+                                <div class="mt-4 flex items-center justify-between">
+                                    <span class="text-[12px] font-semibold">
+                                        ₹120.00
+                                    </span>
+
+                                    <div class="flex items-center gap-2">
+                                        <span
+                                            class="rounded-md bg-[#E8F7EC] px-2 py-1 text-[9px] font-semibold text-success">
+                                            Available
+                                        </span>
+                                        <span class="toggle on"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </article>
+
+                        <!-- Product Card 2 -->
+                        <article class="overflow-hidden rounded-lg border border-[#EAECEF] bg-white shadow-card">
+                            <div class="relative h-[113px]">
+                                <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=700&q=85"
+                                    class="product-image" alt="Chocolate Cake" />
+
+                                <button
+                                    class="absolute left-2 top-2 flex h-9 w-9 items-center justify-center rounded-lg bg-white text-brand-500 shadow-sm">
+                                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                                </button>
+
+                                <button
+                                    class="absolute right-2 top-2 flex h-9 w-9 items-center justify-center rounded-lg bg-white text-error shadow-sm">
+                                    <span class="material-symbols-outlined text-[20px]">delete_outline</span>
+                                </button>
+                            </div>
+
+                            <div class="p-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="flex items-center gap-2 text-[10px] font-medium text-red-500">
+                                        <span class="material-symbols-outlined text-[18px]">cake</span>
+                                        Desserts
+                                    </span>
+
+                                    <span class="material-symbols-outlined text-[22px]">
+                                        star_border
+                                    </span>
+                                </div>
+
+                                <h3 class="mt-2 text-[13px] font-semibold">
+                                    Chocolate Cake
+                                </h3>
+
+                                <div class="mt-4 flex items-center justify-between">
+                                    <span class="text-[12px] font-semibold">
+                                        ₹80.00
+                                    </span>
+
+                                    <div class="flex items-center gap-2">
+                                        <span
+                                            class="rounded-md bg-[#E8F7EC] px-2 py-1 text-[9px] font-semibold text-success">
+                                            Available
+                                        </span>
+                                        <span class="toggle on"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Product Card 3 -->
+                        <article class="overflow-hidden rounded-lg border border-[#EAECEF] bg-white shadow-card">
+                            <div class="relative h-[113px] bg-black">
+                                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=700&q=85"
+                                    class="product-image" alt="Veg Burger" />
+
+                                <button
+                                    class="absolute left-2 top-2 flex h-9 w-9 items-center justify-center rounded-lg bg-white text-brand-500 shadow-sm">
+                                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                                </button>
+
+                                <button
+                                    class="absolute right-2 top-2 flex h-9 w-9 items-center justify-center rounded-lg bg-white text-error shadow-sm">
+                                    <span class="material-symbols-outlined text-[20px]">delete_outline</span>
+                                </button>
+                            </div>
+
+                            <div class="p-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="flex items-center gap-2 text-[10px] font-medium text-warning">
+                                        <span class="material-symbols-outlined text-[18px]">restaurant</span>
+                                        Food
+                                    </span>
+
+                                    <span class="material-symbols-outlined text-[22px] text-warning">
+                                        star
+                                    </span>
+                                </div>
+
+                                <h3 class="mt-2 text-[13px] font-semibold">
+                                    Veg Burger
+                                </h3>
+
+                                <div class="mt-4 flex items-center justify-between">
+                                    <span class="text-[12px] font-semibold">
+                                        ₹90.00
+                                    </span>
+
+                                    <div class="flex items-center gap-2">
+                                        <span
+                                            class="rounded-md bg-[#E8F7EC] px-2 py-1 text-[9px] font-semibold text-success">
+                                            Available
+                                        </span>
+                                        <span class="toggle on"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Product Card 4 -->
+                        <article class="overflow-hidden rounded-lg border border-[#EAECEF] bg-white shadow-card">
+                            <div class="relative h-[113px]">
+                                <img src="https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=700&q=85"
+                                    class="product-image" alt="Fresh Orange Juice" />
+
+                                <button
+                                    class="absolute left-2 top-2 flex h-9 w-9 items-center justify-center rounded-lg bg-white text-brand-500 shadow-sm">
+                                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                                </button>
+
+                                <button
+                                    class="absolute right-2 top-2 flex h-9 w-9 items-center justify-center rounded-lg bg-white text-error shadow-sm">
+                                    <span class="material-symbols-outlined text-[20px]">delete_outline</span>
+                                </button>
+                            </div>
+
+                            <div class="p-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="flex items-center gap-2 text-[10px] font-medium text-brand-500">
+                                        <span class="material-symbols-outlined text-[18px]">local_cafe</span>
+                                        Beverages
+                                    </span>
+
+                                    <span class="material-symbols-outlined text-[22px]">
+                                        star_border
+                                    </span>
+                                </div>
+
+                                <h3 class="mt-2 text-[13px] font-semibold">
+                                    Fresh Orange Juice
+                                </h3>
+
+                                <div class="mt-4 flex items-center justify-between">
+                                    <span class="text-[12px] font-semibold">
+                                        ₹70.00
+                                    </span>
+
+                                    <div class="flex items-center gap-2">
+                                        <span
+                                            class="rounded-md bg-[#E8F7EC] px-2 py-1 text-[9px] font-semibold text-success">
+                                            Available
+                                        </span>
+                                        <span class="toggle on"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Product Card 5 -->
+                        <article class="overflow-hidden rounded-lg border border-[#EAECEF] bg-white shadow-card">
+                            <div class="relative h-[113px]">
+                                <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=700&q=85"
+                                    class="product-image" alt="Cold Coffee" />
+
+                                <button
+                                    class="absolute left-2 top-2 flex h-9 w-9 items-center justify-center rounded-lg bg-white text-brand-500 shadow-sm">
+                                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                                </button>
+
+                                <button
+                                    class="absolute right-2 top-2 flex h-9 w-9 items-center justify-center rounded-lg bg-white text-error shadow-sm">
+                                    <span class="material-symbols-outlined text-[20px]">delete_outline</span>
+                                </button>
+                            </div>
+
+                            <div class="p-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="flex items-center gap-2 text-[10px] font-medium text-brand-500">
+                                        <span class="material-symbols-outlined text-[18px]">local_cafe</span>
+                                        Beverages
+                                    </span>
+
+                                    <span class="material-symbols-outlined text-[22px] text-warning">
+                                        star
+                                    </span>
+                                </div>
+
+                                <h3 class="mt-2 text-[13px] font-semibold">
+                                    Cold Coffee
+                                </h3>
+
+                                <div class="mt-4 flex items-center justify-between">
+                                    <span class="text-[12px] font-semibold">
+                                        ₹110.00
+                                    </span>
+
+                                    <div class="flex items-center gap-2">
+                                        <span
+                                            class="rounded-md bg-[#E8F7EC] px-2 py-1 text-[9px] font-semibold text-success">
+                                            Available
+                                        </span>
+                                        <span class="toggle on"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Product Card 6 -->
+                        <article class="overflow-hidden rounded-lg border border-[#EAECEF] bg-white shadow-card">
+                            <div class="relative h-[113px]">
+                                <img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=700&q=85"
+                                    class="product-image" alt="Club Sandwich" />
+
+                                <button
+                                    class="absolute left-2 top-2 flex h-9 w-9 items-center justify-center rounded-lg bg-white text-brand-500 shadow-sm">
+                                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                                </button>
+
+                                <button
+                                    class="absolute right-2 top-2 flex h-9 w-9 items-center justify-center rounded-lg bg-white text-error shadow-sm">
+                                    <span class="material-symbols-outlined text-[20px]">delete_outline</span>
+                                </button>
+                            </div>
+
+                            <div class="p-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="flex items-center gap-2 text-[10px] font-medium text-warning">
+                                        <span class="material-symbols-outlined text-[18px]">restaurant</span>
+                                        Food
+                                    </span>
+
+                                    <span class="material-symbols-outlined text-[22px]">
+                                        star_border
+                                    </span>
+                                </div>
+
+                                <h3 class="mt-2 text-[13px] font-semibold">
+                                    Club Sandwich
+                                </h3>
+
+                                <div class="mt-4 flex items-center justify-between">
+                                    <span class="text-[12px] font-semibold">
+                                        ₹130.00
+                                    </span>
+
+                                    <div class="flex items-center gap-2">
+                                        <span
+                                            class="rounded-md bg-[#E8F7EC] px-2 py-1 text-[9px] font-semibold text-success">
+                                            Available
+                                        </span>
+                                        <span class="toggle on"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Product Card 7 -->
+                        <article class="overflow-hidden rounded-lg border border-[#EAECEF] bg-white shadow-card">
+                            <div class="relative h-[113px] bg-black">
+                                <img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=700&q=85"
+                                    class="product-image" alt="French Fries" />
+
+                                <button
+                                    class="absolute left-2 top-2 flex h-9 w-9 items-center justify-center rounded-lg bg-white text-brand-500 shadow-sm">
+                                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                                </button>
+
+                                <button
+                                    class="absolute right-2 top-2 flex h-9 w-9 items-center justify-center rounded-lg bg-white text-error shadow-sm">
+                                    <span class="material-symbols-outlined text-[20px]">delete_outline</span>
+                                </button>
+                            </div>
+
+                            <div class="p-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="flex items-center gap-2 text-[10px] font-medium text-brand-500">
+                                        <span class="material-symbols-outlined text-[18px]">restaurant</span>
+                                        Sides
+                                    </span>
+
+                                    <span class="material-symbols-outlined text-[22px]">
+                                        star_border
+                                    </span>
+                                </div>
+
+                                <h3 class="mt-2 text-[13px] font-semibold">
+                                    French Fries
+                                </h3>
+
+                                <div class="mt-4 flex items-center justify-between">
+                                    <span class="text-[12px] font-semibold">
+                                        ₹60.00
+                                    </span>
+
+                                    <div class="flex items-center gap-2">
+                                        <span
+                                            class="rounded-md bg-[#E8F7EC] px-2 py-1 text-[9px] font-semibold text-success">
+                                            Available
+                                        </span>
+                                        <span class="toggle on"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Product Card 8 -->
+                        <article class="overflow-hidden rounded-lg border border-[#EAECEF] bg-white shadow-card">
+                            <div class="relative h-[113px] bg-black">
+                                <img src="https://images.unsplash.com/photo-1573140401552-3fab0b24306f?auto=format&fit=crop&w=700&q=85"
+                                    class="product-image" alt="Garlic Bread" />
+
+                                <button
+                                    class="absolute left-2 top-2 flex h-9 w-9 items-center justify-center rounded-lg bg-white text-brand-500 shadow-sm">
+                                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                                </button>
+
+                                <button
+                                    class="absolute right-2 top-2 flex h-9 w-9 items-center justify-center rounded-lg bg-white text-error shadow-sm">
+                                    <span class="material-symbols-outlined text-[20px]">delete_outline</span>
+                                </button>
+                            </div>
+
+                            <div class="p-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="flex items-center gap-2 text-[10px] font-medium text-brand-500">
+                                        <span class="material-symbols-outlined text-[18px]">restaurant</span>
+                                        Sides
+                                    </span>
+
+                                    <span class="material-symbols-outlined text-[22px]">
+                                        star_border
+                                    </span>
+                                </div>
+
+                                <h3 class="mt-2 text-[13px] font-semibold">
+                                    Garlic Bread
+                                </h3>
+
+                                <div class="mt-4 flex items-center justify-between">
+                                    <span class="text-[12px] font-semibold">
+                                        ₹50.00
+                                    </span>
+
+                                    <div class="flex items-center gap-2">
+                                        <span
+                                            class="rounded-md bg-[#FEECEC] px-2 py-1 text-[9px] font-semibold text-error">
+                                            Unavailable
+                                        </span>
+                                        <span class="toggle off"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Product Card 9 -->
+                        <article class="overflow-hidden rounded-lg border border-[#EAECEF] bg-white shadow-card">
+                            <div class="relative h-[113px] bg-black">
+                                <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=700&q=85"
+                                    class="product-image" alt="Margherita Pizza" />
+
+                                <button
+                                    class="absolute left-2 top-2 flex h-9 w-9 items-center justify-center rounded-lg bg-white text-brand-500 shadow-sm">
+                                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                                </button>
+
+                                <button
+                                    class="absolute right-2 top-2 flex h-9 w-9 items-center justify-center rounded-lg bg-white text-error shadow-sm">
+                                    <span class="material-symbols-outlined text-[20px]">delete_outline</span>
+                                </button>
+                            </div>
+
+                            <div class="p-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="flex items-center gap-2 text-[10px] font-medium text-warning">
+                                        <span class="material-symbols-outlined text-[18px]">restaurant</span>
+                                        Food
+                                    </span>
+
+                                    <span class="material-symbols-outlined text-[22px] text-warning">
+                                        star
+                                    </span>
+                                </div>
+
+                                <h3 class="mt-2 text-[13px] font-semibold">
+                                    Margherita Pizza
+                                </h3>
+
+                                <div class="mt-4 flex items-center justify-between">
+                                    <span class="text-[12px] font-semibold">
+                                        ₹180.00
+                                    </span>
+
+                                    <div class="flex items-center gap-2">
+                                        <span
+                                            class="rounded-md bg-[#E8F7EC] px-2 py-1 text-[9px] font-semibold text-success">
+                                            Available
+                                        </span>
+                                        <span class="toggle on"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Product Card 10 -->
+                        <article class="overflow-hidden rounded-lg border border-[#EAECEF] bg-white shadow-card">
+                            <div class="relative h-[113px]">
+                                <img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=700&q=85"
+                                    class="product-image" alt="Paneer Tikka" />
+
+                                <button
+                                    class="absolute left-2 top-2 flex h-9 w-9 items-center justify-center rounded-lg bg-white text-brand-500 shadow-sm">
+                                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                                </button>
+
+                                <button
+                                    class="absolute right-2 top-2 flex h-9 w-9 items-center justify-center rounded-lg bg-white text-error shadow-sm">
+                                    <span class="material-symbols-outlined text-[20px]">delete_outline</span>
+                                </button>
+                            </div>
+
+                            <div class="p-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="flex items-center gap-2 text-[10px] font-medium text-warning">
+                                        <span class="material-symbols-outlined text-[18px]">restaurant</span>
+                                        Food
+                                    </span>
+
+                                    <span class="material-symbols-outlined text-[22px]">
+                                        star_border
+                                    </span>
+                                </div>
+
+                                <h3 class="mt-2 text-[13px] font-semibold">
+                                    Paneer Tikka
+                                </h3>
+
+                                <div class="mt-4 flex items-center justify-between">
+                                    <span class="text-[12px] font-semibold">
+                                        ₹150.00
+                                    </span>
+
+                                    <div class="flex items-center gap-2">
+                                        <span
+                                            class="rounded-md bg-[#E8F7EC] px-2 py-1 text-[9px] font-semibold text-success">
+                                            Available
+                                        </span>
+                                        <span class="toggle on"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Product Card 11 -->
+                        <article class="overflow-hidden rounded-lg border border-[#EAECEF] bg-white shadow-card">
+                            <div class="relative h-[113px]">
+                                <img src="https://images.unsplash.com/photo-1556761223-4c4282c73f77?auto=format&fit=crop&w=700&q=85"
+                                    class="product-image" alt="Veg Pasta" />
+
+                                <button
+                                    class="absolute left-2 top-2 flex h-9 w-9 items-center justify-center rounded-lg bg-white text-brand-500 shadow-sm">
+                                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                                </button>
+
+                                <button
+                                    class="absolute right-2 top-2 flex h-9 w-9 items-center justify-center rounded-lg bg-white text-error shadow-sm">
+                                    <span class="material-symbols-outlined text-[20px]">delete_outline</span>
+                                </button>
+                            </div>
+
+                            <div class="p-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="flex items-center gap-2 text-[10px] font-medium text-warning">
+                                        <span class="material-symbols-outlined text-[18px]">restaurant</span>
+                                        Food
+                                    </span>
+
+                                    <span class="material-symbols-outlined text-[22px]">
+                                        star_border
+                                    </span>
+                                </div>
+
+                                <h3 class="mt-2 text-[13px] font-semibold">
+                                    Veg Pasta
+                                </h3>
+
+                                <div class="mt-4 flex items-center justify-between">
+                                    <span class="text-[12px] font-semibold">
+                                        ₹140.00
+                                    </span>
+
+                                    <div class="flex items-center gap-2">
+                                        <span
+                                            class="rounded-md bg-[#E8F7EC] px-2 py-1 text-[9px] font-semibold text-success">
+                                            Available
+                                        </span>
+                                        <span class="toggle on"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <!-- Product Card 12 -->
+                        <article class="overflow-hidden rounded-lg border border-[#EAECEF] bg-white shadow-card">
+                            <div class="relative h-[113px]">
+                                <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=700&q=85"
+                                    class="product-image" alt="Lemonade" />
+
+                                <button
+                                    class="absolute left-2 top-2 flex h-9 w-9 items-center justify-center rounded-lg bg-white text-brand-500 shadow-sm">
+                                    <span class="material-symbols-outlined text-[20px]">edit</span>
+                                </button>
+
+                                <button
+                                    class="absolute right-2 top-2 flex h-9 w-9 items-center justify-center rounded-lg bg-white text-error shadow-sm">
+                                    <span class="material-symbols-outlined text-[20px]">delete_outline</span>
+                                </button>
+                            </div>
+
+                            <div class="p-3">
+                                <div class="flex items-center justify-between">
+                                    <span class="flex items-center gap-2 text-[10px] font-medium text-brand-500">
+                                        <span class="material-symbols-outlined text-[18px]">local_cafe</span>
+                                        Beverages
+                                    </span>
+
+                                    <span class="material-symbols-outlined text-[22px]">
+                                        star_border
+                                    </span>
+                                </div>
+
+                                <h3 class="mt-2 text-[13px] font-semibold">
+                                    Lemonade
+                                </h3>
+
+                                <div class="mt-4 flex items-center justify-between">
+                                    <span class="text-[12px] font-semibold">
+                                        ₹60.00
+                                    </span>
+
+                                    <div class="flex items-center gap-2">
+                                        <span
+                                            class="rounded-md bg-[#E8F7EC] px-2 py-1 text-[9px] font-semibold text-success">
+                                            Available
+                                        </span>
+                                        <span class="toggle on"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="mt-5 flex items-center justify-between px-1 pb-1">
+
+                        <div class="flex items-center gap-2">
+                            <span class="text-[11px] text-secondary">
+                                Rows per page:
+                            </span>
+
+                            <button
+                                class="flex h-8 items-center gap-3 rounded-md border border-[#EAECEF] px-3 text-[11px]">
+                                12
+                                <span class="material-symbols-outlined text-[18px]">
+                                    expand_more
+                                </span>
+                            </button>
+                        </div>
+
+                        <div class="flex items-center gap-1">
+
+                            <button class="flex h-8 w-8 items-center justify-center rounded-md border border-[#EAECEF]">
+                                <span class="material-symbols-outlined text-[18px]">
+                                    chevron_left
+                                </span>
+                            </button>
+
+                            <button
+                                class="flex h-8 w-8 items-center justify-center rounded-md bg-brand-500 text-[11px] text-white">
+                                1
+                            </button>
+
+                            <button
+                                class="flex h-8 w-8 items-center justify-center rounded-md border border-[#EAECEF] text-[11px]">
+                                2
+                            </button>
+
+                            <button
+                                class="flex h-8 w-8 items-center justify-center rounded-md border border-[#EAECEF] text-[11px]">
+                                3
+                            </button>
+
+                            <span class="px-2 text-[11px]">...</span>
+
+                            <button
+                                class="flex h-8 w-8 items-center justify-center rounded-md border border-[#EAECEF] text-[11px]">
+                                13
+                            </button>
+
+                            <button class="flex h-8 w-8 items-center justify-center rounded-md border border-[#EAECEF]">
+                                <span class="material-symbols-outlined text-[18px]">
+                                    chevron_right
+                                </span>
+                            </button>
+
+                        </div>
+
+                        <span class="text-[11px] text-secondary">
+                            Showing 1 to 12 of 156 products
+                        </span>
+
+                    </div>
+
+                </section>
+
+                <!-- RIGHT PANEL -->
+                <aside class="space-y-4">
+
+                    <!-- Quick Actions -->
+                    <section class="rounded-xl border border-[#EAECEF] bg-white p-5 shadow-card">
+
+                        <h2 class="text-[13px] font-semibold">
+                            Quick Actions
+                        </h2>
+
+                        <div class="mt-4 divide-y divide-[#EAECEF]">
+
+                            <button class="flex w-full items-center justify-between py-3">
+                                <span class="flex items-center gap-4">
+                                    <span class="material-symbols-outlined text-[22px]">
+                                        folder
+                                    </span>
+                                    <span class="text-[11px] font-semibold">
+                                        Categories
+                                    </span>
+                                </span>
+
+                                <span class="material-symbols-outlined text-[20px]">
+                                    chevron_right
+                                </span>
+                            </button>
+
+                            <button class="flex w-full items-center justify-between py-3">
+                                <span class="flex items-center gap-4">
+                                    <span class="material-symbols-outlined text-[22px]">
+                                        upload
+                                    </span>
+                                    <span class="text-[11px] font-semibold">
+                                        Import Products
+                                    </span>
+                                </span>
+
+                                <span class="material-symbols-outlined text-[20px]">
+                                    chevron_right
+                                </span>
+                            </button>
+
+                            <button class="flex w-full items-center justify-between py-3">
+                                <span class="flex items-center gap-4">
+                                    <span class="material-symbols-outlined text-[22px]">
+                                        download
+                                    </span>
+                                    <span class="text-[11px] font-semibold">
+                                        Export Products
+                                    </span>
+                                </span>
+
+                                <span class="material-symbols-outlined text-[20px]">
+                                    chevron_right
+                                </span>
+                            </button>
+
+                        </div>
+                    </section>
+
+                    <!-- Summary -->
+                    <section class="rounded-xl border border-[#EAECEF] bg-white p-5 shadow-card">
+
+                        <h2 class="text-[13px] font-semibold">
+                            Product Summary
+                        </h2>
+
+                        <div class="mt-5 space-y-4 text-[11px]">
+
+                            <div class="flex justify-between">
+                                <span class="font-semibold">Total Products</span>
+                                <span class="font-bold">156</span>
+                            </div>
+
+                            <div class="flex justify-between">
+                                <span class="font-semibold">Available</span>
+                                <span class="font-bold text-success">142</span>
+                            </div>
+
+                            <div class="flex justify-between">
+                                <span class="font-semibold">Unavailable</span>
+                                <span class="font-bold text-error">14</span>
+                            </div>
+
+                            <div class="flex justify-between">
+                                <span class="font-semibold">Categories</span>
+                                <span class="font-bold">12</span>
+                            </div>
+
+                            <div class="flex justify-between">
+                                <span class="font-semibold">Favourites</span>
+                                <span class="font-bold">28</span>
+                            </div>
+
+                        </div>
+                    </section>
+
+                    <!-- Tips -->
+                    <section class="rounded-xl border border-[#EAECEF] bg-white p-5 shadow-card">
+
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-[22px]">
+                                lightbulb
+                            </span>
+
+                            <h2 class="text-[13px] font-semibold">
+                                Tips
+                            </h2>
+                        </div>
+
+                        <ul class="mt-4 list-disc space-y-3 pl-5 text-[10px] leading-[1.5]">
+                            <li>
+                                Use search or filters to quickly find products.
+                            </li>
+
+                            <li>
+                                Mark favourites to show in billing faster.
+                            </li>
+
+                            <li>
+                                Keep your product catalog updated for accurate billing.
+                            </li>
+                        </ul>
+
+                    </section>
+
+                    <!-- Roadmap -->
+                    <section
+                        class="rounded-xl border border-[#E8DCFF] bg-gradient-to-br from-[#F6F1FF] to-[#EEE7FF] p-5">
+
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-[12px] font-bold text-brand-500">
+                                Upcoming (V2 & V3)
+                            </h2>
+
+                            <span class="rounded-md bg-[#DED0FF] px-2 py-1 text-[9px] font-semibold text-brand-500">
+                                Planned
+                            </span>
+                        </div>
+
+                        <ul class="mt-3 space-y-2 pl-4 text-[10px]">
+                            <li class="list-disc">Inventory Management (V2)</li>
+                            <li class="list-disc">Purchase Price & Stock (V2)</li>
+                            <li class="list-disc">Supplier & Variants (V2)</li>
+                            <li class="list-disc">Advanced Pricing (V3)</li>
+                            <li class="list-disc">Stock Alerts (V3)</li>
+                        </ul>
+
+                        <button class="mt-5 flex items-center gap-2 text-[10px] font-bold text-brand-500">
+                            View Roadmap
+                            <span class="material-symbols-outlined text-[16px]">
+                                arrow_forward
+                            </span>
+                        </button>
+
+                    </section>
+
+                </aside>
+
+            </div>
+        </main>
+    </div>
+
+
+    <!-- ============================================================
+       TABLET
+       ============================================================ -->
+    <div class="hidden md:block xl:hidden min-h-screen bg-[#fbfbfe]">
+
+        <main class="px-6 py-6">
+
+            <header class="mb-5 flex items-start justify-between">
+
+                <div>
+                    <h1 class="text-[24px] font-bold tracking-[-.7px]">
+                        Products
+                    </h1>
+
+                    <p class="mt-1 text-[13px] text-secondary">
+                        Manage your product catalog and keep it up to date.
+                    </p>
+                </div>
+
+                <button
+                    class="flex h-11 items-center gap-2 rounded-lg bg-brand-500 px-5 text-[13px] font-semibold text-white shadow-button">
+                    <span class="material-symbols-outlined text-[20px]">
+                        add
+                    </span>
+                    Add Product
+                </button>
+
+            </header>
+
+            <div class="grid grid-cols-[minmax(0,1fr)_248px] gap-4">
+
+                <section class="min-w-0">
+
+                    <!-- Search -->
+                    <div class="flex gap-3">
+
+                        <div class="relative min-w-0 flex-1">
+
+                            <span
+                                class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[22px] text-secondary">
+                                search
+                            </span>
+
+                            <input type="text" placeholder="Search by product name or barcode..."
+                                class="h-11 w-full rounded-lg border border-[#EAECEF] bg-white pl-11 pr-4 text-[12px] outline-none" />
+
+                        </div>
+
+                        <button
+                            class="flex h-11 items-center gap-2 rounded-lg border border-[#EAECEF] px-4 text-[12px] font-semibold">
+                            <span class="material-symbols-outlined text-[20px]">
+                                filter_list
+                            </span>
+                            Filters
+                        </button>
+
+                    </div>
+
+                    <!-- Filters -->
+                    <div class="mt-4 flex flex-wrap gap-3">
+
+                        <button class="h-10 rounded-lg bg-brand-500 px-4 text-[12px] font-semibold text-white">
+                            All Products
+                            <span class="ml-2 rounded bg-white/15 px-2 py-1">
+                                156
+                            </span>
+                        </button>
+
+                        <button class="h-10 rounded-lg border border-[#EAECEF] px-4 text-[12px] font-semibold">
+                            Available
+                            <span class="ml-2 rounded bg-[#E8F7EC] px-2 py-1 text-success">
+                                142
+                            </span>
+                        </button>
+
+                        <button class="h-10 rounded-lg border border-[#EAECEF] px-4 text-[12px] font-semibold">
+                            Unavailable
+                            <span class="ml-2 rounded bg-[#FEECEC] px-2 py-1 text-error">
+                                14
+                            </span>
+                        </button>
+
+                        <button class="h-10 rounded-lg border border-[#EAECEF] px-4 text-[12px] font-semibold">
+                            <span class="material-symbols-outlined align-middle text-[18px] text-warning">
+                                star
+                            </span>
+                            Favourites
+                            <span class="ml-1 rounded bg-[#EEF0FB] px-2 py-1">
+                                28
+                            </span>
+                        </button>
+
+                        <button
+                            class="flex h-10 items-center gap-2 rounded-lg border border-[#EAECEF] px-4 text-[12px] font-semibold">
+                            All Categories
+                            <span class="material-symbols-outlined text-[18px]">
+                                expand_more
+                            </span>
+                        </button>
+
+                    </div>
+
+                    <!-- View -->
+                    <div class="mt-4 flex justify-end gap-2">
+
+                        <button
+                            class="flex h-10 items-center gap-2 rounded-lg border border-brand-500 bg-brand-50 px-4 text-[12px] font-semibold text-brand-500">
+                            <span class="material-symbols-outlined text-[20px]">
+                                grid_view
+                            </span>
+                            Grid View
+                        </button>
+
+                        <button
+                            class="flex h-10 items-center gap-2 rounded-lg border border-[#EAECEF] px-4 text-[12px] font-semibold">
+                            <span class="material-symbols-outlined text-[20px]">
+                                table_rows
+                            </span>
+                            Table View
+                        </button>
+
+                    </div>
+
+                    <!-- Tablet Grid -->
+                    <div class="mt-4 grid grid-cols-3 gap-4">
+
+                        <article class="overflow-hidden rounded-lg border border-[#EAECEF] bg-white shadow-card">
+                            <div class="relative h-[105px] bg-black">
+                                <img src="https://images.unsplash.com/photo-1572449043416-55f4685c9bb7?auto=format&fit=crop&w=600&q=80"
+                                    class="product-image" alt="Cappuccino">
+
+                                <button
+                                    class="absolute left-2 top-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white text-brand-500">
+                                    <span class="material-symbols-outlined text-[18px]">edit</span>
+                                </button>
+
+                                <button
+                                    class="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white text-error">
+                                    <span class="material-symbols-outlined text-[18px]">delete_outline</span>
+                                </button>
+                            </div>
+
+                            <div class="p-3">
+                                <div class="flex justify-between text-[10px]">
+                                    <span class="flex items-center gap-1">
+                                        <span
+                                            class="material-symbols-outlined text-[16px] text-brand-500">local_cafe</span>
+                                        Beverages
+                                    </span>
+                                    <span class="material-symbols-outlined text-[20px]">star_border</span>
+                                </div>
+
+                                <h3 class="mt-2 text-[13px] font-semibold">
+                                    Cappuccino
+                                </h3>
+
+                                <div class="mt-3 flex items-center justify-between">
+                                    <span class="font-semibold">
+                                        ₹120.00
+                                    </span>
+                                    <span class="toggle on"></span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="overflow-hidden rounded-lg border border-[#EAECEF] bg-white shadow-card">
+                            <div class="relative h-[105px]">
+                                <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80"
+                                    class="product-image" alt="Chocolate Cake">
+
+                                <button
+                                    class="absolute left-2 top-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white text-brand-500">
+                                    <span class="material-symbols-outlined text-[18px]">edit</span>
+                                </button>
+
+                                <button
+                                    class="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white text-error">
+                                    <span class="material-symbols-outlined text-[18px]">delete_outline</span>
+                                </button>
+                            </div>
+
+                            <div class="p-3">
+                                <div class="flex justify-between text-[10px]">
+                                    <span class="flex items-center gap-1">
+                                        <span class="material-symbols-outlined text-[16px] text-error">cake</span>
+                                        Desserts
+                                    </span>
+                                    <span class="material-symbols-outlined text-[20px]">star_border</span>
+                                </div>
+
+                                <h3 class="mt-2 text-[13px] font-semibold">
+                                    Chocolate Cake
+                                </h3>
+
+                                <div class="mt-3 flex items-center justify-between">
+                                    <span class="font-semibold">
+                                        ₹80.00
+                                    </span>
+                                    <span class="toggle on"></span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="overflow-hidden rounded-lg border border-[#EAECEF] bg-white shadow-card">
+                            <div class="relative h-[105px] bg-black">
+                                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&q=80"
+                                    class="product-image" alt="Veg Burger">
+
+                                <button
+                                    class="absolute left-2 top-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white text-brand-500">
+                                    <span class="material-symbols-outlined text-[18px]">edit</span>
+                                </button>
+
+                                <button
+                                    class="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white text-error">
+                                    <span class="material-symbols-outlined text-[18px]">delete_outline</span>
+                                </button>
+                            </div>
+
+                            <div class="p-3">
+                                <div class="flex justify-between text-[10px]">
+                                    <span class="flex items-center gap-1 text-warning">
+                                        <span class="material-symbols-outlined text-[16px]">restaurant</span>
+                                        Food
+                                    </span>
+                                    <span class="material-symbols-outlined text-[20px] text-warning">star</span>
+                                </div>
+
+                                <h3 class="mt-2 text-[13px] font-semibold">
+                                    Veg Burger
+                                </h3>
+
+                                <div class="mt-3 flex items-center justify-between">
+                                    <span class="font-semibold">
+                                        ₹90.00
+                                    </span>
+                                    <span class="toggle on"></span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="overflow-hidden rounded-lg border border-[#EAECEF] bg-white shadow-card">
+                            <div class="relative h-[105px]">
+                                <img src="https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=600&q=80"
+                                    class="product-image" alt="Fresh Orange Juice">
+
+                                <button
+                                    class="absolute left-2 top-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white text-brand-500">
+                                    <span class="material-symbols-outlined text-[18px]">edit</span>
+                                </button>
+
+                                <button
+                                    class="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white text-error">
+                                    <span class="material-symbols-outlined text-[18px]">delete_outline</span>
+                                </button>
+                            </div>
+
+                            <div class="p-3">
+                                <div class="flex justify-between text-[10px]">
+                                    <span class="flex items-center gap-1 text-brand-500">
+                                        <span class="material-symbols-outlined text-[16px]">local_cafe</span>
+                                        Beverages
+                                    </span>
+                                    <span class="material-symbols-outlined text-[20px]">star_border</span>
+                                </div>
+
+                                <h3 class="mt-2 text-[13px] font-semibold">
+                                    Fresh Orange Juice
+                                </h3>
+
+                                <div class="mt-3 flex items-center justify-between">
+                                    <span class="font-semibold">
+                                        ₹70.00
+                                    </span>
+                                    <span class="toggle on"></span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="overflow-hidden rounded-lg border border-[#EAECEF] bg-white shadow-card">
+                            <div class="relative h-[105px]">
+                                <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=600&q=80"
+                                    class="product-image" alt="Cold Coffee">
+
+                                <button
+                                    class="absolute left-2 top-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white text-brand-500">
+                                    <span class="material-symbols-outlined text-[18px]">edit</span>
+                                </button>
+
+                                <button
+                                    class="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white text-error">
+                                    <span class="material-symbols-outlined text-[18px]">delete_outline</span>
+                                </button>
+                            </div>
+
+                            <div class="p-3">
+                                <div class="flex justify-between text-[10px]">
+                                    <span class="flex items-center gap-1 text-brand-500">
+                                        <span class="material-symbols-outlined text-[16px]">local_cafe</span>
+                                        Beverages
+                                    </span>
+                                    <span class="material-symbols-outlined text-[20px] text-warning">star</span>
+                                </div>
+
+                                <h3 class="mt-2 text-[13px] font-semibold">
+                                    Cold Coffee
+                                </h3>
+
+                                <div class="mt-3 flex items-center justify-between">
+                                    <span class="font-semibold">
+                                        ₹110.00
+                                    </span>
+                                    <span class="toggle on"></span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="overflow-hidden rounded-lg border border-[#EAECEF] bg-white shadow-card">
+                            <div class="relative h-[105px]">
+                                <img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=600&q=80"
+                                    class="product-image" alt="Club Sandwich">
+
+                                <button
+                                    class="absolute left-2 top-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white text-brand-500">
+                                    <span class="material-symbols-outlined text-[18px]">edit</span>
+                                </button>
+
+                                <button
+                                    class="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white text-error">
+                                    <span class="material-symbols-outlined text-[18px]">delete_outline</span>
+                                </button>
+                            </div>
+
+                            <div class="p-3">
+                                <div class="flex justify-between text-[10px]">
+                                    <span class="flex items-center gap-1 text-warning">
+                                        <span class="material-symbols-outlined text-[16px]">restaurant</span>
+                                        Food
+                                    </span>
+                                    <span class="material-symbols-outlined text-[20px]">star_border</span>
+                                </div>
+
+                                <h3 class="mt-2 text-[13px] font-semibold">
+                                    Club Sandwich
+                                </h3>
+
+                                <div class="mt-3 flex items-center justify-between">
+                                    <span class="font-semibold">
+                                        ₹130.00
+                                    </span>
+                                    <span class="toggle on"></span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="overflow-hidden rounded-lg border border-[#EAECEF] bg-white shadow-card">
+                            <div class="relative h-[105px] bg-black">
+                                <img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=600&q=80"
+                                    class="product-image" alt="French Fries">
+
+                                <button
+                                    class="absolute left-2 top-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white text-brand-500">
+                                    <span class="material-symbols-outlined text-[18px]">edit</span>
+                                </button>
+
+                                <button
+                                    class="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white text-error">
+                                    <span class="material-symbols-outlined text-[18px]">delete_outline</span>
+                                </button>
+                            </div>
+
+                            <div class="p-3">
+                                <div class="flex justify-between text-[10px]">
+                                    <span class="flex items-center gap-1 text-brand-500">
+                                        <span class="material-symbols-outlined text-[16px]">restaurant</span>
+                                        Sides
+                                    </span>
+                                    <span class="material-symbols-outlined text-[20px]">star_border</span>
+                                </div>
+
+                                <h3 class="mt-2 text-[13px] font-semibold">
+                                    French Fries
+                                </h3>
+
+                                <div class="mt-3 flex items-center justify-between">
+                                    <span class="font-semibold">
+                                        ₹60.00
+                                    </span>
+                                    <span class="toggle on"></span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="overflow-hidden rounded-lg border border-[#EAECEF] bg-white shadow-card">
+                            <div class="relative h-[105px] bg-black">
+                                <img src="https://images.unsplash.com/photo-1573140401552-3fab0b24306f?auto=format&fit=crop&w=600&q=80"
+                                    class="product-image" alt="Garlic Bread">
+
+                                <button
+                                    class="absolute left-2 top-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white text-brand-500">
+                                    <span class="material-symbols-outlined text-[18px]">edit</span>
+                                </button>
+
+                                <button
+                                    class="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white text-error">
+                                    <span class="material-symbols-outlined text-[18px]">delete_outline</span>
+                                </button>
+                            </div>
+
+                            <div class="p-3">
+                                <div class="flex justify-between text-[10px]">
+                                    <span class="flex items-center gap-1 text-brand-500">
+                                        <span class="material-symbols-outlined text-[16px]">restaurant</span>
+                                        Sides
+                                    </span>
+                                    <span class="material-symbols-outlined text-[20px]">star_border</span>
+                                </div>
+
+                                <h3 class="mt-2 text-[13px] font-semibold">
+                                    Garlic Bread
+                                </h3>
+
+                                <div class="mt-3 flex items-center justify-between">
+                                    <span class="font-semibold">
+                                        ₹50.00
+                                    </span>
+                                    <span class="toggle off"></span>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="overflow-hidden rounded-lg border border-[#EAECEF] bg-white shadow-card">
+                            <div class="relative h-[105px] bg-black">
+                                <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=600&q=80"
+                                    class="product-image" alt="Margherita Pizza">
+
+                                <button
+                                    class="absolute left-2 top-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white text-brand-500">
+                                    <span class="material-symbols-outlined text-[18px]">edit</span>
+                                </button>
+
+                                <button
+                                    class="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-lg bg-white text-error">
+                                    <span class="material-symbols-outlined text-[18px]">delete_outline</span>
+                                </button>
+                            </div>
+
+                            <div class="p-3">
+                                <div class="flex justify-between text-[10px]">
+                                    <span class="flex items-center gap-1 text-warning">
+                                        <span class="material-symbols-outlined text-[16px]">restaurant</span>
+                                        Food
+                                    </span>
+                                    <span class="material-symbols-outlined text-[20px] text-warning">star</span>
+                                </div>
+
+                                <h3 class="mt-2 text-[13px] font-semibold">
+                                    Margherita Pizza
+                                </h3>
+
+                                <div class="mt-3 flex items-center justify-between">
+                                    <span class="font-semibold">
+                                        ₹180.00
+                                    </span>
+                                    <span class="toggle on"></span>
+                                </div>
+                            </div>
+                        </article>
+
+                    </div>
+
+                    <div class="mt-5 flex items-center justify-between rounded-lg border border-[#EAECEF] bg-white p-3">
+
+                        <span class="text-[11px]">
+                            Showing 1 to 12 of 156 products
+                        </span>
+
+                        <div class="flex gap-1">
+
+                            <button class="flex h-8 w-8 items-center justify-center rounded border border-[#EAECEF]">
+                                <span class="material-symbols-outlined text-[18px]">
+                                    chevron_left
+                                </span>
+                            </button>
+
+                            <button class="h-8 w-8 rounded bg-brand-500 text-white">
+                                1
+                            </button>
+
+                            <button class="h-8 w-8 rounded border border-[#EAECEF]">
+                                2
+                            </button>
+
+                            <button class="h-8 w-8 rounded border border-[#EAECEF]">
+                                3
+                            </button>
+
+                            <button class="flex h-8 w-8 items-center justify-center rounded border border-[#EAECEF]">
+                                <span class="material-symbols-outlined text-[18px]">
+                                    chevron_right
+                                </span>
+                            </button>
+
+                        </div>
+                    </div>
+
+                </section>
+
+                <!-- TABLET RIGHT PANEL -->
+                <aside class="space-y-4">
+
+                    <section class="rounded-xl border border-[#EAECEF] bg-white p-5">
+
+                        <h2 class="text-[13px] font-semibold">
+                            Quick Actions
+                        </h2>
+
+                        <div class="mt-4 divide-y divide-[#EAECEF]">
+
+                            <button class="flex w-full items-center justify-between py-3 text-[11px] font-semibold">
+                                <span class="flex items-center gap-3">
+                                    <span class="material-symbols-outlined text-[20px]">folder</span>
+                                    Categories
+                                </span>
+                                <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+                            </button>
+
+                            <button class="flex w-full items-center justify-between py-3 text-[11px] font-semibold">
+                                <span class="flex items-center gap-3">
+                                    <span class="material-symbols-outlined text-[20px]">upload</span>
+                                    Import Products
+                                </span>
+                                <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+                            </button>
+
+                            <button class="flex w-full items-center justify-between py-3 text-[11px] font-semibold">
+                                <span class="flex items-center gap-3">
+                                    <span class="material-symbols-outlined text-[20px]">download</span>
+                                    Export Products
+                                </span>
+                                <span class="material-symbols-outlined text-[18px]">chevron_right</span>
+                            </button>
+
+                        </div>
+                    </section>
+
+                    <section class="rounded-xl border border-[#EAECEF] bg-white p-5">
+
+                        <h2 class="text-[13px] font-semibold">
+                            Product Summary
+                        </h2>
+
+                        <div class="mt-5 space-y-4 text-[11px]">
+
+                            <div class="flex justify-between">
+                                <b>Total Products</b>
+                                <b>156</b>
+                            </div>
+
+                            <div class="flex justify-between">
+                                <b>Available</b>
+                                <b class="text-success">142</b>
+                            </div>
+
+                            <div class="flex justify-between">
+                                <b>Unavailable</b>
+                                <b class="text-error">14</b>
+                            </div>
+
+                            <div class="flex justify-between">
+                                <b>Categories</b>
+                                <b>12</b>
+                            </div>
+
+                            <div class="flex justify-between">
+                                <b>Favourites</b>
+                                <b>28</b>
+                            </div>
+
+                        </div>
+                    </section>
+
+                    <section class="rounded-xl border border-[#EAECEF] bg-white p-5">
+
+                        <div class="flex items-center gap-3">
+                            <span class="material-symbols-outlined text-[22px]">
+                                lightbulb
+                            </span>
+
+                            <h2 class="text-[13px] font-semibold">
+                                Tips
+                            </h2>
+                        </div>
+
+                        <ul class="mt-4 list-disc space-y-3 pl-4 text-[10px] leading-5">
+                            <li>Use search or filters to quickly find products.</li>
+                            <li>Mark favourites to show in billing faster.</li>
+                            <li>Keep your product catalog updated for accurate billing.</li>
+                        </ul>
+
+                    </section>
+
+                    <section class="rounded-xl bg-[#F1EAFF] p-5">
+
+                        <div class="flex justify-between">
+                            <h2 class="text-[12px] font-bold text-brand-500">
+                                Upcoming (V2 & V3)
+                            </h2>
+
+                            <span class="rounded bg-[#DED0FF] px-2 py-1 text-[9px]">
+                                Planned
+                            </span>
+                        </div>
+
+                        <ul class="mt-3 list-disc space-y-2 pl-4 text-[10px]">
+                            <li>Inventory Management (V2)</li>
+                            <li>Purchase Price & Stock (V2)</li>
+                            <li>Supplier & Variants (V2)</li>
+                            <li>Advanced Pricing (V3)</li>
+                            <li>Stock Alerts (V3)</li>
+                        </ul>
+
+                        <button class="mt-5 flex items-center gap-1 text-[10px] font-bold text-brand-500">
+                            View Roadmap
+                            <span class="material-symbols-outlined text-[16px]">
+                                arrow_forward
+                            </span>
+                        </button>
+
+                    </section>
+
+                </aside>
+
+            </div>
+        </main>
+    </div>
+
+
+    <!-- ============================================================
+       MOBILE
+       ============================================================ -->
+    <div class="md:hidden min-h-screen bg-white pb-[88px]">
+
+        <!-- Mobile Header -->
+        <header class="px-4 pb-3 pt-5">
+
+            <div class="flex items-start justify-between">
+
+                <div class="flex items-start gap-3">
+
+                    <button class="mt-1 flex h-10 w-10 items-center justify-center rounded-lg text-ink">
+                        <span class="material-symbols-outlined text-[28px]">
+                            menu
+                        </span>
+                    </button>
+
+                    <div>
+                        <h1 class="text-[25px] font-bold tracking-[-1px]">
+                            Products
+                        </h1>
+
+                        <p class="mt-0.5 text-[12px] text-ink">
+                            Manage your product catalog
+                        </p>
+                    </div>
+
+                </div>
+
+                <button
+                    class="flex h-[54px] items-center gap-2 rounded-xl bg-brand-500 px-4 text-[14px] font-semibold text-white shadow-button">
+                    <span class="material-symbols-outlined text-[20px]">
+                        add
+                    </span>
+                    Add Product
+                </button>
+
+            </div>
+        </header>
+
+        <!-- Search -->
+        <div class="px-4 pt-4">
+
+            <div class="flex gap-3">
+
+                <div class="relative min-w-0 flex-1">
+
+                    <span
+                        class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-[24px] text-secondary">
+                        search
+                    </span>
+
+                    <input type="text" placeholder="Search by product name or barcode..."
+                        class="h-[55px] w-full rounded-xl border border-[#EAECEF] bg-white pl-12 pr-3 text-[14px] outline-none placeholder:text-secondary" />
+
+                </div>
+
+                <button
+                    class="flex h-[55px] w-[105px] items-center justify-center gap-2 rounded-xl border border-[#EAECEF] text-[14px] font-semibold">
+                    <span class="material-symbols-outlined text-[24px]">
+                        filter_list
+                    </span>
+                    Filters
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- Mobile Filters -->
+        <div class="no-scrollbar flex gap-3 overflow-x-auto px-4 pt-4">
+
+            <button
+                class="flex h-[50px] shrink-0 items-center gap-2 rounded-xl bg-brand-500 px-5 text-[14px] font-semibold text-white">
+                All
+                <span class="rounded-md bg-white/15 px-2 py-1 text-[12px]">
+                    156
+                </span>
+            </button>
+
+            <button
+                class="flex h-[50px] shrink-0 items-center gap-2 rounded-xl border border-[#EAECEF] px-5 text-[14px] font-semibold">
+                Available
+                <span class="rounded-md bg-[#E8F7EC] px-2 py-1 text-[12px] text-success">
+                    142
+                </span>
+            </button>
+
+            <button
+                class="flex h-[50px] shrink-0 items-center gap-2 rounded-xl border border-[#EAECEF] px-5 text-[14px] font-semibold">
+                Unavailable
+                <span class="rounded-md bg-[#FEECEC] px-2 py-1 text-[12px] text-error">
+                    14
+                </span>
+            </button>
+
+            <button
+                class="flex h-[50px] shrink-0 items-center gap-2 rounded-xl border border-[#EAECEF] px-5 text-[14px] font-semibold">
+                More
+                <span class="material-symbols-outlined text-[20px]">
+                    expand_more
+                </span>
+            </button>
+
+        </div>
+
+        <!-- Count + Views -->
+        <div class="mt-7 flex items-center justify-between px-4">
+
+            <h2 class="text-[18px] font-semibold">
+                156 products
+            </h2>
+
+            <div class="flex gap-2">
+
+                <button
+                    class="flex h-[44px] items-center gap-2 rounded-xl border border-brand-500 bg-brand-50 px-4 text-[13px] font-semibold text-brand-500">
+                    <span class="material-symbols-outlined text-[20px]">
+                        grid_view
+                    </span>
+                    Grid
+                </button>
+
+                <button
+                    class="flex h-[44px] items-center gap-2 rounded-xl border border-[#EAECEF] px-4 text-[13px] font-semibold">
+                    <span class="material-symbols-outlined text-[20px]">
+                        table_rows
+                    </span>
+                    Table
+                </button>
+
+            </div>
+        </div>
+
+        <!-- Mobile Product Grid -->
+        <main class="grid grid-cols-2 gap-4 px-4 pt-5">
+
+            <!-- MOBILE CARD 1 -->
+            <article class="overflow-hidden rounded-xl border border-[#EAECEF] bg-white shadow-card">
+
+                <div class="relative h-[188px] bg-[#17100c]">
+
+                    <img src="https://images.unsplash.com/photo-1572449043416-55f4685c9bb7?auto=format&fit=crop&w=700&q=85"
+                        class="product-image" alt="Cappuccino" />
+
+                    <button
+                        class="absolute left-3 top-3 flex h-[45px] w-[45px] items-center justify-center rounded-xl bg-white text-brand-500 shadow-sm">
+                        <span class="material-symbols-outlined text-[24px]">
+                            edit
+                        </span>
+                    </button>
+
+                    <button
+                        class="absolute right-3 top-3 flex h-[45px] w-[45px] items-center justify-center rounded-xl bg-white text-error shadow-sm">
+                        <span class="material-symbols-outlined text-[24px]">
+                            delete_outline
+                        </span>
+                    </button>
+
+                </div>
+
+                <div class="p-4">
+
+                    <div class="flex items-center justify-between">
+
+                        <span class="flex items-center gap-2 text-[13px] font-medium text-brand-900">
+                            <span class="material-symbols-outlined text-[18px] text-brand-500">
+                                local_cafe
+                            </span>
+                            Beverages
+                        </span>
+
+                        <span class="material-symbols-outlined text-[26px]">
+                            star_border
+                        </span>
+
+                    </div>
+
+                    <h3 class="mt-3 text-[18px] font-semibold">
+                        Cappuccino
+                    </h3>
+
+                    <div class="mt-5 flex items-center justify-between">
+
+                        <span class="text-[15px] font-semibold">
+                            ₹120.00
+                        </span>
+
+                        <div class="flex items-center gap-3">
+
+                            <span class="rounded-md bg-[#E8F7EC] px-2 py-1 text-[11px] font-semibold text-success">
+                                Available
+                            </span>
+
+                            <span class="toggle on" style="width:43px;height:24px"></span>
+
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- MOBILE CARD 2 -->
+            <article class="overflow-hidden rounded-xl border border-[#EAECEF] bg-white shadow-card">
+
+                <div class="relative h-[188px]">
+
+                    <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=700&q=85"
+                        class="product-image" alt="Chocolate Cake" />
+
+                    <button
+                        class="absolute left-3 top-3 flex h-[45px] w-[45px] items-center justify-center rounded-xl bg-white text-brand-500 shadow-sm">
+                        <span class="material-symbols-outlined text-[24px]">
+                            edit
+                        </span>
+                    </button>
+
+                    <button
+                        class="absolute right-3 top-3 flex h-[45px] w-[45px] items-center justify-center rounded-xl bg-white text-error shadow-sm">
+                        <span class="material-symbols-outlined text-[24px]">
+                            delete_outline
+                        </span>
+                    </button>
+
+                </div>
+
+                <div class="p-4">
+
+                    <div class="flex items-center justify-between">
+
+                        <span class="flex items-center gap-2 text-[13px] font-medium text-error">
+                            <span class="material-symbols-outlined text-[18px]">
+                                cake
+                            </span>
+                            Desserts
+                        </span>
+
+                        <span class="material-symbols-outlined text-[26px]">
+                            star_border
+                        </span>
+
+                    </div>
+
+                    <h3 class="mt-3 text-[18px] font-semibold">
+                        Chocolate Cake
+                    </h3>
+
+                    <div class="mt-5 flex items-center justify-between">
+
+                        <span class="text-[15px] font-semibold">
+                            ₹80.00
+                        </span>
+
+                        <div class="flex items-center gap-3">
+
+                            <span class="rounded-md bg-[#E8F7EC] px-2 py-1 text-[11px] font-semibold text-success">
+                                Available
+                            </span>
+
+                            <span class="toggle on" style="width:43px;height:24px"></span>
+
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- MOBILE CARD 3 -->
+            <article class="overflow-hidden rounded-xl border border-[#EAECEF] bg-white shadow-card">
+
+                <div class="relative h-[188px] bg-black">
+
+                    <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=700&q=85"
+                        class="product-image" alt="Veg Burger" />
+
+                    <button
+                        class="absolute left-3 top-3 flex h-[45px] w-[45px] items-center justify-center rounded-xl bg-white text-brand-500 shadow-sm">
+                        <span class="material-symbols-outlined text-[24px]">
+                            edit
+                        </span>
+                    </button>
+
+                    <button
+                        class="absolute right-3 top-3 flex h-[45px] w-[45px] items-center justify-center rounded-xl bg-white text-error shadow-sm">
+                        <span class="material-symbols-outlined text-[24px]">
+                            delete_outline
+                        </span>
+                    </button>
+
+                </div>
+
+                <div class="p-4">
+
+                    <div class="flex items-center justify-between">
+
+                        <span class="flex items-center gap-2 text-[13px] font-medium text-warning">
+                            <span class="material-symbols-outlined text-[18px]">
+                                restaurant
+                            </span>
+                            Food
+                        </span>
+
+                        <span class="material-symbols-outlined text-[26px] text-warning">
+                            star
+                        </span>
+
+                    </div>
+
+                    <h3 class="mt-3 text-[18px] font-semibold">
+                        Veg Burger
+                    </h3>
+
+                    <div class="mt-5 flex items-center justify-between">
+
+                        <span class="text-[15px] font-semibold">
+                            ₹90.00
+                        </span>
+
+                        <div class="flex items-center gap-3">
+
+                            <span class="rounded-md bg-[#E8F7EC] px-2 py-1 text-[11px] font-semibold text-success">
+                                Available
+                            </span>
+
+                            <span class="toggle on" style="width:43px;height:24px"></span>
+
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- MOBILE CARD 4 -->
+            <article class="overflow-hidden rounded-xl border border-[#EAECEF] bg-white shadow-card">
+
+                <div class="relative h-[188px]">
+
+                    <img src="https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=700&q=85"
+                        class="product-image" alt="Fresh Orange Juice" />
+
+                    <button
+                        class="absolute left-3 top-3 flex h-[45px] w-[45px] items-center justify-center rounded-xl bg-white text-brand-500 shadow-sm">
+                        <span class="material-symbols-outlined text-[24px]">
+                            edit
+                        </span>
+                    </button>
+
+                    <button
+                        class="absolute right-3 top-3 flex h-[45px] w-[45px] items-center justify-center rounded-xl bg-white text-error shadow-sm">
+                        <span class="material-symbols-outlined text-[24px]">
+                            delete_outline
+                        </span>
+                    </button>
+
+                </div>
+
+                <div class="p-4">
+
+                    <div class="flex items-center justify-between">
+
+                        <span class="flex items-center gap-2 text-[13px] font-medium text-brand-500">
+                            <span class="material-symbols-outlined text-[18px]">
+                                local_cafe
+                            </span>
+                            Beverages
+                        </span>
+
+                        <span class="material-symbols-outlined text-[26px]">
+                            star_border
+                        </span>
+
+                    </div>
+
+                    <h3 class="mt-3 text-[18px] font-semibold">
+                        Fresh Orange Juice
+                    </h3>
+
+                    <div class="mt-5 flex items-center justify-between">
+
+                        <span class="text-[15px] font-semibold">
+                            ₹70.00
+                        </span>
+
+                        <div class="flex items-center gap-3">
+
+                            <span class="rounded-md bg-[#E8F7EC] px-2 py-1 text-[11px] font-semibold text-success">
+                                Available
+                            </span>
+
+                            <span class="toggle on" style="width:43px;height:24px"></span>
+
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- MOBILE CARD 5 -->
+            <article class="overflow-hidden rounded-xl border border-[#EAECEF] bg-white shadow-card">
+
+                <div class="relative h-[188px]">
+
+                    <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=700&q=85"
+                        class="product-image" alt="Cold Coffee" />
+
+                    <button
+                        class="absolute left-3 top-3 flex h-[45px] w-[45px] items-center justify-center rounded-xl bg-white text-brand-500 shadow-sm">
+                        <span class="material-symbols-outlined text-[24px]">
+                            edit
+                        </span>
+                    </button>
+
+                    <button
+                        class="absolute right-3 top-3 flex h-[45px] w-[45px] items-center justify-center rounded-xl bg-white text-error shadow-sm">
+                        <span class="material-symbols-outlined text-[24px]">
+                            delete_outline
+                        </span>
+                    </button>
+
+                </div>
+
+                <div class="p-4">
+
+                    <div class="flex items-center justify-between">
+
+                        <span class="flex items-center gap-2 text-[13px] font-medium text-brand-500">
+                            <span class="material-symbols-outlined text-[18px]">
+                                local_cafe
+                            </span>
+                            Beverages
+                        </span>
+
+                        <span class="material-symbols-outlined text-[26px] text-warning">
+                            star
+                        </span>
+
+                    </div>
+
+                    <h3 class="mt-3 text-[18px] font-semibold">
+                        Cold Coffee
+                    </h3>
+
+                    <div class="mt-5 flex items-center justify-between">
+
+                        <span class="text-[15px] font-semibold">
+                            ₹110.00
+                        </span>
+
+                        <div class="flex items-center gap-3">
+
+                            <span class="rounded-md bg-[#E8F7EC] px-2 py-1 text-[11px] font-semibold text-success">
+                                Available
+                            </span>
+
+                            <span class="toggle on" style="width:43px;height:24px"></span>
+
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- MOBILE CARD 6 -->
+            <article class="overflow-hidden rounded-xl border border-[#EAECEF] bg-white shadow-card">
+
+                <div class="relative h-[188px]">
+
+                    <img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=700&q=85"
+                        class="product-image" alt="Club Sandwich" />
+
+                    <button
+                        class="absolute left-3 top-3 flex h-[45px] w-[45px] items-center justify-center rounded-xl bg-white text-brand-500 shadow-sm">
+                        <span class="material-symbols-outlined text-[24px]">
+                            edit
+                        </span>
+                    </button>
+
+                    <button
+                        class="absolute right-3 top-3 flex h-[45px] w-[45px] items-center justify-center rounded-xl bg-white text-error shadow-sm">
+                        <span class="material-symbols-outlined text-[24px]">
+                            delete_outline
+                        </span>
+                    </button>
+
+                </div>
+
+                <div class="p-4">
+
+                    <div class="flex items-center justify-between">
+
+                        <span class="flex items-center gap-2 text-[13px] font-medium text-warning">
+                            <span class="material-symbols-outlined text-[18px]">
+                                restaurant
+                            </span>
+                            Food
+                        </span>
+
+                        <span class="material-symbols-outlined text-[26px]">
+                            star_border
+                        </span>
+
+                    </div>
+
+                    <h3 class="mt-3 text-[18px] font-semibold">
+                        Club Sandwich
+                    </h3>
+
+                    <div class="mt-5 flex items-center justify-between">
+
+                        <span class="text-[15px] font-semibold">
+                            ₹130.00
+                        </span>
+
+                        <div class="flex items-center gap-3">
+
+                            <span class="rounded-md bg-[#E8F7EC] px-2 py-1 text-[11px] font-semibold text-success">
+                                Available
+                            </span>
+
+                            <span class="toggle on" style="width:43px;height:24px"></span>
+
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- MOBILE CARD 7 -->
+            <article class="overflow-hidden rounded-xl border border-[#EAECEF] bg-white shadow-card">
+
+                <div class="relative h-[188px] bg-black">
+
+                    <img src="https://images.unsplash.com/photo-1573080496219-bb080dd4f877?auto=format&fit=crop&w=700&q=85"
+                        class="product-image" alt="French Fries" />
+
+                    <button
+                        class="absolute left-3 top-3 flex h-[45px] w-[45px] items-center justify-center rounded-xl bg-white text-brand-500 shadow-sm">
+                        <span class="material-symbols-outlined text-[24px]">
+                            edit
+                        </span>
+                    </button>
+
+                    <button
+                        class="absolute right-3 top-3 flex h-[45px] w-[45px] items-center justify-center rounded-xl bg-white text-error shadow-sm">
+                        <span class="material-symbols-outlined text-[24px]">
+                            delete_outline
+                        </span>
+                    </button>
+
+                </div>
+
+                <div class="p-4">
+
+                    <div class="flex items-center justify-between">
+
+                        <span class="flex items-center gap-2 text-[13px] font-medium text-brand-500">
+                            <span class="material-symbols-outlined text-[18px]">
+                                restaurant
+                            </span>
+                            Sides
+                        </span>
+
+                        <span class="material-symbols-outlined text-[26px]">
+                            star_border
+                        </span>
+
+                    </div>
+
+                    <h3 class="mt-3 text-[18px] font-semibold">
+                        French Fries
+                    </h3>
+
+                    <div class="mt-5 flex items-center justify-between">
+
+                        <span class="text-[15px] font-semibold">
+                            ₹60.00
+                        </span>
+
+                        <div class="flex items-center gap-3">
+
+                            <span class="rounded-md bg-[#E8F7EC] px-2 py-1 text-[11px] font-semibold text-success">
+                                Available
+                            </span>
+
+                            <span class="toggle on" style="width:43px;height:24px"></span>
+
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- MOBILE CARD 8 -->
+            <article class="overflow-hidden rounded-xl border border-[#EAECEF] bg-white shadow-card">
+
+                <div class="relative h-[188px] bg-black">
+
+                    <img src="https://images.unsplash.com/photo-1573140401552-3fab0b24306f?auto=format&fit=crop&w=700&q=85"
+                        class="product-image" alt="Garlic Bread" />
+
+                    <button
+                        class="absolute left-3 top-3 flex h-[45px] w-[45px] items-center justify-center rounded-xl bg-white text-brand-500 shadow-sm">
+                        <span class="material-symbols-outlined text-[24px]">
+                            edit
+                        </span>
+                    </button>
+
+                    <button
+                        class="absolute right-3 top-3 flex h-[45px] w-[45px] items-center justify-center rounded-xl bg-white text-error shadow-sm">
+                        <span class="material-symbols-outlined text-[24px]">
+                            delete_outline
+                        </span>
+                    </button>
+
+                </div>
+
+                <div class="p-4">
+
+                    <div class="flex items-center justify-between">
+
+                        <span class="flex items-center gap-2 text-[13px] font-medium text-brand-500">
+                            <span class="material-symbols-outlined text-[18px]">
+                                restaurant
+                            </span>
+                            Sides
+                        </span>
+
+                        <span class="material-symbols-outlined text-[26px]">
+                            star_border
+                        </span>
+
+                    </div>
+
+                    <h3 class="mt-3 text-[18px] font-semibold">
+                        Garlic Bread
+                    </h3>
+
+                    <div class="mt-5 flex items-center justify-between">
+
+                        <span class="text-[15px] font-semibold">
+                            ₹50.00
+                        </span>
+
+                        <div class="flex items-center gap-3">
+
+                            <span class="rounded-md bg-[#FEECEC] px-2 py-1 text-[11px] font-semibold text-error">
+                                Unavailable
+                            </span>
+
+                            <span class="toggle off" style="width:43px;height:24px"></span>
+
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- MOBILE CARD 9 -->
+            <article class="overflow-hidden rounded-xl border border-[#EAECEF] bg-white shadow-card">
+
+                <div class="relative h-[188px] bg-black">
+
+                    <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=700&q=85"
+                        class="product-image" alt="Margherita Pizza" />
+
+                    <button
+                        class="absolute left-3 top-3 flex h-[45px] w-[45px] items-center justify-center rounded-xl bg-white text-brand-500 shadow-sm">
+                        <span class="material-symbols-outlined text-[24px]">
+                            edit
+                        </span>
+                    </button>
+
+                    <button
+                        class="absolute right-3 top-3 flex h-[45px] w-[45px] items-center justify-center rounded-xl bg-white text-error shadow-sm">
+                        <span class="material-symbols-outlined text-[24px]">
+                            delete_outline
+                        </span>
+                    </button>
+
+                </div>
+
+                <div class="p-4">
+
+                    <div class="flex items-center justify-between">
+
+                        <span class="flex items-center gap-2 text-[13px] font-medium text-warning">
+                            <span class="material-symbols-outlined text-[18px]">
+                                restaurant
+                            </span>
+                            Food
+                        </span>
+
+                        <span class="material-symbols-outlined text-[26px] text-warning">
+                            star
+                        </span>
+
+                    </div>
+
+                    <h3 class="mt-3 text-[18px] font-semibold">
+                        Margherita Pizza
+                    </h3>
+
+                    <div class="mt-5 flex items-center justify-between">
+
+                        <span class="text-[15px] font-semibold">
+                            ₹180.00
+                        </span>
+
+                        <div class="flex items-center gap-3">
+
+                            <span class="rounded-md bg-[#E8F7EC] px-2 py-1 text-[11px] font-semibold text-success">
+                                Available
+                            </span>
+
+                            <span class="toggle on" style="width:43px;height:24px"></span>
+
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- MOBILE CARD 10 -->
+            <article class="overflow-hidden rounded-xl border border-[#EAECEF] bg-white shadow-card">
+
+                <div class="relative h-[188px]">
+
+                    <img src="https://images.unsplash.com/photo-1547592180-85f173990554?auto=format&fit=crop&w=700&q=85"
+                        class="product-image" alt="Paneer Tikka" />
+
+                    <button
+                        class="absolute left-3 top-3 flex h-[45px] w-[45px] items-center justify-center rounded-xl bg-white text-brand-500 shadow-sm">
+                        <span class="material-symbols-outlined text-[24px]">
+                            edit
+                        </span>
+                    </button>
+
+                    <button
+                        class="absolute right-3 top-3 flex h-[45px] w-[45px] items-center justify-center rounded-xl bg-white text-error shadow-sm">
+                        <span class="material-symbols-outlined text-[24px]">
+                            delete_outline
+                        </span>
+                    </button>
+
+                </div>
+
+                <div class="p-4">
+
+                    <div class="flex items-center justify-between">
+
+                        <span class="flex items-center gap-2 text-[13px] font-medium text-warning">
+                            <span class="material-symbols-outlined text-[18px]">
+                                restaurant
+                            </span>
+                            Food
+                        </span>
+
+                        <span class="material-symbols-outlined text-[26px]">
+                            star_border
+                        </span>
+
+                    </div>
+
+                    <h3 class="mt-3 text-[18px] font-semibold">
+                        Paneer Tikka
+                    </h3>
+
+                    <div class="mt-5 flex items-center justify-between">
+
+                        <span class="text-[15px] font-semibold">
+                            ₹150.00
+                        </span>
+
+                        <div class="flex items-center gap-3">
+
+                            <span class="rounded-md bg-[#E8F7EC] px-2 py-1 text-[11px] font-semibold text-success">
+                                Available
+                            </span>
+
+                            <span class="toggle on" style="width:43px;height:24px"></span>
+
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- MOBILE CARD 11 -->
+            <article class="overflow-hidden rounded-xl border border-[#EAECEF] bg-white shadow-card">
+
+                <div class="relative h-[188px]">
+
+                    <img src="https://images.unsplash.com/photo-1556761223-4c4282c73f77?auto=format&fit=crop&w=700&q=85"
+                        class="product-image" alt="Veg Pasta" />
+
+                    <button
+                        class="absolute left-3 top-3 flex h-[45px] w-[45px] items-center justify-center rounded-xl bg-white text-brand-500 shadow-sm">
+                        <span class="material-symbols-outlined text-[24px]">
+                            edit
+                        </span>
+                    </button>
+
+                    <button
+                        class="absolute right-3 top-3 flex h-[45px] w-[45px] items-center justify-center rounded-xl bg-white text-error shadow-sm">
+                        <span class="material-symbols-outlined text-[24px]">
+                            delete_outline
+                        </span>
+                    </button>
+
+                </div>
+
+                <div class="p-4">
+
+                    <div class="flex items-center justify-between">
+
+                        <span class="flex items-center gap-2 text-[13px] font-medium text-warning">
+                            <span class="material-symbols-outlined text-[18px]">
+                                restaurant
+                            </span>
+                            Food
+                        </span>
+
+                        <span class="material-symbols-outlined text-[26px]">
+                            star_border
+                        </span>
+
+                    </div>
+
+                    <h3 class="mt-3 text-[18px] font-semibold">
+                        Veg Pasta
+                    </h3>
+
+                    <div class="mt-5 flex items-center justify-between">
+
+                        <span class="text-[15px] font-semibold">
+                            ₹140.00
+                        </span>
+
+                        <div class="flex items-center gap-3">
+
+                            <span class="rounded-md bg-[#E8F7EC] px-2 py-1 text-[11px] font-semibold text-success">
+                                Available
+                            </span>
+
+                            <span class="toggle on" style="width:43px;height:24px"></span>
+
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- MOBILE CARD 12 -->
+            <article class="overflow-hidden rounded-xl border border-[#EAECEF] bg-white shadow-card">
+
+                <div class="relative h-[188px]">
+
+                    <img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=700&q=85"
+                        class="product-image" alt="Lemonade" />
+
+                    <button
+                        class="absolute left-3 top-3 flex h-[45px] w-[45px] items-center justify-center rounded-xl bg-white text-brand-500 shadow-sm">
+                        <span class="material-symbols-outlined text-[24px]">
+                            edit
+                        </span>
+                    </button>
+
+                    <button
+                        class="absolute right-3 top-3 flex h-[45px] w-[45px] items-center justify-center rounded-xl bg-white text-error shadow-sm">
+                        <span class="material-symbols-outlined text-[24px]">
+                            delete_outline
+                        </span>
+                    </button>
+
+                </div>
+
+                <div class="p-4">
+
+                    <div class="flex items-center justify-between">
+
+                        <span class="flex items-center gap-2 text-[13px] font-medium text-brand-500">
+                            <span class="material-symbols-outlined text-[18px]">
+                                local_cafe
+                            </span>
+                            Beverages
+                        </span>
+
+                        <span class="material-symbols-outlined text-[26px]">
+                            star_border
+                        </span>
+
+                    </div>
+
+                    <h3 class="mt-3 text-[18px] font-semibold">
+                        Lemonade
+                    </h3>
+
+                    <div class="mt-5 flex items-center justify-between">
+
+                        <span class="text-[15px] font-semibold">
+                            ₹60.00
+                        </span>
+
+                        <div class="flex items-center gap-3">
+
+                            <span class="rounded-md bg-[#E8F7EC] px-2 py-1 text-[11px] font-semibold text-success">
+                                Available
+                            </span>
+
+                            <span class="toggle on" style="width:43px;height:24px"></span>
+
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+        </main>
+
+        <!-- MOBILE BOTTOM NAV -->
+        <nav
+            class="mobile-nav fixed bottom-0 left-0 right-0 z-50 border-t border-[#EAECEF] bg-white/95 px-3 pb-3 pt-2 shadow-[0_-8px_25px_rgba(31,41,88,.06)]">
+
+            <div class="grid grid-cols-5 items-end">
+
+                <!-- Dashboard -->
+                <a href="#" class="flex flex-col items-center gap-1.5 py-2 text-ink">
+                    <span class="material-symbols-outlined text-[24px]">
+                        home
+                    </span>
+                    <span class="text-[11px] font-semibold">
+                        Dashboard
+                    </span>
+                </a>
+
+                <!-- Billing -->
+                <a href="#" class="flex flex-col items-center gap-1.5 py-2 text-ink">
+                    <span class="material-symbols-outlined text-[24px]">
+                        receipt_long
+                    </span>
+                    <span class="text-[11px] font-semibold">
+                        Billing
+                    </span>
+                </a>
+
+                <!-- Products -->
+                <a href="#" class="flex flex-col items-center gap-1.5 rounded-[25px] bg-brand-50 py-3 text-brand-500">
+                    <span class="material-symbols-outlined text-[28px]">
+                        inventory_2
+                    </span>
+                    <span class="text-[11px] font-bold">
+                        Products
+                    </span>
+                </a>
+
+                <!-- Customers -->
+                <a href="#" class="flex flex-col items-center gap-1.5 py-2 text-ink">
+                    <span class="material-symbols-outlined text-[24px]">
+                        group
+                    </span>
+                    <span class="text-[11px] font-semibold">
+                        Customers
+                    </span>
+                </a>
+
+                <!-- More -->
+                <a href="#" class="flex flex-col items-center gap-1.5 py-2 text-ink">
+                    <span class="material-symbols-outlined text-[24px]">
+                        more_horiz
+                    </span>
+                    <span class="text-[11px] font-semibold">
+                        More
+                    </span>
+                </a>
+
+            </div>
+        </nav>
+
+    </div>
+
+</body>
+
+</html>

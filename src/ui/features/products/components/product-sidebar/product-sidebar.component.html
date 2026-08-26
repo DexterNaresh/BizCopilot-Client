@@ -1,0 +1,92 @@
+<aside class="sidebar">
+
+  <!-- Quick Actions -->
+  <section class="sidebar__card">
+    <h2 class="sidebar__card-title">Quick Actions</h2>
+    <div class="sidebar__actions-list">
+      <button class="sidebar__action-item">
+        <span class="sidebar__action-left">
+          <span class="material-symbols-outlined sidebar__action-icon">folder</span>
+          <span class="sidebar__action-label">Categories</span>
+        </span>
+        <span class="material-symbols-outlined sidebar__action-chevron">chevron_right</span>
+      </button>
+
+      <button class="sidebar__action-item">
+        <span class="sidebar__action-left">
+          <span class="material-symbols-outlined sidebar__action-icon">upload</span>
+          <span class="sidebar__action-label">Import Products</span>
+        </span>
+        <span class="material-symbols-outlined sidebar__action-chevron">chevron_right</span>
+      </button>
+
+      <button class="sidebar__action-item">
+        <span class="sidebar__action-left">
+          <span class="material-symbols-outlined sidebar__action-icon">download</span>
+          <span class="sidebar__action-label">Export Products</span>
+        </span>
+        <span class="material-symbols-outlined sidebar__action-chevron">chevron_right</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Product Summary -->
+  <section class="sidebar__card">
+    <h2 class="sidebar__card-title">Product Summary</h2>
+    <div class="sidebar__summary-list">
+      <div class="sidebar__summary-row">
+        <span class="sidebar__summary-label">Total Products</span>
+        <span class="sidebar__summary-value">{{ summary?.totalProducts ?? 0 }}</span>
+      </div>
+      <div class="sidebar__summary-row">
+        <span class="sidebar__summary-label">Available</span>
+        <span class="sidebar__summary-value sidebar__summary-value--success">{{ summary?.availableProducts ?? 0 }}</span>
+      </div>
+      <div class="sidebar__summary-row">
+        <span class="sidebar__summary-label">Unavailable</span>
+        <span class="sidebar__summary-value sidebar__summary-value--error">{{ summary?.unavailableProducts ?? 0 }}</span>
+      </div>
+      <div class="sidebar__summary-row">
+        <span class="sidebar__summary-label">Categories</span>
+        <span class="sidebar__summary-value">{{ summary?.totalCategories ?? 0 }}</span>
+      </div>
+      <div class="sidebar__summary-row">
+        <span class="sidebar__summary-label">Favourites</span>
+        <span class="sidebar__summary-value">{{ summary?.favouriteProducts ?? 0 }}</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tips -->
+  <section class="sidebar__card">
+    <div class="sidebar__tips-header">
+      <span class="material-symbols-outlined sidebar__tips-icon">lightbulb</span>
+      <h2 class="sidebar__card-title">Tips</h2>
+    </div>
+    <ul class="sidebar__tips-list">
+      <li>Use search or filters to quickly find products.</li>
+      <li>Mark favourites to show in billing faster.</li>
+      <li>Keep your product catalog updated for accurate billing.</li>
+    </ul>
+  </section>
+
+  <!-- Roadmap -->
+  <section class="sidebar__roadmap">
+    <div class="sidebar__roadmap-header">
+      <h2 class="sidebar__roadmap-title">Upcoming (V2 &amp; V3)</h2>
+      <span class="sidebar__roadmap-badge">Planned</span>
+    </div>
+    <ul class="sidebar__roadmap-list">
+      <li>Inventory Management (V2)</li>
+      <li>Purchase Price &amp; Stock (V2)</li>
+      <li>Supplier &amp; Variants (V2)</li>
+      <li>Advanced Pricing (V3)</li>
+      <li>Stock Alerts (V3)</li>
+    </ul>
+    <button class="sidebar__roadmap-link">
+      View Roadmap
+      <span class="material-symbols-outlined">arrow_forward</span>
+    </button>
+  </section>
+
+</aside>

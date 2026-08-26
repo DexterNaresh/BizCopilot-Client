@@ -1,0 +1,64 @@
+<!-- Search Row -->
+<div class="filters__search-row">
+  <div class="filters__search-wrapper">
+    <span class="material-symbols-outlined filters__search-icon">search</span>
+    <input type="text"
+           class="filters__search-input"
+           placeholder="Search by product name or barcode..."
+           [value]="searchQuery"
+           (input)="onSearchInput($event)" />
+  </div>
+
+  <button class="filters__filter-btn">
+    <span class="material-symbols-outlined">filter_list</span>
+    <span class="filters__filter-btn-label">Filters</span>
+  </button>
+</div>
+
+<!-- Quick Filter Pills -->
+<div class="filters__pills">
+  <button class="filters__pill"
+          [class.filters__pill--active]="activeStatusFilter === 'all'"
+          (click)="setFilterStatus('all')">
+    <span class="filters__pill-label">All Products</span>
+    <span class="filters__pill-badge" [class.filters__pill-badge--active]="activeStatusFilter === 'all'">{{ totalProducts }}</span>
+  </button>
+
+  <button class="filters__pill"
+          [class.filters__pill--selected]="activeStatusFilter === 'available'"
+          (click)="setFilterStatus('available')">
+    <span class="filters__pill-label">Available</span>
+    <span class="filters__pill-badge filters__pill-badge--success">{{ availableCount }}</span>
+  </button>
+
+  <button class="filters__pill"
+          [class.filters__pill--selected]="activeStatusFilter === 'unavailable'"
+          (click)="setFilterStatus('unavailable')">
+    <span class="filters__pill-label">Unavailable</span>
+    <span class="filters__pill-badge filters__pill-badge--error">{{ unavailableCount }}</span>
+  </button>
+
+  <button class="filters__pill" (click)="toggleFavourites()">
+    <span class="material-symbols-outlined filters__star-icon">star</span>
+    <span class="filters__pill-label">Favourites</span>
+    <span class="filters__pill-badge filters__pill-badge--neutral">{{ favouriteCount }}</span>
+  </button>
+
+  <button class="filters__pill filters__pill--dropdown">
+    <span class="filters__pill-label">All Categories</span>
+    <span class="material-symbols-outlined filters__dropdown-icon">expand_more</span>
+  </button>
+</div>
+
+<!-- View Mode Toggle -->
+<div class="filters__view-toggle">
+  <button class="filters__view-btn" [class.filters__view-btn--active]="activeViewMode === 'grid'" (click)="setViewMode('grid')">
+    <span class="material-symbols-outlined">grid_view</span>
+    <span class="filters__view-btn-label">Grid View</span>
+  </button>
+
+  <button class="filters__view-btn" [class.filters__view-btn--active]="activeViewMode === 'table'" (click)="setViewMode('table')">
+    <span class="material-symbols-outlined">table_rows</span>
+    <span class="filters__view-btn-label">Table View</span>
+  </button>
+</div>

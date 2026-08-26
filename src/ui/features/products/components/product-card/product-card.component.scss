@@ -1,0 +1,318 @@
+@use '../../../../theme/breakpoints' as *;
+
+:host {
+  display: block;
+}
+
+.product-card {
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  box-shadow: 0 2px 12px rgba(31, 41, 88, 0.06);
+  transition: box-shadow 0.2s ease;
+
+  &:hover {
+    box-shadow: 0 8px 30px rgba(53, 31, 122, 0.07);
+  }
+}
+
+// ── Image ──
+.product-card__image-wrapper {
+  position: relative;
+  height: 113px;
+  background: #000;
+  overflow: hidden;
+
+  @include mobile {
+    height: 188px;
+  }
+
+  @include tablet {
+    height: 105px;
+  }
+}
+
+.product-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.product-card__image-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+
+  .material-symbols-outlined {
+    font-size: 40px;
+    color: var(--color-text-muted);
+  }
+}
+
+// ── Action Buttons (edit / delete) ──
+.product-card__action-btn {
+  position: absolute;
+  top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--color-surface);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  .material-symbols-outlined {
+    font-size: 20px;
+  }
+
+  @include mobile {
+    width: 45px;
+    height: 45px;
+    top: 12px;
+    border-radius: 12px;
+
+    .material-symbols-outlined {
+      font-size: 24px;
+    }
+  }
+
+  @include tablet {
+    width: 32px;
+    height: 32px;
+
+    .material-symbols-outlined {
+      font-size: 18px;
+    }
+  }
+}
+
+.product-card__action-btn--edit {
+  left: 8px;
+  color: var(--color-primary);
+
+  @include mobile {
+    left: 12px;
+  }
+}
+
+.product-card__action-btn--delete {
+  right: 8px;
+  color: var(--color-error);
+
+  @include mobile {
+    right: 12px;
+  }
+}
+
+// ── Content ──
+.product-card__content {
+  padding: 12px;
+
+  @include mobile {
+    padding: 16px;
+  }
+}
+
+// ── Meta (Category + Star) ──
+.product-card__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.product-card__category {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 10px;
+  font-weight: 500;
+
+  @include mobile {
+    font-size: 13px;
+  }
+}
+
+.product-card__category-icon {
+  font-size: 18px;
+}
+
+// Category color variants
+.category--beverages {
+  color: var(--color-primary);
+}
+
+.category--desserts {
+  color: var(--color-error);
+}
+
+.category--food {
+  color: #D97706;
+}
+
+.category--default {
+  color: var(--color-primary);
+}
+
+.product-card__favourite-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+
+  .material-symbols-outlined {
+    font-size: 22px;
+    color: var(--color-text-muted);
+    transition: color 0.15s ease;
+
+    &.is-favourite {
+      color: #D97706;
+    }
+  }
+
+  @include mobile {
+    width: 28px;
+    height: 28px;
+
+    .material-symbols-outlined {
+      font-size: 26px;
+    }
+  }
+}
+
+// ── Name ──
+.product-card__name {
+  margin-top: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @include mobile {
+    margin-top: 12px;
+    font-size: 18px;
+  }
+}
+
+// ── Footer (Price + Toggle) ──
+.product-card__footer {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  @include mobile {
+    margin-top: 20px;
+  }
+}
+
+.product-card__price {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+
+  @include mobile {
+    font-size: 15px;
+  }
+}
+
+.product-card__availability {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  @include mobile {
+    gap: 12px;
+  }
+}
+
+.product-card__status-badge {
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 9px;
+  font-weight: 600;
+
+  @include mobile {
+    font-size: 11px;
+  }
+}
+
+.status--available {
+  background: #E8F7EC;
+  color: var(--color-success);
+}
+
+.status--unavailable {
+  background: #FEECEC;
+  color: var(--color-error);
+}
+
+// ── Toggle Switch ──
+.product-card__toggle {
+  position: relative;
+  width: 40px;
+  height: 22px;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+
+  @include mobile {
+    width: 43px;
+    height: 24px;
+  }
+}
+
+.toggle--on {
+  background: var(--color-primary);
+}
+
+.toggle--off {
+  background: #dfe3eb;
+}
+
+.product-card__toggle-knob {
+  position: absolute;
+  top: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.16);
+  transition: left 0.2s ease, right 0.2s ease;
+
+  .toggle--on & {
+    right: 3px;
+    left: auto;
+  }
+
+  .toggle--off & {
+    left: 3px;
+    right: auto;
+  }
+
+  @include mobile {
+    top: 4px;
+  }
+}

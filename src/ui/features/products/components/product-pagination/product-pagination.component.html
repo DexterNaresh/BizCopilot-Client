@@ -1,0 +1,75 @@
+<div class="pagination">
+
+  <!-- Desktop: Rows per page + Page Numbers + Showing info -->
+  <div class="pagination__desktop">
+    <div class="pagination__rows-per-page">
+      <span class="pagination__label">Rows per page:</span>
+      <div class="pagination__select-wrapper">
+        <select [value]="pageSize" (change)="onPageSizeSelect($event)" class="pagination__select">
+          <option [value]="12">12</option>
+          <option [value]="24">24</option>
+          <option [value]="48">48</option>
+        </select>
+        <span class="material-symbols-outlined pagination__select-icon">expand_more</span>
+      </div>
+    </div>
+
+    <div class="pagination__page-numbers">
+      <button class="pagination__nav-btn" [disabled]="currentPage === 1" (click)="prevPage()">
+        <span class="material-symbols-outlined">chevron_left</span>
+      </button>
+
+      <ng-container *ngFor="let page of pageNumbers">
+        <span *ngIf="page === 'ellipsis'" class="pagination__ellipsis">...</span>
+        <button *ngIf="page !== 'ellipsis'"
+                class="pagination__page-btn"
+                [class.pagination__page-btn--active]="page === currentPage"
+                (click)="goToPage(+page)">
+          {{ page }}
+        </button>
+      </ng-container>
+
+      <button class="pagination__nav-btn" [disabled]="currentPage === totalPages" (click)="nextPage()">
+        <span class="material-symbols-outlined">chevron_right</span>
+      </button>
+    </div>
+
+    <span class="pagination__info">
+      Showing {{ startItem }} to {{ endItem }} of {{ totalItems }} products
+    </span>
+  </div>
+
+  <!-- Tablet/Mobile: compact pagination -->
+  <div class="pagination__compact">
+    <span class="pagination__info">
+      Showing {{ startItem }} to {{ endItem }} of {{ totalItems }} products
+    </span>
+
+    <div class="pagination__page-numbers">
+      <button class="pagination__nav-btn" [disabled]="currentPage === 1" (click)="prevPage()">
+        <span class="material-symbols-outlined">chevron_left</span>
+      </button>
+
+      <button class="pagination__page-btn pagination__page-btn--active">
+        {{ currentPage }}
+      </button>
+
+      <ng-container *ngIf="currentPage < totalPages">
+        <button class="pagination__page-btn" (click)="goToPage(currentPage + 1)">
+          {{ currentPage + 1 }}
+        </button>
+      </ng-container>
+
+      <ng-container *ngIf="currentPage + 1 < totalPages">
+        <button class="pagination__page-btn" (click)="goToPage(currentPage + 2)">
+          {{ currentPage + 2 }}
+        </button>
+      </ng-container>
+
+      <button class="pagination__nav-btn" [disabled]="currentPage === totalPages" (click)="nextPage()">
+        <span class="material-symbols-outlined">chevron_right</span>
+      </button>
+    </div>
+  </div>
+
+</div>

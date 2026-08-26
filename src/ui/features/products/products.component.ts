@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ProductListComponent } from './pages/product-list/product-list.component';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule],
-  template: '<div class="placeholder-screen"></div>',
-  styles: ['.placeholder-screen { width: 100%; height: 100%; background-color: var(--color-surface); }']
+  imports: [CommonModule, ProductListComponent],
+  template: '<biz-product-list-page></biz-product-list-page>'
 })
-export class ProductsComponent {}
+export class ProductsComponent { }

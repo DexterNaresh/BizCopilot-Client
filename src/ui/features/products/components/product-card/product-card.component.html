@@ -1,0 +1,54 @@
+<article class="product-card">
+  <!-- Image Area -->
+  <div class="product-card__image-wrapper">
+    <img *ngIf="product.imageUrl" [src]="product.imageUrl" [alt]="product.name" class="product-card__image" />
+    <div *ngIf="!product.imageUrl" class="product-card__image-placeholder">
+      <span class="material-symbols-outlined">inventory_2</span>
+    </div>
+
+    <button class="product-card__action-btn product-card__action-btn--edit" (click)="onEdit()" aria-label="Edit product">
+      <span class="material-symbols-outlined">edit</span>
+    </button>
+
+    <button class="product-card__action-btn product-card__action-btn--delete" (click)="onRemove()" aria-label="Delete product">
+      <span class="material-symbols-outlined">delete_outline</span>
+    </button>
+  </div>
+
+  <!-- Content Area -->
+  <div class="product-card__content">
+    <!-- Category + Favourite -->
+    <div class="product-card__meta">
+      <span class="product-card__category" [ngClass]="categoryColorClass">
+        <span class="material-symbols-outlined product-card__category-icon">{{ categoryIcon }}</span>
+        {{ product.categoryName }}
+      </span>
+
+      <button class="product-card__favourite-btn" (click)="onToggleFavourite()" [attr.aria-label]="product.favourite ? 'Remove from favourites' : 'Add to favourites'">
+        <span class="material-symbols-outlined" [class.is-favourite]="product.favourite">
+          {{ product.favourite ? 'star' : 'star_border' }}
+        </span>
+      </button>
+    </div>
+
+    <!-- Product Name -->
+    <h3 class="product-card__name">{{ product.name }}</h3>
+
+    <!-- Price + Availability -->
+    <div class="product-card__footer">
+      <span class="product-card__price">₹{{ product.price | number:'1.2-2' }}</span>
+
+      <div class="product-card__availability">
+        <span class="product-card__status-badge" [ngClass]="product.available ? 'status--available' : 'status--unavailable'">
+          {{ product.available ? 'Available' : 'Unavailable' }}
+        </span>
+
+        <button class="product-card__toggle" [ngClass]="product.available ? 'toggle--on' : 'toggle--off'"
+                (click)="onToggleAvailability()"
+                [attr.aria-label]="product.available ? 'Mark as unavailable' : 'Mark as available'">
+          <span class="product-card__toggle-knob"></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</article>

@@ -46,11 +46,12 @@ export const platformProviders: Provider[] = [
   { provide: IConfigProvider, useClass: ConfigProviderService },
   { provide: IQueueStorage, useClass: QueueStorage },
   { provide: ILocalStorageService, useClass: LocalStorageService },
-  { provide: IDatabaseService, useClass: DatabaseService },
+  DatabaseService,
+  { provide: IDatabaseService, useExisting: DatabaseService },
   { provide: ILogService, useClass: LogService },
   { provide: IPermissionService, useClass: PermissionManager },
   { provide: ISessionService, useClass: SessionService },
-  
+
   // SQLite Repositories
   { provide: IBillRepository, useClass: SqliteBillRepository },
   { provide: IProductRepository, useClass: SqliteProductRepository },
