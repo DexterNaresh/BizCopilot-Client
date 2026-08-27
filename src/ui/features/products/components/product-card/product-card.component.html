@@ -1,0 +1,47 @@
+<div class="product-card">
+      <div class="image-container">
+        <!-- Overlay Actions -->
+        <button class="action-btn edit-btn" (click)="onEdit()" aria-label="Edit product">
+          <biz-icon category="common" name="edit"></biz-icon>
+        </button>
+        <button class="action-btn delete-btn" (click)="onDelete()" aria-label="Archive product">
+          <biz-icon category="common" name="delete"></biz-icon>
+        </button>
+        
+        <!-- Image Placeholder (In real app, this would be an img tag) -->
+        <div class="image-placeholder" [style.background-color]="product.colorHint || '#EAECEF'">
+           <biz-icon category="common" name="image" class="placeholder-icon"></biz-icon>
+        </div>
+      </div>
+
+      <div class="card-content">
+        <div class="meta-row">
+          <span class="category-name">{{ product.category }}</span>
+          <button class="favourite-btn" (click)="onToggleFavourite()" aria-label="Toggle favourite">
+            <biz-icon category="common" [name]="product.isFavourite ? 'star_filled' : 'star'" [filled]="product.isFavourite" class="star"></biz-icon>
+          </button>
+        </div>
+
+        <h3 class="product-name">{{ product.name }}</h3>
+
+        <div class="price-availability-row">
+          <div class="price-block">
+            <span class="price">₹{{ product.price | number:'1.2-2' }}</span>
+          </div>
+          
+          <div class="availability-block">
+            <span class="status-label" [class.status-available]="product.isAvailable" [class.status-unavailable]="!product.isAvailable">
+              {{ product.isAvailable ? 'Available' : 'Unavailable' }}
+            </span>
+            <!-- Simulated Toggle Switch -->
+            <button 
+              class="toggle-switch" 
+              [class.active]="product.isAvailable" 
+              (click)="onToggleAvailability()"
+              aria-label="Toggle availability">
+              <div class="toggle-knob"></div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>

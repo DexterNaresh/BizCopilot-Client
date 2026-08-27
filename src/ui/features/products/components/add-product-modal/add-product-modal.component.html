@@ -1,0 +1,128 @@
+<div class="modal-backdrop" (click)="onCancel()"></div>
+<div class="modal-container">
+  <div class="modal-header">
+    <div class="header-text">
+      <h2>{{ editProduct ? 'Edit Product' : 'Add Product' }}</h2>
+      <p>Enter basic details to {{ editProduct ? 'update the' : 'add a new' }} product.</p>
+    </div>
+    <button class="close-btn" (click)="onCancel()" aria-label="Close modal">
+      <biz-icon category="common" name="close"></biz-icon>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      
+      <!-- 1. Product Image -->
+      <div class="form-group">
+        <label>Product Image <span class="optional">(Optional)</span></label>
+        <div class="image-upload-area" [class.has-image]="!!imagePreview">
+          <input type="file" #fileInput (change)="onFileSelected($event)" accept="image/jpeg, image/png, image/webp" hidden>
+          
+          <ng-container *ngIf="!imagePreview">
+            <div class="upload-prompt" (click)="fileInput.click()">
+              <biz-icon category="common" name="image" class="upload-icon"></biz-icon>
+              <span class="upload-title">Add Image</span>
+              <span class="upload-subtitle">JPG, PNG or WebP<br>Max size 2MB.</span>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="imagePreview">
+            <img [src]="imagePreview" class="preview-img" alt="Product preview">
+            <div class="image-actions">
+              <button type="button" class="img-btn replace" (click)="fileInput.click()">Replace</button>
+              <button type="button" class="img-btn remove" (click)="removeImage()">Remove</button>
+            </div>
+          </ng-container>
+        </div>
+      </div>
+
+      <!-- 2. Product Name -->
+      <div class="form-group">
+        <div class="label-row">
+          <label>Product Name <span class="required">*</span></label>
+          <span class="char-count">{{ nameLength }} / 100</span>
+        </div>
+        <input type="text" formControlName="name" class="form-control" placeholder="Enter product name"
+               [class.is-invalid]="productForm.get('name')?.invalid && productForm.get('name')?.touched">
+        <div class="error-msg" *ngIf="productForm.get('name')?.invalid && productForm.get('name')?.touched">
+          Product name is required.
+        </div>
+      </div>
+
+      <!-- 3. Type / Unit -->
+      <div class="form-group">
+        <label>Type / Unit <span class="required">*</span> <span class="optional" style="margin-left: 4px;">(How do you sell this product?)</span></label>
+        
+        <div class="type-cards-grid">
+          <div *ngFor="let t of types" 
+               class="type-card" 
+               [class.selected]="selectedType === t.id"
+               (click)="setType(t.id)">
+            <biz-icon category="common" [name]="t.icon" class="type-icon"></biz-icon>
+            <span class="type-label">{{ t.label }}</span>
+            <span class="type-supporting">{{ t.supporting }}</span>
+            <!-- Border highlights selection, no extra check icon needed to keep UI clean per prompt -->
+          </div>
+        </div>
+        <div class="dynamic-type-helper">{{ typeHelperMessage }}</div>
+      </div>
+
+      <!-- 4. Selling Price -->
+      <div class="form-group">
+        <label>Selling Price <span class="required">*</span> <span class="optional" style="margin-left: 4px;">({{ priceHelper }})</span></label>
+        <div class="price-input-wrapper">
+          <span class="currency-prefix">₹</span>
+          <input type="number" formControlName="price" class="form-control price-input" placeholder="Enter selling price"
+                 [class.is-invalid]="productForm.get('price')?.invalid && productForm.get('price')?.touched">
+          <span class="price-suffix">{{ priceSuffix }}</span>
+        </div>
+        <div class="error-msg" *ngIf="productForm.get('price')?.invalid && productForm.get('price')?.touched">
+          Valid selling price is required.
+        </div>
+      </div>
+
+      <!-- 5. Description -->
+      <div class="form-group">
+        <div class="label-row">
+          <label>Description <span class="optional">(Optional)</span></label>
+          <span class="char-count">{{ descLength }} / 250</span>
+        </div>
+        <textarea formControlName="description" class="form-control" rows="3" placeholder="Enter product description"></textarea>
+      </div>
+
+      <!-- 6. Barcode -->
+      <div class="form-group">
+        <label>Barcode <span class="optional">(Optional)</span></label>
+        <div class="input-icon-wrapper">
+          <input type="text" formControlName="barcode" class="form-control" placeholder="Enter barcode">
+          <button type="button" class="trailing-icon-btn" aria-label="Scan barcode">
+            <biz-icon category="common" name="barcode_scanner"></biz-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- 7. Category -->
+      <div class="form-group">
+        <label>Category <span class="required">*</span></label>
+        <div class="select-wrapper">
+          <biz-icon category="common" name="folder" class="leading-icon"></biz-icon>
+          <select formControlName="category" class="form-control with-leading-icon"
+                  [class.is-invalid]="productForm.get('category')?.invalid && productForm.get('category')?.touched">
+            <option value="" disabled selected>Select category</option>
+            <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
+          </select>
+        </div>
+        <div class="error-msg" *ngIf="productForm.get('category')?.invalid && productForm.get('category')?.touched">
+          Category is required.
+        </div>
+      </div>
+
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="onSubmit()">{{ editProduct ? 'Update Product' : 'Save Product' }}</button>
+  </div>
+</div>

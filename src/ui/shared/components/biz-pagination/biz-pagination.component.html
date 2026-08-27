@@ -1,0 +1,41 @@
+<div class="pagination-container">
+  <div class="pagination-text">
+    Showing {{ startItem }} to {{ endItem }} of {{ totalItems }} {{ itemName }}
+  </div>
+  
+  <div class="page-numbers">
+    <button 
+      class="page-btn" 
+      [disabled]="currentPage === 1"
+      (click)="onPageChange(currentPage - 1)">
+      <biz-icon category="common" name="chevron_left"></biz-icon>
+    </button>
+    
+    <ng-container *ngFor="let page of pageNumbers">
+      <span class="page-ellipsis" *ngIf="page === '...'">...</span>
+      <button 
+        *ngIf="page !== '...'"
+        class="page-btn" 
+        [class.active]="currentPage === page"
+        (click)="onPageChange($any(page))">
+        {{ page }}
+      </button>
+    </ng-container>
+
+    <button 
+      class="page-btn" 
+      [disabled]="currentPage === totalPages || totalPages === 0"
+      (click)="onPageChange(currentPage + 1)">
+      <biz-icon category="common" name="chevron_right"></biz-icon>
+    </button>
+  </div>
+
+  <div class="rows-per-page">
+    <span class="rows-label">Rows per page:</span>
+    <div class="rows-select-wrapper">
+      <select class="rows-select" [value]="pageSize" (change)="onPageSizeChange($event)">
+        <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}</option>
+      </select>
+    </div>
+  </div>
+</div>

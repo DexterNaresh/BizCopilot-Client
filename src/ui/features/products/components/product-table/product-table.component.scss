@@ -1,0 +1,163 @@
+.table-container {
+      background-color: var(--color-surface, #FFFFFF);
+      border: 1px solid var(--color-border, #EAECEF);
+      border-radius: 12px;
+      overflow: auto;
+    }
+
+    .product-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    th {
+      background-color: #F9FAFB;
+      color: var(--color-text-secondary, #6B7280);
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--color-border, #EAECEF);
+    }
+
+    td {
+      padding: 16px;
+      border-bottom: 1px solid var(--color-border, #EAECEF);
+      vertical-align: middle;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr:hover {
+      background-color: #F9FAFB;
+    }
+
+    /* Column Widths & Alignments */
+    .col-seq { width: 5%; color: var(--color-text-muted, #9CA3AF); font-size: 14px; }
+    .col-product { width: 35%; }
+    .col-category { width: 15%; color: var(--color-text-secondary, #6B7280); font-size: 14px; }
+    .col-price { width: 15%; }
+    .col-availability { width: 15%; }
+    .col-actions { width: 15%; text-align: right; }
+
+    .product-cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .thumbnail {
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .thumbnail span {
+      font-size: 20px;
+      color: rgba(0,0,0,0.1);
+    }
+
+    .product-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-primary, #111827);
+    }
+
+    .price-block {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .price {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-text-primary, #111827);
+    }
+
+    .availability-cell {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .status-text {
+      font-size: 14px;
+      color: var(--color-text-primary, #111827);
+      width: 76px; /* Fixed width ensures the toggle switch aligns perfectly vertically across all rows */
+      display: inline-block;
+    }
+
+    /* Robust toggle switch matching card */
+    .toggle-switch {
+      width: 36px;
+      height: 20px;
+      border-radius: 10px;
+      background-color: var(--color-text-muted, #9CA3AF);
+      border: none;
+      cursor: pointer;
+      padding: 2px;
+      transition: background-color 0.2s;
+      display: flex;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    .toggle-switch.active {
+      background-color: var(--color-primary, #5B3BEB);
+    }
+
+    .toggle-knob {
+      width: 16px;
+      height: 16px;
+      background-color: white;
+      border-radius: 50%;
+      transition: transform 0.2s;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+    }
+
+    .toggle-switch.active .toggle-knob {
+      transform: translateX(16px);
+    }
+
+    .action-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 4px;
+    }
+
+    .icon-btn {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: transparent;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      color: var(--color-text-secondary, #6B7280);
+    }
+
+    .icon-btn:hover {
+      background-color: #E5E7EB;
+    }
+
+    .icon-btn biz-icon {
+      font-size: 20px;
+    }
+
+    .fav-btn biz-icon.filled {
+      color: var(--color-warning, #D97706);
+    }
+
+    .edit-btn:hover { color: var(--color-primary, #5B3BEB); }
+    .delete-btn:hover { color: var(--color-danger, #DC2626); }

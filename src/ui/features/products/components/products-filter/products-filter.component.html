@@ -1,0 +1,30 @@
+<div class="quick-filters">
+      <button 
+        class="chip" 
+        [class.active]="activeFilter === 'all'"
+        (click)="setFilter('all')">
+        All Products <span class="badge" [class.badge-active]="activeFilter === 'all'">156</span>
+      </button>
+      
+      <button 
+        class="chip chip-available" 
+        [class.active]="activeFilter === 'available'"
+        (click)="setFilter('available')">
+        Available <span class="badge badge-success" [class.badge-active]="activeFilter === 'available'">142</span>
+      </button>
+      
+      <button 
+        class="chip chip-unavailable" 
+        [class.active]="activeFilter === 'unavailable'"
+        (click)="setFilter('unavailable')">
+        Unavailable <span class="badge badge-danger" [class.badge-active]="activeFilter === 'unavailable'">14</span>
+      </button>
+      
+      <button 
+        class="chip chip-favourites" 
+        [class.active]="activeFilter === 'favourites'"
+        (click)="setFilter('favourites')">
+        <biz-icon category="common" name="star" class="star-icon"></biz-icon>
+        Favourites <span class="badge badge-warning" [class.badge-active]="activeFilter === 'favourites'">28</span>
+      </button>
+    </div>

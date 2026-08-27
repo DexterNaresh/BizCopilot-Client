@@ -1,0 +1,74 @@
+<div class="products-layout">
+      <!-- Main Content Area -->
+      <main class="main-content">
+        <app-products-header (addProduct)="onAddProduct()"></app-products-header>
+        
+        <app-product-search 
+          (search)="onSearch($event)" 
+          (filter)="onOpenFilters()">
+        </app-product-search>
+        
+        <app-products-filter 
+          [activeFilter]="activeFilter"
+          (filterChange)="onFilterChange($event)">
+        </app-products-filter>
+        
+        <app-product-view-toggle
+          [totalCount]="products.length"
+          [viewMode]="viewMode"
+          (viewModeChange)="onViewModeChange($event)">
+        </app-product-view-toggle>
+
+        <div class="product-content-area">
+          <app-product-grid 
+            *ngIf="viewMode === 'grid'"
+            [products]="products"
+            (edit)="onEditProduct($event)"
+            (delete)="onArchiveProduct($event)"
+            (toggleFavourite)="onToggleFavourite($event)"
+            (toggleAvailability)="onToggleAvailability($event)">
+          </app-product-grid>
+          
+          <app-product-table 
+            *ngIf="viewMode === 'table'"
+            [products]="products"
+            (edit)="onEditProduct($event)"
+            (delete)="onArchiveProduct($event)"
+            (toggleFavourite)="onToggleFavourite($event)"
+            (toggleAvailability)="onToggleAvailability($event)">
+          </app-product-table>
+        </div>
+
+        <!-- Advanced Pagination -->
+        <biz-pagination 
+          [totalItems]="totalProducts"
+          [pageSize]="pageSize"
+          [currentPage]="currentPage"
+          [pageSizeOptions]="[10, 20, 50, 100]"
+          itemName="products"
+          (pageChange)="onPageChange($event)"
+          (pageSizeChange)="onPageSizeChange($event)">
+        </biz-pagination>
+      </main>
+
+      <!-- Right Contextual Panel (Desktop Only) -->
+      <aside class="right-rail">
+        <app-product-support-panel></app-product-support-panel>
+      </aside>
+
+      <!-- Overlays -->
+      <app-add-product-modal 
+        *ngIf="showAddProductModal"
+        [editProduct]="selectedProductForEdit"
+        (close)="closeModals()"
+        (save)="onSaveProduct($event)">
+      </app-add-product-modal>
+
+      <div class="overlay-placeholder" *ngIf="showFiltersSheet" (click)="closeModals()">
+        <div class="sheet-content" (click)="$event.stopPropagation()">
+          <h2>Filters Sheet</h2>
+          <p>This is where the Category, Availability, and Favourite filters will go.</p>
+          <button (click)="closeModals()">Close</button>
+        </div>
+      </div>
+    </div>

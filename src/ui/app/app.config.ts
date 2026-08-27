@@ -1,5 +1,6 @@
 import { ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
 import { routes } from './app.routes';
 
 import { platformProviders } from '@platform/platform.providers';
@@ -13,6 +14,7 @@ import { startupProviders } from '@runtime/startup/startup.providers';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
+    provideHttpClient(),
     ...platformProviders,
     ...billingProviders,
     ...productProviders,

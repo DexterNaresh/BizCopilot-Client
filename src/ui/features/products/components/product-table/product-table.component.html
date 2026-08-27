@@ -1,0 +1,57 @@
+<div class="table-container">
+      <table class="product-table">
+        <thead>
+          <tr>
+            <th class="col-seq">#</th>
+            <th class="col-product">Product</th>
+            <th class="col-category">Category</th>
+            <th class="col-price">Price</th>
+            <th class="col-availability">Availability</th>
+            <th class="col-actions">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of products; let i = index">
+            <td class="col-seq">{{ (i + 1).toString().padStart(2, '0') }}</td>
+            <td class="col-product">
+              <div class="product-cell">
+                <div class="thumbnail" [style.background-color]="product.colorHint || '#EAECEF'">
+                  <biz-icon category="common" name="image"></biz-icon>
+                </div>
+                <span class="product-name">{{ product.name }}</span>
+              </div>
+            </td>
+            <td class="col-category">{{ product.category }}</td>
+            <td class="col-price">
+              <div class="price-block">
+                <span class="price">₹{{ product.price | number:'1.2-2' }}</span>
+              </div>
+            </td>
+            <td class="col-availability">
+              <div class="availability-cell">
+                <span class="status-text">{{ product.isAvailable ? 'Available' : 'Unavailable' }}</span>
+                <button 
+                  class="toggle-switch" 
+                  [class.active]="product.isAvailable" 
+                  (click)="onToggleAvailability(product)">
+                  <div class="toggle-knob"></div>
+                </button>
+              </div>
+            </td>
+            <td class="col-actions">
+              <div class="action-buttons">
+                <button class="icon-btn fav-btn" (click)="toggleFavourite.emit(product)" aria-label="Favourite">
+                  <biz-icon category="common" [name]="product.isFavourite ? 'star_filled' : 'star'" [filled]="product.isFavourite"></biz-icon>
+                </button>
+                <button class="icon-btn edit-btn" (click)="onEdit(product)">
+                  <biz-icon category="common" name="edit"></biz-icon>
+                </button>
+                <button class="icon-btn delete-btn" (click)="onDelete(product)">
+                  <biz-icon category="common" name="delete"></biz-icon>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>

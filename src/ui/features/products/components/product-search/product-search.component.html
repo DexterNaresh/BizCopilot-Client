@@ -1,0 +1,15 @@
+<div class="search-filter-row">
+      <div class="search-container">
+        <biz-icon category="common" name="search" class="search-icon"></biz-icon>
+        <input 
+          type="text" 
+          class="search-input" 
+          placeholder="Search by product name or barcode..."
+          (input)="onSearch($event)"
+        />
+      </div>
+      <button class="filter-btn" (click)="onFilter()">
+        <biz-icon category="common" name="filter_list" class="filter-icon"></biz-icon>
+        Filters
+      </button>
+    </div>

@@ -1,0 +1,87 @@
+<aside class="support-panel">
+      <!-- Quick Actions -->
+      <section class="panel-section">
+        <h3 class="section-title">Quick Actions</h3>
+        <ul class="action-list">
+          <li>
+            <button class="action-btn" (click)="onAction('categories')">
+              <biz-icon category="common" name="folder" class="icon"></biz-icon>
+              <span class="label">Categories</span>
+              <biz-icon category="common" name="chevron_right" class="chevron"></biz-icon>
+            </button>
+          </li>
+          <li>
+            <button class="action-btn" (click)="onAction('import')">
+              <biz-icon category="common" name="upload" class="icon"></biz-icon>
+              <span class="label">Import Products</span>
+              <biz-icon category="common" name="chevron_right" class="chevron"></biz-icon>
+            </button>
+          </li>
+          <li>
+            <button class="action-btn" (click)="onAction('export')">
+              <biz-icon category="common" name="download" class="icon"></biz-icon>
+              <span class="label">Export Products</span>
+              <biz-icon category="common" name="chevron_right" class="chevron"></biz-icon>
+            </button>
+          </li>
+        </ul>
+      </section>
+
+      <!-- Product Summary -->
+      <section class="panel-section">
+        <h3 class="section-title">Product Summary</h3>
+        <div class="summary-list">
+          <div class="summary-item">
+            <span class="summary-label">Total Products</span>
+            <span class="summary-value">156</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Available</span>
+            <span class="summary-value text-success">142</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Unavailable</span>
+            <span class="summary-value text-danger">14</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Categories</span>
+            <span class="summary-value">12</span>
+          </div>
+          <div class="summary-item">
+            <span class="summary-label">Favourites</span>
+            <span class="summary-value">28</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tips -->
+      <section class="panel-section section-tips">
+        <div class="tips-header">
+          <biz-icon category="common" name="lightbulb" class="tips-icon"></biz-icon>
+          <h3 class="section-title">Tips</h3>
+        </div>
+        <ul class="tips-list">
+          <li>Use search or filters to quickly find products.</li>
+          <li>Mark favourites to show in billing faster.</li>
+          <li>Keep your product catalog updated for accurate billing.</li>
+        </ul>
+      </section>
+
+      <!-- Upcoming -->
+      <section class="panel-section section-upcoming">
+        <div class="upcoming-header">
+          <h3 class="section-title">Upcoming (V2 & V3)</h3>
+          <span class="badge">Planned</span>
+        </div>
+        <ul class="upcoming-list">
+          <li>Inventory Management (V2)</li>
+          <li>Purchase Price & Stock (V2)</li>
+          <li>Supplier & Variants (V2)</li>
+          <li>Advanced Pricing (V3)</li>
+          <li>Stock Alerts (V3)</li>
+        </ul>
+        <button class="link-btn">
+          View Roadmap <biz-icon category="common" name="arrow_forward"></biz-icon>
+        </button>
+      </section>
+    </aside>
