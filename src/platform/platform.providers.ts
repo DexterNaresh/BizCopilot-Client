@@ -1,4 +1,4 @@
-import { Provider } from '@angular/core';
+import { Provider, APP_INITIALIZER } from '@angular/core';
 
 // Interfaces
 import { IIdentityService } from '@shared/abstractions/identity.service.interface';
@@ -37,6 +37,12 @@ import { IOfferRepository } from '@runtime/offer/repositories/offer.repository.i
 import { SqliteOfferRepository } from './sqlite/repositories/offer.repository';
 import { IReportRepository } from '@runtime/report/repositories/report.repository.interface';
 import { SqliteReportRepository } from './sqlite/repositories/report.repository';
+import { ICategoryRepository } from '@runtime/category/repositories/category.repository.interface';
+import { SqliteCategoryRepository } from './sqlite/repositories/category.repository';
+
+export function initializeDatabase(dbService: IDatabaseService) {
+  return () => dbService.initialize();
+}
 
 export const platformProviders: Provider[] = [
   { provide: IIdentityService, useClass: IdentityService },
@@ -46,15 +52,23 @@ export const platformProviders: Provider[] = [
   { provide: IConfigProvider, useClass: ConfigProviderService },
   { provide: IQueueStorage, useClass: QueueStorage },
   { provide: ILocalStorageService, useClass: LocalStorageService },
-  { provide: IDatabaseService, useClass: DatabaseService },
+  { provide: IDatabaseService, useExisting: DatabaseService },
   { provide: ILogService, useClass: LogService },
   { provide: IPermissionService, useClass: PermissionManager },
   { provide: ISessionService, useClass: SessionService },
+  
+  {
+    provide: APP_INITIALIZER,
+    useFactory: initializeDatabase,
+    deps: [IDatabaseService],
+    multi: true
+  },
   
   // SQLite Repositories
   { provide: IBillRepository, useClass: SqliteBillRepository },
   { provide: IProductRepository, useClass: SqliteProductRepository },
   { provide: ICustomerRepository, useClass: SqliteCustomerRepository },
   { provide: IOfferRepository, useClass: SqliteOfferRepository },
-  { provide: IReportRepository, useClass: SqliteReportRepository }
+  { provide: IReportRepository, useClass: SqliteReportRepository },
+  { provide: ICategoryRepository, useClass: SqliteCategoryRepository }
 ];

@@ -4,6 +4,7 @@ import { ProductEntity } from '../models/product.entity';
 export abstract class IProductRepository {
   abstract findById(id: string): ProductEntity | null;
   abstract findByIds(ids: string[]): ProductEntity[];
+  abstract findAll(): ProductEntity[];
   abstract findByCode(productCode: string): ProductEntity | null;
   abstract findByBarcode(barcode: string): ProductEntity | null;
   abstract saveNewProduct(product: ProductEntity): ProductEntity;

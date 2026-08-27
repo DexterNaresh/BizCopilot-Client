@@ -127,4 +127,8 @@ export class ProductService {
   getProductsByIds(ids: string[]): ProductEntity[] {
     return this.productRepository.findByIds(ids);
   }
+
+  getAllProducts(): ProductEntity[] {
+    return this.productRepository.findAll();
+  }
 }

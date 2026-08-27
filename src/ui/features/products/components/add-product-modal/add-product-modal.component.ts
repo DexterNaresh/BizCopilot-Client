@@ -12,13 +12,12 @@ import { BizIconComponent } from '../../../../shared/components/biz-icon/biz-ico
 })
 export class AddProductModalComponent implements OnInit {
   @Input() editProduct: any = null;
+  @Input() categories: string[] = [];
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<any>();
 
   productForm: FormGroup;
   imagePreview: string | null = null;
-  
-  categories = ['Electronics', 'Groceries', 'Clothing', 'Furniture', 'Stationery'];
   types = [
     { id: 'Qty', label: 'Qty', supporting: 'By Quantity', icon: 'numbers' },
     { id: 'Kg', label: 'Kg', supporting: 'By Weight', icon: 'scale' },

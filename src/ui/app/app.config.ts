@@ -6,6 +6,7 @@ import { routes } from './app.routes';
 import { platformProviders } from '@platform/platform.providers';
 import { billingProviders } from '@runtime/billing/billing.providers';
 import { productProviders } from '@runtime/product/product.providers';
+import { categoryProviders } from '@runtime/category/category.providers';
 import { customerProviders } from '@runtime/customer/customer.providers';
 import { offerProviders } from '@runtime/offer/offer.providers';
 import { reportProviders } from '@runtime/report/report.providers';
@@ -16,8 +17,9 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(),
     ...platformProviders,
-    ...billingProviders,
     ...productProviders,
+    ...categoryProviders,
+    ...billingProviders,
     ...customerProviders,
     ...offerProviders,
     ...reportProviders,

@@ -36,9 +36,9 @@
               "src/favicon.ico",
               "src/assets",
               {
-                "glob": "sql-wasm.wasm",
+                "glob": "sql-wasm*.wasm",
                 "input": "node_modules/sql.js/dist/",
-                "output": "assets/"
+                "output": "/assets/"
               }
             ],
             "styles": [
@@ -104,9 +104,9 @@
               "src/favicon.ico",
               "src/assets",
               {
-                "glob": "sql-wasm.wasm",
+                "glob": "sql-wasm*.wasm",
                 "input": "node_modules/sql.js/dist/",
-                "output": "assets/"
+                "output": "/assets/"
               }
             ],
             "styles": [

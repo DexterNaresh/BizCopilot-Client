@@ -10,6 +10,10 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./products-filter.component.scss']})
 export class ProductsFilterComponent {
   @Input() activeFilter: string = 'all';
+  @Input() totalCount: number = 0;
+  @Input() availableCount: number = 0;
+  @Input() unavailableCount: number = 0;
+  @Input() favouriteCount: number = 0;
   @Output() filterChange = new EventEmitter<string>();
 
   setFilter(filter: string) {

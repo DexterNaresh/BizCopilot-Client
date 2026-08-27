@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductsHeaderComponent } from './components/products-header/products-header.component';
 import { ProductSearchComponent } from './components/product-search/product-search.component';
@@ -12,6 +12,23 @@ import { BizPaginationComponent } from '../../shared/components/biz-pagination/b
 import { AddProductModalComponent } from './components/add-product-modal/add-product-modal.component';
 import { ConfirmDialogService } from '../../shared/services/confirm-dialog.service';
 import { ToastService } from '../../shared/services/toast.service';
+import { ProductApplication } from '@runtime/product/application/product.application';
+import { CategoryApplication } from '@runtime/category/application/category.application';
+import { ISessionService } from '@shared/abstractions/session.service.interface';
+import { AddCategoryModalComponent } from '../categories/components/add-category-modal/add-category-modal.component';
+import { ProductInfo } from '@runtime/product/application/dto/product.dto';
+import { FilterSheetComponent } from '../../shared/components/filter-sheet/filter-sheet.component';
+
+export interface ProductUIModel {
+  id: string;
+  name: string;
+  category: string;
+  price: number;
+  unit: string;
+  isAvailable: boolean;
+  isFavourite: boolean;
+  colorHint: string;
+}
 
 @Component({
   selector: 'app-products',
@@ -27,27 +44,122 @@ import { ToastService } from '../../shared/services/toast.service';
     ProductSupportPanelComponent,
     BizIconComponent,
     BizPaginationComponent,
-    AddProductModalComponent
+    AddProductModalComponent,
+    FilterSheetComponent,
+    AddCategoryModalComponent
   ],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss']})
-export class ProductsComponent {
+export class ProductsComponent implements OnInit {
   viewMode: 'grid' | 'table' = 'grid';
   activeFilter: string = 'all';
+  searchTerm: string = '';
 
   showAddProductModal = false;
   showFiltersSheet = false;
   selectedProductForEdit: any = null;
 
-  // Pagination state
+  showAddCategoryModal = false;
+
   currentPage = 1;
   pageSize = 10;
-  totalProducts = 156;
+
+  allProducts: ProductUIModel[] = [];
+  allCategories: string[] = [];
 
   constructor(
     private confirmService: ConfirmDialogService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private productApp: ProductApplication,
+    private categoryApp: CategoryApplication,
+    private sessionService: ISessionService
   ) {}
+
+  ngOnInit() {
+    this.loadProducts();
+    this.loadCategories();
+  }
+
+  get currentUserId(): string {
+    const user = this.sessionService.getCurrentUser();
+    return user ? user.id : '00000000-0000-0000-0000-000000000000';
+  }
+
+  loadProducts() {
+    const response = this.productApp.getAllProducts({ userId: this.currentUserId });
+    if (response.success && response.data) {
+      this.allProducts = response.data
+        .filter(p => p.status !== 'ARCHIVED')
+        .map(p => this.mapToUIModel(p));
+    } else {
+      this.toastService.error(response.error?.message || 'Failed to load products');
+    }
+  }
+
+  loadCategories() {
+    const response = this.categoryApp.getAllCategories({ userId: this.currentUserId });
+    if (response.success && response.data) {
+      this.allCategories = response.data
+        .filter(c => c.status !== 'ARCHIVED')
+        .map(c => c.name);
+    }
+  }
+
+  private mapToUIModel(p: ProductInfo): ProductUIModel {
+    return {
+      id: p.product_id,
+      name: p.name,
+      category: p.category || 'Uncategorized',
+      price: p.price,
+      unit: p.type,
+      isAvailable: p.available === 1,
+      isFavourite: false,
+      colorHint: this.getColorForCategory(p.category)
+    };
+  }
+
+  private getColorForCategory(cat?: string | null): string {
+    const colors = ['#F3E8FF', '#FEF3C7', '#E0E7FF', '#D1FAE5', '#FFEDD5'];
+    if (!cat) return colors[0];
+    const hash = cat.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    return colors[hash % colors.length];
+  }
+
+  get filteredProducts(): ProductUIModel[] {
+    return this.allProducts.filter(p => {
+      const matchesSearch = p.name.toLowerCase().includes(this.searchTerm.toLowerCase());
+      let matchesFilter = true;
+      if (this.activeFilter === 'available') matchesFilter = p.isAvailable;
+      if (this.activeFilter === 'unavailable') matchesFilter = !p.isAvailable;
+      if (this.activeFilter === 'favourites') matchesFilter = p.isFavourite;
+      return matchesSearch && matchesFilter;
+    });
+  }
+
+  get paginatedProducts(): ProductUIModel[] {
+    const start = (this.currentPage - 1) * this.pageSize;
+    return this.filteredProducts.slice(start, start + this.pageSize);
+  }
+
+  get totalProducts(): number {
+    return this.filteredProducts.length;
+  }
+
+  get totalProductsCount(): number {
+    return this.allProducts.length;
+  }
+
+  get availableProductsCount(): number {
+    return this.allProducts.filter(p => p.isAvailable).length;
+  }
+
+  get unavailableProductsCount(): number {
+    return this.allProducts.filter(p => !p.isAvailable).length;
+  }
+
+  get favouriteProductsCount(): number {
+    return this.allProducts.filter(p => p.isFavourite).length;
+  }
 
   onPageChange(page: number) {
     this.currentPage = page;
@@ -55,69 +167,17 @@ export class ProductsComponent {
 
   onPageSizeChange(size: number) {
     this.pageSize = size;
-    this.currentPage = 1; // Reset to first page
+    this.currentPage = 1;
   }
 
-  // Dummy Data for UI implementation
-  products = [
-    {
-      id: 1,
-      name: 'Premium Leather Office Chair with Lumbar Support',
-      category: 'Furniture',
-      price: 12500,
-      unit: 'Qty',
-      isAvailable: true,
-      isFavourite: false,
-      colorHint: '#F3E8FF' // Purple 100
-    },
-    {
-      id: 2,
-      name: 'Organic Arabica Coffee Beans - Dark Roast',
-      category: 'Groceries',
-      price: 850,
-      unit: 'Kg',
-      isAvailable: true,
-      isFavourite: true,
-      colorHint: '#FEF3C7' // Amber 100
-    },
-    {
-      id: 3,
-      name: 'Ultra-Wide Curved Gaming Monitor 34-inch',
-      category: 'Electronics',
-      price: 45000,
-      unit: 'Qty',
-      isAvailable: false,
-      isFavourite: false,
-      colorHint: '#E0E7FF' // Indigo 100
-    },
-    {
-      id: 4,
-      name: 'Industrial Grade Heavy Duty Packaging Tape',
-      category: 'Stationery',
-      price: 120,
-      unit: 'Pack',
-      isAvailable: true,
-      isFavourite: false,
-      colorHint: '#D1FAE5' // Emerald 100
-    },
-    {
-      id: 5,
-      name: 'Copper Wire 2.5mm Sq Fire Resistant',
-      category: 'Electricals',
-      price: 45,
-      unit: 'Meter',
-      isAvailable: true,
-      isFavourite: true,
-      colorHint: '#FFEDD5' // Orange 100
-    }
-  ];
-
   onSearch(term: string) {
-    console.log('Search:', term);
+    this.searchTerm = term;
+    this.currentPage = 1;
   }
 
   onFilterChange(filter: string) {
     this.activeFilter = filter;
+    this.currentPage = 1;
   }
 
   onViewModeChange(mode: 'grid' | 'table') {
@@ -136,15 +196,29 @@ export class ProductsComponent {
   closeModals() {
     this.showAddProductModal = false;
     this.showFiltersSheet = false;
+    this.showAddCategoryModal = false;
     this.selectedProductForEdit = null;
   }
 
-  onEditProduct(product: any) {
-    this.selectedProductForEdit = product;
+  onSupportAction(action: string) {
+    if (action === 'add_category') {
+      this.showAddCategoryModal = true;
+    }
+  }
+
+  onEditProduct(product: ProductUIModel) {
+    this.selectedProductForEdit = {
+      id: product.id,
+      name: product.name,
+      type: product.unit,
+      price: product.price,
+      category: product.category,
+      barcode: ''
+    };
     this.showAddProductModal = true;
   }
 
-  async onArchiveProduct(product: any) {
+  async onArchiveProduct(product: ProductUIModel) {
     const isConfirmed = await this.confirmService.confirm({
       variant: 'danger',
       title: `Delete "${product.name}"?`,
@@ -154,19 +228,25 @@ export class ProductsComponent {
     });
 
     if (isConfirmed) {
-      this.products = this.products.filter(p => p.id !== product.id);
-      this.totalProducts--;
-      this.toastService.success(`Product deleted successfully`);
+      const response = this.productApp.archiveProduct({
+        userId: this.currentUserId,
+        product_id: product.id
+      });
+      if (response.success) {
+        this.toastService.success(`Product deleted successfully`);
+        this.loadProducts();
+      } else {
+        this.toastService.error(response.error?.message || 'Failed to delete product');
+      }
     }
   }
 
-  onToggleFavourite(product: any) {
+  onToggleFavourite(product: ProductUIModel) {
     product.isFavourite = !product.isFavourite;
   }
 
-  async onToggleAvailability(product: any) {
+  async onToggleAvailability(product: ProductUIModel) {
     if (product.isAvailable) {
-      // Deactivating
       const isConfirmed = await this.confirmService.confirm({
         variant: 'warning',
         title: `Deactivate "${product.name}"?`,
@@ -176,35 +256,86 @@ export class ProductsComponent {
       });
 
       if (isConfirmed) {
-        product.isAvailable = false;
-        this.toastService.info('Product deactivated');
+        const response = this.productApp.updateAvailability({
+          userId: this.currentUserId,
+          product_id: product.id,
+          available: false
+        });
+        if (response.success) {
+          this.toastService.info('Product deactivated');
+          this.loadProducts();
+        } else {
+          this.toastService.error(response.error?.message || 'Error');
+        }
       }
     } else {
-      // Activating
-      product.isAvailable = true;
-      this.toastService.success('Product activated');
+      const response = this.productApp.updateAvailability({
+        userId: this.currentUserId,
+        product_id: product.id,
+        available: true
+      });
+      if (response.success) {
+        this.toastService.success('Product activated');
+        this.loadProducts();
+      } else {
+        this.toastService.error(response.error?.message || 'Error');
+      }
     }
   }
 
   onSaveProduct(productData: any) {
     if (this.selectedProductForEdit) {
-      // Update existing
-      const index = this.products.findIndex(p => p.id === productData.id);
-      if (index !== -1) {
-        this.products[index] = { ...this.products[index], ...productData, unit: productData.type };
+      const response = this.productApp.updateProduct({
+        userId: this.currentUserId,
+        product_id: this.selectedProductForEdit.id,
+        name: productData.name,
+        type: productData.type,
+        price: productData.price,
+        category: productData.category,
+        barcode: productData.barcode
+      });
+      if (response.success) {
+        this.toastService.success('Product updated successfully');
+        this.loadProducts();
+        this.closeModals();
+      } else {
+        this.toastService.error(response.error?.message || 'Error');
       }
     } else {
-      // Create new
-      this.products.unshift({
-        ...productData,
-        unit: productData.type,
-        isAvailable: true,
-        isFavourite: false,
-        colorHint: '#F3E8FF'
+      const response = this.productApp.createProduct({
+        userId: this.currentUserId,
+        name: productData.name,
+        type: productData.type,
+        price: productData.price,
+        category: productData.category,
+        barcode: productData.barcode
       });
-      this.totalProducts++;
+      if (response.success) {
+        this.toastService.success('Product created successfully');
+        this.loadProducts();
+        if (!productData.addAnother) {
+          this.closeModals();
+        }
+      } else {
+        this.toastService.error(response.error?.message || 'Error');
+      }
     }
-    this.toastService.success(this.selectedProductForEdit ? 'Product updated successfully' : 'Product created successfully');
-    this.closeModals();
+  }
+
+  onSaveCategory(categoryData: any) {
+    const response = this.categoryApp.createCategory({
+      userId: this.currentUserId,
+      name: categoryData.name,
+      description: categoryData.description || null,
+      icon: categoryData.icon,
+      color_hint: categoryData.colorHint
+    });
+    if (response.success) {
+      this.toastService.success('Category created successfully');
+      this.loadCategories();
+      this.closeModals();
+    } else {
+      this.toastService.error(response.error?.message || 'Error creating category');
+    }
   }
 }

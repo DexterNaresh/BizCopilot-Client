@@ -10,11 +10,14 @@
     
     <app-categories-filter 
       [activeFilter]="activeFilter"
+      [totalCount]="totalCategoriesCount"
+      [activeCount]="activeCategoriesCount"
+      [inactiveCount]="inactiveCategoriesCount"
       (filterChange)="onFilterChange($event)">
     </app-categories-filter>
     
     <app-category-view-toggle
-      [totalCount]="categories.length"
+      [totalCount]="totalCategories"
       [viewMode]="viewMode"
       (viewModeChange)="onViewModeChange($event)">
     </app-category-view-toggle>
@@ -22,7 +25,7 @@
     <div class="category-content-area">
       <app-category-grid 
         *ngIf="viewMode === 'grid'"
-        [categories]="categories"
+        [categories]="paginatedCategories"
         (edit)="onEditCategory($event)"
         (delete)="onDeleteCategory($event)"
         (toggleStatus)="onToggleStatus($event)">
@@ -30,7 +33,7 @@
       
       <app-category-table 
         *ngIf="viewMode === 'table'"
-        [categories]="categories"
+        [categories]="paginatedCategories"
         (edit)="onEditCategory($event)"
         (delete)="onDeleteCategory($event)"
         (toggleStatus)="onToggleStatus($event)">
@@ -51,7 +54,7 @@
 
   <!-- Right Contextual Panel (Desktop Only) -->
   <aside class="right-rail">
-    <app-category-support-panel></app-category-support-panel>
+    <app-category-support-panel [categories]="allCategories"></app-category-support-panel>
   </aside>
 
   <!-- Overlays -->
@@ -62,11 +65,13 @@
     (save)="onSaveCategory($event)">
   </app-add-category-modal>
 
-  <div class="overlay-placeholder" *ngIf="showFiltersSheet" (click)="closeModals()">
-    <div class="sheet-content" (click)="$event.stopPropagation()">
-      <h2>Filters Sheet</h2>
-      <p>This is where the Status filters will go.</p>
-      <button (click)="closeModals()">Close</button>
-    </div>
-  </div>
+  <biz-filter-sheet *ngIf="showFiltersSheet" title="Category Filters" (closeSheet)="closeModals()">
+    <app-categories-filter 
+      [activeFilter]="activeFilter"
+      [totalCount]="totalCategoriesCount"
+      [activeCount]="activeCategoriesCount"
+      [inactiveCount]="inactiveCategoriesCount"
+      (filterChange)="onFilterChange($event); closeModals()">
+    </app-categories-filter>
+  </biz-filter-sheet>
 </div>

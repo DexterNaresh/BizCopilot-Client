@@ -3,20 +3,20 @@
     class="chip" 
     [class.active]="activeFilter === 'all'"
     (click)="setFilter('all')">
-    All Categories <span class="badge" [class.badge-active]="activeFilter === 'all'">24</span>
+    All Categories <span class="badge" [class.badge-active]="activeFilter === 'all'">{{ totalCount }}</span>
   </button>
   
   <button 
     class="chip" 
     [class.active]="activeFilter === 'active'"
     (click)="setFilter('active')">
-    Active <span class="badge badge-success" [class.badge-active]="activeFilter === 'active'">20</span>
+    Active <span class="badge badge-success" [class.badge-active]="activeFilter === 'active'">{{ activeCount }}</span>
   </button>
   
   <button 
     class="chip" 
     [class.active]="activeFilter === 'inactive'"
     (click)="setFilter('inactive')">
-    Inactive <span class="badge badge-danger" [class.badge-active]="activeFilter === 'inactive'">4</span>
+    Inactive <span class="badge badge-danger" [class.badge-active]="activeFilter === 'inactive'">{{ inactiveCount }}</span>
   </button>
 </div>

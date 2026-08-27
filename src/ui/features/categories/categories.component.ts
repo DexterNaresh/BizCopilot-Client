@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CategoriesHeaderComponent } from './components/categories-header/categories-header.component';
 import { CategorySearchComponent } from './components/category-search/category-search.component';
@@ -7,11 +7,25 @@ import { CategoryViewToggleComponent } from './components/category-view-toggle/c
 import { CategoryGridComponent } from './components/category-grid/category-grid.component';
 import { CategoryTableComponent } from './components/category-table/category-table.component';
 import { CategorySupportPanelComponent } from './components/category-support-panel/category-support-panel.component';
-import { BizIconComponent } from '../../shared/components/biz-icon/biz-icon.component';
 import { BizPaginationComponent } from '../../shared/components/biz-pagination/biz-pagination.component';
 import { AddCategoryModalComponent } from './components/add-category-modal/add-category-modal.component';
 import { ConfirmDialogService } from '../../shared/services/confirm-dialog.service';
 import { ToastService } from '../../shared/services/toast.service';
+import { CategoryApplication } from '@runtime/category/application/category.application';
+import { ISessionService } from '@shared/abstractions/session.service.interface';
+import { CategoryInfo } from '@runtime/category/application/dto/category.dto';
+import { ProductApplication } from '@runtime/product/application/product.application';
+import { FilterSheetComponent } from '../../shared/components/filter-sheet/filter-sheet.component';
+
+export interface CategoryUIModel {
+  id: string;
+  name: string;
+  description: string;
+  productsCount: number;
+  status: 'Active' | 'Inactive';
+  icon: string;
+  colorHint: string;
+}
 
 @Component({
   selector: 'app-categories',
@@ -25,30 +39,106 @@ import { ToastService } from '../../shared/services/toast.service';
     CategoryGridComponent,
     CategoryTableComponent,
     CategorySupportPanelComponent,
-    BizIconComponent,
     BizPaginationComponent,
-    AddCategoryModalComponent
+    AddCategoryModalComponent,
+    FilterSheetComponent
   ],
   templateUrl: './categories.component.html',
   styleUrls: ['./categories.component.scss']
 })
-export class CategoriesComponent {
+export class CategoriesComponent implements OnInit {
   viewMode: 'grid' | 'table' = 'grid';
   activeFilter: string = 'all';
+  searchTerm: string = '';
 
   showAddCategoryModal = false;
   showFiltersSheet = false;
   selectedCategoryForEdit: any = null;
 
-  // Pagination state
   currentPage = 1;
-  pageSize = 12; // Grid default is 12 for Categories
-  totalCategories = 24;
+  pageSize = 12;
+
+  allCategories: CategoryUIModel[] = [];
 
   constructor(
     private confirmService: ConfirmDialogService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private categoryApp: CategoryApplication,
+    private productApp: ProductApplication,
+    private sessionService: ISessionService
   ) {}
+
+  ngOnInit() {
+    this.loadCategories();
+  }
+
+  get currentUserId(): string {
+    const user = this.sessionService.getCurrentUser();
+    return user ? user.id : '00000000-0000-0000-0000-000000000000';
+  }
+
+  loadCategories() {
+    const response = this.categoryApp.getAllCategories({ userId: this.currentUserId });
+    if (response.success && response.data) {
+      const productResponse = this.productApp.getAllProducts({ userId: this.currentUserId });
+      let allProducts: any[] = [];
+      if (productResponse.success && productResponse.data) {
+        allProducts = productResponse.data;
+      }
+
+      this.allCategories = response.data
+        .filter(c => c.status !== 'ARCHIVED')
+        .map(c => {
+          const count = allProducts.filter(p => p.category === c.name).length;
+          return this.mapToUIModel(c, count);
+        });
+    } else {
+      this.toastService.error(response.error?.message || 'Failed to load categories');
+    }
+  }
+
+  private mapToUIModel(c: CategoryInfo, count: number): CategoryUIModel {
+    return {
+      id: c.category_id,
+      name: c.name,
+      description: c.description || '',
+      productsCount: count,
+      status: c.status === 'ACTIVE' ? 'Active' : 'Inactive',
+      icon: c.icon || 'folder',
+      colorHint: c.color_hint || '#F3E8FF'
+    };
+  }
+
+  get filteredCategories(): CategoryUIModel[] {
+    return this.allCategories.filter(c => {
+      const matchesSearch = c.name.toLowerCase().includes(this.searchTerm.toLowerCase());
+      let matchesFilter = true;
+      if (this.activeFilter === 'active') matchesFilter = c.status === 'Active';
+      if (this.activeFilter === 'inactive') matchesFilter = c.status === 'Inactive';
+      return matchesSearch && matchesFilter;
+    });
+  }
+
+  get paginatedCategories(): CategoryUIModel[] {
+    const start = (this.currentPage - 1) * this.pageSize;
+    return this.filteredCategories.slice(start, start + this.pageSize);
+  }
+
+  get totalCategories(): number {
+    return this.filteredCategories.length;
+  }
+
+  get totalCategoriesCount(): number {
+    return this.allCategories.length;
+  }
+
+  get activeCategoriesCount(): number {
+    return this.allCategories.filter(c => c.status === 'Active').length;
+  }
+
+  get inactiveCategoriesCount(): number {
+    return this.allCategories.filter(c => c.status === 'Inactive').length;
+  }
 
   onPageChange(page: number) {
     this.currentPage = page;
@@ -56,115 +146,17 @@ export class CategoriesComponent {
 
   onPageSizeChange(size: number) {
     this.pageSize = size;
-    this.currentPage = 1; // Reset to first page
+    this.currentPage = 1;
   }
 
-  // Dummy Data for UI implementation
-  categories = [
-    {
-      id: 1,
-      name: 'Beverages',
-      productsCount: 48,
-      status: 'Active',
-      icon: 'local_cafe',
-      colorHint: '#F3E8FF' // Purple
-    },
-    {
-      id: 2,
-      name: 'Food',
-      productsCount: 120,
-      status: 'Active',
-      icon: 'restaurant_menu',
-      colorHint: '#FFEDD5' // Orange
-    },
-    {
-      id: 3,
-      name: 'Snacks',
-      productsCount: 35,
-      status: 'Active',
-      icon: 'fastfood',
-      colorHint: '#FEF3C7' // Yellow/Amber
-    },
-    {
-      id: 4,
-      name: 'Desserts',
-      productsCount: 28,
-      status: 'Active',
-      icon: 'cake',
-      colorHint: '#FCE7F3' // Pink
-    },
-    {
-      id: 5,
-      name: 'Bakery',
-      productsCount: 22,
-      status: 'Active',
-      icon: 'bakery_dining',
-      colorHint: '#FFEDD5' // Orange
-    },
-    {
-      id: 6,
-      name: 'Dairy',
-      productsCount: 18,
-      status: 'Active',
-      icon: 'local_drink',
-      colorHint: '#E0E7FF' // Blue
-    },
-    {
-      id: 7,
-      name: 'Fruits',
-      productsCount: 26,
-      status: 'Active',
-      icon: 'eco',
-      colorHint: '#DCFCE7' // Green
-    },
-    {
-      id: 8,
-      name: 'Vegetables',
-      productsCount: 30,
-      status: 'Active',
-      icon: 'energy_savings_leaf',
-      colorHint: '#DCFCE7' // Green
-    },
-    {
-      id: 9,
-      name: 'Sauces & Spreads',
-      productsCount: 12,
-      status: 'Active',
-      icon: 'soup_kitchen',
-      colorHint: '#FEE2E2' // Red
-    },
-    {
-      id: 10,
-      name: 'Dry Fruits',
-      productsCount: 15,
-      status: 'Active',
-      icon: 'eco',
-      colorHint: '#F3E8FF' // Purple
-    },
-    {
-      id: 11,
-      name: 'Ice Cream',
-      productsCount: 16,
-      status: 'Active',
-      icon: 'icecream',
-      colorHint: '#DBEAFE' // Light Blue
-    },
-    {
-      id: 12,
-      name: 'Combo Meals',
-      productsCount: 8,
-      status: 'Inactive',
-      icon: 'set_meal',
-      colorHint: '#F3F4F6' // Gray
-    }
-  ];
-
   onSearch(term: string) {
-    console.log('Search:', term);
+    this.searchTerm = term;
+    this.currentPage = 1;
   }
 
   onFilterChange(filter: string) {
     this.activeFilter = filter;
+    this.currentPage = 1;
   }
 
   onViewModeChange(mode: 'grid' | 'table') {
@@ -186,12 +178,18 @@ export class CategoriesComponent {
     this.selectedCategoryForEdit = null;
   }
 
-  onEditCategory(category: any) {
-    this.selectedCategoryForEdit = category;
+  onEditCategory(category: CategoryUIModel) {
+    this.selectedCategoryForEdit = {
+      id: category.id,
+      name: category.name,
+      icon: category.icon,
+      colorHint: category.colorHint,
+      description: category.description
+    };
     this.showAddCategoryModal = true;
   }
 
-  async onDeleteCategory(category: any) {
+  async onDeleteCategory(category: CategoryUIModel) {
     const isConfirmed = await this.confirmService.confirm({
       variant: 'danger',
       title: `Delete "${category.name}"?`,
@@ -203,34 +201,69 @@ export class CategoriesComponent {
     });
 
     if (isConfirmed) {
-      this.categories = this.categories.filter(c => c.id !== category.id);
-      this.totalCategories--;
-      this.toastService.success(`Category deleted successfully`);
+      const response = this.categoryApp.archiveCategory({
+        userId: this.currentUserId,
+        category_id: category.id
+      });
+      if (response.success) {
+        this.toastService.success(`Category deleted successfully`);
+        this.loadCategories();
+      } else {
+        this.toastService.error(response.error?.message || 'Failed to delete category');
+      }
     }
   }
 
-  onToggleStatus(category: any) {
-    category.status = category.status === 'Active' ? 'Inactive' : 'Active';
+  onToggleStatus(category: CategoryUIModel) {
+    const newStatus = category.status === 'Active' ? 'INACTIVE' : 'ACTIVE';
+    const response = this.categoryApp.updateStatus({
+      userId: this.currentUserId,
+      category_id: category.id,
+      status: newStatus
+    });
+    
+    if (response.success) {
+      this.toastService.success(`Category ${newStatus === 'ACTIVE' ? 'activated' : 'deactivated'}`);
+      this.loadCategories();
+    } else {
+      this.toastService.error(response.error?.message || 'Failed to update category status');
+    }
   }
 
   onSaveCategory(categoryData: any) {
     if (this.selectedCategoryForEdit) {
-      // Update existing
-      const index = this.categories.findIndex(c => c.id === categoryData.id);
-      if (index !== -1) {
-        this.categories[index] = { ...this.categories[index], ...categoryData };
+      const response = this.categoryApp.updateCategory({
+        userId: this.currentUserId,
+        category_id: this.selectedCategoryForEdit.id,
+        name: categoryData.name,
+        description: categoryData.description || null,
+        icon: categoryData.icon,
+        color_hint: categoryData.colorHint
+      });
+      if (response.success) {
+        this.toastService.success('Category updated successfully');
+        this.loadCategories();
+        this.closeModals();
+      } else {
+        this.toastService.error(response.error?.message || 'Error updating category');
       }
     } else {
-      // Create new
-      this.categories.unshift({
-        ...categoryData,
-        productsCount: 0,
-        status: 'Active',
-        colorHint: '#F3E8FF'
+      const response = this.categoryApp.createCategory({
+        userId: this.currentUserId,
+        name: categoryData.name,
+        description: categoryData.description || null,
+        icon: categoryData.icon,
+        color_hint: categoryData.colorHint
       });
-      this.totalCategories++;
+      if (response.success) {
+        this.toastService.success('Category created successfully');
+        this.loadCategories();
+        if (!categoryData.addAnother) {
+          this.closeModals();
+        }
+      } else {
+        this.toastService.error(response.error?.message || 'Error creating category');
+      }
     }
-    this.toastService.success(this.selectedCategoryForEdit ? 'Category updated successfully' : 'Category created successfully');
-    this.closeModals();
   }
 }

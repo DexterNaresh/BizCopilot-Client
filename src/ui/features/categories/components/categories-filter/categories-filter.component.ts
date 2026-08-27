@@ -10,6 +10,9 @@ import { CommonModule } from '@angular/common';
 })
 export class CategoriesFilterComponent {
   @Input() activeFilter: string = 'all';
+  @Input() totalCount: number = 0;
+  @Input() activeCount: number = 0;
+  @Input() inactiveCount: number = 0;
   @Output() filterChange = new EventEmitter<string>();
 
   setFilter(filter: string) {

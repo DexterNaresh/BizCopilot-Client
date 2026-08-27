@@ -17,33 +17,33 @@
 
   /* Semantic Variants */
   &.toast-success {
-    border-left: 4px solid var(--color-success, #10B981);
-    .semantic-icon { color: var(--color-success, #10B981); }
-    .progress-bar { background-color: var(--color-success, #10B981); }
+    .icon-container { background-color: #D1FAE5; }
+    .semantic-icon { color: #16A34A; }
+    .progress-bar { background-color: #16A34A; }
   }
 
   &.toast-info {
-    border-left: 4px solid var(--color-info, #3B82F6);
-    .semantic-icon { color: var(--color-info, #3B82F6); }
-    .progress-bar { background-color: var(--color-info, #3B82F6); }
+    .icon-container { background-color: #DBEAFE; }
+    .semantic-icon { color: #2563EB; }
+    .progress-bar { background-color: #2563EB; }
   }
 
   &.toast-warning {
-    border-left: 4px solid var(--color-warning, #F59E0B);
-    .semantic-icon { color: var(--color-warning, #F59E0B); }
-    .progress-bar { background-color: var(--color-warning, #F59E0B); }
+    .icon-container { background-color: #FEF3C7; }
+    .semantic-icon { color: #F59E0B; }
+    .progress-bar { background-color: #F59E0B; }
   }
 
   &.toast-error {
-    border-left: 4px solid var(--color-danger, #EF4444);
-    .semantic-icon { color: var(--color-danger, #EF4444); }
-    .progress-bar { background-color: var(--color-danger, #EF4444); }
+    .icon-container { background-color: #FEE2E2; }
+    .semantic-icon { color: #EF4444; }
+    .progress-bar { background-color: #EF4444; }
   }
 
   &.toast-undo {
-    border-left: 4px solid var(--color-primary, #5B3BEB);
-    .semantic-icon { color: var(--color-primary, #5B3BEB); }
-    .progress-bar { background-color: var(--color-primary, #5B3BEB); }
+    .icon-container { background-color: #F3E8FF; }
+    .semantic-icon { color: #7C3AED; }
+    .progress-bar { background-color: #7C3AED; }
   }
 }
 
@@ -55,14 +55,17 @@
 }
 
 .icon-container {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
   flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 2px; /* align with title text */
+  margin-top: -2px;
 
   .semantic-icon {
-    font-size: 20px;
+    font-size: 14px;
   }
 }
 

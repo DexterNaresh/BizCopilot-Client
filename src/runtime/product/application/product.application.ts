@@ -46,6 +46,12 @@ export class ProductApplication {
     });
   }
 
+  getAllProducts(request: { userId: string }): ApplicationResponse<ProductInfo[]> {
+    return this.executeWithPermission(request.userId, 'PRODUCT_VIEW', () => {
+      return this.productService.getAllProducts().map(e => this.mapToInfo(e));
+    });
+  }
+
   private mapToInfo(entity: ProductEntity): ProductInfo {
     return {
       product_id: entity.product_id,

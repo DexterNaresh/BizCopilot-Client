@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import initSqlJs, { Database, QueryExecResult } from 'sql.js';
 import { IDatabaseService } from '@shared/abstractions/database.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class DatabaseService implements IDatabaseService {
   private db: Database | null = null;
   private isInitialized = false;
@@ -85,12 +87,16 @@ export class DatabaseService implements IDatabaseService {
         pin_hash TEXT NOT NULL,
         created_at TEXT NOT NULL
       );
+    `);
 
+    this.execute(`
       CREATE TABLE IF NOT EXISTS sequences (
         sequence_name TEXT PRIMARY KEY,
         next_value INTEGER NOT NULL
       );
+    `);
 
+    this.execute(`
       CREATE TABLE IF NOT EXISTS products (
         product_id TEXT PRIMARY KEY,
         product_code TEXT NOT NULL UNIQUE,
@@ -103,7 +109,22 @@ export class DatabaseService implements IDatabaseService {
         status TEXT NOT NULL DEFAULT 'ACTIVE',
         created_at TEXT NOT NULL
       );
+    `);
 
+    this.execute(`
+      CREATE TABLE IF NOT EXISTS categories (
+        category_id TEXT PRIMARY KEY,
+        name TEXT NOT NULL,
+        description TEXT,
+        icon TEXT NOT NULL,
+        color_hint TEXT NOT NULL,
+        status TEXT NOT NULL DEFAULT 'ACTIVE',
+        created_at TEXT NOT NULL,
+        updated_at TEXT
+      );
+    `);
+
+    this.execute(`
       CREATE TABLE IF NOT EXISTS customers (
         customer_id TEXT PRIMARY KEY,
         name TEXT NOT NULL,
@@ -113,7 +134,9 @@ export class DatabaseService implements IDatabaseService {
         status TEXT NOT NULL DEFAULT 'ACTIVE',
         created_at TEXT NOT NULL
       );
+    `);
 
+    this.execute(`
       CREATE TABLE IF NOT EXISTS offers (
         offer_id TEXT PRIMARY KEY,
         name TEXT NOT NULL,
@@ -125,7 +148,9 @@ export class DatabaseService implements IDatabaseService {
         valid_until TEXT,
         created_at TEXT NOT NULL
       );
+    `);
 
+    this.execute(`
       CREATE TABLE IF NOT EXISTS bills (
         bill_id TEXT PRIMARY KEY,
         bill_number TEXT NOT NULL UNIQUE,
@@ -141,7 +166,9 @@ export class DatabaseService implements IDatabaseService {
         status TEXT NOT NULL DEFAULT 'COMPLETED',
         created_at TEXT NOT NULL
       );
+    `);
 
+    this.execute(`
       CREATE TABLE IF NOT EXISTS bill_items (
         bill_item_id TEXT PRIMARY KEY,
         bill_id TEXT NOT NULL,
