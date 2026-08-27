@@ -10,6 +10,8 @@ import { ProductSupportPanelComponent } from './components/product-support-panel
 import { BizIconComponent } from '../../shared/components/biz-icon/biz-icon.component';
 import { BizPaginationComponent } from '../../shared/components/biz-pagination/biz-pagination.component';
 import { AddProductModalComponent } from './components/add-product-modal/add-product-modal.component';
+import { ConfirmDialogService } from '../../shared/services/confirm-dialog.service';
+import { ToastService } from '../../shared/services/toast.service';
 
 @Component({
   selector: 'app-products',
@@ -41,6 +43,11 @@ export class ProductsComponent {
   currentPage = 1;
   pageSize = 10;
   totalProducts = 156;
+
+  constructor(
+    private confirmService: ConfirmDialogService,
+    private toastService: ToastService
+  ) {}
 
   onPageChange(page: number) {
     this.currentPage = page;
@@ -137,17 +144,46 @@ export class ProductsComponent {
     this.showAddProductModal = true;
   }
 
-  onArchiveProduct(product: any) {
-    console.log('Archive product (instead of delete):', product);
-    alert('Archive Product confirmation dialog will open here for ' + product.name);
+  async onArchiveProduct(product: any) {
+    const isConfirmed = await this.confirmService.confirm({
+      variant: 'danger',
+      title: `Delete "${product.name}"?`,
+      message: 'This product will be permanently deleted.\nThis action cannot be undone.',
+      cancelLabel: 'Cancel',
+      confirmLabel: 'Delete Product'
+    });
+
+    if (isConfirmed) {
+      this.products = this.products.filter(p => p.id !== product.id);
+      this.totalProducts--;
+      this.toastService.success(`Product deleted successfully`);
+    }
   }
 
   onToggleFavourite(product: any) {
     product.isFavourite = !product.isFavourite;
   }
 
-  onToggleAvailability(product: any) {
-    product.isAvailable = !product.isAvailable;
+  async onToggleAvailability(product: any) {
+    if (product.isAvailable) {
+      // Deactivating
+      const isConfirmed = await this.confirmService.confirm({
+        variant: 'warning',
+        title: `Deactivate "${product.name}"?`,
+        message: 'This product will no longer be available for billing.',
+        cancelLabel: 'Cancel',
+        confirmLabel: 'Deactivate'
+      });
+
+      if (isConfirmed) {
+        product.isAvailable = false;
+        this.toastService.info('Product deactivated');
+      }
+    } else {
+      // Activating
+      product.isAvailable = true;
+      this.toastService.success('Product activated');
+    }
   }
 
   onSaveProduct(productData: any) {
@@ -168,6 +204,7 @@ export class ProductsComponent {
       });
       this.totalProducts++;
     }
+    this.toastService.success(this.selectedProductForEdit ? 'Product updated successfully' : 'Product created successfully');
     this.closeModals();
   }
 }

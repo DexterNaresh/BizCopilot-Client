@@ -1,0 +1,9 @@
+<div class="category-grid">
+  <app-category-card 
+    *ngFor="let category of categories"
+    [category]="category"
+    (edit)="edit.emit(category)"
+    (delete)="delete.emit(category)"
+    (toggleStatus)="toggleStatus.emit(category)">
+  </app-category-card>
+</div>

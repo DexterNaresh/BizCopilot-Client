@@ -1,0 +1,149 @@
+.support-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.panel-section {
+  background-color: var(--color-surface, #FFFFFF);
+  border: 1px solid var(--color-border, #EAECEF);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.section-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary, #111827);
+  margin: 0 0 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.action-item {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+}
+
+.action-icon {
+  font-size: 20px;
+  color: var(--color-primary, #5B3BEB);
+  margin-right: 12px;
+}
+
+.action-text {
+  flex: 1;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-primary, #111827);
+}
+
+.chevron {
+  font-size: 20px;
+  color: var(--color-text-muted, #9CA3AF);
+}
+
+.summary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.summary-label {
+  font-size: 14px;
+  color: var(--color-text-primary, #111827);
+  font-weight: 500;
+}
+
+.summary-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary, #111827);
+}
+
+.summary-value.success {
+  color: #166534;
+}
+
+.summary-value.danger {
+  color: #991B1B;
+}
+
+.summary-value.primary {
+  color: var(--color-primary, #5B3BEB);
+}
+
+.tips-icon {
+  color: var(--color-warning, #D97706);
+}
+
+.tips-list {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tips-list li {
+  font-size: 13px;
+  color: var(--color-text-secondary, #6B7280);
+  line-height: 1.5;
+}
+
+.upcoming-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.upcoming-header .section-title {
+  margin-bottom: 0;
+}
+
+.badge-planned {
+  background-color: rgba(91, 59, 235, 0.1);
+  color: var(--color-primary, #5B3BEB);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.roadmap-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-primary, #5B3BEB);
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 16px;
+  padding: 0;
+  cursor: pointer;
+}
+
+.roadmap-btn biz-icon {
+  font-size: 16px;
+}

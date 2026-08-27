@@ -1,0 +1,72 @@
+<div class="categories-layout">
+  <!-- Main Content Area -->
+  <main class="main-content">
+    <app-categories-header (addCategory)="onAddCategory()"></app-categories-header>
+    
+    <app-category-search 
+      (search)="onSearch($event)" 
+      (filter)="onOpenFilters()">
+    </app-category-search>
+    
+    <app-categories-filter 
+      [activeFilter]="activeFilter"
+      (filterChange)="onFilterChange($event)">
+    </app-categories-filter>
+    
+    <app-category-view-toggle
+      [totalCount]="categories.length"
+      [viewMode]="viewMode"
+      (viewModeChange)="onViewModeChange($event)">
+    </app-category-view-toggle>
+
+    <div class="category-content-area">
+      <app-category-grid 
+        *ngIf="viewMode === 'grid'"
+        [categories]="categories"
+        (edit)="onEditCategory($event)"
+        (delete)="onDeleteCategory($event)"
+        (toggleStatus)="onToggleStatus($event)">
+      </app-category-grid>
+      
+      <app-category-table 
+        *ngIf="viewMode === 'table'"
+        [categories]="categories"
+        (edit)="onEditCategory($event)"
+        (delete)="onDeleteCategory($event)"
+        (toggleStatus)="onToggleStatus($event)">
+      </app-category-table>
+    </div>
+
+    <!-- Advanced Pagination -->
+    <biz-pagination 
+      [totalItems]="totalCategories"
+      [pageSize]="pageSize"
+      [currentPage]="currentPage"
+      [pageSizeOptions]="[8, 10, 12, 20, 25, 50]"
+      itemName="categories"
+      (pageChange)="onPageChange($event)"
+      (pageSizeChange)="onPageSizeChange($event)">
+    </biz-pagination>
+  </main>
+
+  <!-- Right Contextual Panel (Desktop Only) -->
+  <aside class="right-rail">
+    <app-category-support-panel></app-category-support-panel>
+  </aside>
+
+  <!-- Overlays -->
+  <app-add-category-modal 
+    *ngIf="showAddCategoryModal"
+    [editCategory]="selectedCategoryForEdit"
+    (close)="closeModals()"
+    (save)="onSaveCategory($event)">
+  </app-add-category-modal>
+
+  <div class="overlay-placeholder" *ngIf="showFiltersSheet" (click)="closeModals()">
+    <div class="sheet-content" (click)="$event.stopPropagation()">
+      <h2>Filters Sheet</h2>
+      <p>This is where the Status filters will go.</p>
+      <button (click)="closeModals()">Close</button>
+    </div>
+  </div>
+</div>

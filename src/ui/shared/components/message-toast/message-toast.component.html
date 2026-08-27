@@ -1,0 +1,29 @@
+<div class="toast-card" [ngClass]="semanticClass" 
+     (mouseenter)="pauseTimer()" 
+     (mouseleave)="resumeTimer()"
+     (touchstart)="pauseTimer()"
+     (touchend)="resumeTimer()">
+  
+  <div class="toast-content-wrapper">
+    <div class="icon-container">
+      <biz-icon category="common" [name]="iconName" class="semantic-icon"></biz-icon>
+    </div>
+    
+    <div class="text-content">
+      <div class="toast-title">{{ toast.title }}</div>
+      <div class="toast-message" *ngIf="toast.message">{{ toast.message }}</div>
+    </div>
+
+    <div class="action-container" *ngIf="toast.action">
+      <button class="action-btn" (click)="onActionClick()">{{ toast.action.label }}</button>
+    </div>
+
+    <button class="close-btn" (click)="onDismiss()" aria-label="Dismiss notification">
+      <biz-icon category="common" name="close"></biz-icon>
+    </button>
+  </div>
+
+  <div class="progress-bar-container" *ngIf="toast.duration > 0">
+    <div class="progress-bar" [style.width.%]="progress"></div>
+  </div>
+</div>

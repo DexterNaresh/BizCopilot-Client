@@ -1,0 +1,35 @@
+<div class="category-card">
+  <!-- Overlay Actions -->
+  <button class="action-btn edit-btn" (click)="onEdit()" aria-label="Edit category">
+    <biz-icon category="common" name="edit"></biz-icon>
+  </button>
+  <button class="action-btn delete-btn" (click)="onDelete()" aria-label="Delete category">
+    <biz-icon category="common" name="delete"></biz-icon>
+  </button>
+  
+  <!-- Centered Icon -->
+  <div class="icon-container-wrapper">
+    <div class="icon-circle" [style.background-color]="category.colorHint || '#F3F4F6'">
+       <biz-icon category="common" [name]="category.icon" class="category-icon"></biz-icon>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <h3 class="category-name">{{ category.name }}</h3>
+  <div class="products-count">{{ category.productsCount }} Products</div>
+  
+  <!-- Status and Toggle -->
+  <div class="status-row">
+    <span class="status-label" [class.status-active]="category.status === 'Active'" [class.status-inactive]="category.status === 'Inactive'">
+      {{ category.status }}
+    </span>
+    <!-- Simulated Toggle Switch -->
+    <button 
+      class="toggle-switch" 
+      [class.active]="category.status === 'Active'" 
+      (click)="onToggleStatus()"
+      aria-label="Toggle status">
+      <div class="toggle-knob"></div>
+    </button>
+  </div>
+</div>

@@ -5,6 +5,7 @@ import { AppShellComponent } from '../layout/app-shell/app-shell.component';
 import { HomeComponent } from '../features/home/home.component';
 import { BillingComponent } from '../features/billing/billing.component';
 import { ProductsComponent } from '../features/products/products.component';
+import { CategoriesComponent } from '../features/categories/categories.component';
 import { CustomersComponent } from '../features/customers/customers.component';
 import { ReportsComponent } from '../features/reports/reports.component';
 import { OffersComponent } from '../features/offers/offers.component';
@@ -27,6 +28,7 @@ export const routes: Routes = [
       { path: 'home', component: HomeComponent },
       { path: 'billing', component: BillingComponent },
       { path: 'products', component: ProductsComponent },
+      { path: 'categories', component: CategoriesComponent },
       { path: 'customers', component: CustomersComponent },
       { path: 'reports', component: ReportsComponent },
       { path: 'offers', component: OffersComponent },

@@ -1,0 +1,35 @@
+<div class="modal-backdrop" *ngIf="state?.isOpen"></div>
+
+<div class="modal-container" *ngIf="state?.isOpen" [ngClass]="semanticClass">
+  <div class="dialog-header">
+    <div class="icon-circle">
+      <biz-icon category="common" [name]="iconName" class="header-icon"></biz-icon>
+    </div>
+    
+    <div class="header-text">
+      <h2>{{ state!.title }}</h2>
+    </div>
+    
+    <button class="close-btn" (click)="onCancel()" aria-label="Close dialog" [disabled]="state!.isLoading">
+      <biz-icon category="common" name="close"></biz-icon>
+    </button>
+  </div>
+
+  <div class="dialog-body">
+    <p class="dialog-message">{{ state!.message }}</p>
+
+    <div class="warning-block" *ngIf="state!.warningMessage">
+      <biz-icon category="common" name="warning" class="warning-icon"></biz-icon>
+      <span>{{ state!.warningMessage }}</span>
+    </div>
+  </div>
+
+  <div class="dialog-footer">
+    <button class="btn btn-secondary" (click)="onCancel()" [disabled]="state!.isLoading">
+      {{ state!.cancelLabel || 'Cancel' }}
+    </button>
+    <button class="btn btn-primary" (click)="onConfirm()" [disabled]="state!.isLoading">
+      {{ state!.isLoading ? 'Processing...' : (state!.confirmLabel || 'Confirm') }}
+    </button>
+  </div>
+</div>

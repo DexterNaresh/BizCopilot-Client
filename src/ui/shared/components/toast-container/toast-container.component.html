@@ -1,0 +1,7 @@
+<div class="toast-container-wrapper">
+  <app-message-toast 
+    *ngFor="let toast of toasts$ | async" 
+    [toast]="toast"
+    (dismiss)="onDismiss($event)">
+  </app-message-toast>
+</div>

@@ -1,0 +1,204 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(17, 24, 39, 0.4);
+  z-index: 2000;
+  backdrop-filter: blur(2px);
+}
+
+.modal-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: min(calc(100% - 48px), 480px); /* narrower for confirm dialogs */
+  background-color: var(--color-surface, #FFFFFF);
+  border-radius: 12px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  z-index: 2001;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  /* Semantic Variants */
+  &.dialog-danger {
+    .icon-circle { background-color: #FEE2E2; color: var(--color-danger, #EF4444); }
+    .btn-primary { background-color: var(--color-danger, #EF4444); color: white; }
+    .btn-primary:hover { background-color: #DC2626; }
+  }
+
+  &.dialog-warning {
+    .icon-circle { background-color: #FEF3C7; color: var(--color-warning, #F59E0B); }
+    .btn-primary { background-color: var(--color-warning, #F59E0B); color: white; }
+    .btn-primary:hover { background-color: #D97706; }
+  }
+
+  &.dialog-info {
+    .icon-circle { background-color: #E0E7FF; color: var(--color-primary, #5B3BEB); }
+    .btn-primary { background-color: var(--color-primary, #5B3BEB); color: white; }
+    .btn-primary:hover { background-color: #4C31C4; }
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-container {
+    top: auto;
+    bottom: 0;
+    left: 0;
+    transform: none;
+    width: 100%;
+    border-radius: 16px 16px 0 0;
+  }
+}
+
+.dialog-header {
+  padding: 20px 24px 16px 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+
+  .icon-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    .header-icon {
+      font-size: 20px;
+    }
+  }
+
+  .header-text {
+    flex: 1;
+    margin-top: 8px; /* align with icon center */
+    
+    h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--color-text-primary, #111827);
+    }
+  }
+
+  .close-btn {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: var(--color-text-secondary, #6B7280);
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+
+    biz-icon {
+      font-size: 20px;
+    }
+
+    &:hover:not(:disabled) {
+      background-color: #F3F4F6;
+      color: var(--color-text-primary, #111827);
+    }
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.dialog-body {
+  padding: 0 24px 24px 24px;
+  /* alignment with text */
+  padding-left: 80px; 
+}
+
+@media (max-width: 480px) {
+  .dialog-body {
+    padding-left: 24px; /* reset on mobile where it wraps */
+  }
+}
+
+.dialog-message {
+  margin: 0 0 16px 0;
+  font-size: 14px;
+  color: var(--color-text-secondary, #4B5563);
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+.warning-block {
+  background-color: #FEF2F2; /* very light red */
+  border: 1px solid #FEE2E2;
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  
+  .warning-icon {
+    color: var(--color-danger, #EF4444);
+    font-size: 18px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  span {
+    font-size: 13px;
+    color: #991B1B;
+    line-height: 1.4;
+  }
+}
+
+.dialog-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--color-border, #EAECEF);
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  background-color: #F9FAFB;
+
+  .btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+
+    &:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    &.btn-secondary {
+      background-color: white;
+      border-color: var(--color-border, #D1D5DB);
+      color: var(--color-text-primary, #374151);
+
+      &:hover:not(:disabled) {
+        background-color: #F3F4F6;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .dialog-footer {
+    flex-direction: column-reverse;
+
+    .btn {
+      width: 100%;
+    }
+  }
+}

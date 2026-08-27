@@ -1,0 +1,106 @@
+<div class="modal-backdrop" (click)="onCancel()"></div>
+<div class="modal-container">
+
+  <div class="modal-header">
+    <div class="header-icon-container" [style.backgroundColor]="editCategory?.colorHint || '#F3E8FF'">
+      <biz-icon category="common" [name]="editCategory?.icon || 'folder'" class="header-icon"
+        [style.color]="'var(--color-primary)'"></biz-icon>
+    </div>
+    <div class="header-text">
+      <h2>{{ editCategory ? 'Edit Category' : 'Add Category' }}</h2>
+      <p>{{ editCategory ? 'Update the category information' : 'Create a new category to organize your products' }}</p>
+    </div>
+    <button class="close-btn" (click)="onCancel()" aria-label="Close modal">
+      <biz-icon category="common" name="close"></biz-icon>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+
+      <!-- 1. Category Name -->
+      <div class="form-group">
+        <div class="label-row">
+          <label>Category Name <span class="required">*</span></label>
+          <span class="char-count">{{ nameLength }} / 50</span>
+        </div>
+        <input type="text" formControlName="name" class="form-control" placeholder="Enter category name"
+          [class.is-invalid]="categoryForm.get('name')?.invalid && categoryForm.get('name')?.touched">
+        <div class="error-msg" *ngIf="categoryForm.get('name')?.invalid && categoryForm.get('name')?.touched">
+          Category name is required.
+        </div>
+      </div>
+
+      <!-- 2. Description -->
+      <div class="form-group">
+        <div class="label-row">
+          <label>Description <span class="optional">(Optional)</span></label>
+          <span class="char-count">{{ descLength }} / 200</span>
+        </div>
+        <textarea formControlName="description" class="form-control" rows="3"
+          placeholder="Enter category description (optional)"></textarea>
+      </div>
+
+      <!-- 3. Category Icon -->
+      <div class="form-group">
+        <label>Category Icon <span class="required">*</span></label>
+        <p class="helper-text">Choose an icon that represents this category</p>
+
+        <div class="icon-grid">
+          <div *ngFor="let icon of icons" class="icon-wrapper"
+            [class.selected]="categoryForm.get('icon')?.value === icon.name"
+            [style.backgroundColor]="categoryForm.get('icon')?.value === icon.name ? icon.colorHint : (icon.isMore ? '#F9FAFB' : '#FFFFFF')"
+            (click)="selectIcon(icon)">
+            <biz-icon category="common" [name]="icon.name" class="category-icon"
+              [style.color]="icon.isMore ? '#6B7280' : 'var(--color-primary)'"></biz-icon>
+          </div>
+        </div>
+        <div class="error-msg" *ngIf="categoryForm.get('icon')?.invalid && categoryForm.get('icon')?.touched">
+          Category icon is required.
+        </div>
+      </div>
+
+      <!-- 4. Status -->
+      <div class="form-group">
+        <label>Status <span class="required">*</span></label>
+        <p class="helper-text bottom">Set the initial availability status for this category</p>
+
+        <div class="status-options">
+          <div class="status-card" [class.selected]="categoryForm.get('status')?.value === 'Active'"
+            (click)="setStatus('Active')">
+            <div class="radio-circle">
+              <div class="inner-circle" *ngIf="categoryForm.get('status')?.value === 'Active'"></div>
+            </div>
+            <span class="status-label">Active</span>
+            <div class="status-indicator active"></div>
+          </div>
+
+          <div class="status-card" [class.selected]="categoryForm.get('status')?.value === 'Inactive'"
+            (click)="setStatus('Inactive')">
+            <div class="radio-circle">
+              <div class="inner-circle" *ngIf="categoryForm.get('status')?.value === 'Inactive'"></div>
+            </div>
+            <span class="status-label">Inactive</span>
+            <div class="status-indicator inactive"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Add another category -->
+      <div class="form-group checkbox-group" *ngIf="!editCategory">
+        <label class="checkbox-label">
+          <input type="checkbox" formControlName="addAnother">
+          <span class="checkmark"></span>
+          Add another category after saving
+        </label>
+      </div>
+
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="onSubmit()">{{ editCategory ? 'Save Changes' : 'Save'
+      }}</button>
+  </div>
+</div>

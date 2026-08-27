@@ -1,0 +1,22 @@
+<div class="view-toggle-row">
+  <div class="count-display">
+    {{ totalCount }} categories
+  </div>
+  
+  <div class="toggle-group">
+    <button 
+      class="toggle-btn" 
+      [class.active]="viewMode === 'grid'"
+      (click)="setViewMode('grid')">
+      <biz-icon category="common" name="grid_view" class="icon"></biz-icon>
+      Grid View
+    </button>
+    <button 
+      class="toggle-btn" 
+      [class.active]="viewMode === 'table'"
+      (click)="setViewMode('table')">
+      <biz-icon category="common" name="table_rows" class="icon"></biz-icon>
+      Table View
+    </button>
+  </div>
+</div>

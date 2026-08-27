@@ -1,0 +1,50 @@
+<div class="table-container">
+  <table class="category-table">
+    <thead>
+      <tr>
+        <th class="col-seq">#</th>
+        <th class="col-category">Category</th>
+        <th class="col-products">Products</th>
+        <th class="col-status">Status</th>
+        <th class="col-actions">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let category of categories; let i = index">
+        <td class="col-seq">{{ i + 1 }}</td>
+        <td class="col-category">
+          <div class="category-cell">
+            <div class="icon-circle" [style.background-color]="category.colorHint || '#EAECEF'">
+              <biz-icon category="common" [name]="category.icon" class="category-icon"></biz-icon>
+            </div>
+            <span class="category-name">{{ category.name }}</span>
+          </div>
+        </td>
+        <td class="col-products">{{ category.productsCount }} products</td>
+        <td class="col-status">
+          <div class="status-cell">
+            <span class="status-label" [class.status-active]="category.status === 'Active'" [class.status-inactive]="category.status === 'Inactive'">
+              {{ category.status }}
+            </span>
+            <button 
+              class="toggle-switch" 
+              [class.active]="category.status === 'Active'" 
+              (click)="toggleStatus.emit(category)">
+              <div class="toggle-knob"></div>
+            </button>
+          </div>
+        </td>
+        <td class="col-actions">
+          <div class="action-buttons">
+            <button class="icon-btn edit-btn" (click)="edit.emit(category)" aria-label="Edit category">
+              <biz-icon category="common" name="edit"></biz-icon>
+            </button>
+            <button class="icon-btn delete-btn" (click)="delete.emit(category)" aria-label="Delete category">
+              <biz-icon category="common" name="delete"></biz-icon>
+            </button>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
