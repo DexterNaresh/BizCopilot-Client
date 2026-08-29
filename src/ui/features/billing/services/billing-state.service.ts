@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { ILocalStorageService } from '@shared/abstractions/storage.service';
 
 export interface BillingProduct {
   id: string;
@@ -19,6 +20,19 @@ export interface CartItem {
   lineTotal: number;
 }
 
+export interface HeldBill {
+  id: string;
+  billNumber: string;
+  timestamp: string;
+  customer?: any; // To be extended when customer module integrates
+  appliedOffers?: any[]; // To be extended when offers module integrates
+  cartItems: CartItem[];
+  itemCount: number;
+  subtotal: number;
+  discount: number;
+  total: number;
+}
+
 @Injectable()
 export class BillingStateService {
   private cartItemsSubject = new BehaviorSubject<CartItem[]>([]);
@@ -36,8 +50,82 @@ export class BillingStateService {
   private itemCountSubject = new BehaviorSubject<number>(0);
   itemCount$ = this.itemCountSubject.asObservable();
 
+  private heldBillsSubject = new BehaviorSubject<HeldBill[]>([]);
+  heldBills$ = this.heldBillsSubject.asObservable();
+
+  private readonly HELD_BILLS_STORAGE_KEY = 'bizcopilot_held_bills';
+
+  constructor(private storageService: ILocalStorageService) {
+    this.loadHeldBills();
+  }
+
   get cartItems() {
     return this.cartItemsSubject.value;
+  }
+
+  get heldBills() {
+    return this.heldBillsSubject.value;
+  }
+
+  private loadHeldBills() {
+    try {
+      const stored = this.storageService.getItem(this.HELD_BILLS_STORAGE_KEY);
+      if (stored) {
+        this.heldBillsSubject.next(JSON.parse(stored));
+      }
+    } catch (e) {
+      console.error('Failed to load held bills from storage', e);
+    }
+  }
+
+  private saveHeldBills(bills: HeldBill[]) {
+    this.heldBillsSubject.next(bills);
+    try {
+      this.storageService.setItem(this.HELD_BILLS_STORAGE_KEY, JSON.stringify(bills));
+    } catch (e) {
+      console.error('Failed to save held bills to storage', e);
+    }
+  }
+
+  holdCurrentBill(): void {
+    const items = this.cartItems;
+    if (items.length === 0) return;
+
+    // Generate a simple sequential bill number for display purposes, e.g. Bill #1048
+    // In a real app this might come from a sequence service, but since it's temporary:
+    const randomId = Math.floor(1000 + Math.random() * 9000);
+    
+    const heldBill: HeldBill = {
+      id: `HOLD-${Date.now()}`,
+      billNumber: `Bill #${randomId}`,
+      timestamp: new Date().toISOString(),
+      cartItems: [...items],
+      itemCount: this.itemCountSubject.value,
+      subtotal: this.subtotalSubject.value,
+      discount: this.discountSubject.value,
+      total: this.totalSubject.value
+      // Note: customer and appliedOffers would be captured here
+    };
+
+    // Prepend new held bill (newest first)
+    this.saveHeldBills([heldBill, ...this.heldBills]);
+    this.clearCart();
+  }
+
+  resumeBill(heldBillId: string): void {
+    const heldBill = this.heldBills.find(b => b.id === heldBillId);
+    if (!heldBill) return;
+
+    // Restore active cart state
+    this.cartItemsSubject.next([...heldBill.cartItems]);
+    this.recalculateTotals();
+
+    // Remove from held bills
+    this.deleteHeldBill(heldBillId);
+  }
+
+  deleteHeldBill(heldBillId: string): void {
+    this.saveHeldBills(this.heldBills.filter(b => b.id !== heldBillId));
   }
 
   addToCart(product: BillingProduct, initialQuantity: number = 1) {

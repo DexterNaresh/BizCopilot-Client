@@ -1,0 +1,260 @@
+@import '../../../../../styles.scss';
+
+.hold-bill-card {
+  display: flex;
+  background-color: var(--color-surface, #FFFFFF);
+  border: 1px solid var(--border-color, #EAECEF);
+  border-radius: 16px;
+  padding: 16px;
+  gap: 20px;
+  align-items: stretch;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    border-color: var(--color-primary, #5B3BEB);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
+  @media (max-width: 768px) {
+    padding: 12px;
+    gap: 8px;
+  }
+}
+
+// Column 1: Icon Area
+.card-col-icon {
+  display: flex;
+  align-items: flex-start;
+
+
+
+  .icon-container {
+    width: 52px;
+    height: 52px;
+    background-color: rgba(91, 59, 235, 0.08); /* Primary light */
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .clipboard-icon {
+      font-size: 26px;
+      color: var(--color-primary, #5B3BEB);
+    }
+
+    @media (max-width: 768px) {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+
+      .clipboard-icon {
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+// Column 2: Info Area
+.card-col-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 150px;
+  padding-right: 16px;
+  border-right: 1px dashed var(--border-color, #EAECEF);
+
+  @media (max-width: 768px) {
+    min-width: 100px;
+    padding-right: 8px;
+    gap: 4px;
+  }
+
+  .bill-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-primary, #5B3BEB);
+    margin-bottom: 2px;
+
+    @media (max-width: 768px) {
+      font-size: 0.95rem;
+    }
+  }
+
+  .meta-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-text-primary, #111827);
+    font-size: 0.95rem;
+
+    @media (max-width: 768px) {
+      font-size: 0.75rem;
+      gap: 4px;
+    }
+
+    .meta-icon {
+      font-size: 18px;
+      color: var(--color-text-secondary, #6B7280);
+
+      @media (max-width: 768px) {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .total-value {
+    margin-top: 6px;
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--color-success, #16A34A);
+    display: flex;
+    align-items: center;
+    gap: 2px;
+
+    @media (max-width: 768px) {
+      font-size: 0.95rem;
+      margin-top: 2px;
+    }
+
+    .currency {
+      font-weight: 500;
+      font-size: 1rem;
+
+      @media (max-width: 768px) {
+        font-size: 0.85rem;
+      }
+    }
+  }
+}
+
+// Right Side: Time, Delete, Resume
+.card-col-right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 160px;
+  gap: 12px;
+
+  @media (max-width: 768px) {
+    width: auto;
+    flex: 1;
+    gap: 8px;
+  }
+
+  .right-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+
+    .time-block {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      color: var(--color-text-secondary, #6B7280);
+
+      @media (max-width: 768px) {
+        gap: 4px;
+      }
+
+      .time-icon {
+        font-size: 20px;
+        margin-top: 2px;
+
+        @media (max-width: 768px) {
+          font-size: 14px;
+          margin-top: 1px;
+        }
+      }
+
+      .time-text-wrapper {
+        display: flex;
+        flex-direction: column;
+        
+        .time-main {
+          font-size: 1rem;
+          font-weight: 600;
+          color: var(--color-text-primary, #111827);
+
+          @media (max-width: 768px) {
+            font-size: 0.85rem;
+          }
+        }
+
+        .time-sub {
+          font-size: 0.8rem;
+          color: var(--color-text-muted, #9CA3AF);
+          margin-top: 2px;
+
+          @media (max-width: 768px) {
+            font-size: 0.7rem;
+            margin-top: 0;
+          }
+        }
+      }
+    }
+
+    .delete-btn {
+      border-radius: 8px;
+      padding: 6px;
+      height: 36px;
+      width: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      @media (max-width: 768px) {
+        height: 28px;
+        width: 28px;
+        padding: 4px;
+      }
+
+      .delete-icon {
+        font-size: 20px;
+
+        @media (max-width: 768px) {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+
+  .resume-btn {
+    padding: 10px 0;
+    border-radius: 8px;
+    font-weight: 600;
+    width: 100%;
+    text-align: center;
+
+    @media (max-width: 768px) {
+      padding: 6px 0;
+      font-size: 0.85rem;
+    }
+  }
+}
+
+// Button styles (fallback to hardcoded tokens if CSS variables are missing)
+.btn-danger-outline {
+  background-color: transparent;
+  border: 1px solid var(--color-danger, #DC2626);
+  color: var(--color-danger, #DC2626);
+  cursor: pointer;
+  transition: all 0.2s;
+  
+  &:hover {
+    background-color: rgba(220, 38, 38, 0.08); /* Error light */
+  }
+}
+
+.btn-primary-outline {
+  background-color: transparent;
+  border: 1px solid var(--color-primary, #5B3BEB);
+  color: var(--color-primary, #5B3BEB);
+  cursor: pointer;
+  transition: all 0.2s;
+
+  &:hover {
+    background-color: rgba(91, 59, 235, 0.08); /* Primary light */
+  }
+}

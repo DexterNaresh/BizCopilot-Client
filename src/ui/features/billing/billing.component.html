@@ -3,7 +3,8 @@
   <!-- Left Side: Catalog -->
   <div class="catalog-section">
     <app-billing-header 
-      (openHeldBills)="onPlaceholderAction('Hold Bills List')"
+      [heldBillsCount]="(heldBills$ | async)?.length || 0"
+      (openHeldBills)="onOpenHeldBills()"
       (openRecentBills)="onPlaceholderAction('Recent Bills List')">
     </app-billing-header>
     
@@ -42,7 +43,7 @@
       (clearCart)="onClearCart()"
       (openCustomer)="onPlaceholderAction('Select Customer')"
       (openOffers)="onPlaceholderAction('Select Offer')"
-      (holdBill)="onPlaceholderAction('Hold Current Bill')"
+      (holdBill)="onHoldBill()"
       (proceedToPay)="onPlaceholderAction('Proceed to Pay')">
     </app-billing-cart-panel>
   </div>
@@ -56,7 +57,7 @@
     [total]="(total$ | async) || 0"
     [discount]="(discount$ | async) || 0"
     (openCart)="isMobileCartOpen = true"
-    (holdBill)="onPlaceholderAction('Hold Current Bill')"
+    (holdBill)="onHoldBill()"
     (proceedToPay)="onPlaceholderAction('Proceed to Pay')">
   </app-billing-mobile-cart-bar>
 
@@ -74,8 +75,16 @@
     (clearCart)="onClearCart()"
     (openCustomer)="onPlaceholderAction('Select Customer')"
     (openOffers)="onPlaceholderAction('Select Offer')"
-    (holdBill)="onPlaceholderAction('Hold Current Bill')"
+    (holdBill)="onHoldBill()"
     (proceedToPay)="onPlaceholderAction('Proceed to Pay')">
   </app-billing-cart-sheet>
+
+  <app-billing-hold-bill-modal
+    *ngIf="showHoldBillsModal"
+    [heldBills]="(heldBills$ | async) || []"
+    (resume)="onResumeHeldBill($event)"
+    (delete)="onDeleteHeldBill($event)"
+    (close)="showHoldBillsModal = false">
+  </app-billing-hold-bill-modal>
 
 </div>

@@ -1,0 +1,181 @@
+@import '../../../../../styles.scss';
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(2px);
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal-container {
+  background-color: var(--color-surface, #FFFFFF);
+  border-radius: 16px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-lg);
+  animation: scaleIn 0.2s ease-out;
+  overflow: hidden;
+
+
+}
+
+.drag-handle {
+  display: none;
+  width: 40px;
+  height: 4px;
+  background-color: var(--border-color);
+  border-radius: 2px;
+  margin: 12px auto 0;
+
+
+}
+
+.modal-header {
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--border-color);
+
+
+
+  .header-content {
+    h2 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    p {
+      margin: 4px 0 0;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+  }
+
+  .close-btn {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    background-color: var(--color-surface-card, #F9FAFB);
+    
+    &:hover {
+      background-color: var(--color-background-default, #EAECEF);
+    }
+  }
+}
+
+.modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+
+}
+
+// Empty State
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  
+  .empty-icon-circle {
+    width: 64px;
+    height: 64px;
+    background-color: var(--primary-50);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+
+    .empty-icon {
+      font-size: 32px;
+      color: var(--primary-main);
+    }
+  }
+
+  h3 {
+    margin: 0 0 8px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  p {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+  }
+}
+
+// List State
+.held-bills-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.info-tip {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background-color: var(--primary-50);
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 8px;
+
+  .tip-icon-container {
+    width: 32px;
+    height: 32px;
+    background-color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    .tip-icon {
+      font-size: 20px;
+      color: var(--primary-main);
+    }
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--primary-dark);
+    line-height: 1.4;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(100%); }
+  to { opacity: 1; transform: translateY(0); }
+}

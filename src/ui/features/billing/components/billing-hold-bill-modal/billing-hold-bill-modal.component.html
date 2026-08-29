@@ -1,0 +1,45 @@
+<div class="modal-backdrop" (click)="close.emit()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    
+    <!-- Mobile drag handle -->
+    <div class="drag-handle" (click)="close.emit()"></div>
+
+    <div class="modal-header">
+      <div class="header-content">
+        <h2>Held Bills <span *ngIf="heldBills.length > 0">({{ heldBills.length }})</span></h2>
+        <p>Bills waiting to be resumed</p>
+      </div>
+      <button class="btn btn-icon close-btn" (click)="close.emit()">
+        <biz-icon category="common" name="close"></biz-icon>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <!-- Empty State -->
+      <div class="empty-state" *ngIf="heldBills.length === 0">
+        <div class="empty-icon-circle">
+          <biz-icon category="common" name="assignment" class="empty-icon"></biz-icon>
+        </div>
+        <h3>No bills on hold</h3>
+        <p>Bills you put on hold will appear here.</p>
+      </div>
+
+      <!-- List State -->
+      <div class="held-bills-list" *ngIf="heldBills.length > 0">
+        <app-billing-hold-bill-card 
+          *ngFor="let bill of heldBills" 
+          [bill]="bill" 
+          (resume)="onResume($event)" 
+          (delete)="onDelete($event)">
+        </app-billing-hold-bill-card>
+
+        <div class="info-tip">
+          <div class="tip-icon-container">
+            <biz-icon category="common" name="lightbulb" class="tip-icon"></biz-icon>
+          </div>
+          <p>Tip: Resuming a bill will restore all items, quantities, offers and customer details as they were.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

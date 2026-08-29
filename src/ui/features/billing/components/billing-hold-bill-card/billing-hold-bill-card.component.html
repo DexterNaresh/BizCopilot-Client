@@ -1,0 +1,49 @@
+<div class="hold-bill-card">
+  <!-- Column 1: Left Icon -->
+  <div class="card-col-icon">
+    <div class="icon-container">
+      <biz-icon category="common" name="assignment" class="clipboard-icon"></biz-icon>
+    </div>
+  </div>
+
+  <!-- Column 2: Bill Details -->
+  <div class="card-col-details">
+    <div class="bill-title">{{ bill.billNumber }}</div>
+
+    <div class="meta-row">
+      <biz-icon category="common" name="person" class="meta-icon"></biz-icon>
+      <span class="meta-text">{{ bill.customer?.name || 'Walk-in Customer' }}</span>
+    </div>
+
+    <div class="meta-row">
+      <biz-icon category="common" name="inventory_2" class="meta-icon"></biz-icon>
+      <span class="meta-text">{{ bill.itemCount }} items</span>
+    </div>
+
+    <div class="total-value">
+      <span class="currency">₹</span>{{ bill.total | number:'1.2-2' }}
+    </div>
+  </div>
+
+  <!-- Right Side: Time, Delete, Resume -->
+  <div class="card-col-right">
+    <div class="right-top-row">
+      <div class="time-block">
+        <biz-icon category="common" name="schedule" class="time-icon"></biz-icon>
+        <div class="time-text-wrapper">
+          <span class="time-main">{{ formattedTime }}</span>
+          <span class="time-sub">Today</span>
+        </div>
+      </div>
+
+      <button class="btn btn-icon btn-danger-outline delete-btn" (click)="delete.emit(bill.id)"
+        aria-label="Delete Held Bill">
+        <biz-icon category="common" name="delete_outline" class="delete-icon"></biz-icon>
+      </button>
+    </div>
+
+    <button class="btn btn-primary-outline resume-btn" (click)="resume.emit(bill.id)">
+      Resume
+    </button>
+  </div>
+</div>

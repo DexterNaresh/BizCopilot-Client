@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Output, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BizIconComponent } from '../../../../shared/components/biz-icon/biz-icon.component';
 
@@ -13,6 +13,5 @@ export class BillingHeaderComponent {
   @Output() openHeldBills = new EventEmitter<void>();
   @Output() openRecentBills = new EventEmitter<void>();
 
-  // Hardcoded for now. Will be updated when Hold Bill placeholder is built or integrated.
-  heldBillsCount = 0; 
+  @Input() heldBillsCount = 0;
 }

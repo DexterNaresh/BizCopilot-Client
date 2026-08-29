@@ -7,10 +7,12 @@ import { BillingProductGridComponent } from './components/billing-product-grid/b
 import { BillingCartPanelComponent } from './components/billing-cart-panel/billing-cart-panel.component';
 import { BillingMobileCartBarComponent } from './components/billing-mobile-cart-bar/billing-mobile-cart-bar.component';
 import { BillingCartSheetComponent } from './components/billing-cart-sheet/billing-cart-sheet.component';
-import { BillingStateService, BillingProduct, CartItem } from './services/billing-state.service';
+import { BillingHoldBillModalComponent } from './components/billing-hold-bill-modal/billing-hold-bill-modal.component';
+import { BillingStateService, BillingProduct, CartItem, HeldBill } from './services/billing-state.service';
 import { ProductApplication } from '@runtime/product/application/product.application';
 import { CategoryApplication } from '@runtime/category/application/category.application';
 import { ISessionService } from '@shared/abstractions/session.service.interface';
+import { ConfirmDialogService } from '../../shared/services/confirm-dialog.service';
 import { ToastService } from '../../shared/services/toast.service';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -28,7 +30,8 @@ import { getTestImageUrlForProduct } from '../../../shared/utilities/test-image.
     BillingProductGridComponent,
     BillingCartPanelComponent,
     BillingMobileCartBarComponent,
-    BillingCartSheetComponent
+    BillingCartSheetComponent,
+    BillingHoldBillModalComponent
   ],
   providers: [BillingStateService],
   templateUrl: './billing.component.html',
@@ -42,6 +45,7 @@ export class BillingComponent implements OnInit {
   discount$: Observable<number>;
   total$: Observable<number>;
   itemCount$: Observable<number>;
+  heldBills$: Observable<HeldBill[]>;
 
   // Data
   allProducts: BillingProduct[] = [];
@@ -51,19 +55,22 @@ export class BillingComponent implements OnInit {
   activeFilter = 'all';
   searchTerm = '';
   isMobileCartOpen = false;
+  showHoldBillsModal = false;
 
   constructor(
     private state: BillingStateService,
     private productApp: ProductApplication,
     private categoryApp: CategoryApplication,
     private sessionService: ISessionService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private confirmService: ConfirmDialogService
   ) {
     this.cartItems$ = this.state.cartItems$;
     this.subtotal$ = this.state.subtotal$;
     this.discount$ = this.state.discount$;
     this.total$ = this.state.total$;
     this.itemCount$ = this.state.itemCount$;
+    this.heldBills$ = this.state.heldBills$;
   }
 
   ngOnInit() {
@@ -162,6 +169,55 @@ export class BillingComponent implements OnInit {
   onClearCart() {
     this.state.clearCart();
     this.isMobileCartOpen = false;
+  }
+
+  // --- Hold Bill Handlers ---
+
+  onHoldBill() {
+    if (this.state.cartItems.length > 0) {
+      this.state.holdCurrentBill();
+      this.toastService.info('Bill placed on hold');
+    } else {
+      // Just open the modal
+      this.showHoldBillsModal = true;
+    }
+  }
+
+  onOpenHeldBills() {
+    this.showHoldBillsModal = true;
+  }
+
+  async onResumeHeldBill(heldBillId: string) {
+    if (this.state.cartItems.length > 0) {
+      const isConfirmed = await this.confirmService.confirm({
+        variant: 'warning',
+        title: 'Active Bill Present',
+        message: 'You have an active bill with items. What would you like to do?',
+        cancelLabel: 'Cancel',
+        confirmLabel: 'Hold Current & Resume'
+      });
+
+      if (!isConfirmed) return;
+      
+      this.state.holdCurrentBill();
+    }
+    
+    this.state.resumeBill(heldBillId);
+    this.showHoldBillsModal = false;
+  }
+
+  async onDeleteHeldBill(heldBillId: string) {
+    const isConfirmed = await this.confirmService.confirm({
+      variant: 'danger',
+      title: 'Delete held bill?',
+      message: 'This bill will be permanently removed from held bills.',
+      cancelLabel: 'Cancel',
+      confirmLabel: 'Delete'
+    });
+
+    if (isConfirmed) {
+      this.state.deleteHeldBill(heldBillId);
+    }
   }
 
   // Placeholders
