@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { BizIconComponent } from '../../../../shared/components/biz-icon/biz-icon.component';
 import { BillingProduct, CartItem } from '../../services/billing-state.service';
+import { PRODUCT_UNITS } from '../../../../../shared/constants/product-unit.constant';
 
 @Component({
   selector: 'app-billing-product-card',
@@ -28,11 +29,11 @@ export class BillingProductCardComponent {
   }
 
   get isQtyOrPack(): boolean {
-    return this.product.unit === 'Qty' || this.product.unit === 'Pack';
+    return this.product.unit === PRODUCT_UNITS.QTY || this.product.unit === PRODUCT_UNITS.PACK;
   }
   
   get isDecimalUnit(): boolean {
-    return ['Kg', 'Ltr', 'Meter'].includes(this.product.unit);
+    return [PRODUCT_UNITS.KG, PRODUCT_UNITS.LTR, PRODUCT_UNITS.METER].includes(this.product.unit as any);
   }
 
   onAdd() {

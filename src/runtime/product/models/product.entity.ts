@@ -10,6 +10,7 @@ export interface ProductEntity {
   barcode?: string | null;
   available: number;
   status: 'ACTIVE' | 'ARCHIVED';
+  image_url?: string | null;
   created_at: string;
   updated_at?: string | null;
 }

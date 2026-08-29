@@ -10,8 +10,11 @@
 
   <!-- Image Section -->
   <div class="card-image-wrapper">
-    <!-- Using placeholder image from existing pattern if product has no image. Assume image path exists or fallback. -->
-    <img src="assets/placeholder.png" alt="{{ product.name }}" class="product-image">
+    <img *ngIf="product.imageUrl" [src]="product.imageUrl" alt="{{ product.name }}" class="product-image">
+    <!-- Using placeholder image styling from existing pattern if product has no image -->
+    <div *ngIf="!product.imageUrl" class="image-placeholder" [style.background-color]="product.colorHint || '#EAECEF'">
+       <biz-icon category="common" name="image" class="placeholder-icon"></biz-icon>
+    </div>
   </div>
 
   <!-- Details Section -->

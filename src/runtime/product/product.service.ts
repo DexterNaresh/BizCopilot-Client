@@ -38,6 +38,7 @@ export class ProductService {
         barcode: request.barcode,
         available: 1,
         status: 'ACTIVE',
+        image_url: request.image_url || null,
         created_at: new Date().toISOString()
       };
 
@@ -63,7 +64,8 @@ export class ProductService {
       type: request.type || existingProduct.type,
       price: request.price,
       category: request.category,
-      barcode: request.barcode
+      barcode: request.barcode,
+      image_url: request.image_url !== undefined ? request.image_url : existingProduct.image_url
     };
 
     this.productRepository.update(updatedProduct.product_id, updatedProduct);

@@ -13,6 +13,9 @@ import { CategoryApplication } from '@runtime/category/application/category.appl
 import { ISessionService } from '@shared/abstractions/session.service.interface';
 import { ToastService } from '../../shared/services/toast.service';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
+import { PRODUCT_UNITS, ProductUnitKey } from '../../../shared/constants/product-unit.constant';
+import { getTestImageUrlForProduct } from '../../../shared/utilities/test-image.util';
 
 @Component({
   selector: 'app-billing',
@@ -96,10 +99,11 @@ export class BillingComponent implements OnInit {
           name: p.name,
           category: p.category || 'Uncategorized',
           price: p.price,
-          unit: p.type,
+          unit: PRODUCT_UNITS[p.type as ProductUnitKey] || PRODUCT_UNITS.QTY,
           isAvailable: p.available === 1,
           isFavourite: false, // Defaulting to false, you could persist this later
-          colorHint: this.getColorForCategory(p.category)
+          colorHint: this.getColorForCategory(p.category),
+          imageUrl: environment.seedTestData ? getTestImageUrlForProduct(p.name, p.product_id) : (p.image_url || undefined)
         }));
     } else {
       this.toastService.error(response.error?.message || 'Failed to load products');

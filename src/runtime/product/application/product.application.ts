@@ -63,6 +63,7 @@ export class ProductApplication {
       barcode: entity.barcode,
       available: entity.available,
       status: entity.status,
+      image_url: entity.image_url,
       created_at: entity.created_at
     };
   }

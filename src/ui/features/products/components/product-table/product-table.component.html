@@ -15,7 +15,8 @@
             <td class="col-seq">{{ (i + 1).toString().padStart(2, '0') }}</td>
             <td class="col-product">
               <div class="product-cell">
-                <div class="thumbnail" [style.background-color]="product.colorHint || '#EAECEF'">
+                <img *ngIf="product.imageUrl" [src]="product.imageUrl" alt="{{ product.name }}" class="thumbnail-image">
+                <div *ngIf="!product.imageUrl" class="thumbnail" [style.background-color]="product.colorHint || '#EAECEF'">
                   <biz-icon category="common" name="image"></biz-icon>
                 </div>
                 <span class="product-name">{{ product.name }}</span>

@@ -1,4 +1,5 @@
 import { Provider, APP_INITIALIZER } from '@angular/core';
+import { environment } from '../environments/environment';
 
 // Interfaces
 import { IIdentityService } from '@shared/abstractions/identity.service.interface';
@@ -22,6 +23,7 @@ import { ConfigProviderService } from './configuration/config-provider.service';
 import { QueueStorage } from './synchronization/queue.storage';
 import { LocalStorageService } from './storage/local-storage.service';
 import { DatabaseService } from './sqlite/database.service';
+import { DatabaseSeederService } from './sqlite/database-seeder.service';
 import { LogService } from './logging/log.service';
 import { PermissionManager } from './authentication/permission.service';
 import { SessionService } from './authentication/session.service';
@@ -40,8 +42,13 @@ import { SqliteReportRepository } from './sqlite/repositories/report.repository'
 import { ICategoryRepository } from '@runtime/category/repositories/category.repository.interface';
 import { SqliteCategoryRepository } from './sqlite/repositories/category.repository';
 
-export function initializeDatabase(dbService: IDatabaseService) {
-  return () => dbService.initialize();
+export function initializeDatabase(dbService: IDatabaseService, seederService: DatabaseSeederService) {
+  return async () => {
+    await dbService.initialize();
+    if (environment.seedTestData) {
+      seederService.seed();
+    }
+  };
 }
 
 export const platformProviders: Provider[] = [
@@ -60,7 +67,7 @@ export const platformProviders: Provider[] = [
   {
     provide: APP_INITIALIZER,
     useFactory: initializeDatabase,
-    deps: [IDatabaseService],
+    deps: [IDatabaseService, DatabaseSeederService],
     multi: true
   },
   

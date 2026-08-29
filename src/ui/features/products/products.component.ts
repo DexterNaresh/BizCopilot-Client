@@ -18,6 +18,9 @@ import { ISessionService } from '@shared/abstractions/session.service.interface'
 import { AddCategoryModalComponent } from '../categories/components/add-category-modal/add-category-modal.component';
 import { ProductInfo } from '@runtime/product/application/dto/product.dto';
 import { FilterSheetComponent } from '../../shared/components/filter-sheet/filter-sheet.component';
+import { environment } from '../../../environments/environment';
+import { PRODUCT_UNITS, ProductUnitKey } from '../../../shared/constants/product-unit.constant';
+import { getTestImageUrlForProduct } from '../../../shared/utilities/test-image.util';
 
 export interface ProductUIModel {
   id: string;
@@ -28,6 +31,7 @@ export interface ProductUIModel {
   isAvailable: boolean;
   isFavourite: boolean;
   colorHint: string;
+  imageUrl?: string;
 }
 
 @Component({
@@ -42,7 +46,6 @@ export interface ProductUIModel {
     ProductGridComponent,
     ProductTableComponent,
     ProductSupportPanelComponent,
-    BizIconComponent,
     BizPaginationComponent,
     AddProductModalComponent,
     FilterSheetComponent,
@@ -111,10 +114,11 @@ export class ProductsComponent implements OnInit {
       name: p.name,
       category: p.category || 'Uncategorized',
       price: p.price,
-      unit: p.type,
+      unit: PRODUCT_UNITS[p.type as ProductUnitKey] || PRODUCT_UNITS.QTY,
       isAvailable: p.available === 1,
       isFavourite: false,
-      colorHint: this.getColorForCategory(p.category)
+      colorHint: this.getColorForCategory(p.category),
+      imageUrl: environment.seedTestData ? getTestImageUrlForProduct(p.name, p.product_id) : (p.image_url || undefined)
     };
   }
 
@@ -213,7 +217,8 @@ export class ProductsComponent implements OnInit {
       type: product.unit,
       price: product.price,
       category: product.category,
-      barcode: ''
+      barcode: '',
+      image: product.imageUrl
     };
     this.showAddProductModal = true;
   }
@@ -292,7 +297,8 @@ export class ProductsComponent implements OnInit {
         type: productData.type,
         price: productData.price,
         category: productData.category,
-        barcode: productData.barcode
+        barcode: productData.barcode,
+        image_url: productData.image
       });
       if (response.success) {
         this.toastService.success('Product updated successfully');
@@ -308,7 +314,8 @@ export class ProductsComponent implements OnInit {
         type: productData.type,
         price: productData.price,
         category: productData.category,
-        barcode: productData.barcode
+        barcode: productData.barcode,
+        image_url: productData.image
       });
       if (response.success) {
         this.toastService.success('Product created successfully');

@@ -9,7 +9,8 @@ export interface BillingProduct {
   unit: string;
   isAvailable: boolean;
   isFavourite: boolean;
-  colorHint: string;
+  colorHint?: string;
+  imageUrl?: string;
 }
 
 export interface CartItem {

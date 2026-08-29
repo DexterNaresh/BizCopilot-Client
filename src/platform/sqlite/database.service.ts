@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import initSqlJs, { Database, QueryExecResult } from 'sql.js';
 import { IDatabaseService } from '@shared/abstractions/database.service';
+import { DatabaseSeederService } from './database-seeder.service';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -69,6 +71,9 @@ export class DatabaseService implements IDatabaseService {
     if (!productInfo.some(c => c.name === 'type')) {
       this.execute(`ALTER TABLE products ADD COLUMN type TEXT NOT NULL DEFAULT 'QTY'`);
     }
+    if (!productInfo.some(c => c.name === 'image_url')) {
+      this.execute(`ALTER TABLE products ADD COLUMN image_url TEXT`);
+    }
 
     // Migration: Add 'product_name' and 'product_type' to bill_items
     const billItemInfo = this.query<{name: string}>(`PRAGMA table_info(bill_items)`);
@@ -107,6 +112,7 @@ export class DatabaseService implements IDatabaseService {
         barcode TEXT UNIQUE,
         available INTEGER NOT NULL DEFAULT 1,
         status TEXT NOT NULL DEFAULT 'ACTIVE',
+        image_url TEXT,
         created_at TEXT NOT NULL
       );
     `);

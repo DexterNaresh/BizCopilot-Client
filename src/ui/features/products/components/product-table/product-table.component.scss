@@ -59,6 +59,14 @@
       flex-shrink: 0;
     }
 
+    .thumbnail-image {
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
     .thumbnail span {
       font-size: 20px;
       color: rgba(0,0,0,0.1);

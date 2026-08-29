@@ -8,8 +8,9 @@
           <biz-icon category="common" name="delete"></biz-icon>
         </button>
         
-        <!-- Image Placeholder (In real app, this would be an img tag) -->
-        <div class="image-placeholder" [style.background-color]="product.colorHint || '#EAECEF'">
+        <!-- Image Tag / Fallback Placeholder -->
+        <img *ngIf="product.imageUrl" [src]="product.imageUrl" alt="{{ product.name }}" class="product-image">
+        <div *ngIf="!product.imageUrl" class="image-placeholder" [style.background-color]="product.colorHint || '#EAECEF'">
            <biz-icon category="common" name="image" class="placeholder-icon"></biz-icon>
         </div>
       </div>
