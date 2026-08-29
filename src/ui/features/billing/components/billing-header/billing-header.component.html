@@ -1,0 +1,19 @@
+<header class="billing-header">
+  <div class="header-left">
+    <h1 class="page-title">Billing</h1>
+    <p class="page-subtitle">Fast billing. Happy business.</p>
+  </div>
+  
+  <div class="header-right">
+    <button class="btn btn-outline" (click)="openHeldBills.emit()">
+      <biz-icon category="common" name="pause" class="btn-icon"></biz-icon>
+      Hold Bill
+      <span class="badge badge-primary" *ngIf="heldBillsCount > 0">{{ heldBillsCount }}</span>
+    </button>
+    
+    <button class="btn btn-outline" (click)="openRecentBills.emit()">
+      <biz-icon category="common" name="history" class="btn-icon"></biz-icon>
+      Recent Bills
+    </button>
+  </div>
+</header>

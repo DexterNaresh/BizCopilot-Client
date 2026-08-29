@@ -1,0 +1,49 @@
+<div class="cart-item">
+  <!-- Image -->
+  <div class="item-image-wrapper">
+    <!-- Using placeholder image from existing pattern if product has no image. Assume image path exists or fallback. -->
+    <img src="assets/placeholder.png" alt="{{ item.product.name }}" class="item-image">
+  </div>
+
+  <!-- Details & Controls -->
+  <div class="item-content">
+    <div class="item-header">
+      <div class="item-info">
+        <h4 class="item-name">{{ item.product.name }}</h4>
+        <span class="item-price">₹{{ item.product.price | number:'1.2-2' }} / {{ item.product.unit }}</span>
+      </div>
+      <button class="btn-remove" (click)="remove.emit()" aria-label="Remove item">
+        <biz-icon category="common" name="delete_outline" class="remove-icon"></biz-icon>
+      </button>
+    </div>
+
+    <div class="item-actions-row">
+      <!-- Quantity Controls based on Unit -->
+      <div class="qty-control" *ngIf="isQtyOrPack">
+        <button class="qty-btn" (click)="onDecrement()">
+          <biz-icon category="common" name="remove"></biz-icon>
+        </button>
+        <span class="qty-display">{{ item.quantity }} {{ item.product.unit }}</span>
+        <button class="qty-btn" (click)="onIncrement()">
+          <biz-icon category="common" name="add"></biz-icon>
+        </button>
+      </div>
+
+      <div class="decimal-control" *ngIf="isDecimalUnit">
+        <input 
+          type="number" 
+          class="decimal-input" 
+          [value]="item.quantity" 
+          (change)="onDecimalInputChange($event)"
+          (keydown)="onNumberKeypress($event)"
+          step="0.001"
+          min="0"
+        />
+        <span class="decimal-unit">{{ item.product.unit }}</span>
+      </div>
+
+      <!-- Line Total -->
+      <span class="line-total">₹{{ item.lineTotal | number:'1.2-2' }}</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="filter-chips-container">
+  <button 
+    class="chip" 
+    [class.active]="activeFilter === 'all'"
+    (click)="setFilter('all')">
+    <biz-icon category="common" name="grid_view" class="chip-icon"></biz-icon>
+    All
+  </button>
+  
+  <button 
+    class="chip" 
+    [class.active]="activeFilter === 'favourites'"
+    (click)="setFilter('favourites')">
+    <biz-icon category="common" name="star" class="chip-icon"></biz-icon>
+    Favourites
+  </button>
+  
+  <button 
+    *ngFor="let cat of categories"
+    class="chip" 
+    [class.active]="activeFilter === cat.id"
+    (click)="setFilter(cat.id)">
+    <biz-icon category="common" [name]="cat.icon" class="chip-icon"></biz-icon>
+    {{ cat.name }}
+  </button>
+
+  <button class="chip chip-more">
+    More
+    <biz-icon category="common" name="expand_more" class="chip-icon-trailing"></biz-icon>
+  </button>
+</div>

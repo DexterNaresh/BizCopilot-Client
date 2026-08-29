@@ -1,0 +1,81 @@
+<div class="billing-layout">
+  
+  <!-- Left Side: Catalog -->
+  <div class="catalog-section">
+    <app-billing-header 
+      (openHeldBills)="onPlaceholderAction('Hold Bills List')"
+      (openRecentBills)="onPlaceholderAction('Recent Bills List')">
+    </app-billing-header>
+    
+    <app-billing-search 
+      (search)="onSearch($event)"
+      (scan)="onPlaceholderAction('Scan Barcode')">
+    </app-billing-search>
+    
+    <app-billing-filter 
+      [categories]="categories"
+      [activeFilter]="activeFilter"
+      (filterChange)="onFilterChange($event)">
+    </app-billing-filter>
+    
+    <div class="grid-scroll-area">
+      <app-billing-product-grid 
+        [products]="filteredProducts"
+        [cartItems]="(cartItems$ | async) || []"
+        (addProduct)="onAddProduct($event)"
+        (updateQuantity)="onUpdateQuantity($event)"
+        (toggleFavourite)="onToggleFavourite($event)">
+      </app-billing-product-grid>
+    </div>
+  </div>
+
+  <!-- Right Side: Desktop Cart Panel -->
+  <div class="desktop-cart-section">
+    <app-billing-cart-panel
+      [cartItems]="(cartItems$ | async) || []"
+      [itemCount]="(itemCount$ | async) || 0"
+      [subtotal]="(subtotal$ | async) || 0"
+      [discount]="(discount$ | async) || 0"
+      [total]="(total$ | async) || 0"
+      (updateQuantity)="onUpdateQuantity($event)"
+      (remove)="onRemoveCartItem($event)"
+      (clearCart)="onClearCart()"
+      (openCustomer)="onPlaceholderAction('Select Customer')"
+      (openOffers)="onPlaceholderAction('Select Offer')"
+      (holdBill)="onPlaceholderAction('Hold Current Bill')"
+      (proceedToPay)="onPlaceholderAction('Proceed to Pay')">
+    </app-billing-cart-panel>
+  </div>
+
+  <!-- Mobile Cart Elements -->
+  
+  <!-- Sticky Bottom Bar -->
+  <app-billing-mobile-cart-bar
+    *ngIf="!isMobileCartOpen"
+    [itemCount]="(itemCount$ | async) || 0"
+    [total]="(total$ | async) || 0"
+    [discount]="(discount$ | async) || 0"
+    (openCart)="isMobileCartOpen = true"
+    (holdBill)="onPlaceholderAction('Hold Current Bill')"
+    (proceedToPay)="onPlaceholderAction('Proceed to Pay')">
+  </app-billing-mobile-cart-bar>
+
+  <!-- Bottom Sheet Overlay -->
+  <app-billing-cart-sheet
+    *ngIf="isMobileCartOpen"
+    [cartItems]="(cartItems$ | async) || []"
+    [itemCount]="(itemCount$ | async) || 0"
+    [subtotal]="(subtotal$ | async) || 0"
+    [discount]="(discount$ | async) || 0"
+    [total]="(total$ | async) || 0"
+    (close)="isMobileCartOpen = false"
+    (updateQuantity)="onUpdateQuantity($event)"
+    (remove)="onRemoveCartItem($event)"
+    (clearCart)="onClearCart()"
+    (openCustomer)="onPlaceholderAction('Select Customer')"
+    (openOffers)="onPlaceholderAction('Select Offer')"
+    (holdBill)="onPlaceholderAction('Hold Current Bill')"
+    (proceedToPay)="onPlaceholderAction('Proceed to Pay')">
+  </app-billing-cart-sheet>
+
+</div>

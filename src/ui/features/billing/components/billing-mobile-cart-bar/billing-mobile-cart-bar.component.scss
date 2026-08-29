@@ -1,0 +1,130 @@
+.mobile-cart-bar {
+  position: fixed;
+  bottom: 0; // Will be adjusted by container if there's a bottom nav
+  left: 0;
+  right: 0;
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 16px;
+  
+  &.is-empty {
+    padding-bottom: env(safe-area-inset-bottom, 16px);
+  }
+}
+
+.summary-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  
+  .cart-icon-wrapper {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    background-color: var(--color-primary-light, #F3E8FF);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary);
+    
+    .cart-icon {
+      font-size: 20px;
+    }
+    
+    .badge {
+      position: absolute;
+      top: -4px;
+      right: -4px;
+      background-color: var(--color-primary);
+      color: white;
+      font-size: 10px;
+      font-weight: 700;
+      min-width: 18px;
+      height: 18px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid var(--color-surface);
+    }
+  }
+  
+  .summary-details {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    
+    .items-text {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+    
+    .savings-text {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-success);
+    }
+  }
+  
+  .total-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    .total-amount {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--color-text-primary);
+    }
+    
+    .expand-icon {
+      font-size: 24px;
+      color: var(--color-text-muted);
+    }
+  }
+}
+
+.actions-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+  
+  button {
+    height: 44px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .btn-hold {
+    flex: 1;
+    background: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+  }
+  
+  .btn-pay {
+    flex: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--color-primary);
+    border: none;
+    color: white;
+    
+    .arrow-icon {
+      font-size: 18px;
+    }
+  }
+}

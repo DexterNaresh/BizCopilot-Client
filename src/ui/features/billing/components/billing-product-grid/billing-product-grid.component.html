@@ -1,0 +1,35 @@
+<div class="grid-container">
+  
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="products.length === 0">
+    <div class="empty-message">
+      <h3>No products found</h3>
+      <p>Try another product name, code or barcode.</p>
+    </div>
+  </div>
+
+  <!-- Product Grid -->
+  <div class="product-grid" *ngIf="products.length > 0">
+    <app-billing-product-card
+      *ngFor="let product of paginatedProducts"
+      [product]="product"
+      [cartItem]="getCartItem(product.id)"
+      (add)="addProduct.emit(product)"
+      (updateQuantity)="updateQuantity.emit({ productId: product.id, quantity: $event })"
+      (toggleFavourite)="toggleFavourite.emit(product)">
+    </app-billing-product-card>
+  </div>
+
+  <!-- Pagination -->
+  <biz-pagination 
+    *ngIf="products.length > 0"
+    [totalItems]="totalProducts"
+    [pageSize]="pageSize"
+    [currentPage]="currentPage"
+    [pageSizeOptions]="[8, 10, 12, 20]"
+    itemName="products"
+    (pageChange)="onPageChange($event)"
+    (pageSizeChange)="onPageSizeChange($event)">
+  </biz-pagination>
+
+</div>

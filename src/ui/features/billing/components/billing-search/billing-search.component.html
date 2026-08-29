@@ -1,0 +1,15 @@
+<div class="search-scan-row">
+  <div class="search-container">
+    <biz-icon category="common" name="search" class="search-icon"></biz-icon>
+    <input 
+      type="text" 
+      class="search-input" 
+      placeholder="Search product / code / barcode"
+      (input)="onSearch($event)"
+    />
+  </div>
+  <button class="scan-btn" (click)="scan.emit()">
+    <biz-icon category="common" name="barcode_scanner" class="scan-icon"></biz-icon>
+    Scan
+  </button>
+</div>

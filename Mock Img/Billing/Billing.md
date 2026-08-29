@@ -1939,6 +1939,151 @@ For Kg/Ltr/Meter, the same two-way synchronization applies to the
 numeric value.
 
 There must always be ONE shared active-bill/cart state.
+
+-----
+
+==================================================
+CART SCROLL BEHAVIOR — CRITICAL
+==================================================
+
+The Cart panel has a fixed/sticky structure.
+
+ONLY THE CART ITEM LIST IS SCROLLABLE.
+
+The following sections MUST remain fixed and always visible:
+
+1. Cart Header
+   - Your Cart count
+   - Close/expand control
+
+2. Customer Section
+   - Customer
+   - Selected customer
+   - Change action
+
+3. Offers & Discounts Section
+   - Offers heading
+   - Applied offer
+   - View all
+
+4. Cart Summary / Totals
+   - Subtotal
+   - Discount
+   - Total
+
+5. Cart Actions
+   - Hold Bill
+   - Proceed to Pay
+
+ONLY the individual product/cart-item area between Customer and Offers
+is allowed to scroll vertically.
+
+Example:
+
+┌──────────────────────────────┐
+│ Your Cart (6)          ✕     │ ← FIXED
+├──────────────────────────────┤
+│ Customer                     │ ← FIXED
+│ Walk-In Customer      Change │
+├──────────────────────────────┤
+│                              │
+│ CART ITEMS                    │
+│                              │
+│ Carrot                       │
+│ Cooking Oil                  │
+│ Basmati Rice                 │
+│ Sugar                        │
+│ Electrical Wire              │
+│ Coca Cola                    │
+│                              │
+│          ↕ SCROLL            │
+│                              │
+├──────────────────────────────┤
+│ Offers & Discounts            │ ← FIXED
+│ BUYMORE10     ✓ Applied      │
+│ View all                     │
+├──────────────────────────────┤
+│ Subtotal              ₹862.50│ ← FIXED
+│ Discount              -₹86.25│
+│ Total                 ₹776.25│
+├──────────────────────────────┤
+│ [ Hold Bill ] [ Proceed Pay ]│ ← FIXED
+└──────────────────────────────┘
+
+IMPORTANT:
+
+Do NOT make the entire Cart panel scroll.
+
+Do NOT allow Customer to scroll away.
+
+Do NOT allow Offers & Discounts to scroll away.
+
+Do NOT allow Totals to scroll away.
+
+Do NOT allow Hold Bill / Proceed to Pay to scroll away.
+
+The cashier must always be able to see:
+- Current customer
+- Applied offer
+- Current total
+- Hold Bill
+- Proceed to Pay
+
+while scrolling through cart items.
+
+Only the Cart Item List receives overflow-y scrolling.
+
+The Cart panel itself must remain fixed within the Billing layout.
+
+The same principle applies to Desktop and Tablet.
+
+For Mobile expanded Cart bottom-sheet:
+- Cart header remains fixed.
+- Customer section remains fixed.
+- Cart item list is the primary scrollable region.
+- Offers section remains fixed where viewport space permits.
+- Totals and Hold/Proceed actions remain fixed/sticky at the bottom.
+- If content exceeds the available mobile height, only the appropriate middle
+  content region should scroll; never create a second unnecessary page-level
+  scrollbar.
+
+There must be NO horizontal scrolling anywhere in the Cart.
+
+==================================================
+RESPONSIVE CART HEIGHT
+==================================================
+
+The Cart must dynamically calculate its available height based on the
+viewport.
+
+Do NOT use a fixed pixel height that works only on one monitor.
+
+On a 4K monitor:
+- Cart uses available height naturally.
+- Item list may have plenty of visible space.
+- No unnecessary scrollbar should appear if all items fit.
+
+On a 13-inch laptop:
+- Cart adapts to the smaller viewport.
+- Only the Cart Item List becomes scrollable when required.
+- Customer, Offers, Totals and Actions remain visible.
+
+On Tablet:
+- Same principle.
+- Only Cart Items scroll.
+
+On Mobile:
+- Expanded Cart is a bottom-sheet.
+- Only the designated content region scrolls.
+- Fixed/sticky sections remain accessible.
+
+NEVER create:
+- Whole-page vertical scrolling because of Cart content
+- Nested unnecessary scrollbars
+- Horizontal scrollbar
+- Cart scrollbar that causes Customer/Offers/Totals to disappear
+- A scrollbar on the entire Billing screen merely because the Cart contains
+  many products
 __________
 
 FINAL NON-NEGOTIABLE RULES:

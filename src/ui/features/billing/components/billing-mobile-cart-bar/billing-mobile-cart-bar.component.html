@@ -1,0 +1,28 @@
+<div class="mobile-cart-bar" [class.is-empty]="itemCount === 0">
+  <!-- Summary Row (Clickable to open bottom sheet) -->
+  <div class="summary-row" (click)="onCartClick()">
+    <div class="cart-icon-wrapper">
+      <biz-icon category="common" name="shopping_cart" class="cart-icon"></biz-icon>
+      <span class="badge" *ngIf="itemCount > 0">{{ itemCount }}</span>
+    </div>
+    
+    <div class="summary-details">
+      <div class="items-text">{{ itemCount }} {{ itemCount === 1 ? 'Item' : 'Items' }}</div>
+      <div class="savings-text" *ngIf="itemCount > 0 && discount > 0">You save ₹{{ discount | number:'1.2-2' }}</div>
+    </div>
+    
+    <div class="total-wrapper">
+      <span class="total-amount">₹{{ total | number:'1.2-2' }}</span>
+      <biz-icon category="common" name="expand_less" class="expand-icon"></biz-icon>
+    </div>
+  </div>
+
+  <!-- Actions Row (Hidden when empty per spec) -->
+  <div class="actions-row" *ngIf="itemCount > 0">
+    <button class="btn-hold" (click)="holdBill.emit()">Hold Bill</button>
+    <button class="btn-pay" (click)="proceedToPay.emit()">
+      Proceed to Pay
+      <biz-icon category="common" name="arrow_forward" class="arrow-icon"></biz-icon>
+    </button>
+  </div>
+</div>

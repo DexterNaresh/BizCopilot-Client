@@ -1,0 +1,118 @@
+<div class="sheet-backdrop" (click)="onClose()"></div>
+
+<div class="bottom-sheet">
+  <!-- Drag Handle (Visual only) -->
+  <div class="drag-handle-wrapper" (click)="onClose()">
+    <div class="drag-handle"></div>
+  </div>
+
+  <!-- Header -->
+  <div class="sheet-header fixed-section">
+    <div class="title-row">
+      <h2>Your Cart ({{ itemCount }})</h2>
+      <button class="btn-close" (click)="onClose()" aria-label="Close cart">
+        <biz-icon category="common" name="close"></biz-icon>
+      </button>
+    </div>
+    <div class="subtitle-row">
+      <p class="subtitle">Add items, review and proceed to pay.</p>
+      <button class="btn-clear" *ngIf="itemCount > 0" (click)="clearCart.emit()">
+        <biz-icon category="common" name="delete_outline" class="clear-icon"></biz-icon>
+        Clear Cart
+      </button>
+    </div>
+  </div>
+
+  <div class="sheet-content-wrapper">
+    <!-- Empty State -->
+    <div class="cart-empty-state" *ngIf="itemCount === 0">
+      <div class="empty-icon-wrapper">
+        <biz-icon category="common" name="shopping_cart" class="empty-icon"></biz-icon>
+      </div>
+      <h3>Your cart is empty</h3>
+      <p>Add products to start billing.</p>
+    </div>
+
+    <ng-container *ngIf="itemCount > 0">
+      
+      <!-- Customer Section -->
+      <div class="customer-section fixed-section">
+        <div class="section-label">Customer</div>
+        <div class="customer-card">
+          <div class="customer-avatar">
+            <biz-icon category="common" name="person"></biz-icon>
+          </div>
+          <div class="customer-details">
+            <span class="customer-name">{{ customerName }}</span>
+            <span class="customer-type">{{ customerType }}</span>
+          </div>
+          <button class="btn-change" (click)="openCustomer.emit()">Change</button>
+        </div>
+      </div>
+
+      <!-- Scrollable Items List -->
+      <div class="cart-items-list scrollable-section">
+        <app-billing-cart-item
+          *ngFor="let item of cartItems"
+          [item]="item"
+          (updateQuantity)="onUpdateQuantity(item.product.id, $event)"
+          (remove)="onRemove(item.product.id)">
+        </app-billing-cart-item>
+      </div>
+
+      <!-- Offers Section -->
+      <div class="offers-section fixed-section">
+        <div class="section-header">
+          <div class="label-with-icon">
+            <biz-icon category="common" name="local_offer" class="offer-icon"></biz-icon>
+            <span class="section-label">Offers & Discounts</span>
+          </div>
+          <div class="header-actions">
+            <span class="applied-count" *ngIf="isOfferApplied">1 applied</span>
+            <button class="btn-view-all" (click)="openOffers.emit()">View all <biz-icon category="common" name="chevron_right" class="chevron"></biz-icon></button>
+          </div>
+        </div>
+        
+        <div class="applied-offer-card" *ngIf="isOfferApplied">
+          <div class="offer-icon-wrapper">
+            <biz-icon category="common" name="confirmation_number"></biz-icon>
+          </div>
+          <div class="offer-details">
+            <span class="offer-name">{{ appliedOfferName }}</span>
+            <span class="offer-savings">You save ₹{{ discount | number:'1.2-2' }}</span>
+          </div>
+          <div class="offer-status">
+            <biz-icon category="common" name="check" class="check-icon"></biz-icon>
+            Applied
+          </div>
+        </div>
+      </div>
+
+      <!-- Totals Section -->
+      <div class="totals-section fixed-section">
+        <div class="total-row subtotal">
+          <span>Subtotal</span>
+          <span>₹{{ subtotal | number:'1.2-2' }}</span>
+        </div>
+        <div class="total-row discount" *ngIf="discount > 0">
+          <span>Discount</span>
+          <span>-₹{{ discount | number:'1.2-2' }}</span>
+        </div>
+        <div class="total-row grand-total">
+          <span>Total</span>
+          <span class="total-amount">₹{{ total | number:'1.2-2' }}</span>
+        </div>
+      </div>
+      
+    </ng-container>
+  </div>
+
+  <!-- Sticky Bottom Actions -->
+  <div class="cart-actions" *ngIf="itemCount > 0">
+    <button class="btn-hold" (click)="holdBill.emit()">Hold Bill</button>
+    <button class="btn-pay" (click)="proceedToPay.emit()">
+      Proceed to Pay
+      <biz-icon category="common" name="arrow_forward" class="arrow-icon"></biz-icon>
+    </button>
+  </div>
+</div>

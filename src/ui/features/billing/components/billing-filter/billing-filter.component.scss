@@ -1,0 +1,55 @@
+.filter-chips-container {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+  
+  /* Hide scrollbar for a cleaner look */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 0 16px;
+    height: 40px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    color: var(--color-text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+
+    .chip-icon {
+      font-size: 18px;
+      color: var(--color-text-muted);
+    }
+    
+    .chip-icon-trailing {
+      font-size: 18px;
+      color: var(--color-text-secondary);
+    }
+
+    &:hover {
+      background-color: var(--color-surface-hover);
+    }
+
+    &.active {
+      background-color: var(--color-primary);
+      border-color: var(--color-primary);
+      color: white;
+
+      .chip-icon {
+        color: white;
+      }
+    }
+  }
+}

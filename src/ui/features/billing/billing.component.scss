@@ -1,0 +1,65 @@
+.billing-layout {
+  display: flex;
+  height: 100vh; // Assuming it takes full height of the viewport/container
+  background-color: var(--color-background, #F9FAFB);
+  overflow: hidden;
+}
+
+.catalog-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 32px;
+  overflow: hidden;
+  
+  .grid-scroll-area {
+    flex: 1;
+    overflow-y: auto;
+    /* Hide scrollbar for cleaner look if desired, or leave default */
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
+
+.desktop-cart-section {
+  width: 400px;
+  flex-shrink: 0;
+  padding: 24px 32px 24px 0;
+  display: block; // Visible on desktop
+}
+
+/* Hide mobile elements on desktop */
+@media (min-width: 769px) {
+  app-billing-mobile-cart-bar,
+  app-billing-cart-sheet {
+    display: none !important;
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .catalog-section {
+    padding: 20px 24px;
+  }
+  .desktop-cart-section {
+    width: 360px;
+    padding: 20px 24px 20px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .billing-layout {
+    flex-direction: column;
+  }
+  
+  .catalog-section {
+    padding: 16px;
+    // Add padding at bottom so grid doesn't hide behind mobile cart bar
+    padding-bottom: 90px; 
+  }
+  
+  .desktop-cart-section {
+    display: none; // Hide on mobile
+  }
+}

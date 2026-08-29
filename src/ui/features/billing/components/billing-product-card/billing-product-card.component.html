@@ -1,0 +1,68 @@
+<div class="product-card">
+  <!-- Favourite Icon -->
+  <button 
+    class="favourite-btn" 
+    [class.is-favourite]="product.isFavourite"
+    (click)="toggleFavourite.emit()"
+    aria-label="Toggle favourite">
+    <biz-icon category="common" name="star" class="star-icon"></biz-icon>
+  </button>
+
+  <!-- Image Section -->
+  <div class="card-image-wrapper">
+    <!-- Using placeholder image from existing pattern if product has no image. Assume image path exists or fallback. -->
+    <img src="assets/placeholder.png" alt="{{ product.name }}" class="product-image">
+  </div>
+
+  <!-- Details Section -->
+  <div class="card-details">
+    <span class="category-badge" [style.backgroundColor]="product.colorHint">{{ product.category }}</span>
+    <h3 class="product-name">{{ product.name }}</h3>
+    <div class="price-row">
+      <span class="price">₹{{ product.price | number:'1.2-2' }}</span>
+      <span class="unit">/ {{ product.unit }}</span>
+    </div>
+  </div>
+
+  <!-- Actions Section (Dynamic) -->
+  <div class="card-actions">
+    
+    <!-- State 1: Not in Cart -->
+    <ng-container *ngIf="!isInCart">
+      <button class="btn-add" (click)="onAdd()">
+        <biz-icon category="common" name="add" class="add-icon"></biz-icon>
+        Add
+      </button>
+    </ng-container>
+
+    <!-- State 2: In Cart, Unit is Qty or Pack -->
+    <ng-container *ngIf="isInCart && isQtyOrPack">
+      <div class="qty-control">
+        <button class="qty-btn" (click)="onDecrement()">
+          <biz-icon category="common" name="remove"></biz-icon>
+        </button>
+        <span class="qty-display">{{ currentQuantity }} {{ product.unit }}</span>
+        <button class="qty-btn" (click)="onIncrement()">
+          <biz-icon category="common" name="add"></biz-icon>
+        </button>
+      </div>
+    </ng-container>
+
+    <!-- State 3: In Cart, Unit is Kg, Ltr, Meter -->
+    <ng-container *ngIf="isInCart && isDecimalUnit">
+      <div class="decimal-control">
+        <input 
+          type="number" 
+          class="decimal-input" 
+          [value]="currentQuantity" 
+          (change)="onDecimalInputChange($event)"
+          (keydown)="onNumberKeypress($event)"
+          step="0.001"
+          min="0"
+        />
+        <span class="decimal-unit">{{ product.unit }}</span>
+      </div>
+    </ng-container>
+
+  </div>
+</div>
