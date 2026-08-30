@@ -57,19 +57,19 @@
           <span class="section-label">Offers & Discounts</span>
         </div>
         <div class="header-actions">
-          <span class="applied-count" *ngIf="isOfferApplied">1 applied</span>
+          <span class="applied-count" *ngIf="appliedOffer">1 applied</span>
           <button class="btn-view-all" (click)="openOffers.emit()">View all <biz-icon category="common" name="chevron_right" class="chevron"></biz-icon></button>
         </div>
       </div>
       
-      <div class="applied-offer-card" *ngIf="isOfferApplied">
+      <div class="applied-offer-card" *ngIf="appliedOffer">
         <div class="offer-icon-wrapper">
           <biz-icon category="common" name="confirmation_number"></biz-icon>
         </div>
         <div class="offer-details">
-          <span class="offer-name">{{ appliedOfferName }}</span>
-          <span class="offer-desc">{{ appliedOfferDesc }}</span>
-          <span class="offer-savings">You save ₹{{ discount | number:'1.2-2' }}</span>
+          <span class="offer-name">{{ appliedOffer.code }}</span>
+          <span class="offer-desc">{{ appliedOffer.description }}</span>
+          <span class="offer-savings">You save ₹{{ appliedOffer.savingAmount | number:'1.2-2' }}</span>
         </div>
         <div class="offer-status">
           <biz-icon category="common" name="check" class="check-icon"></biz-icon>

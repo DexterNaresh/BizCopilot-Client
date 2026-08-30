@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BizIconComponent } from '../../../../shared/components/biz-icon/biz-icon.component';
 import { BillingCartItemComponent } from '../billing-cart-item/billing-cart-item.component';
+import { AvailableOffer } from '../billing-offer-modal/billing-offer-modal.component';
 import { CartItem } from '../../services/billing-state.service';
 
 @Component({
@@ -28,12 +29,11 @@ export class BillingCartSheetComponent {
   @Output() holdBill = new EventEmitter<void>();
   @Output() proceedToPay = new EventEmitter<void>();
 
+  @Input() appliedOffer: AvailableOffer | null = null;
+
   // Mocked state for UI layout
   customerName = 'Walk-In Customer';
   customerType = 'Default Customer';
-  appliedOfferName = 'BUYMORE10';
-  appliedOfferDesc = '10% off on orders above ₹500';
-  isOfferApplied = false;
 
   onRemove(productId: string) {
     this.remove.emit(productId);

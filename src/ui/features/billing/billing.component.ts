@@ -8,6 +8,7 @@ import { BillingCartPanelComponent } from './components/billing-cart-panel/billi
 import { BillingMobileCartBarComponent } from './components/billing-mobile-cart-bar/billing-mobile-cart-bar.component';
 import { BillingCartSheetComponent } from './components/billing-cart-sheet/billing-cart-sheet.component';
 import { BillingHoldBillModalComponent } from './components/billing-hold-bill-modal/billing-hold-bill-modal.component';
+import { BillingOfferModalComponent, AvailableOffer } from './components/billing-offer-modal/billing-offer-modal.component';
 import { BillingStateService, BillingProduct, CartItem, HeldBill } from './services/billing-state.service';
 import { ProductApplication } from '@runtime/product/application/product.application';
 import { CategoryApplication } from '@runtime/category/application/category.application';
@@ -31,7 +32,8 @@ import { getTestImageUrlForProduct } from '../../../shared/utilities/test-image.
     BillingCartPanelComponent,
     BillingMobileCartBarComponent,
     BillingCartSheetComponent,
-    BillingHoldBillModalComponent
+    BillingHoldBillModalComponent,
+    BillingOfferModalComponent
   ],
   providers: [BillingStateService],
   templateUrl: './billing.component.html',
@@ -56,6 +58,9 @@ export class BillingComponent implements OnInit {
   searchTerm = '';
   isMobileCartOpen = false;
   showHoldBillsModal = false;
+  showOfferModal = false;
+  currentAppliedOfferCode: string | null = null;
+  currentAppliedOffer: AvailableOffer | null = null;
 
   constructor(
     private state: BillingStateService,
@@ -217,6 +222,23 @@ export class BillingComponent implements OnInit {
 
     if (isConfirmed) {
       this.state.deleteHeldBill(heldBillId);
+    }
+  }
+
+  // --- Offers Handlers ---
+  onOpenOffers() {
+    this.showOfferModal = true;
+  }
+
+  onApplyOffer(offer: AvailableOffer | null) {
+    this.showOfferModal = false;
+    this.currentAppliedOffer = offer;
+    if (offer) {
+      this.currentAppliedOfferCode = offer.code;
+      this.toastService.success(`Offer ${offer.code} applied! You save ₹${offer.savingAmount}`);
+    } else {
+      this.currentAppliedOfferCode = null;
+      this.toastService.info('Offer removed');
     }
   }
 

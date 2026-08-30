@@ -1,0 +1,65 @@
+<div class="modal-backdrop" (click)="onCancel()">
+  <div class="modal-container" (click)="$event.stopPropagation()">
+    
+    <!-- Mobile drag handle -->
+    <div class="drag-handle" (click)="onCancel()"></div>
+
+    <div class="modal-header">
+      <div class="header-content">
+        <h2>Offers & Discounts</h2>
+        <p>Choose the best offer for your cart</p>
+      </div>
+      <button class="btn btn-icon close-btn" (click)="onCancel()">
+        <biz-icon category="common" name="close"></biz-icon>
+      </button>
+    </div>
+
+    <div class="modal-body">
+      <div class="offer-list">
+        <!-- List of Offers -->
+        <div class="offer-card" 
+             *ngFor="let offer of offers; let isFirst = first" 
+             [class.selected]="selectedOfferCode === offer.code"
+             (click)="selectOffer(offer.code)">
+          
+          <div class="card-left">
+            <div class="radio-wrapper">
+              <biz-icon category="common" 
+                        [name]="selectedOfferCode === offer.code ? 'radio_button_checked' : 'radio_button_unchecked'" 
+                        class="radio-icon">
+              </biz-icon>
+            </div>
+            <div class="offer-icon-wrapper" [class.selected]="selectedOfferCode === offer.code">
+              <biz-icon category="common" name="local_offer" class="offer-icon"></biz-icon>
+            </div>
+          </div>
+
+          <div class="card-center">
+            <div class="offer-code-row">
+              <span class="offer-code">{{ offer.code }}</span>
+              <span class="best-savings-badge" *ngIf="isFirst">Best Savings</span>
+            </div>
+            <div class="offer-desc">{{ offer.description }}</div>
+          </div>
+
+          <div class="card-right">
+            <div class="saving-amount" [class.highlight]="selectedOfferCode === offer.code">
+              You save ₹{{ offer.savingAmount | number:'1.2-2' }}
+            </div>
+            <div class="applied-status" *ngIf="selectedOfferCode === offer.code">
+              <biz-icon category="common" name="check" class="check-icon"></biz-icon>
+              Applied
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-secondary-outline btn-cancel" (click)="onCancel()">Cancel</button>
+      <button class="btn btn-primary btn-apply" (click)="onApply()">Apply Offer</button>
+    </div>
+
+  </div>
+</div>

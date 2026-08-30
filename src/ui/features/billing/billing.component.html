@@ -38,11 +38,12 @@
       [subtotal]="(subtotal$ | async) || 0"
       [discount]="(discount$ | async) || 0"
       [total]="(total$ | async) || 0"
+      [appliedOffer]="currentAppliedOffer"
       (updateQuantity)="onUpdateQuantity($event)"
       (remove)="onRemoveCartItem($event)"
       (clearCart)="onClearCart()"
       (openCustomer)="onPlaceholderAction('Select Customer')"
-      (openOffers)="onPlaceholderAction('Select Offer')"
+      (openOffers)="onOpenOffers()"
       (holdBill)="onHoldBill()"
       (proceedToPay)="onPlaceholderAction('Proceed to Pay')">
     </app-billing-cart-panel>
@@ -69,12 +70,13 @@
     [subtotal]="(subtotal$ | async) || 0"
     [discount]="(discount$ | async) || 0"
     [total]="(total$ | async) || 0"
+    [appliedOffer]="currentAppliedOffer"
     (close)="isMobileCartOpen = false"
     (updateQuantity)="onUpdateQuantity($event)"
     (remove)="onRemoveCartItem($event)"
     (clearCart)="onClearCart()"
     (openCustomer)="onPlaceholderAction('Select Customer')"
-    (openOffers)="onPlaceholderAction('Select Offer')"
+    (openOffers)="onOpenOffers()"
     (holdBill)="onHoldBill()"
     (proceedToPay)="onPlaceholderAction('Proceed to Pay')">
   </app-billing-cart-sheet>
@@ -86,5 +88,12 @@
     (delete)="onDeleteHeldBill($event)"
     (close)="showHoldBillsModal = false">
   </app-billing-hold-bill-modal>
+
+  <app-billing-offer-modal
+    *ngIf="showOfferModal"
+    [currentAppliedOfferCode]="currentAppliedOfferCode"
+    (close)="showOfferModal = false"
+    (applyOffer)="onApplyOffer($event)">
+  </app-billing-offer-modal>
 
 </div>

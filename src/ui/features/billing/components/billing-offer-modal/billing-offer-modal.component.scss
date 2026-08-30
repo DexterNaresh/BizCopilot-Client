@@ -1,0 +1,320 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(17, 24, 39, 0.4); // Dark translucent scrim
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-container {
+  background: white;
+  width: 100%;
+  max-width: 600px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  max-height: 85vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.drag-handle {
+  display: none; // Only on mobile
+}
+
+.modal-header {
+  padding: 24px 24px 16px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 1px solid var(--border-color, #EAECEF);
+
+  .header-content {
+    h2 {
+      margin: 0 0 4px 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary, #111827);
+    }
+    p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: var(--text-secondary, #6B7280);
+    }
+  }
+
+  .close-btn {
+    border: none;
+    background: transparent;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary, #6B7280);
+    
+    &:hover {
+      background-color: rgba(107, 114, 128, 0.1);
+    }
+  }
+}
+
+.modal-body {
+  padding: 16px 24px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.offer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.offer-card {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border: 1px solid var(--border-color, #EAECEF);
+  border-radius: 12px;
+  background-color: #FFFFFF;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  gap: 16px;
+
+  &:hover {
+    border-color: rgba(91, 59, 235, 0.3); // Slight purple on hover
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  }
+
+  &.selected {
+    border-color: var(--color-success, #16A34A);
+    background-color: rgba(22, 163, 74, 0.04);
+  }
+
+  .card-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .radio-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted, #9CA3AF);
+
+      .radio-icon {
+        font-size: 24px;
+      }
+    }
+
+    .offer-icon-wrapper {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background-color: rgba(107, 114, 128, 0.08); // Neutral grey
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary, #6B7280);
+
+      &.selected {
+        background-color: rgba(22, 163, 74, 0.12);
+        color: var(--color-success, #16A34A);
+      }
+    }
+  }
+
+  .card-center {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .offer-code-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .offer-code {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: var(--text-primary, #111827);
+      }
+
+      .best-savings-badge {
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 2px 8px;
+        background-color: #FEF3C7; // Amber light
+        color: #D97706; // Amber
+        border-radius: 12px;
+      }
+    }
+
+    .offer-desc {
+      font-size: 0.95rem;
+      color: var(--text-secondary, #6B7280);
+    }
+  }
+
+  .card-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+
+    .saving-amount {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: var(--text-primary, #111827);
+
+      &.highlight {
+        color: var(--color-success, #16A34A);
+      }
+    }
+
+    .applied-status {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-success, #16A34A);
+
+      .check-icon {
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+/* Card Selection Overrides */
+.offer-card.selected .card-left .radio-wrapper {
+  color: var(--color-primary, #5B3BEB); // BizCopilot purple for the selected radio button
+}
+
+.modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border-color, #EAECEF);
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+
+  .btn-cancel {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color, #EAECEF);
+    background: white;
+    color: var(--text-primary, #111827);
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+      background-color: rgba(107, 114, 128, 0.05);
+    }
+  }
+
+  .btn-apply {
+    flex: 1;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    background-color: var(--color-primary, #5B3BEB);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(91, 59, 235, 0.2);
+
+    &:hover {
+      background-color: var(--color-primary-hover, #4B2DC7);
+    }
+  }
+}
+
+/* -------------------------------------
+   RESPONSIVE DESIGN (MOBILE BOTTOM SHEET)
+   ------------------------------------- */
+@media (max-width: 768px) {
+  .modal-backdrop {
+    align-items: flex-end; // Push to bottom
+  }
+
+  .modal-container {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 20px 20px 0 0;
+    max-height: 90vh;
+    animation: slideUp 0.3s ease-out;
+  }
+
+  .drag-handle {
+    display: block;
+    width: 40px;
+    height: 4px;
+    background-color: var(--border-color, #EAECEF);
+    border-radius: 2px;
+    margin: 12px auto 0 auto;
+    cursor: grab;
+  }
+
+  .modal-header {
+    padding: 16px 20px;
+  }
+
+  .modal-body {
+    padding: 12px 20px;
+  }
+
+  .offer-card {
+    padding: 12px;
+    gap: 12px;
+
+    .card-left {
+      gap: 8px;
+      .offer-icon-wrapper {
+        width: 36px;
+        height: 36px;
+      }
+    }
+
+    .card-center {
+      .offer-code-row .offer-code {
+        font-size: 0.95rem;
+      }
+      .offer-desc {
+        font-size: 0.85rem;
+      }
+    }
+
+    .card-right {
+      .saving-amount {
+        font-size: 0.95rem;
+      }
+      .applied-status {
+        font-size: 0.8rem;
+      }
+    }
+  }
+
+  .modal-footer {
+    padding: 16px 20px;
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+    position: sticky;
+    bottom: 0;
+    background: white;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+  }
+}
