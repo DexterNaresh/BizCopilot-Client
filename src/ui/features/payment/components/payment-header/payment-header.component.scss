@@ -1,0 +1,127 @@
+.payment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 72px;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--border-color, #EAECEF);
+  background-color: #FFFFFF;
+  box-sizing: border-box;
+  width: 100%;
+
+  .left-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+
+    .title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+
+      h1 {
+        margin: 0;
+        font-size: 1.25rem; // 20px
+        font-weight: 600;
+        color: var(--text-primary, #111827);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      p {
+        margin: 0;
+        font-size: 0.8125rem; // 13px
+        color: var(--text-secondary, #6B7280);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
+  .right-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+
+    .bill-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      .bill-number {
+        font-size: 0.9375rem; // 15px
+        font-weight: 500;
+        color: var(--text-primary, #111827);
+      }
+      .items-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 12px;
+        background-color: rgba(91, 59, 235, 0.1);
+        color: var(--primary, #5B3BEB);
+        border-radius: 12px;
+        font-size: 0.8125rem;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    color: var(--text-primary, #111827);
+    transition: background-color 0.2s ease;
+
+    ::ng-deep biz-icon {
+      font-size: 24px;
+      display: flex;
+    }
+
+    &:hover {
+      background-color: rgba(107, 114, 128, 0.1);
+    }
+  }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .payment-header {
+    height: auto;
+    min-height: 64px;
+    padding: 12px 16px;
+
+    .left-group {
+      gap: 12px;
+      .title-group {
+        h1 { font-size: 1.125rem; } // 18px
+        p { 
+          font-size: 0.75rem; 
+        }
+      }
+    }
+    
+    .right-group {
+      .bill-meta {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 2px;
+        
+        .bill-number {
+          font-size: 0.875rem;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+<header class="payment-header">
+  <div class="left-group">
+    <button class="btn-icon" (click)="onBack()" aria-label="Go back">
+      <biz-icon category="common" name="chevron_left"></biz-icon>
+    </button>
+    <div class="title-group">
+      <h1>Payment</h1>
+      <p>Complete the payment to finish this bill.</p>
+    </div>
+  </div>
+
+  <div class="right-group">
+    <div class="bill-meta">
+      <span class="bill-number">Bill #{{ billNumber }}</span>
+      <span class="items-badge">{{ itemsCount }} items</span>
+    </div>
+    <button class="btn-icon" (click)="close.emit()" aria-label="Close">
+      <biz-icon category="common" name="close"></biz-icon>
+    </button>
+  </div>
+</header>

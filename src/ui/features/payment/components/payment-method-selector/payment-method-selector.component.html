@@ -1,0 +1,22 @@
+<div class="payment-method-container">
+  <h2 class="section-title">Payment Method</h2>
+  
+  <div class="method-list">
+    <div *ngFor="let method of methods"
+         class="method-card"
+         [class.selected]="selectedMethod === method.id"
+         (click)="selectMethod(method.id)">
+      
+      <div class="method-content">
+        <biz-icon category="common" [name]="method.icon" class="method-icon"></biz-icon>
+        <span class="method-label">{{ method.label }}</span>
+      </div>
+      
+      <biz-icon category="common" 
+                [name]="selectedMethod === method.id ? 'radio_button_checked' : 'radio_button_unchecked'" 
+                class="radio-icon">
+      </biz-icon>
+      
+    </div>
+  </div>
+</div>

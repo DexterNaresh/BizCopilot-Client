@@ -45,7 +45,7 @@
       (openCustomer)="onPlaceholderAction('Select Customer')"
       (openOffers)="onOpenOffers()"
       (holdBill)="onHoldBill()"
-      (proceedToPay)="onPlaceholderAction('Proceed to Pay')">
+      (proceedToPay)="onProceedToPay()">
     </app-billing-cart-panel>
   </div>
 
@@ -59,7 +59,7 @@
     [discount]="(discount$ | async) || 0"
     (openCart)="isMobileCartOpen = true"
     (holdBill)="onHoldBill()"
-    (proceedToPay)="onPlaceholderAction('Proceed to Pay')">
+    (proceedToPay)="onProceedToPay()">
   </app-billing-mobile-cart-bar>
 
   <!-- Bottom Sheet Overlay -->
@@ -78,7 +78,7 @@
     (openCustomer)="onPlaceholderAction('Select Customer')"
     (openOffers)="onOpenOffers()"
     (holdBill)="onHoldBill()"
-    (proceedToPay)="onPlaceholderAction('Proceed to Pay')">
+    (proceedToPay)="onProceedToPay()">
   </app-billing-cart-sheet>
 
   <app-billing-hold-bill-modal

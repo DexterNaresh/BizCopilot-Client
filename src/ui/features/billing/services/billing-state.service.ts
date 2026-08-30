@@ -33,7 +33,7 @@ export interface HeldBill {
   total: number;
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class BillingStateService {
   private cartItemsSubject = new BehaviorSubject<CartItem[]>([]);
   cartItems$ = this.cartItemsSubject.asObservable();

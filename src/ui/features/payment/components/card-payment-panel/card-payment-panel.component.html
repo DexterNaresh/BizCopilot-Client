@@ -1,0 +1,31 @@
+<div class="card-panel-container">
+  <div class="panel-header">
+    <biz-icon category="common" name="devices" class="panel-icon"></biz-icon>
+    <h2 class="panel-title">Card Payment</h2>
+  </div>
+  
+  <div class="payable-highlight">
+    <span class="label">Total Payable</span>
+    <span class="value">₹{{ totalPayable | number:'1.2-2' }}</span>
+  </div>
+
+  <div class="illustration-container">
+    <div class="pos-illustration">
+      <biz-icon category="common" name="devices" class="pos-icon"></biz-icon>
+    </div>
+    <h3 class="main-heading">Accept Card Payment</h3>
+    <p class="instruction">
+      Please collect the payment using your card terminal.<br>
+      Once the payment is successful, click the button below<br>
+      to mark this bill as paid.
+    </p>
+  </div>
+
+  <div class="success-instruction">
+    <biz-icon category="common" name="check_circle"></biz-icon>
+    <div class="text">
+      <strong>Payment Successful?</strong>
+      <span>Click "Mark as Paid" after confirming the payment.</span>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,78 @@
+.card {
+  background: white;
+  border: 1px solid var(--border-color, #EAECEF);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+  padding: 24px;
+}
+
+.card-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--text-primary, #111827);
+  margin: 0 0 16px 0;
+}
+
+.customer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9375rem;
+  color: var(--text-primary, #111827);
+
+  .customer-info, .items-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    ::ng-deep biz-icon {
+      color: var(--text-secondary, #6B7280);
+    }
+  }
+}
+
+.divider {
+  height: 1px;
+  background-color: var(--border-color, #EAECEF);
+  margin: 16px 0;
+}
+
+.amounts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.amount-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.9375rem;
+  color: var(--text-secondary, #6B7280);
+
+  &.discount {
+    color: var(--color-success, #16A34A);
+  }
+
+  &.total-payable {
+    color: var(--text-primary, #111827);
+    font-size: 1.125rem;
+    font-weight: 600;
+    
+    .value {
+      font-size: 1.75rem;
+      font-weight: 700;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  .amount-row.total-payable .value {
+    font-size: 1.5rem;
+  }
+}

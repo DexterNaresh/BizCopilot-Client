@@ -1,0 +1,38 @@
+<div class="upi-panel-container">
+  <div class="panel-header">
+    <biz-icon category="common" name="barcode_scanner" class="panel-icon"></biz-icon>
+    <h2 class="panel-title">UPI Payment</h2>
+  </div>
+  
+  <div class="payable-highlight">
+    <span class="label">Total Payable</span>
+    <span class="value">₹{{ totalPayable | number:'1.2-2' }}</span>
+  </div>
+
+  <div class="qr-container">
+    <div class="qr-placeholder">
+      <biz-icon category="common" name="qr_code_2" class="qr-icon"></biz-icon>
+    </div>
+    <p class="instruction">Scan the QR code using any UPI app.</p>
+  </div>
+
+  <div class="upi-id-section">
+    <span class="label">UPI ID</span>
+    <div class="id-display">
+      <span class="id-text">{{ upiId }}</span>
+      <button class="btn-copy" (click)="copyUpiId()" aria-label="Copy UPI ID">
+        <biz-icon category="common" name="assignment"></biz-icon>
+        Copy
+      </button>
+    </div>
+  </div>
+
+  <div class="status-section" [ngClass]="paymentStatus.toLowerCase()">
+    <biz-icon category="common" 
+              [name]="paymentStatus === 'WAITING' ? 'schedule' : (paymentStatus === 'SUCCESS' ? 'check_circle' : 'error')">
+    </biz-icon>
+    <span *ngIf="paymentStatus === 'WAITING'">Waiting for payment...</span>
+    <span *ngIf="paymentStatus === 'SUCCESS'">Payment Successful!</span>
+    <span *ngIf="paymentStatus === 'FAILED'">Payment Failed. Try again.</span>
+  </div>
+</div>

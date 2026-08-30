@@ -1,0 +1,167 @@
+.payment-page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--bg-body, #F3F4F6);
+  box-sizing: border-box;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+.payment-content-area {
+  display: flex;
+  gap: 24px;
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.left-column {
+  flex: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.right-column {
+  flex: 7;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background-color: #FFFFFF;
+  border: 1px solid var(--border-color, #EAECEF);
+  border-radius: 12px;
+  padding: 32px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.dynamic-panel {
+  flex: 1;
+}
+
+.payment-note-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: auto;
+  
+  label {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--text-primary, #111827);
+  }
+
+  textarea {
+    width: 100%;
+    height: 80px;
+    padding: 12px;
+    border: 1px solid var(--border-color, #EAECEF);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.9375rem;
+    color: var(--text-primary, #111827);
+    resize: none;
+    transition: border-color 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: var(--primary, #5B3BEB);
+      box-shadow: 0 0 0 3px rgba(91, 59, 235, 0.1);
+    }
+  }
+}
+
+.action-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 24px;
+
+  .secure-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-secondary, #6B7280);
+    font-size: 0.875rem;
+
+    ::ng-deep biz-icon {
+      font-size: 18px;
+    }
+  }
+
+  .btn-mark-paid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 32px;
+    height: 48px;
+    background-color: var(--primary, #5B3BEB);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    ::ng-deep biz-icon {
+      font-size: 20px;
+      display: flex;
+    }
+
+    &:hover:not(:disabled) {
+      filter: brightness(0.9);
+    }
+
+    &:disabled {
+      background-color: var(--border-color, #EAECEF);
+      color: var(--text-muted, #9CA3AF);
+      cursor: not-allowed;
+    }
+  }
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .payment-page-wrapper {
+    background-color: #FFFFFF;
+  }
+
+  .payment-content-area {
+    flex-direction: column;
+    padding: 0;
+    gap: 0;
+  }
+
+  .left-column {
+    padding: 16px;
+    gap: 16px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .right-column {
+    padding: 0 16px 24px 16px;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    background-color: transparent;
+  }
+  
+  .action-footer {
+    flex-direction: column-reverse;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+    width: 100%;
+    
+    .btn-mark-paid {
+      width: 100%;
+    }
+  }
+}

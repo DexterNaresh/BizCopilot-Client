@@ -1,0 +1,41 @@
+<div class="cash-panel-container">
+  <div class="panel-header">
+    <biz-icon category="common" name="numbers" class="panel-icon"></biz-icon>
+    <h2 class="panel-title">Cash Payment</h2>
+  </div>
+  
+  <div class="payable-highlight">
+    <span class="label">Total Payable</span>
+    <span class="value">₹{{ totalPayable | number:'1.2-2' }}</span>
+  </div>
+
+  <div class="input-section">
+    <label>Amount Received</label>
+    <div class="input-group">
+      <span class="currency-prefix">₹</span>
+      <input type="number" 
+             [(ngModel)]="amountReceived" 
+             (ngModelChange)="onAmountChange()"
+             placeholder="Enter amount" 
+             class="amount-input" />
+      <button class="btn-quick-fill" (click)="onQuickFill()">Quick Fill</button>
+    </div>
+  </div>
+
+  <div class="suggested-section" *ngIf="suggestedCash.length > 0">
+    <label>Suggested Cash</label>
+    <div class="suggested-buttons">
+      <button *ngFor="let amt of suggestedCash"
+              class="btn-suggested"
+              [class.active]="amountReceived === amt"
+              (click)="onSuggestedCashClick(amt)">
+        ₹{{ amt | number:'1.0-0' }}
+      </button>
+    </div>
+  </div>
+
+  <div class="change-section" [class.valid]="isValid">
+    <label>Change to Return</label>
+    <span class="change-value">₹{{ changeToReturn | number:'1.2-2' }}</span>
+  </div>
+</div>

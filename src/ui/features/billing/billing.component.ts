@@ -15,6 +15,7 @@ import { CategoryApplication } from '@runtime/category/application/category.appl
 import { ISessionService } from '@shared/abstractions/session.service.interface';
 import { ConfirmDialogService } from '../../shared/services/confirm-dialog.service';
 import { ToastService } from '../../shared/services/toast.service';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { PRODUCT_UNITS, ProductUnitKey } from '../../../shared/constants/product-unit.constant';
@@ -35,7 +36,6 @@ import { getTestImageUrlForProduct } from '../../../shared/utilities/test-image.
     BillingHoldBillModalComponent,
     BillingOfferModalComponent
   ],
-  providers: [BillingStateService],
   templateUrl: './billing.component.html',
   styleUrls: ['./billing.component.scss']
 })
@@ -68,7 +68,8 @@ export class BillingComponent implements OnInit {
     private categoryApp: CategoryApplication,
     private sessionService: ISessionService,
     private toastService: ToastService,
-    private confirmService: ConfirmDialogService
+    private confirmService: ConfirmDialogService,
+    private router: Router
   ) {
     this.cartItems$ = this.state.cartItems$;
     this.subtotal$ = this.state.subtotal$;
@@ -240,6 +241,10 @@ export class BillingComponent implements OnInit {
       this.currentAppliedOfferCode = null;
       this.toastService.info('Offer removed');
     }
+  }
+
+  onProceedToPay() {
+    this.router.navigate(['/payment']);
   }
 
   // Placeholders

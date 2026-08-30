@@ -17,10 +17,12 @@ import { HelpComponent } from '../features/help/help.component';
 import { WhatsNewComponent } from '../features/whats-new/whats-new.component';
 import { BillsComponent } from '../features/bills/bills.component';
 import { BusinessProfileComponent } from '../features/business-profile/business-profile.component';
+import { PaymentComponent } from '../features/payment/payment.component';
 
 export const routes: Routes = [
   { path: 'setup', component: SetupWizardComponent },
   { path: 'login', component: LoginShellComponent },
+  { path: 'payment', component: PaymentComponent },
   {
     path: '',
     component: AppShellComponent,

@@ -1,0 +1,86 @@
+<div class="mixed-panel-container">
+  <div class="panel-header-wrapper">
+    <div class="panel-header">
+      <div class="title-with-icon">
+        <biz-icon category="common" name="grid_view" class="panel-icon"></biz-icon>
+        <h2 class="panel-title">Mixed Payment</h2>
+      </div>
+      <button class="btn-clear-all" (click)="onClearAll()">Clear All</button>
+    </div>
+    <p class="subtitle">Use multiple payment methods to complete the payment.</p>
+  </div>
+  
+  <div class="payable-highlight">
+    <span class="label">Total Payable</span>
+    <span class="value">₹{{ totalPayable | number:'1.2-2' }}</span>
+  </div>
+
+  <div class="allocation-table">
+    <div class="table-header">
+      <div class="col-method">Payment Method</div>
+      <div class="col-amount">Amount</div>
+      <div class="col-actions">Actions</div>
+    </div>
+    
+    <div class="table-body">
+      <div *ngFor="let alloc of allocations" class="table-row">
+        <div class="col-method">
+          <div class="method-dropdown-wrapper" [ngClass]="'method-' + alloc.method.toLowerCase()">
+            <biz-icon category="common" [name]="alloc.method === 'Cash' ? 'numbers' : (alloc.method === 'UPI' ? 'barcode_scanner' : 'devices')"></biz-icon>
+            <select [(ngModel)]="alloc.method" (ngModelChange)="onAllocationChange()" class="method-select">
+              <option value="Cash">Cash</option>
+              <option value="UPI">UPI</option>
+              <option value="Card">Card</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-amount">
+          <div class="amount-input-group">
+            <span class="currency-prefix">₹</span>
+            <input type="number" [(ngModel)]="alloc.amount" (ngModelChange)="onAllocationChange()" class="amount-input" />
+          </div>
+        </div>
+        <div class="col-actions">
+          <button class="btn-delete" (click)="removeAllocation(alloc.id)" aria-label="Remove">
+            <biz-icon category="common" name="delete"></biz-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn-add-method" (click)="onAddMethod()">
+    <biz-icon category="common" name="add"></biz-icon>
+    Add Payment Method
+  </button>
+
+  <div class="summary-box" [class.fully-paid]="isFullyPaid">
+    <div class="summary-col">
+      <span class="label">Total Paid</span>
+      <span class="value paid">₹{{ totalPaid | number:'1.2-2' }}</span>
+    </div>
+    <div class="summary-col">
+      <span class="label">Remaining</span>
+      <span class="value remaining" [class.paid]="isFullyPaid">₹{{ remaining | number:'1.2-2' }}</span>
+    </div>
+    <div class="summary-col">
+      <span class="label">Balance Status</span>
+      <div class="status-badge" [class.unpaid]="!isFullyPaid">
+        <biz-icon category="common" name="check_circle" *ngIf="isFullyPaid"></biz-icon>
+        <span>{{ isFullyPaid ? 'Fully Paid' : 'Pending' }}</span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="upi-details-section" *ngIf="hasUpiAllocation()">
+    <label>UPI Details</label>
+    <p class="upi-hint">UPI ID (if paid via UPI)</p>
+    <div class="upi-input-group">
+      <input type="text" value="bizcopilot@upi" readonly class="upi-input" />
+      <button class="btn-copy">
+        <biz-icon category="common" name="assignment"></biz-icon>
+        Copy
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+<div class="card bill-summary-card">
+  <h2 class="card-title">Bill Summary</h2>
+  
+  <div class="customer-row">
+    <div class="customer-info">
+      <biz-icon category="common" name="person"></biz-icon>
+      <span>{{ customerName }}</span>
+    </div>
+    <div class="items-info">
+      <biz-icon category="common" name="inventory_2"></biz-icon>
+      <span>{{ itemsCount }} items</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="amounts-list">
+    <div class="amount-row">
+      <span>Subtotal</span>
+      <span>₹{{ subtotal | number:'1.2-2' }}</span>
+    </div>
+    <div class="amount-row discount" *ngIf="discountAmount > 0">
+      <span>Discount ({{ discountCode }})</span>
+      <span>-₹{{ discountAmount | number:'1.2-2' }}</span>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="amount-row total-payable">
+    <span>Total Payable</span>
+    <span class="value">₹{{ totalPayable | number:'1.2-2' }}</span>
+  </div>
+</div>

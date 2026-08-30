@@ -1,0 +1,67 @@
+<div class="payment-page-wrapper">
+  <app-payment-header 
+    [billNumber]="billNumber" 
+    [itemsCount]="itemsCount"
+    (close)="onClose()">
+  </app-payment-header>
+
+  <div class="payment-content-area">
+    <div class="left-column">
+      <app-bill-summary-card
+        [customerName]="customerName"
+        [itemsCount]="itemsCount"
+        [subtotal]="subtotal"
+        [discountCode]="discountCode"
+        [discountAmount]="discountAmount"
+        [totalPayable]="totalPayable">
+      </app-bill-summary-card>
+
+      <app-payment-method-selector
+        [selectedMethod]="selectedMethod"
+        (methodSelected)="onMethodSelected($event)">
+      </app-payment-method-selector>
+    </div>
+
+    <div class="right-column">
+      <div class="dynamic-panel">
+        <app-cash-payment-panel 
+          *ngIf="selectedMethod === 'CASH'"
+          [totalPayable]="totalPayable"
+          (validityChange)="onValidityChange($event)">
+        </app-cash-payment-panel>
+
+        <app-upi-payment-panel 
+          *ngIf="selectedMethod === 'UPI'"
+          [totalPayable]="totalPayable">
+        </app-upi-payment-panel>
+
+        <app-card-payment-panel 
+          *ngIf="selectedMethod === 'CARD'"
+          [totalPayable]="totalPayable">
+        </app-card-payment-panel>
+
+        <app-mixed-payment-panel 
+          *ngIf="selectedMethod === 'MIXED'"
+          [totalPayable]="totalPayable"
+          (validityChange)="onValidityChange($event)">
+        </app-mixed-payment-panel>
+      </div>
+
+      <div class="payment-note-section">
+        <label>Payment Note (Optional)</label>
+        <textarea [(ngModel)]="paymentNote" placeholder="Add a note..."></textarea>
+      </div>
+
+      <div class="action-footer">
+        <div class="secure-badge">
+          <biz-icon category="common" name="info"></biz-icon>
+          <span>This bill will be marked as paid and cannot be edited.</span>
+        </div>
+        <button class="btn-mark-paid" [disabled]="!isPaymentValid" (click)="markAsPaid()">
+          <biz-icon category="common" name="check_circle"></biz-icon>
+          {{ selectedMethod === 'CASH' ? 'Complete Sale' : 'Mark as Paid' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
