@@ -9,7 +9,8 @@ import { BillingMobileCartBarComponent } from './components/billing-mobile-cart-
 import { BillingCartSheetComponent } from './components/billing-cart-sheet/billing-cart-sheet.component';
 import { BillingHoldBillModalComponent } from './components/billing-hold-bill-modal/billing-hold-bill-modal.component';
 import { BillingOfferModalComponent, AvailableOffer } from './components/billing-offer-modal/billing-offer-modal.component';
-import { BillingStateService, BillingProduct, CartItem, HeldBill } from './services/billing-state.service';
+import { BillingCustomerModalComponent } from './components/billing-customer-modal/billing-customer-modal.component';
+import { BillingStateService, BillingProduct, CartItem, HeldBill, BillingCustomer } from './services/billing-state.service';
 import { ProductApplication } from '@runtime/product/application/product.application';
 import { CategoryApplication } from '@runtime/category/application/category.application';
 import { ISessionService } from '@shared/abstractions/session.service.interface';
@@ -34,7 +35,8 @@ import { getTestImageUrlForProduct } from '../../../shared/utilities/test-image.
     BillingMobileCartBarComponent,
     BillingCartSheetComponent,
     BillingHoldBillModalComponent,
-    BillingOfferModalComponent
+    BillingOfferModalComponent,
+    BillingCustomerModalComponent
   ],
   templateUrl: './billing.component.html',
   styleUrls: ['./billing.component.scss']
@@ -48,6 +50,7 @@ export class BillingComponent implements OnInit {
   total$: Observable<number>;
   itemCount$: Observable<number>;
   heldBills$: Observable<HeldBill[]>;
+  customer$: Observable<BillingCustomer | null>;
 
   // Data
   allProducts: BillingProduct[] = [];
@@ -59,6 +62,7 @@ export class BillingComponent implements OnInit {
   isMobileCartOpen = false;
   showHoldBillsModal = false;
   showOfferModal = false;
+  showCustomerModal = false;
   currentAppliedOfferCode: string | null = null;
   currentAppliedOffer: AvailableOffer | null = null;
 
@@ -77,6 +81,7 @@ export class BillingComponent implements OnInit {
     this.total$ = this.state.total$;
     this.itemCount$ = this.state.itemCount$;
     this.heldBills$ = this.state.heldBills$;
+    this.customer$ = this.state.customer$;
   }
 
   ngOnInit() {
@@ -245,6 +250,15 @@ export class BillingComponent implements OnInit {
 
   onProceedToPay() {
     this.router.navigate(['/payment']);
+  }
+
+  onOpenCustomer() {
+    this.showCustomerModal = true;
+  }
+
+  onConfirmCustomer(customer: BillingCustomer | null) {
+    this.state.setCustomer(customer);
+    this.showCustomerModal = false;
   }
 
   // Placeholders

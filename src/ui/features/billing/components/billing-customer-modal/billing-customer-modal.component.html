@@ -1,0 +1,151 @@
+<div class="overlay-backdrop" (click)="onClose()"></div>
+
+<div class="customer-modal-container">
+  
+  <div class="modal-header">
+    <div class="header-left">
+      <button class="btn-icon" (click)="onClose()" aria-label="Back">
+        <biz-icon category="common" name="arrow_back"></biz-icon>
+      </button>
+      <div class="header-titles">
+        <h2>Select Customer</h2>
+        <p>Search customer or enter details</p>
+      </div>
+    </div>
+    <button class="btn-icon close-btn" (click)="onClose()" aria-label="Close">
+      <biz-icon category="common" name="close"></biz-icon>
+    </button>
+  </div>
+
+  <div class="modal-content">
+    
+    <!-- 1. Search Customer -->
+    <div class="section search-section">
+      <h3>1. Search Customer (name / phone number)</h3>
+      
+      <div class="search-input-wrapper">
+        <biz-icon category="common" name="search" class="search-icon"></biz-icon>
+        <input 
+          type="text" 
+          placeholder="Search customer by name / phone number"
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearchInput($event)"
+          class="search-input" />
+        <button class="btn-clear-search" *ngIf="searchTerm" (click)="clearSearch()">
+          <biz-icon category="common" name="close"></biz-icon>
+        </button>
+      </div>
+
+      <!-- Results Container (scrollable if constrained) -->
+      <div class="search-results-container" *ngIf="searchResults !== null">
+        <div class="results-meta">
+          <span *ngIf="isSearching">Searching...</span>
+          <span *ngIf="!isSearching && searchResults.length === 0">No customer found</span>
+          <span *ngIf="!isSearching && searchResults.length === 1">1 customer found</span>
+          <span *ngIf="!isSearching && searchResults.length > 1">{{ searchResults.length }} customers found</span>
+        </div>
+
+        <div class="results-list" *ngIf="!isSearching && searchResults.length > 0">
+          <div 
+            *ngFor="let cust of searchResults" 
+            class="customer-result-card" 
+            [class.selected]="!isWalkIn && selectedCustomer?.id === cust.id"
+            (click)="selectSearchResult(cust)">
+            
+            <div class="avatar-wrapper">
+              <div class="avatar">{{ getInitials(cust.name) }}</div>
+            </div>
+            
+            <div class="customer-info">
+              <span class="name">{{ cust.name }}</span>
+              <div class="meta-row">
+                <biz-icon category="common" name="phone"></biz-icon>
+                <span class="phone">{{ cust.phone || 'No phone' }}</span>
+              </div>
+              <div class="meta-row">
+                <biz-icon category="common" name="sell"></biz-icon>
+                <span class="meta">{{ cust.id }} • {{ cust.createdAt }}</span>
+              </div>
+            </div>
+            
+            <div class="radio-indicator">
+              <biz-icon category="common" [name]="(!isWalkIn && selectedCustomer?.id === cust.id) ? 'radio_button_checked' : 'radio_button_unchecked'"></biz-icon>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="or-divider">
+      <hr/><span>OR</span><hr/>
+    </div>
+
+    <!-- 2. Enter Customer Details -->
+    <div class="section details-section">
+      <h3>2. Enter Customer Details</h3>
+      
+      <div class="form-group">
+        <div class="input-with-icon">
+          <biz-icon category="common" name="person" class="field-icon"></biz-icon>
+          <input type="text" placeholder="Customer Name" [(ngModel)]="newCustomerName" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="phone-input-wrapper">
+          <div class="country-code">
+            <biz-icon category="common" name="phone" class="phone-icon-small"></biz-icon>
+            <span>+91</span>
+            <biz-icon category="common" name="expand_more"></biz-icon>
+          </div>
+          <input type="tel" placeholder="Phone Number (Optional)" [(ngModel)]="newCustomerPhone" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="input-with-icon align-top">
+          <biz-icon category="common" name="assignment" class="field-icon"></biz-icon>
+          <textarea placeholder="Notes (Optional)" [(ngModel)]="newCustomerNotes" maxlength="100" rows="2"></textarea>
+        </div>
+      </div>
+
+      <button class="btn-use-entered" [disabled]="!newCustomerName.trim()" (click)="useEnteredCustomer()">
+        Use This Customer
+      </button>
+      <p class="use-hint">Customer will be saved and selected for this bill</p>
+    </div>
+
+    <!-- Walk-In Section -->
+    <div class="section walk-in-section">
+      <div class="walk-in-card" [class.selected]="isWalkIn" (click)="selectWalkIn()">
+        <div class="radio-indicator">
+          <biz-icon category="common" [name]="isWalkIn ? 'radio_button_checked' : 'radio_button_unchecked'"></biz-icon>
+        </div>
+        <div class="walk-in-icon">
+          <biz-icon category="common" name="person"></biz-icon>
+        </div>
+        <div class="walk-in-info">
+          <span class="title">Walk-In Customer</span>
+          <span class="desc">No customer information required</span>
+        </div>
+        <div class="badge-wrapper">
+          <span class="badge">Default</span>
+        </div>
+      </div>
+    </div>
+
+  </div> <!-- End modal-content -->
+
+  <!-- Footer -->
+  <div class="modal-footer">
+    <div class="selected-summary">
+      <span class="label">Selected Customer</span>
+      <span class="value success" *ngIf="!isWalkIn && selectedCustomer">{{ selectedCustomer.name }} ({{ selectedCustomer.phone }})</span>
+      <span class="value" *ngIf="isWalkIn">Walk-In Customer</span>
+    </div>
+    <button class="btn-confirm" (click)="onConfirm()">
+      Confirm & Use
+    </button>
+  </div>
+
+</div>

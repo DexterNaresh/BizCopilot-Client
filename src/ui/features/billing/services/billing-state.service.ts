@@ -14,6 +14,14 @@ export interface BillingProduct {
   imageUrl?: string;
 }
 
+export interface BillingCustomer {
+  id: string;
+  name: string;
+  phone?: string;
+  notes?: string;
+  createdAt?: string;
+}
+
 export interface CartItem {
   product: BillingProduct;
   quantity: number; // For Qty, Pack, Kg, Ltr, Meter
@@ -24,7 +32,7 @@ export interface HeldBill {
   id: string;
   billNumber: string;
   timestamp: string;
-  customer?: any; // To be extended when customer module integrates
+  customer?: BillingCustomer;
   appliedOffers?: any[]; // To be extended when offers module integrates
   cartItems: CartItem[];
   itemCount: number;
@@ -37,6 +45,9 @@ export interface HeldBill {
 export class BillingStateService {
   private cartItemsSubject = new BehaviorSubject<CartItem[]>([]);
   cartItems$ = this.cartItemsSubject.asObservable();
+
+  private customerSubject = new BehaviorSubject<BillingCustomer | null>(null);
+  customer$ = this.customerSubject.asObservable();
 
   private subtotalSubject = new BehaviorSubject<number>(0);
   subtotal$ = this.subtotalSubject.asObservable();
@@ -87,6 +98,10 @@ export class BillingStateService {
     }
   }
 
+  setCustomer(customer: BillingCustomer | null) {
+    this.customerSubject.next(customer);
+  }
+
   holdCurrentBill(): void {
     const items = this.cartItems;
     if (items.length === 0) return;
@@ -103,8 +118,9 @@ export class BillingStateService {
       itemCount: this.itemCountSubject.value,
       subtotal: this.subtotalSubject.value,
       discount: this.discountSubject.value,
-      total: this.totalSubject.value
-      // Note: customer and appliedOffers would be captured here
+      total: this.totalSubject.value,
+      customer: this.customerSubject.value || undefined
+      // Note: appliedOffers would be captured here
     };
 
     // Prepend new held bill (newest first)
@@ -118,6 +134,7 @@ export class BillingStateService {
 
     // Restore active cart state
     this.cartItemsSubject.next([...heldBill.cartItems]);
+    this.customerSubject.next(heldBill.customer || null);
     this.recalculateTotals();
 
     // Remove from held bills

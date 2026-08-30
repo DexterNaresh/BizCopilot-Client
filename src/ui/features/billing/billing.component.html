@@ -39,10 +39,11 @@
       [discount]="(discount$ | async) || 0"
       [total]="(total$ | async) || 0"
       [appliedOffer]="currentAppliedOffer"
+      [customer]="(customer$ | async)"
       (updateQuantity)="onUpdateQuantity($event)"
       (remove)="onRemoveCartItem($event)"
       (clearCart)="onClearCart()"
-      (openCustomer)="onPlaceholderAction('Select Customer')"
+      (openCustomer)="onOpenCustomer()"
       (openOffers)="onOpenOffers()"
       (holdBill)="onHoldBill()"
       (proceedToPay)="onProceedToPay()">
@@ -71,11 +72,12 @@
     [discount]="(discount$ | async) || 0"
     [total]="(total$ | async) || 0"
     [appliedOffer]="currentAppliedOffer"
+    [customer]="(customer$ | async)"
     (close)="isMobileCartOpen = false"
     (updateQuantity)="onUpdateQuantity($event)"
     (remove)="onRemoveCartItem($event)"
     (clearCart)="onClearCart()"
-    (openCustomer)="onPlaceholderAction('Select Customer')"
+    (openCustomer)="onOpenCustomer()"
     (openOffers)="onOpenOffers()"
     (holdBill)="onHoldBill()"
     (proceedToPay)="onProceedToPay()">
@@ -95,5 +97,11 @@
     (close)="showOfferModal = false"
     (applyOffer)="onApplyOffer($event)">
   </app-billing-offer-modal>
+
+  <app-billing-customer-modal
+    *ngIf="showCustomerModal"
+    (close)="showCustomerModal = false"
+    (confirm)="onConfirmCustomer($event)">
+  </app-billing-customer-modal>
 
 </div>

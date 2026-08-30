@@ -37,17 +37,19 @@
       
       <!-- Customer Section -->
       <div class="customer-section fixed-section">
-        <div class="section-label">Customer</div>
-        <div class="customer-card">
-          <div class="customer-avatar">
-            <biz-icon category="common" name="person"></biz-icon>
-          </div>
-          <div class="customer-details">
-            <span class="customer-name">{{ customerName }}</span>
-            <span class="customer-type">{{ customerType }}</span>
-          </div>
-          <button class="btn-change" (click)="openCustomer.emit()">Change</button>
+        <div class="customer-section-header">Customer</div>
+      <div class="customer-card">
+        <div class="customer-avatar">
+          <biz-icon category="common" [name]="customer ? 'person' : 'directions_walk'"></biz-icon>
         </div>
+        <div class="customer-details">
+          <span class="customer-name" *ngIf="customer">{{ customer.name }}</span>
+          <span class="customer-name" *ngIf="!customer">Walk-In Customer</span>
+          <span class="customer-type" *ngIf="customer">{{ customer.phone || 'No phone' }}</span>
+          <span class="customer-type" *ngIf="!customer">No details required</span>
+        </div>
+        <button class="btn-change" (click)="openCustomer.emit()">Change</button>
+      </div>
       </div>
 
       <!-- Scrollable Items List -->

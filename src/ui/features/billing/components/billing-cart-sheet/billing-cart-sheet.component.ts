@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { BizIconComponent } from '../../../../shared/components/biz-icon/biz-icon.component';
 import { BillingCartItemComponent } from '../billing-cart-item/billing-cart-item.component';
 import { AvailableOffer } from '../billing-offer-modal/billing-offer-modal.component';
-import { CartItem } from '../../services/billing-state.service';
+import { CartItem, BillingCustomer } from '../../services/billing-state.service';
 
 @Component({
   selector: 'app-billing-cart-sheet',
@@ -18,6 +18,8 @@ export class BillingCartSheetComponent {
   @Input() subtotal: number = 0;
   @Input() discount: number = 0;
   @Input() total: number = 0;
+  @Input() appliedOffer: AvailableOffer | null = null;
+  @Input() customer: BillingCustomer | null = null;
 
   @Output() close = new EventEmitter<void>();
   @Output() updateQuantity = new EventEmitter<{productId: string, quantity: number}>();
@@ -29,7 +31,6 @@ export class BillingCartSheetComponent {
   @Output() holdBill = new EventEmitter<void>();
   @Output() proceedToPay = new EventEmitter<void>();
 
-  @Input() appliedOffer: AvailableOffer | null = null;
 
   // Mocked state for UI layout
   customerName = 'Walk-In Customer';
