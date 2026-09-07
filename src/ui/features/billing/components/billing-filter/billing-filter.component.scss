@@ -1,6 +1,6 @@
 .filter-chips-container {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   overflow-x: auto;
   padding-bottom: 8px;
   margin-bottom: 16px;
@@ -15,22 +15,24 @@
   .chip {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 0 16px;
-    height: 40px;
+    gap: 8px;
+    padding: 0 18px;
+    height: 38px;
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-nav-item, 8px);
+    border-radius: 999px;
     color: var(--color-text-secondary);
     font-size: var(--font-base);
     font-weight: 500;
     cursor: pointer;
     white-space: nowrap;
-    transition: all 0.2s ease;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: var(--shadow-sm);
 
     .chip-icon {
       font-size: var(--font-lg);
       color: var(--color-text-muted);
+      transition: color 0.2s ease;
     }
     
     .chip-icon-trailing {
@@ -40,15 +42,26 @@
 
     &:hover {
       background-color: var(--color-surface-hover);
+      border-color: var(--color-primary-light);
+      color: var(--color-text-primary);
+      transform: translateY(-1px);
     }
 
     &.active {
-      background-color: var(--color-primary);
-      border-color: var(--color-primary);
-      color: white;
+      background: var(--gradient-primary);
+      border-color: transparent;
+      color: #ffffff;
+      font-weight: 600;
+      box-shadow: 0 4px 14px var(--color-primary-light);
 
-      .chip-icon {
-        color: white;
+      .chip-icon,
+      .chip-icon-trailing {
+        color: #ffffff;
+      }
+
+      &:hover {
+        transform: translateY(-1px);
+        box-shadow: var(--shadow-glow);
       }
     }
   }

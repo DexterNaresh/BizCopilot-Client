@@ -164,15 +164,25 @@ When creating new screens, dialogs, or feature components:
 
 ## 6.4 Shared Action Components
 - **Search Bars**: Must use `height: 48px; border-radius: 12px; box-shadow: var(--shadow-sm); border: 1px solid transparent;` and use a `focus-within` border color change to `--color-primary` with a 3px light shadow ring.
-- **Filter Chips**: Use `border-radius: 999px; height: 36px; padding: 0 16px; box-shadow: var(--shadow-sm);`. Active states MUST use `background: var(--gradient-primary); box-shadow: 0 4px 12px var(--color-primary-light);`.
+## 6.4 Shared Action Components
+- **Search Bars**: Must use `height: 48px; border-radius: 12px; box-shadow: var(--shadow-sm); border: 1px solid transparent;` and use a `focus-within` border color change to `--color-primary` with a 3px light shadow ring.
+- **Filter Chips**: Must use pill radius (`border-radius: 999px; height: 38px; padding: 0 18px; box-shadow: var(--shadow-sm)`). Active states MUST use `background: var(--gradient-primary); border-color: transparent; color: #ffffff; font-weight: 600; box-shadow: 0 4px 14px var(--color-primary-light);`.
 - **View Toggles / Button Groups**: Wrapper uses `background-color: var(--color-surface-hover); border-radius: 10px; padding: 3px; gap: 2px;`. Active buttons act as cards `background-color: var(--color-surface); box-shadow: var(--shadow-sm); border-radius: 8px;`.
-- **Primary CTA Buttons**: Should use `var(--gradient-primary)` background, `font-weight: 600`, and `box-shadow: 0 4px 12px var(--color-primary-light)` to stand out from regular buttons.
+- **Primary CTA Buttons**: Should use `var(--gradient-primary)` background, `font-weight: 600`, `color: #ffffff`, `border-radius: var(--radius-key)`, and `box-shadow: 0 4px 12px var(--color-primary-light)` to stand out from regular buttons.
+- **Quantity & Decimal Steppers**: Stepper container uses `border: 1px solid var(--color-border); border-radius: var(--radius-key, 10px); background: var(--color-surface); box-shadow: var(--shadow-sm)`. Incremental buttons use `background: var(--color-primary-bg); color: var(--color-primary); font-weight: 700;`.
+- **Pagination & Page Selector Controls**: Floating pagination shell uses `background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-card, 20px); box-shadow: var(--shadow-card)`. Active page buttons use `background: var(--gradient-primary); color: #ffffff; box-shadow: 0 4px 12px var(--color-primary-light)`.
 
-## 6.5 Semantic Highlight Backgrounds
+## 6.5 Product & Category Card Design
+- **Card Container**: `background: var(--color-surface); border: 1px solid var(--color-border); border-radius: var(--radius-card, 20px); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: var(--shadow-sm);`.
+- **Hover Micro-Interactions**: `&:hover { box-shadow: var(--shadow-premium); border-color: var(--color-primary-light); transform: translateY(-3px); }`.
+- **Image & Icon Containers**: Rounded border (`var(--radius-key, 12px)`), subtle ambient gradient (`linear-gradient(135deg, var(--color-surface-hover) 0%, var(--color-surface) 100%)`), and hover image zoom scaling (`transform: scale(1.05)`).
+- **Category Badges**: Pill radius (`border-radius: 999px`), background `var(--color-primary-bg)`, text `var(--color-primary)`, border `1px solid var(--color-primary-light)`.
+
+## 6.6 Semantic Highlight Backgrounds
 - Do not use hardcoded `rgba(x,x,x, 0.05)` over white backgrounds for selected states. Use the semantic theme background variables:
-  - `--color-primary-bg` (Selected items, active states)
+  - `--color-primary-bg` (Selected items, active states, badge highlights)
   - `--color-success-bg` (Active toggles, positive indicators)
-  - `--color-error-bg` (Destructive action highlights)
+  - `--color-error-bg` (Destructive action highlights, delete button hover)
 
 ---
 
@@ -180,6 +190,7 @@ When creating new screens, dialogs, or feature components:
 
 Before marking any new UI component or screen complete, verify:
 - [ ] Compiles cleanly with SCSS tokens (No hardcoded hex colors or raw pixel font sizes).
-- [ ] Supports both Light and Dark mode without visual defects.
+- [ ] Supports both Light and Dark mode without visual defects (No hardcoded white/black text or dark mode contrast breaks).
 - [ ] Displays icons cleanly using local trusted SVG assets (`BizIconComponent` or CSS masks).
+- [ ] Incorporates standard card radius (`--radius-card`), smooth hover translation (`translateY(-2px/3px)`), and primary gradient active states.
 - [ ] Displays correctly without spawning unwanted horizontal or vertical page scrollbars across screen sizes.

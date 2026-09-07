@@ -1,20 +1,21 @@
 .category-card {
-  background-color: var(--color-surface, #FFFFFF);
-  border: 1px solid var(--color-border, #EAECEF);
-  border-radius: var(--radius-input, 12px);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card, 20px);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 24px 16px;
   position: relative;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   box-shadow: var(--shadow-sm);
-}
 
-.category-card:hover {
-  box-shadow: var(--shadow-premium);
-  transform: translateY(-3px);
+  &:hover {
+    box-shadow: var(--shadow-premium);
+    border-color: var(--color-primary-light);
+    transform: translateY(-3px);
+  }
 }
 
 .action-btn {
@@ -22,36 +23,39 @@
   top: 16px;
   width: 32px;
   height: 32px;
-  border-radius: 6px;
+  border-radius: 8px;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s;
-}
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
 
-.action-btn biz-icon {
-  font-size: var(--font-lg);
+  biz-icon {
+    font-size: var(--font-base);
+  }
 }
 
 .edit-btn {
   left: 16px;
-  color: var(--color-primary, #5B3BEB);
-}
+  color: var(--color-primary);
 
-.edit-btn:hover {
-  background: var(--color-surface-hover);
+  &:hover {
+    background: var(--color-primary-bg);
+    border-color: var(--color-primary-light);
+  }
 }
 
 .delete-btn {
   right: 16px;
-  color: var(--color-danger, #DC2626);
-}
+  color: var(--color-error, #EF4444);
 
-.delete-btn:hover {
-  background: var(--color-surface-hover);
+  &:hover {
+    background: var(--color-error-bg);
+    border-color: var(--color-error-light, rgba(239, 68, 68, 0.2));
+  }
 }
 
 .icon-container-wrapper {
@@ -65,25 +69,29 @@
 .icon-circle {
   width: 72px;
   height: 72px;
-  border-radius: 50%;
+  border-radius: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   box-shadow: var(--shadow-sm);
-  background: var(--gradient-primary-glow);
+  background: linear-gradient(135deg, var(--color-primary-bg) 0%, var(--color-surface-hover) 100%);
   border: 1px solid var(--color-primary-light);
+  transition: transform 0.3s ease;
+
+  .category-card:hover & {
+    transform: scale(1.05);
+  }
 }
 
 .category-icon {
   font-size: var(--font-3xl);
-  color: var(--color-text-primary, #111827);
-  opacity: 0.8;
+  color: var(--color-primary);
 }
 
 .category-name {
   font-size: var(--font-lg);
   font-weight: 700;
-  color: var(--color-text-primary, #111827);
+  color: var(--color-text-primary);
   margin: 0 0 8px 0;
   text-align: center;
   letter-spacing: -0.3px;
@@ -91,10 +99,10 @@
 
 .products-count {
   display: inline-block;
-  padding: 2px 10px;
+  padding: 3px 12px;
   background: var(--color-surface-hover);
   border-radius: 999px;
-  font-size: var(--font-sm);
+  font-size: var(--font-xs);
   font-weight: 600;
   color: var(--color-text-secondary);
   border: 1px solid var(--color-border);
@@ -110,46 +118,50 @@
 }
 
 .status-label {
-  font-size: var(--font-sm);
-  font-weight: 500;
+  font-size: var(--font-xs);
+  font-weight: 600;
   padding: 2px 8px;
-  border-radius: 4px;
+  border-radius: 6px;
+  letter-spacing: 0.2px;
 }
 
 .status-active {
-  color: var(--color-success-text, #166534);
+  color: var(--color-success-text, #10B981);
+  background-color: var(--color-success-bg, rgba(16, 185, 129, 0.1));
 }
 
 .status-inactive {
-  color: var(--color-error-text, #991B1B);
+  color: var(--color-text-muted);
+  background-color: var(--color-surface-hover);
 }
 
 /* Robust toggle switch implementation */
 .toggle-switch {
-  width: 36px;
-  height: 20px;
-  border-radius: 10px;
-  background-color: var(--color-text-muted, #9CA3AF);
+  width: 38px;
+  height: 22px;
+  border-radius: 999px;
+  background-color: var(--color-border);
   border: none;
   cursor: pointer;
   padding: 2px;
-  transition: background-color 0.2s;
+  transition: all 0.25s ease;
   display: flex;
   align-items: center;
   box-sizing: border-box;
-}
 
-.toggle-switch.active {
-  background-color: var(--color-primary, #5B3BEB);
+  &.active {
+    background: var(--gradient-primary);
+    box-shadow: 0 2px 8px var(--color-primary-light);
+  }
 }
 
 .toggle-knob {
-  width: 16px;
-  height: 16px;
-  background-color: white;
+  width: 18px;
+  height: 18px;
+  background-color: var(--color-surface);
   border-radius: 50%;
-  transition: transform 0.2s;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .toggle-switch.active .toggle-knob {

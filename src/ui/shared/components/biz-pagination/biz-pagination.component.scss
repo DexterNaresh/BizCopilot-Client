@@ -4,15 +4,16 @@
   align-items: center;
   margin-top: 24px;
   padding: 16px 24px;
-  background-color: var(--color-surface, #FFFFFF);
-  border: 1px solid var(--color-border, #EAECEF);
-  border-radius: var(--radius-nav-item, 8px);
-  box-shadow: var(--shadow-sm);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card, 16px);
+  box-shadow: var(--shadow-card);
+  transition: all 0.3s ease;
 }
 
 .pagination-text {
   font-size: var(--font-base);
-  color: var(--color-text-primary);
+  color: var(--color-text-secondary);
   font-weight: 500;
   flex: 1;
 }
@@ -26,10 +27,10 @@
 }
 
 .page-btn {
-  width: 36px;
-  height: 36px;
-  border-radius: var(--radius-nav-item, 8px);
-  border: 1px solid var(--color-border, #EAECEF);
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-key, 12px);
+  border: 1px solid var(--color-border);
   background: var(--color-surface);
   display: flex;
   align-items: center;
@@ -38,7 +39,8 @@
   color: var(--color-text-primary);
   font-weight: 600;
   font-size: var(--font-base);
-  transition: all 0.2s;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: var(--shadow-sm);
 }
 
 .page-btn biz-icon {
@@ -46,22 +48,27 @@
 }
 
 .page-btn:hover:not(.active):not([disabled]) {
-  background-color: var(--color-surface-hover, #F9FAFB);
+  background-color: var(--color-surface-hover);
+  border-color: var(--color-primary-light);
+  color: var(--color-primary);
+  transform: translateY(-1px);
 }
 
 .page-btn.active {
-  background-color: var(--color-primary, #5B3BEB);
-  color: white;
-  border-color: var(--color-primary, #5B3BEB);
+  background: var(--gradient-primary);
+  color: #ffffff;
+  border-color: transparent;
+  box-shadow: 0 4px 12px var(--color-primary-light);
 }
 
 .page-btn[disabled] {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 .page-ellipsis {
-  color: var(--color-text-primary);
+  color: var(--color-text-muted);
   font-weight: 600;
   padding: 0 4px;
 }
@@ -76,7 +83,7 @@
 
 .rows-label {
   font-size: var(--font-base);
-  color: var(--color-text-primary);
+  color: var(--color-text-secondary);
   font-weight: 500;
 }
 
@@ -84,22 +91,30 @@
   appearance: none;
   -webkit-appearance: none;
   background-color: var(--color-surface);
-  border: 1px solid var(--color-border, #EAECEF);
-  border-radius: var(--radius-nav-item, 8px);
-  padding: 8px 32px 8px 16px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-key, 10px);
+  padding: 8px 36px 8px 16px;
   font-size: var(--font-base);
   font-weight: 600;
   color: var(--color-text-primary);
   cursor: pointer;
   outline: none;
-  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%239CA3AF%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E");
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%2394A3B8%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E");
   background-repeat: no-repeat;
-  background-position: right 8px center;
+  background-position: right 10px center;
   background-size: 16px;
 }
 
+.rows-select:hover {
+  border-color: var(--color-primary-light);
+  background-color: var(--color-surface-hover);
+}
+
 .rows-select:focus {
-  border-color: var(--color-primary, #5B3BEB);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px var(--color-primary-light);
 }
 
 @media (max-width: 768px) {
@@ -130,8 +145,8 @@
   }
   
   .page-btn {
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
   }
 }
 
