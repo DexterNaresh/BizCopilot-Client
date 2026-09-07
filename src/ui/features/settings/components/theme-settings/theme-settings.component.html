@@ -1,0 +1,101 @@
+<div class="theme-settings-container">
+  <!-- Appearance Header / Card -->
+  <div class="settings-card">
+    <div class="card-header">
+      <div class="header-icon">
+        <biz-icon category="common" name="settings"></biz-icon>
+      </div>
+      <div>
+        <h3 class="card-title">Theme & Appearance</h3>
+        <p class="card-subtitle">Customize the look and visual feel of your BizCopilot workspace.</p>
+      </div>
+    </div>
+
+    <div class="card-body">
+      <!-- Dark Mode Row -->
+      <div class="setting-row">
+        <div class="setting-info">
+          <div class="setting-title-wrap">
+            <svg class="icon-small-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <span class="setting-name">Dark Mode</span>
+          </div>
+          <span class="setting-desc">Toggle high-contrast dark theme for low-light environments</span>
+        </div>
+        <button class="toggle-switch" [class.active]="isDarkMode" (click)="toggleDarkMode()" role="switch" [attr.aria-checked]="isDarkMode">
+          <div class="toggle-thumb">
+            <svg *ngIf="isDarkMode" class="toggle-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+            <svg *ngIf="!isDarkMode" class="toggle-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </div>
+        </button>
+      </div>
+
+      <!-- Accent Color Selection Grid -->
+      <div class="setting-row vertical">
+        <div class="setting-info">
+          <div class="setting-title-wrap">
+            <svg class="icon-small-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="13.5" cy="6.5" r=".5" fill="currentColor"></circle>
+              <circle cx="17.5" cy="10.5" r=".5" fill="currentColor"></circle>
+              <circle cx="8.5" cy="7.5" r=".5" fill="currentColor"></circle>
+              <circle cx="6.5" cy="12.5" r=".5" fill="currentColor"></circle>
+              <path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.92 0 1.7-.72 1.7-1.61 0-.43-.17-.83-.44-1.14-.26-.3-.43-.72-.43-1.19 0-.93.75-1.68 1.68-1.68H16c3.31 0 6-2.69 6-6 0-4.96-4.49-9-10-9z"></path>
+            </svg>
+            <span class="setting-name">Accent Color</span>
+          </div>
+          <span class="setting-desc">Choose a brand color theme for buttons, active indicators, and highlights</span>
+        </div>
+
+        <div class="color-grid">
+          <button *ngFor="let theme of colorThemes" 
+                  class="color-card" 
+                  [class.active]="currentTheme === theme.id"
+                  (click)="setTheme(theme.id)">
+            <div class="color-preview" [style.background]="theme.color">
+              <biz-icon *ngIf="currentTheme === theme.id" category="common" name="check" class="checkmark"></biz-icon>
+            </div>
+            <span class="color-label">{{ theme.name }}</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Font Size Selection -->
+      <div class="setting-row vertical">
+        <div class="setting-info">
+          <div class="setting-title-wrap">
+            <svg class="icon-small-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 7V4h16v3"></path>
+              <path d="M9 20h6"></path>
+              <path d="M12 4v16"></path>
+            </svg>
+            <span class="setting-name">Text Scaling</span>
+          </div>
+          <span class="setting-desc">Adjust baseline font size across all interfaces</span>
+        </div>
+
+        <div class="font-size-segment">
+          <button *ngFor="let size of fontSizes"
+                  class="segment-btn"
+                  [class.active]="currentFontSize === size.id"
+                  (click)="setFontSize(size.id)">
+            <span class="size-sample" [ngClass]="'sample-' + size.id">Aa</span>
+            <span class="size-label">{{ size.name }}</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

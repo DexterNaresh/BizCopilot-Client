@@ -25,8 +25,8 @@
   height: 64px;
   padding: 0 16px;
   border: 1px solid var(--border-color, #EAECEF);
-  border-radius: 12px;
-  background-color: #FFFFFF;
+  border-radius: var(--radius-input, 12px);
+  background-color: var(--color-surface, #FFFFFF);
   cursor: pointer;
   transition: all 0.2s ease;
 
@@ -37,12 +37,12 @@
     
     .method-icon {
       color: var(--text-secondary, #6B7280);
-      font-size: 24px;
+      font-size: var(--font-xl);
       transition: color 0.2s ease;
     }
     
     .method-label {
-      font-size: 1rem;
+      font-size: var(--font-md);
       font-weight: 500;
       color: var(--text-primary, #111827);
     }
@@ -50,7 +50,7 @@
 
   .radio-icon {
     color: var(--text-muted, #9CA3AF);
-    font-size: 24px;
+    font-size: var(--font-xl);
     transition: color 0.2s ease;
   }
 
@@ -95,7 +95,7 @@
       gap: 4px;
       
       .method-icon {
-        font-size: 24px;
+        font-size: var(--font-xl);
       }
       .method-label {
         font-size: 0.8125rem;
@@ -106,7 +106,7 @@
       position: absolute;
       top: 6px;
       right: 6px;
-      font-size: 16px;
+      font-size: var(--font-md);
     }
   }
 }

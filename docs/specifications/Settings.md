@@ -117,7 +117,7 @@ Never owns:
 
 # 5. Application Settings
 
-- Theme
+- Theme (Accent Color, Light/Dark Mode, Font Size - See `specifications/UI_UX_Design_System.md`)
 - Language
 - Date Format
 - Time Format

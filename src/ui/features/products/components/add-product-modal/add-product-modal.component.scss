@@ -18,8 +18,9 @@
   width: min(calc(100% - 48px), 700px);
   max-height: 96vh;
   background-color: var(--color-surface, #FFFFFF);
-  border-radius: 12px;
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-input, 12px);
+  box-shadow: var(--shadow-premium);
   z-index: 1001;
   display: flex;
   flex-direction: column;
@@ -34,13 +35,14 @@
     transform: none;
     width: 100%;
     max-height: 95vh;
-    border-radius: 16px 16px 0 0;
+    border-radius: var(--radius-key, 12px) 16px 0 0;
   }
 }
 
 .modal-header {
   padding: 12px 24px;
   border-bottom: 1px solid var(--color-border, #EAECEF);
+  background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-hover) 100%);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -48,14 +50,14 @@
   .header-text {
     h2 {
       margin: 0 0 4px 0;
-      font-size: 20px;
+      font-size: var(--font-lg);
       font-weight: 600;
       color: var(--color-text-primary, #111827);
     }
 
     p {
       margin: 0;
-      font-size: 14px;
+      font-size: var(--font-base);
       color: var(--color-text-secondary, #6B7280);
     }
   }
@@ -67,18 +69,18 @@
     color: var(--color-text-secondary, #6B7280);
     width: 32px;
     height: 32px;
-    border-radius: 8px;
+    border-radius: var(--radius-nav-item, 8px);
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all 0.2s ease;
 
     biz-icon {
-      font-size: 20px;
+      font-size: var(--font-lg);
     }
 
     &:hover {
-      background-color: #F3F4F6;
+      background-color: var(--color-bg-canvas, #F3F4F6);
       color: var(--color-text-primary, #111827);
     }
   }
@@ -100,7 +102,7 @@
 
   label {
     display: block;
-    font-size: 14px;
+    font-size: var(--font-base);
     font-weight: 500;
     color: var(--color-text-primary, #111827);
     margin-bottom: 8px;
@@ -112,7 +114,7 @@
     .optional {
       color: var(--color-text-muted, #9CA3AF);
       font-weight: 400;
-      font-size: 12px;
+      font-size: var(--font-sm);
     }
   }
 
@@ -127,7 +129,7 @@
     }
 
     .char-count {
-      font-size: 12px;
+      font-size: var(--font-sm);
       color: var(--color-text-muted, #9CA3AF);
     }
   }
@@ -137,8 +139,8 @@
   width: 100%;
   padding: 8px 12px;
   border: 1px solid var(--color-border, #EAECEF);
-  border-radius: 8px;
-  font-size: 14px;
+  border-radius: var(--radius-nav-item, 8px);
+  font-size: var(--font-base);
   color: var(--color-text-primary, #111827);
   transition: border-color 0.2s;
   box-sizing: border-box;
@@ -150,7 +152,7 @@
   &:focus {
     outline: none;
     border-color: var(--color-primary, #5B3BEB);
-    box-shadow: 0 0 0 3px rgba(91, 59, 235, 0.1);
+    box-shadow: 0 0 0 3px var(--color-primary-light);
   }
 
   &.is-invalid {
@@ -165,7 +167,7 @@ textarea.form-control {
 
 .helper-text {
   margin: 0 0 12px 0;
-  font-size: 13px;
+  font-size: var(--font-sm);
   color: var(--color-text-secondary, #6B7280);
 
   &.bottom {
@@ -175,23 +177,23 @@ textarea.form-control {
 
 .error-msg {
   color: var(--color-danger, #DC2626);
-  font-size: 12px;
+  font-size: var(--font-sm);
   margin-top: 6px;
 }
 
 /* Image Upload */
 .image-upload-area {
   border: 2px dashed var(--color-border, #EAECEF);
-  border-radius: 12px;
-  background-color: #F9FAFB;
+  border-radius: var(--radius-input, 12px);
+  background-color: var(--color-surface-hover, #F9FAFB);
   text-align: center;
   transition: all 0.2s;
   overflow: hidden;
   position: relative;
 
   &:hover:not(.has-image) {
-    background-color: #F3F4F6;
-    border-color: #D1D5DB;
+    background-color: var(--color-bg-canvas, #F3F4F6);
+    border-color: var(--color-border-strong, #D1D5DB);
     cursor: pointer;
   }
 }
@@ -203,20 +205,20 @@ textarea.form-control {
   align-items: center;
 
   .upload-icon {
-    font-size: 24px;
+    font-size: var(--font-xl);
     color: var(--color-text-muted, #9CA3AF);
     margin-bottom: 8px;
   }
 
   .upload-title {
-    font-size: 13px;
+    font-size: var(--font-sm);
     font-weight: 500;
     color: var(--color-primary, #5B3BEB);
     margin-bottom: 2px;
   }
 
   .upload-subtitle {
-    font-size: 12px;
+    font-size: var(--font-sm);
     color: var(--color-text-secondary, #6B7280);
     line-height: 1.5;
   }
@@ -226,7 +228,7 @@ textarea.form-control {
   width: 100%;
   height: 80px;
   object-fit: contain;
-  background-color: #F3F4F6;
+  background-color: var(--color-bg-canvas, #F3F4F6);
   display: block;
 }
 
@@ -240,7 +242,7 @@ textarea.form-control {
   .img-btn {
     padding: 6px 12px;
     border-radius: 6px;
-    font-size: 12px;
+    font-size: var(--font-sm);
     font-weight: 500;
     cursor: pointer;
     border: none;
@@ -248,11 +250,11 @@ textarea.form-control {
     transition: background-color 0.2s;
 
     &.replace {
-      background-color: white;
+      background-color: var(--color-surface);
       color: var(--color-text-primary, #111827);
 
       &:hover {
-        background-color: #F3F4F6;
+        background-color: var(--color-surface-hover);
       }
     }
 
@@ -261,7 +263,7 @@ textarea.form-control {
       color: white;
 
       &:hover {
-        background-color: #B91C1C;
+        background-color: var(--color-error-text, #B91C1C);
       }
     }
   }
@@ -277,42 +279,42 @@ textarea.form-control {
 
 .type-card {
   border: 1px solid var(--color-border, #EAECEF);
-  border-radius: 8px;
+  border-radius: var(--radius-nav-item, 8px);
   padding: 6px 2px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   cursor: pointer;
-  background-color: white;
+  background-color: var(--color-surface);
   transition: all 0.2s;
   position: relative;
 
   .type-icon {
-    font-size: 18px;
+    font-size: var(--font-lg);
     color: var(--color-text-secondary, #6B7280);
     margin-bottom: 2px;
   }
 
   .type-label {
-    font-size: 12px;
+    font-size: var(--font-sm);
     font-weight: 600;
     color: var(--color-text-primary, #111827);
     margin-bottom: 0;
   }
 
   .type-supporting {
-    font-size: 11px;
+    font-size: var(--font-xs);
     color: var(--color-text-muted, #9CA3AF);
   }
 
   &:hover {
-    border-color: #D1D5DB;
+    border-color: var(--color-border-strong, #D1D5DB);
   }
 
   &.selected {
     border-color: var(--color-primary, #5B3BEB);
-    background-color: rgba(91, 59, 235, 0.04);
+    background-color: var(--color-primary-bg);
 
     .type-icon,
     .type-label {
@@ -322,9 +324,9 @@ textarea.form-control {
 }
 
 .dynamic-type-helper {
-  font-size: 11px;
+  font-size: var(--font-xs);
   color: var(--color-primary, #5B3BEB);
-  background-color: rgba(91, 59, 235, 0.08);
+  background-color: var(--color-primary-light);
   padding: 6px 12px;
   border-radius: 6px;
   margin-top: 6px;
@@ -354,7 +356,7 @@ textarea.form-control {
     position: absolute;
     right: 12px;
     color: var(--color-text-muted, #9CA3AF);
-    font-size: 13px;
+    font-size: var(--font-sm);
     pointer-events: none;
   }
 }
@@ -382,12 +384,12 @@ textarea.form-control {
     border-radius: 4px;
 
     &:hover {
-      background-color: #F3F4F6;
+      background-color: var(--color-bg-canvas, #F3F4F6);
       color: var(--color-primary, #5B3BEB);
     }
 
     biz-icon {
-      font-size: 20px;
+      font-size: var(--font-lg);
     }
   }
 }
@@ -401,7 +403,7 @@ textarea.form-control {
     position: absolute;
     left: 12px;
     color: var(--color-text-secondary, #6B7280);
-    font-size: 18px;
+    font-size: var(--font-lg);
     pointer-events: none;
   }
 
@@ -423,24 +425,24 @@ textarea.form-control {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
-  background-color: #F9FAFB;
+  background-color: var(--color-surface-hover);
 
   .btn {
     padding: 10px 20px;
-    border-radius: 8px;
-    font-size: 14px;
+    border-radius: var(--radius-nav-item, 8px);
+    font-size: var(--font-base);
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s;
     border: 1px solid transparent;
 
     &.btn-secondary {
-      background-color: white;
+      background-color: var(--color-surface);
       border-color: var(--color-border, #EAECEF);
       color: var(--color-text-primary, #111827);
 
       &:hover {
-        background-color: #F3F4F6;
+        background-color: var(--color-surface-hover);
       }
     }
 
@@ -449,7 +451,7 @@ textarea.form-control {
       color: white;
 
       &:hover {
-        background-color: #4C31C4;
+        background-color: var(--color-primary-hover, #4C31C4);
       }
     }
   }

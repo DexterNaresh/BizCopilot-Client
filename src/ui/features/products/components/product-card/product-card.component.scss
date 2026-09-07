@@ -1,22 +1,42 @@
 .product-card {
   background-color: var(--color-surface, #FFFFFF);
   border: 1px solid var(--color-border, #EAECEF);
-  border-radius: 12px;
+  border-radius: var(--radius-input, 12px);
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: box-shadow 0.2s ease;
+  transition: all 0.3s ease;
+  position: relative;
+  box-shadow: var(--shadow-sm);
+}
+
+.product-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient-primary);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 10;
 }
 
 .product-card:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: var(--shadow-card);
+  transform: translateY(-2px);
+}
+
+.product-card:hover::before {
+  opacity: 1;
 }
 
 .image-container {
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 10;
-  background-color: #F9FAFB;
+  background-color: var(--color-surface-hover, #F9FAFB);
 }
 
 .product-image {
@@ -31,11 +51,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  background: linear-gradient(135deg, var(--color-surface-hover) 0%, var(--color-bg-canvas) 100%);
 }
 
 .placeholder-icon {
-  font-size: 48px;
-  color: rgba(0, 0, 0, 0.1);
+  font-size: 2.5rem;
+  color: var(--color-primary-light);
 }
 
 .action-btn {
@@ -44,8 +65,8 @@
   width: 32px;
   height: 32px;
   border-radius: 6px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -55,7 +76,7 @@
 }
 
 .action-btn biz-icon {
-  font-size: 18px;
+  font-size: var(--font-lg);
 }
 
 .edit-btn {
@@ -64,7 +85,7 @@
 }
 
 .edit-btn:hover {
-  background: #FFFFFF;
+  background: var(--color-surface-hover);
 }
 
 .delete-btn {
@@ -73,11 +94,11 @@
 }
 
 .delete-btn:hover {
-  background: #FFFFFF;
+  background: var(--color-surface-hover);
 }
 
 .card-content {
-  padding: 16px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -91,7 +112,7 @@
 }
 
 .category-name {
-  font-size: 12px;
+  font-size: var(--font-sm);
   color: var(--color-text-secondary, #6B7280);
   font-weight: 500;
 }
@@ -105,7 +126,7 @@
 }
 
 .star {
-  font-size: 20px;
+  font-size: var(--font-lg);
   color: var(--color-text-muted, #9CA3AF);
 }
 
@@ -114,7 +135,7 @@
 }
 
 .product-name {
-  font-size: 16px;
+  font-size: var(--font-md);
   font-weight: 600;
   color: var(--color-text-primary, #111827);
   margin: 0 0 16px 0;
@@ -124,6 +145,8 @@
   line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  letter-spacing: -0.2px;
+  line-height: 1.4;
 }
 
 .price-availability-row {
@@ -138,9 +161,10 @@
 }
 
 .price {
-  font-size: 16px;
-  font-weight: 700;
-  color: var(--color-text-primary, #111827);
+  font-size: var(--font-lg);
+  font-weight: 800;
+  color: var(--color-primary);
+  letter-spacing: -0.5px;
 }
 
 .availability-block {
@@ -150,20 +174,21 @@
 }
 
 .status-label {
-  font-size: 12px;
-  font-weight: 500;
-  padding: 2px 6px;
-  border-radius: 4px;
+  font-size: var(--font-xs);
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 6px;
+  letter-spacing: 0.3px;
 }
 
 .status-available {
-  background-color: #DCFCE7;
-  color: #166534;
+  background-color: var(--color-success-bg, #DCFCE7);
+  color: var(--color-success-text, #166534);
 }
 
 .status-unavailable {
-  background-color: #FEE2E2;
-  color: #991B1B;
+  background-color: var(--color-error-bg, #FEE2E2);
+  color: var(--color-error-text, #991B1B);
 }
 
 /* Robust toggle switch implementation */

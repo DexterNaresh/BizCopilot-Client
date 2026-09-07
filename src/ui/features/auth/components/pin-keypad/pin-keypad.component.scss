@@ -26,13 +26,13 @@
       }
 
       .num {
-        font-size: 24px; // 24-32px / 700
+        font-size: var(--font-xl); // 24-32px / 700
         font-weight: 700;
         color: var(--color-text-primary);
       }
 
       .alpha {
-        font-size: 11px; // 11-13px / 600
+        font-size: var(--font-xs); // 11-13px / 600
         font-weight: 600;
         color: var(--color-text-secondary);
         letter-spacing: 1px;
@@ -48,7 +48,7 @@
 
         &.text-action {
           color: var(--color-primary);
-          font-size: 16px;
+          font-size: var(--font-md);
           font-weight: 700;
         }
       }

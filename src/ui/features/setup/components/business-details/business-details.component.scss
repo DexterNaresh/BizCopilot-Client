@@ -13,27 +13,27 @@
       width: 40px;
       height: 40px;
       background-color: var(--color-primary);
-      border-radius: 8px;
+      border-radius: var(--radius-nav-item, 8px);
       padding: 8px;
       // Note: SVG icon styling in a real app might use CSS masks. 
       // For now, we assume the SVG is white.
     }
     .logo-text {
-      font-size: 24px;
+      font-size: var(--font-xl);
       font-weight: 700;
       color: var(--color-text-primary);
     }
   }
 
   .title {
-    font-size: 24px;
+    font-size: var(--font-xl);
     font-weight: 700;
     color: var(--color-text-primary);
     margin-bottom: 8px;
   }
 
   .subtitle {
-    font-size: 16px;
+    font-size: var(--font-md);
     color: var(--color-text-secondary);
   }
 }
@@ -50,7 +50,7 @@
   gap: 8px;
 
   label {
-    font-size: 14px;
+    font-size: var(--font-base);
     font-weight: 600;
     color: var(--color-text-primary);
   }
@@ -74,7 +74,7 @@
       border: 1px solid var(--color-border);
       border-radius: var(--radius-input);
       padding: 0 16px 0 44px;
-      font-size: 16px;
+      font-size: var(--font-md);
       color: var(--color-text-primary);
       outline: none;
       transition: border-color 0.2s;
@@ -110,7 +110,7 @@
   }
 
   p {
-    font-size: 14px;
+    font-size: var(--font-base);
     color: var(--color-text-primary);
     line-height: 1.4;
   }
@@ -126,7 +126,7 @@
   background-color: var(--color-primary);
   color: white;
   border-radius: var(--radius-key);
-  font-size: 16px;
+  font-size: var(--font-md);
   font-weight: 600;
   margin-top: 16px;
   transition: background-color 0.2s;
@@ -148,7 +148,7 @@
 
 .error-msg {
   color: var(--color-error);
-  font-size: 14px;
+  font-size: var(--font-base);
   text-align: center;
   margin-top: 8px;
 }

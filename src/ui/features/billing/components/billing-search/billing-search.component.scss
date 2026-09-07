@@ -11,19 +11,19 @@
   align-items: center;
   background-color: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: var(--radius-nav-item, 8px);
   padding: 0 12px;
   height: 48px;
   transition: border-color 0.2s;
   
   &:focus-within {
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 2px rgba(91, 59, 235, 0.1);
+    box-shadow: 0 0 0 2px var(--color-primary-light);
   }
 
   .search-icon {
     color: var(--color-text-muted);
-    font-size: 20px;
+    font-size: var(--font-lg);
     margin-right: 8px;
   }
 
@@ -32,7 +32,7 @@
     border: none;
     background: transparent;
     outline: none;
-    font-size: 15px;
+    font-size: var(--font-base);
     color: var(--color-text-primary);
     width: 100%;
     
@@ -50,19 +50,19 @@
   height: 48px;
   background-color: var(--color-primary-light, #F3E8FF);
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-nav-item, 8px);
   color: var(--color-primary, #5B3BEB);
-  font-size: 15px;
+  font-size: var(--font-base);
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s ease;
 
   &:hover {
-    background-color: #E9D5FF;
+    background-color: var(--color-primary-subtle, #E9D5FF);
   }
 
   .scan-icon {
-    font-size: 20px;
+    font-size: var(--font-lg);
   }
 }
 

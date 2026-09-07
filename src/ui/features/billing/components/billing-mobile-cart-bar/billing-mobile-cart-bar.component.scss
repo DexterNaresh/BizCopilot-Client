@@ -5,7 +5,7 @@
   right: 0;
   background-color: var(--color-surface);
   border-top: 1px solid var(--color-border);
-  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 -4px 12px var(--shadow-card);
   z-index: 50;
   display: flex;
   flex-direction: column;
@@ -27,14 +27,14 @@
     width: 40px;
     height: 40px;
     background-color: var(--color-primary-light, #F3E8FF);
-    border-radius: 20px;
+    border-radius: var(--radius-card, 24px);
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--color-primary);
     
     .cart-icon {
-      font-size: 20px;
+      font-size: var(--font-lg);
     }
     
     .badge {
@@ -43,7 +43,7 @@
       right: -4px;
       background-color: var(--color-primary);
       color: white;
-      font-size: 10px;
+      font-size: var(--font-xs);
       font-weight: 700;
       min-width: 18px;
       height: 18px;
@@ -61,13 +61,13 @@
     flex-direction: column;
     
     .items-text {
-      font-size: 15px;
+      font-size: var(--font-base);
       font-weight: 600;
       color: var(--color-text-primary);
     }
     
     .savings-text {
-      font-size: 12px;
+      font-size: var(--font-sm);
       font-weight: 500;
       color: var(--color-success);
     }
@@ -79,13 +79,13 @@
     gap: 8px;
     
     .total-amount {
-      font-size: 18px;
+      font-size: var(--font-lg);
       font-weight: 700;
       color: var(--color-text-primary);
     }
     
     .expand-icon {
-      font-size: 24px;
+      font-size: var(--font-xl);
       color: var(--color-text-muted);
     }
   }
@@ -99,8 +99,8 @@
   
   button {
     height: 44px;
-    border-radius: 8px;
-    font-size: 15px;
+    border-radius: var(--radius-nav-item, 8px);
+    font-size: var(--font-base);
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
@@ -124,7 +124,7 @@
     color: white;
     
     .arrow-icon {
-      font-size: 18px;
+      font-size: var(--font-lg);
     }
   }
 }

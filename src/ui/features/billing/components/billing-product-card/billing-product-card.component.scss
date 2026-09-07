@@ -1,7 +1,7 @@
 .product-card {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 12px;
+  border-radius: var(--radius-input, 12px);
   padding: 16px;
   position: relative;
   display: flex;
@@ -10,8 +10,8 @@
   height: 100%;
 
   &:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    border-color: #E2E8F0;
+    box-shadow: 0 4px 12px var(--shadow-card);
+    border-color: var(--color-border-strong, #E2E8F0);
   }
 }
 
@@ -26,7 +26,7 @@
   padding: 4px;
   
   .star-icon {
-    font-size: 24px;
+    font-size: var(--font-xl);
     color: var(--color-text-muted);
     transition: color 0.2s;
   }
@@ -56,11 +56,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 8px;
+    border-radius: var(--radius-nav-item, 8px);
   }
 
   .placeholder-icon {
-    font-size: 32px;
+    font-size: var(--font-3xl);
     color: rgba(0, 0, 0, 0.1);
   }
 }
@@ -74,7 +74,7 @@
     align-self: flex-start;
     padding: 2px 8px;
     border-radius: 4px;
-    font-size: 11px;
+    font-size: var(--font-xs);
     font-weight: 600;
     color: var(--color-text-secondary);
     margin-bottom: 8px;
@@ -82,7 +82,7 @@
 
   .product-name {
     margin: 0 0 4px 0;
-    font-size: 15px;
+    font-size: var(--font-base);
     font-weight: 600;
     color: var(--color-text-primary);
     line-height: 1.4;
@@ -92,13 +92,13 @@
     margin-bottom: 16px;
     
     .price {
-      font-size: 14px;
+      font-size: var(--font-base);
       font-weight: 600;
       color: var(--color-text-secondary);
     }
 
     .unit {
-      font-size: 13px;
+      font-size: var(--font-sm);
       color: var(--color-text-muted);
     }
   }
@@ -119,14 +119,14 @@
   background-color: var(--color-surface);
   border: 1px solid var(--color-primary);
   color: var(--color-primary);
-  border-radius: 8px;
-  font-size: 14px;
+  border-radius: var(--radius-nav-item, 8px);
+  font-size: var(--font-base);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
 
   .add-icon {
-    font-size: 18px;
+    font-size: var(--font-lg);
   }
 
   &:hover {
@@ -140,7 +140,7 @@
   justify-content: space-between;
   height: 40px;
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: var(--radius-nav-item, 8px);
   overflow: hidden;
 
   .qty-btn {
@@ -163,7 +163,7 @@
   .qty-display {
     flex: 1;
     text-align: center;
-    font-size: 14px;
+    font-size: var(--font-base);
     font-weight: 600;
     color: var(--color-text-primary);
   }
@@ -174,7 +174,7 @@
   align-items: center;
   height: 40px;
   border: 1px solid var(--color-border);
-  border-radius: 8px;
+  border-radius: var(--radius-nav-item, 8px);
   overflow: hidden;
   padding: 0 12px;
 
@@ -182,7 +182,7 @@
     flex: 1;
     border: none;
     outline: none;
-    font-size: 14px;
+    font-size: var(--font-base);
     font-weight: 600;
     color: var(--color-text-primary);
     width: 100%;
@@ -200,7 +200,7 @@
   }
 
   .decimal-unit {
-    font-size: 14px;
+    font-size: var(--font-base);
     color: var(--color-text-muted);
     font-weight: 500;
     margin-left: 8px;

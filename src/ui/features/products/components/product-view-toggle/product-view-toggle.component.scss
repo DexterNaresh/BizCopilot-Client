@@ -6,44 +6,49 @@
     }
 
     .count-display {
-      font-size: 14px;
+      font-size: var(--font-base);
       font-weight: 500;
       color: var(--color-text-secondary, #6B7280);
     }
 
     .toggle-group {
       display: flex;
-      background-color: var(--color-surface, #FFFFFF);
+      background-color: var(--color-surface-hover);
       border: 1px solid var(--color-border, #EAECEF);
-      border-radius: 8px;
+      border-radius: 10px;
       overflow: hidden;
+      padding: 3px;
+      gap: 2px;
     }
 
     .toggle-btn {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 8px 16px;
+      padding: 6px 14px;
       background: transparent;
       border: none;
-      font-size: 14px;
+      font-size: var(--font-base);
       font-weight: 500;
       color: var(--color-text-secondary, #6B7280);
       cursor: pointer;
       transition: all 0.2s ease;
+      border-radius: 8px;
     }
 
     .toggle-btn:hover:not(.active) {
-      background-color: var(--color-surface-hover, #F9FAFB);
+      background-color: var(--color-surface);
     }
 
     .toggle-btn.active {
       color: var(--color-primary, #5B3BEB);
-      background-color: rgba(91, 59, 235, 0.08);
+      background-color: var(--color-surface);
+      box-shadow: var(--shadow-sm);
+      font-weight: 700;
     }
 
     .icon {
-      font-size: 18px;
+      font-size: var(--font-lg);
     }
 
     @media (max-width: 600px) {

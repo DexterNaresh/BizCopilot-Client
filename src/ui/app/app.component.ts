@@ -6,6 +6,7 @@ import { ToastContainerComponent } from '../shared/components/toast-container/to
 import { ConfirmDialogComponent } from '../shared/components/confirm-dialog/confirm-dialog.component';
 import { ISessionService } from '@shared/abstractions/session.service.interface';
 import { OnInit } from '@angular/core';
+import { ThemeService } from '../shared/services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,10 @@ import { OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  constructor(private sessionService: ISessionService) {}
+  constructor(
+    private sessionService: ISessionService,
+    private themeService: ThemeService
+  ) {}
 
   ngOnInit() {
     // Start dummy session for local dev

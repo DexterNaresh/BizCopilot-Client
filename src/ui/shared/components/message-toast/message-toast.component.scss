@@ -1,7 +1,7 @@
 .toast-card {
   position: relative;
   background: var(--color-surface, #FFFFFF);
-  border-radius: 12px;
+  border-radius: var(--radius-input, 12px);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   border: 1px solid var(--color-border, #EAECEF);
   overflow: hidden;
@@ -17,33 +17,33 @@
 
   /* Semantic Variants */
   &.toast-success {
-    .icon-container { background-color: #D1FAE5; }
-    .semantic-icon { color: #16A34A; }
-    .progress-bar { background-color: #16A34A; }
+    .icon-container { background-color: var(--color-success-bg, #D1FAE5); }
+    .semantic-icon { color: var(--color-success, #16A34A); }
+    .progress-bar { background-color: var(--color-success, #16A34A); }
   }
 
   &.toast-info {
-    .icon-container { background-color: #DBEAFE; }
-    .semantic-icon { color: #2563EB; }
-    .progress-bar { background-color: #2563EB; }
+    .icon-container { background-color: var(--color-info-bg, #DBEAFE); }
+    .semantic-icon { color: var(--color-info, #2563EB); }
+    .progress-bar { background-color: var(--color-info, #2563EB); }
   }
 
   &.toast-warning {
-    .icon-container { background-color: #FEF3C7; }
-    .semantic-icon { color: #F59E0B; }
-    .progress-bar { background-color: #F59E0B; }
+    .icon-container { background-color: var(--color-warning-bg, #FEF3C7); }
+    .semantic-icon { color: var(--color-warning, #F59E0B); }
+    .progress-bar { background-color: var(--color-warning, #F59E0B); }
   }
 
   &.toast-error {
-    .icon-container { background-color: #FEE2E2; }
-    .semantic-icon { color: #EF4444; }
-    .progress-bar { background-color: #EF4444; }
+    .icon-container { background-color: var(--color-error-bg, #FEE2E2); }
+    .semantic-icon { color: var(--color-error, #EF4444); }
+    .progress-bar { background-color: var(--color-error, #EF4444); }
   }
 
   &.toast-undo {
-    .icon-container { background-color: #F3E8FF; }
-    .semantic-icon { color: #7C3AED; }
-    .progress-bar { background-color: #7C3AED; }
+    .icon-container { background-color: var(--color-primary-bg, #F3E8FF); }
+    .semantic-icon { color: var(--color-primary-hover, #7C3AED); }
+    .progress-bar { background-color: var(--color-primary-hover, #7C3AED); }
   }
 }
 
@@ -65,7 +65,7 @@
   margin-top: -2px;
 
   .semantic-icon {
-    font-size: 14px;
+    font-size: var(--font-base);
   }
 }
 
@@ -75,7 +75,7 @@
 }
 
 .toast-title {
-  font-size: 14px;
+  font-size: var(--font-base);
   font-weight: 600;
   color: var(--color-text-primary, #111827);
   line-height: 1.4;
@@ -83,7 +83,7 @@
 }
 
 .toast-message {
-  font-size: 13px;
+  font-size: var(--font-sm);
   color: var(--color-text-secondary, #6B7280);
   line-height: 1.4;
 }
@@ -96,7 +96,7 @@
     background: transparent;
     border: 1px solid var(--color-border, #D1D5DB);
     color: var(--color-text-primary, #374151);
-    font-size: 13px;
+    font-size: var(--font-sm);
     font-weight: 500;
     padding: 6px 12px;
     border-radius: 6px;
@@ -104,7 +104,7 @@
     transition: background-color 0.2s;
 
     &:hover {
-      background-color: #F3F4F6;
+      background-color: var(--color-bg-canvas, #F3F4F6);
     }
   }
 }
@@ -126,18 +126,18 @@
   transition: all 0.2s;
 
   biz-icon {
-    font-size: 18px;
+    font-size: var(--font-lg);
   }
 
   &:hover {
     color: var(--color-text-primary, #111827);
-    background-color: #F3F4F6;
+    background-color: var(--color-bg-canvas, #F3F4F6);
   }
 }
 
 .progress-bar-container {
   height: 3px;
-  background-color: #F3F4F6;
+  background-color: var(--color-bg-canvas, #F3F4F6);
   width: 100%;
 }
 

@@ -1,7 +1,7 @@
 .card {
   background: white;
   border: 1px solid var(--border-color, #EAECEF);
-  border-radius: 12px;
+  border-radius: var(--radius-input, 12px);
   box-shadow: 0 2px 8px rgba(0,0,0,0.02);
   padding: 24px;
 }
@@ -60,7 +60,7 @@
     font-weight: 600;
     
     .value {
-      font-size: 1.75rem;
+      font-size: var(--font-2xl);
       font-weight: 700;
     }
   }
@@ -69,10 +69,10 @@
 @media (max-width: 768px) {
   .card {
     padding: 16px;
-    border-radius: 12px;
+    border-radius: var(--radius-input, 12px);
   }
 
   .amount-row.total-payable .value {
-    font-size: 1.5rem;
+    font-size: var(--font-xl);
   }
 }

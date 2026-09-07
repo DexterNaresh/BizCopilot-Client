@@ -6,13 +6,19 @@
 
     .panel-section {
       background-color: var(--color-surface, #FFFFFF);
-      border-radius: 12px;
+      border-radius: var(--radius-input, 12px);
       border: 1px solid var(--color-border, #EAECEF);
       padding: 20px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s ease;
+    }
+    
+    .panel-section:hover {
+      box-shadow: var(--shadow-card);
     }
 
     .section-title {
-      font-size: 14px;
+      font-size: var(--font-base);
       font-weight: 600;
       color: var(--color-text-primary, #111827);
       margin: 0 0 16px 0;
@@ -37,9 +43,17 @@
       align-items: center;
       background: transparent;
       border: none;
-      padding: 8px 0;
+      padding: 10px 12px;
+      margin: -2px -12px;
+      width: calc(100% + 24px);
+      border-radius: 8px;
       cursor: pointer;
       color: var(--color-text-primary, #111827);
+      transition: all 0.2s;
+    }
+
+    .action-btn:hover {
+      background-color: var(--color-surface-hover);
     }
 
     .action-btn:hover .label {
@@ -47,21 +61,21 @@
     }
 
     .action-btn .icon {
-      font-size: 20px;
-      color: var(--color-text-secondary, #6B7280);
+      font-size: var(--font-lg);
+      color: var(--color-primary);
       margin-right: 12px;
     }
 
     .action-btn .label {
       flex: 1;
       text-align: left;
-      font-size: 14px;
+      font-size: var(--font-base);
       font-weight: 500;
       transition: color 0.2s;
     }
 
     .action-btn .chevron {
-      font-size: 20px;
+      font-size: var(--font-lg);
       color: var(--color-text-muted, #9CA3AF);
     }
 
@@ -81,23 +95,23 @@
     }
 
     .summary-label {
-      font-size: 14px;
+      font-size: var(--font-base);
       color: var(--color-text-primary, #111827);
       font-weight: 500;
     }
 
     .summary-value {
-      font-size: 14px;
+      font-size: var(--font-base);
       font-weight: 600;
       color: var(--color-text-primary, #111827);
     }
 
     .summary-value.success {
-      color: #166534;
+      color: var(--color-success-text, #166534);
     }
 
     .summary-value.danger {
-      color: #991B1B;
+      color: var(--color-error-text, #991B1B);
     }
 
     .summary-value.primary {
@@ -118,7 +132,7 @@
     }
     
     .tips-list li {
-      font-size: 13px;
+      font-size: var(--font-sm);
       color: var(--color-text-secondary, #6B7280);
       line-height: 1.5;
     }
@@ -136,11 +150,11 @@
     }
 
     .badge-planned {
-      background-color: rgba(91, 59, 235, 0.1);
+      background-color: var(--color-primary-light);
       color: var(--color-primary, #5B3BEB);
       padding: 2px 8px;
-      border-radius: 12px;
-      font-size: 11px;
+      border-radius: var(--radius-input, 12px);
+      font-size: var(--font-xs);
       font-weight: 600;
     }
 
@@ -148,7 +162,7 @@
       background: transparent;
       border: none;
       color: var(--color-primary, #5B3BEB);
-      font-size: 13px;
+      font-size: var(--font-sm);
       font-weight: 600;
       display: flex;
       align-items: center;
@@ -159,5 +173,5 @@
     }
 
     .roadmap-btn biz-icon {
-      font-size: 16px;
+      font-size: var(--font-md);
     }

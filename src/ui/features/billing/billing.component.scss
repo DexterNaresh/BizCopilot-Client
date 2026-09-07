@@ -1,7 +1,7 @@
 .billing-layout {
   display: flex;
   height: 100vh; // Assuming it takes full height of the viewport/container
-  background-color: var(--color-background, #F9FAFB);
+  background-color: var(--color-bg-canvas);
   overflow: hidden;
 }
 
@@ -27,6 +27,7 @@
   flex-shrink: 0;
   padding: 24px 32px 24px 0;
   display: block; // Visible on desktop
+  border-left: 1px solid var(--color-border);
 }
 
 /* Hide mobile elements on desktop */

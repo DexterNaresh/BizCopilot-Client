@@ -30,11 +30,11 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
-  background-color: #FFFFFF;
+  background-color: var(--color-surface, #FFFFFF);
   border: 1px solid var(--border-color, #EAECEF);
-  border-radius: 12px;
+  border-radius: var(--radius-input, 12px);
   padding: 32px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+  box-shadow: 0 4px 12px var(--shadow-card);
   box-sizing: border-box;
   width: 100%;
 }
@@ -60,7 +60,7 @@
     height: 80px;
     padding: 12px;
     border: 1px solid var(--border-color, #EAECEF);
-    border-radius: 8px;
+    border-radius: var(--radius-nav-item, 8px);
     font-family: inherit;
     font-size: 0.9375rem;
     color: var(--text-primary, #111827);
@@ -70,7 +70,7 @@
     &:focus {
       outline: none;
       border-color: var(--primary, #5B3BEB);
-      box-shadow: 0 0 0 3px rgba(91, 59, 235, 0.1);
+      box-shadow: 0 0 0 3px var(--color-primary-light);
     }
   }
 }
@@ -86,10 +86,10 @@
     align-items: center;
     gap: 6px;
     color: var(--text-secondary, #6B7280);
-    font-size: 0.875rem;
+    font-size: var(--font-base);
 
     ::ng-deep biz-icon {
-      font-size: 18px;
+      font-size: var(--font-lg);
     }
   }
 
@@ -103,14 +103,14 @@
     background-color: var(--primary, #5B3BEB);
     color: white;
     border: none;
-    border-radius: 8px;
-    font-size: 1rem;
+    border-radius: var(--radius-nav-item, 8px);
+    font-size: var(--font-md);
     font-weight: 600;
     cursor: pointer;
     transition: all 0.2s ease;
 
     ::ng-deep biz-icon {
-      font-size: 20px;
+      font-size: var(--font-lg);
       display: flex;
     }
 
@@ -129,7 +129,7 @@
 /* Mobile responsive */
 @media (max-width: 768px) {
   .payment-page-wrapper {
-    background-color: #FFFFFF;
+    background-color: var(--color-surface, #FFFFFF);
   }
 
   .payment-content-area {

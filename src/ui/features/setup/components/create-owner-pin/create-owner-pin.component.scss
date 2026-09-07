@@ -8,7 +8,7 @@
     align-items: center;
     gap: 8px;
     color: var(--color-primary);
-    font-size: 16px;
+    font-size: var(--font-md);
     font-weight: 600;
     background: transparent;
     border: none;
@@ -42,14 +42,14 @@
   }
 
   .title {
-    font-size: 24px;
+    font-size: var(--font-xl);
     font-weight: 700;
     color: var(--color-text-primary);
     margin-bottom: 4px;
   }
 
   .subtitle {
-    font-size: 14px;
+    font-size: var(--font-base);
     color: var(--color-text-secondary);
     line-height: 1.4;
   }
@@ -108,13 +108,13 @@
       }
 
       .num {
-        font-size: 24px; /* Scaled down slightly */
+        font-size: var(--font-xl); /* Scaled down slightly */
         font-weight: 700;
         color: var(--color-text-primary);
       }
 
       .alpha {
-        font-size: 11px;
+        font-size: var(--font-xs);
         font-weight: 600;
         color: var(--color-text-secondary);
         letter-spacing: 1px;
@@ -131,7 +131,7 @@
 
         &.text-action {
           color: var(--color-primary);
-          font-size: 14px;
+          font-size: var(--font-base);
           font-weight: 700;
         }
       }
@@ -149,7 +149,7 @@
   background-color: var(--color-primary);
   color: white;
   border-radius: var(--radius-key);
-  font-size: 15px;
+  font-size: var(--font-base);
   font-weight: 600;
   margin-top: auto;
   border: none;
@@ -168,7 +168,7 @@
 
 .error-msg {
   color: var(--color-error);
-  font-size: 13px;
+  font-size: var(--font-sm);
   text-align: center;
   margin-top: 8px;
 }

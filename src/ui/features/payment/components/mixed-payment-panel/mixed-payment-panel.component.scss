@@ -22,7 +22,7 @@
       gap: 12px;
 
       .panel-icon {
-        font-size: 24px;
+        font-size: var(--font-xl);
         color: var(--primary, #5B3BEB);
         display: flex;
       }
@@ -47,13 +47,13 @@
       transition: background-color 0.2s ease;
       
       &:hover {
-        background-color: rgba(91, 59, 235, 0.05);
+        background-color: var(--color-primary-light);
       }
     }
   }
 
   .subtitle {
-    font-size: 0.875rem;
+    font-size: var(--font-base);
     color: var(--text-secondary, #6B7280);
     margin: 0;
   }
@@ -65,16 +65,16 @@
   align-items: center;
   padding: 16px;
   background-color: rgba(91, 59, 235, 0.04);
-  border-radius: 8px;
+  border-radius: var(--radius-nav-item, 8px);
 
   .label {
-    font-size: 1rem;
+    font-size: var(--font-md);
     font-weight: 600;
     color: var(--text-primary, #111827);
   }
 
   .value {
-    font-size: 1.25rem;
+    font-size: var(--font-lg);
     font-weight: 700;
     color: var(--text-primary, #111827);
   }
@@ -91,7 +91,7 @@
     margin-bottom: 12px;
     
     div {
-      font-size: 0.875rem;
+      font-size: var(--font-base);
       font-weight: 600;
       color: var(--text-primary, #111827);
     }
@@ -126,12 +126,12 @@
     gap: 8px;
     padding: 0 16px;
     height: 40px;
-    border-radius: 8px;
+    border-radius: var(--radius-nav-item, 8px);
     font-weight: 500;
     font-size: 0.9375rem;
     width: 100%;
     border: 1px solid var(--border-color, #EAECEF);
-    background-color: #FFFFFF;
+    background-color: var(--color-surface, #FFFFFF);
     color: var(--text-primary, #111827);
     
     biz-icon {
@@ -173,14 +173,14 @@
     }
     
     &.method-upi {
-      background-color: rgba(91, 59, 235, 0.05);
+      background-color: var(--color-primary-light);
       color: var(--primary, #5B3BEB);
       border-color: rgba(91, 59, 235, 0.2);
     }
     
     &.method-card {
       background-color: rgba(59, 130, 246, 0.05);
-      color: #3B82F6;
+      color: var(--color-info, #3B82F6);
       border-color: rgba(59, 130, 246, 0.2);
     }
   }
@@ -201,8 +201,8 @@
       height: 40px;
       padding-left: 28px;
       border: 1px solid var(--border-color, #EAECEF);
-      border-radius: 8px;
-      font-size: 1rem;
+      border-radius: var(--radius-nav-item, 8px);
+      font-size: var(--font-md);
       
       &:focus {
         outline: none;
@@ -221,17 +221,17 @@
     border: 1px solid var(--border-color, #EAECEF);
     color: var(--text-secondary, #6B7280);
     cursor: pointer;
-    border-radius: 8px;
+    border-radius: var(--radius-nav-item, 8px);
     transition: all 0.2s ease;
     
     ::ng-deep biz-icon {
-      font-size: 20px;
+      font-size: var(--font-lg);
     }
     
     &:hover {
       background-color: rgba(239, 68, 68, 0.1);
-      color: #EF4444;
-      border-color: #EF4444;
+      color: var(--color-error, #EF4444);
+      border-color: var(--color-error, #EF4444);
     }
   }
 }
@@ -246,14 +246,14 @@
   background: transparent;
   border: 1px dashed var(--primary, #5B3BEB);
   color: var(--primary, #5B3BEB);
-  border-radius: 8px;
+  border-radius: var(--radius-nav-item, 8px);
   font-size: 0.9375rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
   
   &:hover {
-    background-color: rgba(91, 59, 235, 0.05);
+    background-color: var(--color-primary-light);
   }
 }
 
@@ -292,7 +292,7 @@
     align-items: center;
     gap: 4px;
     padding: 4px 12px;
-    border-radius: 16px;
+    border-radius: var(--radius-key, 12px);
     background-color: rgba(22, 163, 74, 0.1);
     color: var(--color-success, #16A34A);
     font-size: 0.8125rem;
@@ -301,8 +301,8 @@
     
     &.unpaid {
       background-color: rgba(245, 158, 11, 0.1);
-      color: #F59E0B;
-      border-color: #F59E0B;
+      color: var(--color-warning, #F59E0B);
+      border-color: var(--color-warning, #F59E0B);
     }
   }
 }
@@ -336,8 +336,8 @@
       height: 48px;
       padding: 0 90px 0 16px;
       border: 1px solid var(--border-color, #EAECEF);
-      border-radius: 8px;
-      background-color: #F9FAFB;
+      border-radius: var(--radius-nav-item, 8px);
+      background-color: var(--color-surface-hover, #F9FAFB);
       font-size: 0.9375rem;
       color: var(--text-primary, #111827);
     }
@@ -350,11 +350,11 @@
       gap: 4px;
       height: 32px;
       padding: 0 12px;
-      background-color: rgba(91, 59, 235, 0.1);
+      background-color: var(--color-primary-light);
       color: var(--primary, #5B3BEB);
       border: none;
       border-radius: 6px;
-      font-size: 0.875rem;
+      font-size: var(--font-base);
       font-weight: 500;
       cursor: pointer;
     }
@@ -387,7 +387,7 @@
         gap: 4px;
         
         biz-icon {
-          font-size: 20px;
+          font-size: var(--font-lg);
         }
 
         .method-select {
@@ -408,7 +408,7 @@
 
       .amount-input-group .amount-input {
         padding-left: 20px;
-        font-size: 0.875rem;
+        font-size: var(--font-base);
       }
       .amount-input-group .currency-prefix {
         left: 8px;

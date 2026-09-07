@@ -1,38 +1,90 @@
 :root {
-  --color-primary: #5B3BEB;
-  --color-primary-hover: #4B2DC7;
-  --color-primary-light: rgba(91,59,235,0.08);
+  // Aliases for inconsistent naming
+  --primary: var(--color-primary);
+  --text-primary: var(--color-text-primary);
+  --text-secondary: var(--color-text-secondary);
+  --text-muted: var(--color-text-muted);
+  --border-color: var(--color-border);
+  --bg-body: var(--color-bg-canvas);
+  --color-background: var(--color-bg-canvas);
+  --color-danger: var(--color-error);
+  
+  // Component specific aliases
+  --color-input-bg: var(--color-surface);
+  --color-input-border: var(--color-border);
+  --color-card-bg: var(--color-surface);
 
-  --color-bg-canvas: #F5F6FC;
+  // Core brand colors (Purple Theme Default)
+  --color-primary: #6366F1;
+  --color-primary-hover: #4F46E5;
+  --color-primary-light: rgba(99, 102, 241, 0.1);
+  --color-primary-bg: #EEF2FF;
+  --color-primary-subtle: #E0E7FF;
+  --color-primary-dark: #4338CA;
+  --gradient-primary: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
+  --gradient-primary-glow: linear-gradient(135deg, rgba(99, 102, 241, 0.4) 0%, rgba(79, 70, 229, 0.2) 100%);
+
+  // Background and surfaces
+  --color-bg-canvas: #F8FAFC;
   --color-surface: #FFFFFF;
+  --color-surface-hover: #F1F5F9;
+  --glass-bg: rgba(255, 255, 255, 0.82);
+  --glass-border: 1px solid rgba(226, 232, 240, 0.8);
+  --glass-blur: blur(12px);
 
-  --color-text-primary: #111827;
-  --color-text-secondary: #6B7280;
-  --color-text-muted: #9CA3AF;
+  // Text
+  --color-text-primary: #0F172A;
+  --color-text-secondary: #475569;
+  --color-text-muted: #94A3B8;
+  --color-text-disabled: #CBD5E1;
 
-  --color-border: #EAECEF;
+  // Borders
+  --color-border: #E2E8F0;
+  --color-border-strong: #CBD5E1;
+  --color-divider: #F1F5F9;
 
-  --color-success: #16A34A;
-  --color-error: #DC2626;
+  // Semantic Status
+  --color-success: #10B981;
+  --color-success-bg: #ECFDF5;
+  --color-success-text: #047857;
+  
+  --color-error: #EF4444;
+  --color-error-bg: #FEF2F2;
+  --color-error-text: #B91C1C;
 
-  --color-overlay: rgba(17,24,39,0.45);
+  --color-warning: #F59E0B;
+  --color-warning-bg: #FFFBEB;
+  --color-warning-text: #B45309;
 
+  --color-info: #3B82F6;
+  --color-info-bg: #EFF6FF;
+
+  --color-overlay: rgba(15, 23, 42, 0.45);
+
+  // Border radius
   --radius-key: 12px;
   --radius-input: 12px;
-  --radius-card: 24px;
+  --radius-card: 20px;
   --radius-nav-item: 10px;
   --radius-sheet: 24px;
 
+  // Spacing
   --spacing-xs: 4px;
   --spacing-sm: 8px;
   --spacing-md: 16px;
   --spacing-lg: 24px;
   --spacing-xl: 32px;
 
-  --shadow-card: 0 8px 30px rgba(0,0,0,0.05);
+  // Multi-layered Ultra-Premium Shadows
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.03);
+  --shadow-card: 0 1px 3px rgba(15, 23, 42, 0.04), 0 4px 12px rgba(15, 23, 42, 0.08), 0 8px 20px rgba(15, 23, 42, 0.05);
+  --shadow-premium: 0 2px 4px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(15, 23, 42, 0.12), 0 16px 48px rgba(15, 23, 42, 0.08);
+  --shadow-glow: 0 0 20px var(--color-primary-light);
 
+  // Layout sizing
   --nav-mobile-height: 68px;
-  --nav-desktop-width: 248px;
+  --nav-desktop-width: 256px;
 
-  --icon-nav: 24px;
+  // Icons
+  --icon-nav: 22px;
 }

@@ -17,7 +17,9 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(15, 23, 42, 0.35); // Neutral dimming
+  background-color: var(--color-overlay);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   pointer-events: auto;
   animation: fadeIn 200ms ease-out forwards;
 }
@@ -35,25 +37,29 @@
 .sheet-container {
   position: relative;
   width: 100%;
-  background-color: var(--color-surface, #FFFFFF);
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  background-color: var(--glass-bg, var(--color-surface));
+  backdrop-filter: var(--glass-blur, blur(16px));
+  -webkit-backdrop-filter: var(--glass-blur, blur(16px));
+  border-top: 1px solid var(--color-border);
+  border-top-left-radius: 24px;
+  border-top-right-radius: 24px;
   pointer-events: auto;
   display: flex;
   flex-direction: column;
-  animation: slideUp 250ms ease-out forwards;
+  animation: slideUp 280ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
   padding-bottom: env(safe-area-inset-bottom);
-  box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+  box-shadow: var(--shadow-premium);
   margin: 0 auto;
   overflow: hidden; // NO SCROLLBAR
 
   @media (min-width: 600px) {
-    max-width: 480px;
-    margin-bottom: 80px; // Above bottom nav
+    max-width: 440px;
+    margin-bottom: 84px; // Above bottom nav
     margin-right: 24px;
     align-self: flex-end;
-    border-radius: 20px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    border-radius: 24px;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-premium);
 
     .hide-on-tablet {
       display: none !important;
@@ -70,7 +76,7 @@
   .drag-handle {
     width: 36px;
     height: 4px;
-    background-color: #E5E7EB; // Neutral border color
+    background-color: var(--color-border-strong, #E5E7EB); // Neutral border color
     border-radius: 2px;
     margin: 0 auto 12px auto;
 
@@ -87,7 +93,7 @@
   }
 
   .sheet-title {
-    font-size: 20px;
+    font-size: var(--font-lg);
     font-weight: 700;
     color: var(--color-text-primary);
   }
@@ -111,23 +117,23 @@
 }
 
 .sheet-content {
-  padding: 4px 16px 16px 16px;
+  padding: clamp(2px, 0.5vh, 4px) 16px clamp(8px, 2vh, 16px) 16px;
   display: flex;
   flex-direction: column;
-  gap: 12px; // tighter gap to avoid overflow
+  gap: clamp(4px, 1vh, 12px);
 }
 
 .sheet-section {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: clamp(1px, 0.5vh, 2px);
 
   .section-title {
-    font-size: 11px;
+    font-size: var(--font-xs);
     font-weight: 600;
     color: var(--color-text-secondary, #6B7280);
     text-transform: uppercase;
-    padding: 0 12px 6px 12px;
+    padding: 0 12px clamp(2px, 0.5vh, 6px) 12px;
     letter-spacing: 0.5px;
   }
 }
@@ -136,18 +142,18 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 6px 12px;
-  border-radius: 12px;
+  padding: clamp(4px, 0.8vh, 6px) 12px;
+  border-radius: var(--radius-input, 12px);
   text-decoration: none;
   color: var(--color-text-primary);
   background: transparent;
   border: none;
   cursor: pointer;
   font-family: inherit;
-  font-size: 15px;
+  font-size: var(--font-base);
   font-weight: 500;
   transition: background-color 0.15s;
-  height: 42px; // Very compact
+  height: clamp(36px, 5vh, 42px);
 
   .icon-container {
     width: 32px;
@@ -155,7 +161,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 8px;
+    border-radius: var(--radius-nav-item, 8px);
     
     .nav-icon {
       width: 20px;
@@ -181,7 +187,7 @@
   }
 
   &:active {
-    background-color: var(--color-primary-light, rgba(91, 59, 235, 0.05));
+    background-color: var(--color-primary-light, var(--color-primary-light));
   }
 
   &.active {
@@ -189,7 +195,7 @@
     font-weight: 600;
 
     .icon-container {
-      background-color: var(--color-primary-light, rgba(91, 59, 235, 0.08));
+      background-color: var(--color-primary-light, var(--color-primary-light));
       .nav-icon {
         background-color: var(--color-primary);
       }
@@ -214,9 +220,9 @@
     height: 44px;
     background: transparent;
     border: 1px solid var(--color-error, #DC2626);
-    border-radius: 12px;
+    border-radius: var(--radius-input, 12px);
     color: var(--color-error, #DC2626);
-    font-size: 15px;
+    font-size: var(--font-base);
     font-weight: 600;
     cursor: pointer;
     transition: background-color 0.15s;
@@ -228,7 +234,7 @@
     }
 
     &:active {
-      background-color: rgba(220, 38, 38, 0.05);
+      background-color: var(--color-error-bg);
     }
   }
 }

@@ -2,20 +2,25 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom: 24px;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  padding: 20px 24px;
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 20px;
   
   .header-left {
     .page-title {
       margin: 0;
-      font-size: 28px;
-      font-weight: 700;
+      font-size: var(--font-2xl);
+      font-weight: 800;
       color: var(--color-text-primary);
       letter-spacing: -0.5px;
     }
     
     .page-subtitle {
       margin: 4px 0 0 0;
-      font-size: 14px;
+      font-size: var(--font-base);
       color: var(--color-text-secondary);
     }
   }
@@ -31,9 +36,9 @@
       gap: 8px;
       padding: 8px 16px;
       height: 40px;
-      font-size: 14px;
+      font-size: var(--font-base);
       font-weight: 600;
-      border-radius: 8px;
+      border-radius: var(--radius-nav-item, 8px);
       cursor: pointer;
       transition: all 0.2s ease;
       position: relative;
@@ -51,7 +56,7 @@
       }
 
       .btn-icon {
-        font-size: 18px;
+        font-size: var(--font-lg);
       }
 
       .badge {
@@ -60,7 +65,7 @@
         right: -8px;
         background: var(--color-primary);
         color: white;
-        font-size: 11px;
+        font-size: var(--font-xs);
         font-weight: 700;
         min-width: 20px;
         height: 20px;

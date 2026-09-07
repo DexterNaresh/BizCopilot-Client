@@ -4,7 +4,7 @@
   display: flex;
   background-color: var(--color-surface, #FFFFFF);
   border: 1px solid var(--border-color, #EAECEF);
-  border-radius: 16px;
+  border-radius: var(--radius-key, 12px);
   padding: 16px;
   gap: 20px;
   align-items: stretch;
@@ -31,24 +31,24 @@
   .icon-container {
     width: 52px;
     height: 52px;
-    background-color: rgba(91, 59, 235, 0.08); /* Primary light */
+    background-color: var(--color-primary-light); /* Primary light */
     border-radius: 14px;
     display: flex;
     align-items: center;
     justify-content: center;
 
     .clipboard-icon {
-      font-size: 26px;
+      font-size: var(--font-xl);
       color: var(--color-primary, #5B3BEB);
     }
 
     @media (max-width: 768px) {
       width: 32px;
       height: 32px;
-      border-radius: 8px;
+      border-radius: var(--radius-nav-item, 8px);
 
       .clipboard-icon {
-        font-size: 16px;
+        font-size: var(--font-md);
       }
     }
   }
@@ -89,16 +89,16 @@
     font-size: 0.95rem;
 
     @media (max-width: 768px) {
-      font-size: 0.75rem;
+      font-size: var(--font-sm);
       gap: 4px;
     }
 
     .meta-icon {
-      font-size: 18px;
+      font-size: var(--font-lg);
       color: var(--color-text-secondary, #6B7280);
 
       @media (max-width: 768px) {
-        font-size: 14px;
+        font-size: var(--font-base);
       }
     }
   }
@@ -119,7 +119,7 @@
 
     .currency {
       font-weight: 500;
-      font-size: 1rem;
+      font-size: var(--font-md);
 
       @media (max-width: 768px) {
         font-size: 0.85rem;
@@ -159,11 +159,11 @@
       }
 
       .time-icon {
-        font-size: 20px;
+        font-size: var(--font-lg);
         margin-top: 2px;
 
         @media (max-width: 768px) {
-          font-size: 14px;
+          font-size: var(--font-base);
           margin-top: 1px;
         }
       }
@@ -173,7 +173,7 @@
         flex-direction: column;
         
         .time-main {
-          font-size: 1rem;
+          font-size: var(--font-md);
           font-weight: 600;
           color: var(--color-text-primary, #111827);
 
@@ -196,7 +196,7 @@
     }
 
     .delete-btn {
-      border-radius: 8px;
+      border-radius: var(--radius-nav-item, 8px);
       padding: 6px;
       height: 36px;
       width: 36px;
@@ -211,10 +211,10 @@
       }
 
       .delete-icon {
-        font-size: 20px;
+        font-size: var(--font-lg);
 
         @media (max-width: 768px) {
-          font-size: 16px;
+          font-size: var(--font-md);
         }
       }
     }
@@ -222,7 +222,7 @@
 
   .resume-btn {
     padding: 10px 0;
-    border-radius: 8px;
+    border-radius: var(--radius-nav-item, 8px);
     font-weight: 600;
     width: 100%;
     text-align: center;
@@ -255,6 +255,6 @@
   transition: all 0.2s;
 
   &:hover {
-    background-color: rgba(91, 59, 235, 0.08); /* Primary light */
+    background-color: var(--color-primary-light); /* Primary light */
   }
 }

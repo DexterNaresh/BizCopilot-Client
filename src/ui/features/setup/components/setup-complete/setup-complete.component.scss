@@ -36,14 +36,14 @@
   }
 
   .title {
-    font-size: 24px;
+    font-size: var(--font-xl);
     font-weight: 700;
     color: var(--color-text-primary);
     margin-bottom: 8px;
   }
 
   .subtitle {
-    font-size: 16px;
+    font-size: var(--font-md);
     color: var(--color-text-secondary);
     line-height: 1.4;
   }
@@ -76,13 +76,13 @@
 
   .card-info {
     h2 {
-      font-size: 16px;
+      font-size: var(--font-md);
       font-weight: 700;
       color: var(--color-text-primary);
       margin-bottom: 4px;
     }
     p {
-      font-size: 14px;
+      font-size: var(--font-base);
       color: var(--color-text-secondary);
     }
   }
@@ -98,7 +98,7 @@
   background-color: var(--color-primary);
   color: white;
   border-radius: var(--radius-key);
-  font-size: 16px;
+  font-size: var(--font-md);
   font-weight: 600;
   margin-top: auto;
 

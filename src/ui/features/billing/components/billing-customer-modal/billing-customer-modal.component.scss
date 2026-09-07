@@ -23,8 +23,8 @@
   position: relative;
   width: 100%;
   max-width: 600px;
-  background-color: #FFFFFF;
-  border-radius: 16px;
+  background-color: var(--color-surface, #FFFFFF);
+  border-radius: var(--radius-key, 12px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
@@ -59,14 +59,14 @@
     border-radius: 50%;
     
     &:hover {
-      background-color: rgba(91, 59, 235, 0.05);
+      background-color: var(--color-primary-light);
     }
     
     &.close-btn {
-      background-color: rgba(91, 59, 235, 0.05);
+      background-color: var(--color-primary-light);
       
       &:hover {
-        background-color: rgba(91, 59, 235, 0.1);
+        background-color: var(--color-primary-light);
       }
     }
   }
@@ -109,7 +109,7 @@
   
   h3 {
     margin: 0 0 8px 0;
-    font-size: 0.875rem;
+    font-size: var(--font-base);
     font-weight: 600;
     color: var(--primary, #5B3BEB);
     flex: 0 0 auto; /* Prevent header from squishing */
@@ -142,7 +142,7 @@
     padding: 0 44px;
     border: 1px solid var(--border-color, #EAECEF);
     border-radius: 10px;
-    font-size: 0.875rem;
+    font-size: var(--font-base);
     color: var(--text-primary, #111827);
     
     &:focus {
@@ -204,8 +204,8 @@
   align-items: center;
   padding: 12px 16px;
   border: 1px solid var(--border-color, #EAECEF);
-  border-radius: 12px;
-  background-color: #FFFFFF;
+  border-radius: var(--radius-input, 12px);
+  background-color: var(--color-surface, #FFFFFF);
   cursor: pointer;
   transition: all 0.2s ease;
   
@@ -217,13 +217,13 @@
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background-color: #E2F5EA; /* Light green from mock */
-    color: #16A34A;
+    background-color: var(--color-success-bg, #E2F5EA); /* Light green from mock */
+    color: var(--color-success, #16A34A);
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 600;
-    font-size: 0.875rem;
+    font-size: var(--font-base);
   }
   
   .customer-info {
@@ -233,7 +233,7 @@
     gap: 4px;
     
     .name {
-      font-size: 0.875rem;
+      font-size: var(--font-base);
       font-weight: 600;
       color: var(--text-primary, #111827);
     }
@@ -244,13 +244,13 @@
       gap: 6px;
       
       biz-icon {
-        font-size: 14px;
+        font-size: var(--font-base);
         color: var(--text-secondary, #6B7280);
         display: flex;
       }
       
       .phone, .meta {
-        font-size: 0.75rem;
+        font-size: var(--font-sm);
         color: var(--text-secondary, #6B7280);
       }
     }
@@ -261,7 +261,7 @@
     display: flex;
     
     biz-icon {
-      font-size: 24px;
+      font-size: var(--font-xl);
     }
   }
   
@@ -292,7 +292,7 @@
   
   span {
     padding: 0 16px;
-    font-size: 0.75rem;
+    font-size: var(--font-sm);
     font-weight: 700;
     color: var(--primary, #5B3BEB);
   }
@@ -325,7 +325,7 @@
       padding: 14px 14px 14px 44px;
       border: 1px solid var(--border-color, #EAECEF);
       border-radius: 10px;
-      font-size: 0.875rem;
+      font-size: var(--font-base);
       font-family: inherit;
       
       &:focus {
@@ -354,18 +354,18 @@
       align-items: center;
       gap: 4px;
       padding: 0 10px 0 14px;
-      background-color: #F9FAFB;
+      background-color: var(--color-surface-hover, #F9FAFB);
       border-right: 1px solid var(--border-color, #EAECEF);
       color: var(--text-primary, #111827);
       font-weight: 500;
-      font-size: 0.875rem;
+      font-size: var(--font-base);
     }
     
     input {
       flex: 1;
       padding: 14px;
       border: none;
-      font-size: 0.875rem;
+      font-size: var(--font-base);
       
       &:focus {
         outline: none;
@@ -377,11 +377,11 @@
 .btn-use-entered {
   width: 100%;
   height: 44px;
-  background-color: rgba(91, 59, 235, 0.08);
+  background-color: var(--color-primary-light);
   color: var(--primary, #5B3BEB);
   border: none;
-  border-radius: 8px;
-  font-size: 0.875rem;
+  border-radius: var(--radius-nav-item, 8px);
+  font-size: var(--font-base);
   font-weight: 600;
   cursor: pointer;
   margin-top: 4px;
@@ -394,7 +394,7 @@
 
 .use-hint {
   text-align: center;
-  font-size: 0.75rem;
+  font-size: var(--font-sm);
   color: var(--text-secondary, #6B7280);
   margin-top: 8px;
   margin-bottom: 0;
@@ -406,8 +406,8 @@
   align-items: center;
   padding: 12px 16px;
   border: 1px solid var(--border-color, #EAECEF);
-  border-radius: 12px;
-  background-color: #FFFFFF;
+  border-radius: var(--radius-input, 12px);
+  background-color: var(--color-surface, #FFFFFF);
   cursor: pointer;
   
   .radio-indicator {
@@ -420,7 +420,7 @@
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background-color: rgba(91, 59, 235, 0.1);
+    background-color: var(--color-primary-light);
     color: var(--primary, #5B3BEB);
     display: flex;
     align-items: center;
@@ -434,13 +434,13 @@
     gap: 2px;
     
     .title {
-      font-size: 0.875rem;
+      font-size: var(--font-base);
       font-weight: 600;
       color: var(--text-primary, #111827);
     }
     
     .desc {
-      font-size: 0.75rem;
+      font-size: var(--font-sm);
       color: var(--text-secondary, #6B7280);
     }
   }
@@ -449,8 +449,8 @@
     margin-left: auto;
     
     .badge {
-      font-size: 0.6875rem;
-      background-color: rgba(91, 59, 235, 0.08);
+      font-size: var(--font-xs);
+      background-color: var(--color-primary-light);
       color: var(--primary, #5B3BEB);
       padding: 4px 8px;
       border-radius: 4px;
@@ -480,13 +480,13 @@
     flex-direction: column;
     
     .label {
-      font-size: 0.75rem;
+      font-size: var(--font-sm);
       color: var(--text-secondary, #6B7280);
       margin-bottom: 2px;
     }
     
     .value {
-      font-size: 0.875rem;
+      font-size: var(--font-base);
       font-weight: 600;
       color: var(--text-primary, #111827);
       
@@ -500,10 +500,10 @@
     height: 48px;
     padding: 0 24px;
     background-color: var(--primary, #5B3BEB);
-    color: #FFFFFF;
+    color: var(--color-surface, #FFFFFF);
     border: none;
     border-radius: 10px;
-    font-size: 0.875rem;
+    font-size: var(--font-base);
     font-weight: 600;
     cursor: pointer;
   }
@@ -517,7 +517,7 @@
 
   .customer-modal-container {
     max-width: 100%;
-    border-radius: 20px 20px 0 0; 
+    border-radius: var(--radius-card, 24px) 20px 0 0; 
     max-height: calc(100vh - 16px); 
     height: calc(100vh - 16px); 
   }
@@ -535,7 +535,7 @@
     }
     
     .header-titles p {
-      font-size: 0.6875rem;
+      font-size: var(--font-xs);
       margin: 0;
     }
   }
@@ -550,7 +550,7 @@
     }
     
     .section h3 {
-      font-size: 0.75rem;
+      font-size: var(--font-sm);
       margin-bottom: 6px;
     }
   }
@@ -596,7 +596,7 @@
       font-size: 0.8125rem;
     }
     .walk-in-info .desc {
-      font-size: 0.6875rem;
+      font-size: var(--font-xs);
     }
   }
   
@@ -612,12 +612,12 @@
     gap: 8px;
     
     .selected-summary .label {
-      font-size: 0.6875rem;
+      font-size: var(--font-xs);
       margin-bottom: 0;
     }
     
     .selected-summary .value {
-      font-size: 0.75rem;
+      font-size: var(--font-sm);
     }
     
     .btn-confirm {
@@ -634,9 +634,9 @@
     padding: 8px 10px;
     
     .avatar-wrapper { margin-right: 10px; }
-    .avatar { width: 32px; height: 32px; font-size: 0.75rem; }
+    .avatar { width: 32px; height: 32px; font-size: var(--font-sm); }
     .customer-info .name { font-size: 0.8125rem; }
-    .customer-info .meta-row .phone, .customer-info .meta-row .meta { font-size: 0.6875rem; }
+    .customer-info .meta-row .phone, .customer-info .meta-row .meta { font-size: var(--font-xs); }
   }
   
   /* Limit results height on mobile so the rest of the form is easily reachable */

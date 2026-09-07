@@ -2,12 +2,17 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  height: var(--nav-mobile-height, 68px);
-  background-color: var(--color-surface);
+  height: clamp(58px, 8.5vh, 70px);
+  background-color: var(--glass-bg, var(--color-surface));
+  backdrop-filter: var(--glass-blur, blur(12px));
+  -webkit-backdrop-filter: var(--glass-blur, blur(12px));
+  border-top: 1px solid var(--color-border);
   padding-bottom: env(safe-area-inset-bottom);
   width: 100%;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.04);
 
   .nav-item {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -15,35 +20,66 @@
     gap: 4px;
     flex: 1;
     height: 100%;
-    color: var(--color-text-secondary);
+    color: var(--color-text-muted);
     text-decoration: none;
     background: none;
     border: none;
     cursor: pointer;
     font-family: inherit;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      width: 24px;
+      height: 3px;
+      background: var(--gradient-primary);
+      border-radius: 0 0 4px 4px;
+      opacity: 0;
+      transform: translateY(-2px);
+      transition: all 0.2s ease;
+    }
+
+    &:active {
+      transform: scale(0.92);
+    }
 
     .nav-icon {
-      width: var(--icon-nav, 24px);
-      height: var(--icon-nav, 24px);
-      background-color: var(--color-text-secondary);
+      width: var(--icon-nav, 22px);
+      height: var(--icon-nav, 22px);
+      background-color: var(--color-text-muted);
       mask-size: contain;
       -webkit-mask-size: contain;
       mask-repeat: no-repeat;
       -webkit-mask-repeat: no-repeat;
       mask-position: center;
       -webkit-mask-position: center;
+      transition: all 0.2s ease;
     }
 
     span {
-      font-size: 11px;
-      font-weight: 600;
+      font-size: var(--font-xs);
+      font-weight: 500;
+      letter-spacing: -0.1px;
+      transition: all 0.2s ease;
     }
 
     &.active {
       color: var(--color-primary);
 
+      &::before {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
       .nav-icon {
         background-color: var(--color-primary);
+        transform: translateY(-1px) scale(1.08);
+      }
+
+      span {
+        font-weight: 700;
       }
     }
 

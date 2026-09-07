@@ -35,14 +35,14 @@
     flex: 1;
 
     h3 {
-      font-size: 16px; // 16-18px / 600
+      font-size: var(--font-md); // 16-18px / 600
       font-weight: 600;
       color: var(--color-text-primary);
       margin-bottom: 4px;
     }
 
     p {
-      font-size: 14px; // 13-15px / 400
+      font-size: var(--font-base); // 13-15px / 400
       font-weight: 400;
       color: var(--color-text-secondary);
     }

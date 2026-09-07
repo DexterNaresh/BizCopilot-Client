@@ -45,7 +45,7 @@
       width: 32px;
       height: 32px;
       background-color: var(--color-primary);
-      border-radius: 8px;
+      border-radius: var(--radius-nav-item, 8px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -58,7 +58,7 @@
     }
 
     .brand-text {
-      font-size: 20px;
+      font-size: var(--font-lg);
       font-weight: 700;
       color: var(--color-text-primary);
     }
@@ -71,7 +71,7 @@
     background: none;
     border: none;
     color: var(--color-text-secondary);
-    font-size: 15px;
+    font-size: var(--font-base);
     font-weight: 500;
     cursor: pointer;
 
@@ -100,13 +100,13 @@
   padding: 0 24px;
 
   h1 {
-    font-size: 28px;
+    font-size: var(--font-2xl);
     font-weight: 800;
     color: var(--color-text-primary);
     margin-bottom: 4px;
   }
   p {
-    font-size: 16px;
+    font-size: var(--font-md);
     color: var(--color-text-secondary);
   }
 }
@@ -138,11 +138,11 @@
       align-items: center;
       justify-content: center;
       font-weight: 600;
-      font-size: 14px;
+      font-size: var(--font-base);
     }
 
     .step-label {
-      font-size: 14px;
+      font-size: var(--font-base);
       font-weight: 600;
       color: var(--color-text-secondary);
     }
@@ -235,7 +235,7 @@
   margin-top: auto;
   margin-bottom: 12px;
   color: var(--color-text-secondary);
-  font-size: 14px;
+  font-size: var(--font-base);
   font-weight: 500;
 
   img {

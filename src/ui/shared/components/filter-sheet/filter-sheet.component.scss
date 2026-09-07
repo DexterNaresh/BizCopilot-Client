@@ -34,7 +34,7 @@
 
   h2 {
     margin: 0;
-    font-size: 20px;
+    font-size: var(--font-lg);
     font-weight: 600;
     color: var(--color-text-primary, #111827);
   }
@@ -44,7 +44,7 @@
     border: none;
     width: 32px;
     height: 32px;
-    border-radius: 16px;
+    border-radius: var(--radius-key, 12px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -58,7 +58,7 @@
     }
 
     &:hover {
-      background-color: #F3F4F6;
+      background-color: var(--color-bg-canvas, #F3F4F6);
     }
   }
 }
@@ -74,7 +74,7 @@
   }
   
   .sheet-content {
-    border-radius: 16px;
+    border-radius: var(--radius-key, 12px);
     max-height: 80vh;
   }
 }

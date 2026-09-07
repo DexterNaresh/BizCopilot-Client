@@ -15,7 +15,7 @@
   background: white;
   width: 100%;
   max-width: 600px;
-  border-radius: 16px;
+  border-radius: var(--radius-key, 12px);
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
@@ -38,7 +38,7 @@
   .header-content {
     h2 {
       margin: 0 0 4px 0;
-      font-size: 1.25rem;
+      font-size: var(--font-lg);
       font-weight: 600;
       color: var(--text-primary, #111827);
     }
@@ -54,7 +54,7 @@
     background: transparent;
     padding: 8px;
     cursor: pointer;
-    border-radius: 8px;
+    border-radius: var(--radius-nav-item, 8px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -83,15 +83,15 @@
   align-items: center;
   padding: 16px;
   border: 1px solid var(--border-color, #EAECEF);
-  border-radius: 12px;
-  background-color: #FFFFFF;
+  border-radius: var(--radius-input, 12px);
+  background-color: var(--color-surface, #FFFFFF);
   cursor: pointer;
   transition: all 0.2s ease;
   gap: 16px;
 
   &:hover {
     border-color: rgba(91, 59, 235, 0.3); // Slight purple on hover
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 6px -1px var(--shadow-card);
   }
 
   &.selected {
@@ -111,7 +111,7 @@
       color: var(--text-muted, #9CA3AF);
 
       .radio-icon {
-        font-size: 24px;
+        font-size: var(--font-xl);
       }
     }
 
@@ -150,12 +150,12 @@
       }
 
       .best-savings-badge {
-        font-size: 0.75rem;
+        font-size: var(--font-sm);
         font-weight: 600;
         padding: 2px 8px;
-        background-color: #FEF3C7; // Amber light
-        color: #D97706; // Amber
-        border-radius: 12px;
+        background-color: var(--color-warning-bg, #FEF3C7); // Amber light
+        color: var(--color-warning, #D97706); // Amber
+        border-radius: var(--radius-input, 12px);
       }
     }
 
@@ -190,7 +190,7 @@
       color: var(--color-success, #16A34A);
 
       .check-icon {
-        font-size: 16px;
+        font-size: var(--font-md);
       }
     }
   }
@@ -211,7 +211,7 @@
   .btn-cancel {
     flex: 1;
     padding: 12px;
-    border-radius: 8px;
+    border-radius: var(--radius-nav-item, 8px);
     border: 1px solid var(--border-color, #EAECEF);
     background: white;
     color: var(--text-primary, #111827);
@@ -226,7 +226,7 @@
   .btn-apply {
     flex: 1;
     padding: 12px;
-    border-radius: 8px;
+    border-radius: var(--radius-nav-item, 8px);
     border: none;
     background-color: var(--color-primary, #5B3BEB);
     color: white;
@@ -251,7 +251,7 @@
   .modal-container {
     width: 100%;
     max-width: 100%;
-    border-radius: 20px 20px 0 0;
+    border-radius: var(--radius-card, 24px) 20px 0 0;
     max-height: 90vh;
     animation: slideUp 0.3s ease-out;
   }
