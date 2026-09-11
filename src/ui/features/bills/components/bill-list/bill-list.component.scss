@@ -1,0 +1,189 @@
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.bill-list-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.bill-cards-scrollable {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+  padding: 4px 6px var(--spacing-md) 4px; /* Top/left padding prevents first card's shadow/glow from clipping */
+
+  @media (max-width: 1024px) {
+    gap: 6px;
+    padding: 4px 2px var(--spacing-sm) 4px;
+  }
+
+  @media (max-width: 768px) {
+    gap: 4px;
+    padding: 4px 0 var(--spacing-sm) 4px;
+  }
+
+  /* Scrollbar styling */
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-border);
+    border-radius: 10px;
+  }
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  text-align: center;
+  color: var(--color-text-muted);
+  padding: var(--spacing-xl) var(--spacing-md);
+
+  .material-symbols-outlined {
+    font-size: 48px;
+    margin-bottom: var(--spacing-md);
+    opacity: 0.4;
+  }
+
+  h3 {
+    font-family: 'Inter', sans-serif;
+    font-size: var(--font-md, 16px);
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin: 0 0 var(--spacing-sm) 0;
+  }
+
+  p {
+    font-family: 'Inter', sans-serif;
+    font-size: var(--font-base, 14px);
+    margin: 0;
+    max-width: 280px;
+    line-height: 1.4;
+  }
+}
+
+/* =========================================
+   PAGINATION — Design System Spec 6.4
+   ========================================= */
+.pagination-container {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-sm) 0;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: 0 0 var(--radius-card) var(--radius-card);
+  margin-top: auto;
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    align-items: center;
+    padding: var(--spacing-sm) 0;
+  }
+
+  @media (max-width: 768px) {
+    padding: 6px 0;
+    gap: 6px;
+  }
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .icon-btn,
+  .page-btn {
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--spacing-sm);
+    height: 32px;
+    min-width: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: var(--font-sm, 12px);
+    color: var(--color-text-primary);
+    transition: all 0.2s ease;
+
+    &:hover:not(.active) {
+      background: var(--color-primary-bg);
+      border-color: var(--color-primary);
+    }
+  }
+
+  @media (max-width: 768px) {
+    gap: 3px;
+
+    .icon-btn,
+    .page-btn {
+      height: 30px;
+      min-width: 30px;
+      font-size: var(--font-xs, 11px);
+    }
+  }
+
+  .page-btn.active {
+    background: var(--gradient-primary);
+    color: #ffffff;
+    border-color: transparent;
+    font-weight: 600;
+    box-shadow: 0 4px 12px var(--color-primary-light);
+  }
+
+  .ellipsis {
+    color: var(--color-text-muted);
+    padding: 0 2px;
+    font-size: var(--font-xs, 11px);
+  }
+}
+
+.per-page {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--spacing-sm);
+  padding: 0 10px;
+  height: 32px;
+  font-family: 'Inter', sans-serif;
+  font-size: var(--font-sm, 12px);
+  color: var(--color-text-primary);
+  cursor: pointer;
+  white-space: nowrap;
+  background: var(--color-surface);
+
+  @media (max-width: 768px) {
+    height: 30px;
+    font-size: var(--font-xs, 11px);
+    padding: 0 8px;
+  }
+
+  .material-symbols-outlined {
+    font-size: 16px;
+    color: var(--color-text-muted);
+  }
+}

@@ -1,0 +1,41 @@
+<div class="bill-card" [class.selected]="isSelected">
+  <div class="card-icon">
+    <div class="icon-circle">
+      <span class="material-symbols-outlined">receipt_long</span>
+    </div>
+  </div>
+  
+  <div class="card-content">
+    <div class="card-header">
+      <div class="bill-info">
+        <span class="bill-number">{{ bill.billNumber }}</span>
+        <span class="paid-badge" *ngIf="bill.isPaid">Paid</span>
+      </div>
+      <div class="bill-total">
+        {{ bill.totalPaid | currency:'INR':'symbol':'1.2-2' }}
+      </div>
+    </div>
+    
+    <div class="card-body">
+      <div class="customer-info">
+        <span class="customer-name">{{ bill.customerName }}</span>
+        <span class="customer-phone" *ngIf="bill.phone">{{ bill.phone }}</span>
+        <span class="walk-in-dash" *ngIf="!bill.phone && bill.isWalkIn">—</span>
+      </div>
+      
+      <div class="meta-info">
+        <div class="date-time">
+          <!-- In a real app we'd format "Today, 02:42 PM". For mock we use DatePipe -->
+          {{ bill.date | date:'mediumDate' }}, {{ bill.date | date:'shortTime' }}
+        </div>
+        <div class="items-payment">
+          {{ bill.items.length }} items • {{ bill.paymentDetails.method }}
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="card-chevron">
+    <span class="material-symbols-outlined">chevron_right</span>
+  </div>
+</div>

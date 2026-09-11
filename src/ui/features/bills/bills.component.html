@@ -1,0 +1,59 @@
+<!-- bills.component.html -->
+<div class="biz-recent-bills-screen">
+  <!-- Desktop / Tablet View -->
+  <ng-container *ngIf="!isMobile">
+    <div class="desktop-shell">
+      <div class="desktop-main">
+        <div class="desktop-header">
+          <app-bills-header></app-bills-header>
+          <app-bills-toolbar></app-bills-toolbar>
+          
+          <div class="result-count">
+            {{ stateService.filteredBills().length }} Bills Found
+          </div>
+        </div>
+
+        <div class="desktop-content">
+          <div class="list-pane">
+            <app-bill-list></app-bill-list>
+          </div>
+          
+          <div class="detail-pane">
+            <app-bill-details *ngIf="selectedBill()" [bill]="selectedBill()!"></app-bill-details>
+            <div class="no-selection" *ngIf="!selectedBill()">
+              <span class="material-symbols-outlined">receipt_long</span>
+              <p>Select a bill to view details</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- Mobile View -->
+  <ng-container *ngIf="isMobile">
+    <!-- List View -->
+    <div class="mobile-list-view" *ngIf="!selectedBill()">
+      <div class="mobile-header">
+        <app-bills-header></app-bills-header>
+        <app-bills-toolbar></app-bills-toolbar>
+        
+        <div class="result-count">
+          {{ stateService.filteredBills().length }} Bills Found
+        </div>
+      </div>
+      <div class="mobile-content">
+        <app-bill-list></app-bill-list>
+      </div>
+      <!-- Note: Bottom navigation is rendered by the global app shell -->
+    </div>
+
+    <!-- Detail View -->
+    <div class="mobile-detail-view" *ngIf="selectedBill()">
+      <app-bill-details 
+        [bill]="selectedBill()!"
+        (backClicked)="handleBackToListView()">
+      </app-bill-details>
+    </div>
+  </ng-container>
+</div>

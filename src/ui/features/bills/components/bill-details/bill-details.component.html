@@ -1,0 +1,115 @@
+<div class="bill-details-container" *ngIf="bill">
+  <div class="bill-details-header">
+    <div class="header-left">
+      <button class="mobile-back-btn" (click)="onBack()">
+        <span class="material-symbols-outlined">arrow_back</span>
+      </button>
+      <h2>Bill {{ bill.billNumber }}</h2>
+      <span class="paid-badge" *ngIf="bill.isPaid">Paid</span>
+    </div>
+    <div class="header-right">
+      <button class="reprint-btn" (click)="printBill()">
+        <span class="material-symbols-outlined">print</span>
+        Reprint
+      </button>
+    </div>
+  </div>
+
+  <div class="customer-metadata">
+    <div class="meta-item">
+      <span class="material-symbols-outlined icon">person</span>
+      <div class="meta-content">
+        <span class="primary-text">{{ bill.customerName }}</span>
+        <span class="secondary-text" *ngIf="bill.phone">{{ bill.phone }}</span>
+      </div>
+    </div>
+    <div class="meta-item">
+      <span class="material-symbols-outlined icon">calendar_month</span>
+      <div class="meta-content">
+        <span class="primary-text">{{ bill.date | date:'mediumDate' }}, {{ bill.date | date:'shortTime' }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="bill-items-section">
+    <h3>Bill Items ({{ bill.items.length }})</h3>
+    <div class="table-header">
+      <div class="col-item">Item</div>
+      <div class="col-qty">Quantity / Unit</div>
+      <div class="col-rate">Rate</div>
+      <div class="col-total">Total</div>
+    </div>
+    
+    <div class="bill-items-scrollable">
+      <div class="item-row" *ngFor="let item of bill.items">
+        <div class="col-item">
+          <!-- Placeholder product image block -->
+          <div class="item-img-placeholder"></div>
+          <span class="item-name">{{ item.name }}</span>
+        </div>
+        <div class="col-qty">{{ item.quantity }} {{ item.unit }}</div>
+        <div class="col-rate">{{ item.rate | currency:'INR':'symbol':'1.2-2' }} / {{ item.unit }}</div>
+        <div class="col-total">{{ item.total | currency:'INR':'symbol':'1.2-2' }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="summary-section">
+    <div class="summary-row">
+      <span>Subtotal</span>
+      <span>{{ bill.subtotal | currency:'INR':'symbol':'1.2-2' }}</span>
+    </div>
+    <div class="summary-row discount" *ngIf="bill.discountName">
+      <span>Offer ({{ bill.discountName }})</span>
+      <span>-{{ bill.discountAmount | currency:'INR':'symbol':'1.2-2' }}</span>
+    </div>
+    <div class="summary-row tax" *ngIf="bill.cgst">
+      <span>CGST (2.5%)</span>
+      <span>{{ bill.cgst | currency:'INR':'symbol':'1.2-2' }}</span>
+    </div>
+    <div class="summary-row tax" *ngIf="bill.sgst">
+      <span>SGST (2.5%)</span>
+      <span>{{ bill.sgst | currency:'INR':'symbol':'1.2-2' }}</span>
+    </div>
+    
+    <div class="summary-row total-paid">
+      <span>Total Paid</span>
+      <span>{{ bill.totalPaid | currency:'INR':'symbol':'1.2-2' }}</span>
+    </div>
+  </div>
+
+  <div class="payment-details-section">
+    <h3>Payment Details</h3>
+    <div class="payment-card">
+      <div class="payment-method-row">
+        <div class="method-info">
+          <!-- Dynamic icon based on payment method -->
+          <span class="material-symbols-outlined" *ngIf="bill.paymentDetails.method === 'UPI'">qr_code_2</span>
+          <span class="material-symbols-outlined" *ngIf="bill.paymentDetails.method === 'Cash'">payments</span>
+          <span class="material-symbols-outlined" *ngIf="bill.paymentDetails.method === 'Card'">credit_card</span>
+          <span class="material-symbols-outlined" *ngIf="bill.paymentDetails.method === 'Mixed'">account_balance_wallet</span>
+          <span class="method-name">{{ bill.paymentDetails.method }}</span>
+        </div>
+        <span class="payment-amount">{{ bill.paymentDetails.amount | currency:'INR':'symbol':'1.2-2' }}</span>
+      </div>
+      
+      <!-- Show Transaction ID for UPI or Card -->
+      <div class="payment-meta" *ngIf="bill.paymentDetails.transactionId">
+        Txn ID: {{ bill.paymentDetails.transactionId }}
+      </div>
+      <!-- Show split for Mixed -->
+      <div class="payment-meta" *ngIf="bill.paymentDetails.method === 'Mixed'">
+        <div class="split-line" *ngIf="bill.paymentDetails.cashAmount">Cash: {{ bill.paymentDetails.cashAmount | currency:'INR':'symbol':'1.2-2' }}</div>
+        <div class="split-line" *ngIf="bill.paymentDetails.upiAmount">UPI: {{ bill.paymentDetails.upiAmount | currency:'INR':'symbol':'1.2-2' }}</div>
+        <div class="split-line" *ngIf="bill.paymentDetails.cardAmount">Card: {{ bill.paymentDetails.cardAmount | currency:'INR':'symbol':'1.2-2' }}</div>
+      </div>
+      <!-- Show Note if exists -->
+      <div class="payment-meta payment-note" *ngIf="bill.paymentDetails.note">
+        Note: {{ bill.paymentDetails.note }}
+      </div>
+      
+    </div>
+  </div>
+
+
+</div>

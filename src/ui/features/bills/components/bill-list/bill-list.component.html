@@ -1,0 +1,32 @@
+<div class="bill-list-container">
+  <div class="bill-cards-scrollable">
+    <app-bill-card 
+      *ngFor="let bill of stateService.filteredBills()"
+      [bill]="bill"
+      [isSelected]="bill.id === stateService.selectedBillId()"
+      (click)="stateService.selectBill(bill.id)">
+    </app-bill-card>
+    
+    <div class="empty-state" *ngIf="stateService.filteredBills().length === 0">
+      <span class="material-symbols-outlined">search_off</span>
+      <h3>No bills found</h3>
+      <p>Try a different bill number, customer, phone, date or filter.</p>
+    </div>
+  </div>
+
+  <div class="pagination-container" *ngIf="stateService.filteredBills().length > 0">
+    <div class="pagination-controls">
+      <button class="icon-btn"><span class="material-symbols-outlined">chevron_left</span></button>
+      <button class="page-btn active">1</button>
+      <button class="page-btn">2</button>
+      <button class="page-btn">3</button>
+      <span class="ellipsis">...</span>
+      <button class="page-btn">8</button>
+      <button class="icon-btn"><span class="material-symbols-outlined">chevron_right</span></button>
+    </div>
+    <div class="per-page">
+      <span>10 per page</span>
+      <span class="material-symbols-outlined">expand_more</span>
+    </div>
+  </div>
+</div>
