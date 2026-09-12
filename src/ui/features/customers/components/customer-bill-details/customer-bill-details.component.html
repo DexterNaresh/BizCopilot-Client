@@ -1,0 +1,103 @@
+<div class="bill-overlay-backdrop" (click)="close()"></div>
+
+<div class="bill-details-container" *ngIf="state.selectedBill() as bill">
+
+  <!-- Handle bar for mobile -->
+  <div class="drag-handle"></div>
+
+  <div class="bill-header">
+    <div class="bill-title-row">
+      <h2>Bill Details</h2>
+      <button class="icon-button close-btn" (click)="close()" aria-label="Close Bill Details">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+
+    <div class="bill-meta">
+      <div class="bill-id-row">
+        <span class="bill-id">{{ bill.billNumber }}</span>
+        <span class="status-badge" [ngClass]="bill.status.toLowerCase()">
+          <span class="status-dot"></span>
+          {{ bill.status }}
+        </span>
+      </div>
+      <div class="bill-date">
+        {{ bill.date | date:'dd MMM yyyy • h:mm a' }}
+      </div>
+    </div>
+  </div>
+
+  <div class="customer-info" *ngIf="state.selectedCustomer() as customer">
+    <div class="avatar">{{ customer.name.substring(0, 2).toUpperCase() }}</div>
+    <div class="customer-text">
+      <div class="customer-label">Customer</div>
+      <div class="name">{{ customer.name }}</div>
+      <div class="phone" *ngIf="customer.phone">{{ customer.phone }}</div>
+    </div>
+  </div>
+
+  <div class="items-section">
+    <div class="items-section-header">Items ({{ bill.items.length }})</div>
+
+    <div class="items-container" role="region" aria-label="Bill items">
+      <div class="item-row" *ngFor="let item of bill.items; let i = index">
+        <div class="item-seq">{{ (i + 1).toString().padStart(2, '0') }}</div>
+        <div class="item-details">
+          <div class="item-name">{{ item.name }}</div>
+          <div class="item-calc">
+            {{ item.quantity | number:'1.0-3' }} {{ item.unit }} × {{ item.unitPrice | currency:'INR':'symbol-narrow' }}
+          </div>
+        </div>
+        <div class="item-total">
+          {{ item.total | currency:'INR':'symbol-narrow' }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="summary-section">
+    <div class="summary-row">
+      <span>Subtotal</span>
+      <span>{{ bill.subtotal | currency:'INR':'symbol-narrow' }}</span>
+    </div>
+    <div class="summary-row discount" *ngIf="bill.discount">
+      <span>Discount</span>
+      <span>-{{ bill.discount | currency:'INR':'symbol-narrow' }}</span>
+    </div>
+    <div class="summary-row offer" *ngIf="bill.offer">
+      <span>Offer</span>
+      <span>-{{ bill.offer | currency:'INR':'symbol-narrow' }}</span>
+    </div>
+    <div class="summary-row tax">
+      <span>Tax</span>
+      <span>{{ bill.tax | currency:'INR':'symbol-narrow' }}</span>
+    </div>
+
+    <div class="summary-row total-row">
+      <span>Total</span>
+      <span>{{ bill.total | currency:'INR':'symbol-narrow' }}</span>
+    </div>
+  </div>
+
+  <div class="payment-section">
+    <div class="payment-card">
+      <div class="payment-icon">
+        <span class="material-symbols-outlined">payments</span>
+      </div>
+      <div class="payment-details">
+        <div class="payment-label">Payment</div>
+        <div class="payment-method">{{ bill.paymentMethod }}</div>
+      </div>
+      <div class="payment-amount">
+        {{ bill.total | currency:'INR':'symbol-narrow' }}
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-actions">
+    <button class="btn-reprint" (click)="reprint()" aria-label="Reprint Bill">
+      <span class="material-symbols-outlined">print</span>
+      Reprint Bill
+    </button>
+  </div>
+</div>

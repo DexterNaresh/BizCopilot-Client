@@ -1,0 +1,47 @@
+<div class="biz-customer-dashboard-screen">
+  
+  <!-- Desktop / Tablet Shell -->
+  <div class="desktop-shell">
+    <div class="desktop-main">
+      <app-customer-header class="header-section"></app-customer-header>
+      <app-customer-kpi class="kpi-section"></app-customer-kpi>
+      
+      <div class="workspace-area" [class.split-active]="state.selectedCustomerId() !== null">
+      
+      <!-- LEFT: Condensed Customer List / Dashboard -->
+      <div class="main-workspace">
+        <div class="list-card-container">
+          <app-customer-toolbar class="toolbar-section"></app-customer-toolbar>
+          <app-customer-list class="list-section"></app-customer-list>
+        </div>
+      </div>
+
+      <!-- RIGHT: Customer Details Panel -->
+      <div class="details-workspace" *ngIf="state.selectedCustomerId() !== null">
+        <app-customer-details></app-customer-details>
+      </div>
+
+    </div>
+  </div>
+  </div>
+
+  <!-- Mobile Shell -->
+  <div class="mobile-shell">
+    <app-customer-header class="mobile-header"></app-customer-header>
+    <app-customer-kpi class="mobile-kpi"></app-customer-kpi>
+    <app-customer-toolbar class="mobile-toolbar"></app-customer-toolbar>
+    <app-customer-list class="mobile-list"></app-customer-list>
+
+    <!-- MOBILE: Bottom Sheet Overlay -->
+    <div class="mobile-details-overlay" [class.active]="state.selectedCustomerId() !== null">
+      <div class="overlay-backdrop" (click)="state.clearSelection()"></div>
+      <div class="overlay-content">
+        <app-customer-details *ngIf="state.selectedCustomerId() !== null"></app-customer-details>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bill Details Overlay (Phase 3) -->
+  <app-customer-bill-details *ngIf="state.selectedBillId() !== null"></app-customer-bill-details>
+
+</div>
