@@ -15,7 +15,7 @@ import { CustomerStateService } from '../../services/customer-state.service';
         </div>
         <p class="page-subtitle">Manage and track your customer base</p>
       </div>
-      <button class="add-btn">
+      <button class="add-btn" (click)="state.openAddCustomerModal()">
         <span class="material-symbols-outlined">add</span>
         <span class="btn-text">Add Customer</span>
       </button>

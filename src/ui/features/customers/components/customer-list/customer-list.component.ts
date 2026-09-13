@@ -12,7 +12,7 @@ import { CustomerStateService } from '../../services/customer-state.service';
       <!-- Desktop / Tablet Table View -->
       <div class="desktop-table-view" [class.condensed]="state.selectedCustomerId() !== null">
         <div class="table-header">
-          <div class="col col-seq">Seq. No.</div>
+          <div class="col col-seq">#</div>
           <div class="col col-customer">Customer</div>
           <div class="col col-phone">Phone</div>
           <div class="col col-bills" *ngIf="!state.selectedCustomerId()">Bills</div>
@@ -44,7 +44,7 @@ import { CustomerStateService } from '../../services/customer-state.service';
               </div>
             </div>
             <div class="col col-actions" *ngIf="!state.selectedCustomerId()">
-              <button class="action-btn edit" (click)="$event.stopPropagation()">
+              <button class="action-btn edit" (click)="editCustomer($event, customer)">
                 <span class="material-symbols-outlined">edit</span>
               </button>
             </div>
@@ -90,7 +90,7 @@ import { CustomerStateService } from '../../services/customer-state.service';
             <button class="action-text-btn" (click)="toggleStatus($event, customer.id)">
               <span class="material-symbols-outlined">{{ customer.isActive ? 'toggle_on' : 'toggle_off' }}</span>
             </button>
-            <button class="action-text-btn" (click)="$event.stopPropagation()">
+            <button class="action-text-btn" (click)="editCustomer($event, customer)">
               <span class="material-symbols-outlined">edit</span> Edit
             </button>
             <button class="action-text-btn delete" (click)="deactivate($event, customer.id)">
@@ -158,6 +158,11 @@ export class CustomerListComponent {
   toggleStatus(event: Event, id: string) {
     event.stopPropagation();
     this.state.toggleCustomerStatus(id);
+  }
+
+  editCustomer(event: Event, customer: any) {
+    event.stopPropagation();
+    this.state.openAddCustomerModal(customer);
   }
 
   deactivate(event: Event, id: string) {

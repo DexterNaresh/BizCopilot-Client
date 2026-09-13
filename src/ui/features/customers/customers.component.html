@@ -44,4 +44,7 @@
   <!-- Bill Details Overlay (Phase 3) -->
   <app-customer-bill-details *ngIf="state.selectedBillId() !== null"></app-customer-bill-details>
 
+  <!-- Add Customer Overlay -->
+  <app-add-customer *ngIf="state.isAddCustomerModalOpen()"></app-add-customer>
+
 </div>

@@ -1,0 +1,84 @@
+<div class="modal-backdrop" (click)="onCancel()"></div>
+<div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="add-customer-title">
+  
+  <div class="modal-header">
+    <h2 id="add-customer-title">{{ editingCustomer ? 'Edit Customer' : 'Add Customer' }}</h2>
+    <button class="close-btn" (click)="onCancel()" aria-label="Close Add Customer">
+      <biz-icon category="common" name="close"></biz-icon>
+    </button>
+  </div>
+
+  <div class="modal-body">
+    <form [formGroup]="customerForm" (ngSubmit)="onSubmit()">
+      
+      <!-- Customer Name -->
+      <div class="form-group">
+        <label for="customerName">Customer Name <span class="required">*</span></label>
+        <input 
+          type="text" 
+          id="customerName"
+          formControlName="name" 
+          class="form-control" 
+          placeholder="Enter customer name"
+          [class.is-invalid]="customerForm.get('name')?.invalid && customerForm.get('name')?.touched"
+          aria-label="Customer Name"
+          autocomplete="off"
+          autofocus>
+        <div class="error-msg" *ngIf="customerForm.get('name')?.invalid && customerForm.get('name')?.touched">
+          Customer name is required
+        </div>
+      </div>
+
+      <!-- Phone -->
+      <div class="form-group">
+        <label for="customerPhone">Phone</label>
+        <div class="phone-input-wrapper" [class.is-invalid]="customerForm.get('phone')?.hasError('duplicate')">
+          <div class="country-code" aria-label="Country code">
+            <span>+91</span>
+            <biz-icon category="common" name="arrow_drop_down" class="dropdown-icon"></biz-icon>
+          </div>
+          <input 
+            type="tel" 
+            id="customerPhone"
+            formControlName="phone" 
+            class="form-control phone-input" 
+            placeholder="Enter phone number"
+            aria-label="Phone number"
+            autocomplete="off">
+        </div>
+        <div class="error-msg duplicate" *ngIf="customerForm.get('phone')?.hasError('duplicate')">
+          <div class="duplicate-message">
+            <span>Customer already exists</span>
+            <button type="button" class="btn-link" (click)="onCancel()">Review existing customer</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Notes -->
+      <div class="form-group">
+        <label for="customerNotes">Notes</label>
+        <textarea 
+          id="customerNotes"
+          formControlName="notes" 
+          class="form-control textarea" 
+          rows="3" 
+          placeholder="Add a note (optional)"
+          aria-label="Customer notes"></textarea>
+      </div>
+
+    </form>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="onCancel()" aria-label="Cancel">Cancel</button>
+    <button 
+      type="button" 
+      class="btn btn-primary" 
+      (click)="onSubmit()" 
+      [disabled]="isSaving"
+      aria-label="Save Customer">
+      {{ isSaving ? 'Saving...' : (editingCustomer ? 'Save Changes' : 'Save Customer') }}
+    </button>
+  </div>
+  
+</div>

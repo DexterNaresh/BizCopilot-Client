@@ -6,6 +6,7 @@ import { CustomerToolbarComponent } from './components/customer-toolbar/customer
 import { CustomerListComponent } from './components/customer-list/customer-list.component';
 import { CustomerDetailsComponent } from './components/customer-details/customer-details.component';
 import { CustomerBillDetailsComponent } from './components/customer-bill-details/customer-bill-details.component';
+import { AddCustomerComponent } from './components/add-customer/add-customer.component';
 import { CustomerStateService } from './services/customer-state.service';
 
 @Component({
@@ -18,7 +19,8 @@ import { CustomerStateService } from './services/customer-state.service';
     CustomerToolbarComponent, 
     CustomerListComponent,
     CustomerDetailsComponent,
-    CustomerBillDetailsComponent
+    CustomerBillDetailsComponent,
+    AddCustomerComponent
   ],
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.scss']

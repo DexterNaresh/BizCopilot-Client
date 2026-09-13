@@ -88,6 +88,8 @@ export class CustomerStateService {
   readonly statusFilter = signal<'All' | 'Active' | 'Inactive'>('All');
   readonly currentPage = signal<number>(1);
   readonly itemsPerPage = signal<number>(10);
+  readonly isAddCustomerModalOpen = signal<boolean>(false);
+  readonly editingCustomer = signal<Customer | null>(null);
 
   // Derived State (Computed)
   readonly filteredCustomers = computed(() => {
@@ -198,5 +200,73 @@ export class CustomerStateService {
 
   clearBillSelection() {
     this.selectedBillId.set(null);
+  }
+
+  openAddCustomerModal(customer?: Customer) {
+    this.editingCustomer.set(customer || null);
+    this.isAddCustomerModalOpen.set(true);
+  }
+
+  closeAddCustomerModal() {
+    this.isAddCustomerModalOpen.set(false);
+    this.editingCustomer.set(null);
+  }
+
+  async editCustomer(id: string, name: string, phone: string | null, notes: string | null): Promise<boolean> {
+    // Simulate network delay
+    await new Promise(resolve => setTimeout(resolve, 600));
+
+    const currentCustomers = this.customers();
+    
+    // Check duplicate phone (if provided)
+    if (phone) {
+      const isDuplicate = currentCustomers.some(c => c.phone === phone && c.id !== id);
+      if (isDuplicate) {
+        return false;
+      }
+    }
+
+    this.customers.update(list => 
+      list.map(c => c.id === id ? { ...c, name, phone } : c)
+    );
+    return true;
+  }
+
+  // Returns true if successful, false if duplicate
+  async addCustomer(name: string, phone: string | null, notes: string | null): Promise<boolean> {
+    // Simulate network delay
+    await new Promise(resolve => setTimeout(resolve, 600));
+
+    const currentCustomers = this.customers();
+    
+    // Check duplicate phone (if provided)
+    if (phone) {
+      const isDuplicate = currentCustomers.some(c => c.phone === phone);
+      if (isDuplicate) {
+        return false;
+      }
+    }
+
+    const nextSeqNo = currentCustomers.length > 0 
+      ? Math.max(...currentCustomers.map(c => c.seqNo)) + 1 
+      : 1;
+
+    const newCustomer: Customer = {
+      id: `c${Date.now()}`,
+      seqNo: nextSeqNo,
+      name,
+      phone,
+      billsCount: 0,
+      totalSpent: 0,
+      lastVisit: new Date(), // Just created
+      isActive: true
+    };
+
+    // Prepend to list
+    this.customers.set([newCustomer, ...currentCustomers]);
+    
+    // Add notes to a separate entity if we had one, but the mock Customer interface doesn't have notes.
+    // We will just create the customer.
+    return true;
   }
 }
