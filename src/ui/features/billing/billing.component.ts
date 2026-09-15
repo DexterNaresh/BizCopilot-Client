@@ -198,6 +198,10 @@ export class BillingComponent implements OnInit {
     this.showHoldBillsModal = true;
   }
 
+  onOpenRecentBills() {
+    this.router.navigate(['/bills']);
+  }
+
   async onResumeHeldBill(heldBillId: string) {
     if (this.state.cartItems.length > 0) {
       const isConfirmed = await this.confirmService.confirm({

@@ -5,7 +5,7 @@
     <app-billing-header 
       [heldBillsCount]="(heldBills$ | async)?.length || 0"
       (openHeldBills)="onOpenHeldBills()"
-      (openRecentBills)="onPlaceholderAction('Recent Bills List')">
+      (openRecentBills)="onOpenRecentBills()">
     </app-billing-header>
     
     <app-billing-search 

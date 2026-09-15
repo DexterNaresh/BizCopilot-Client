@@ -1,18 +1,164 @@
 <div class="bills-toolbar-container">
+  <!-- Search Box -->
   <div class="search-box">
     <span class="material-symbols-outlined search-icon">search</span>
-    <input type="text" placeholder="Search by Bill No. / Customer / Phone" (input)="onSearchChange($event)" />
+    <input 
+      type="text" 
+      placeholder="Search by Bill No. / Customer / Phone" 
+      [value]="stateService.searchQuery()"
+      (input)="onSearchChange($event)" />
   </div>
 
+  <!-- Actions -->
   <div class="toolbar-actions">
-    <button class="date-button">
-      <span class="material-symbols-outlined">calendar_month</span>
-      <span class="label">Today</span>
-      <span class="material-symbols-outlined chevron">expand_more</span>
+    <!-- Date Dropdown Container -->
+    <div class="popover-wrapper">
+      <button 
+        class="date-button" 
+        [class.active]="isDateDropdownOpen()" 
+        (click)="toggleDateDropdown($event)"
+        aria-label="Select Date Range">
+        <span class="material-symbols-outlined">calendar_month</span>
+        <span class="label">{{ stateService.dateOption() }}</span>
+        <span class="material-symbols-outlined chevron">expand_more</span>
+      </button>
+
+      <!-- Date Range Dropdown Popover -->
+      <div class="popover-menu date-popover" *ngIf="isDateDropdownOpen()" (click)="$event.stopPropagation()">
+        <div class="popover-header">
+          <span>Select Date Range</span>
+        </div>
+        <div class="popover-body">
+          <button 
+            *ngFor="let opt of dateOptions"
+            class="option-item"
+            [class.selected]="stateService.dateOption() === opt"
+            (click)="selectDateOption(opt)">
+            <span class="opt-label">{{ opt }}</span>
+            <span class="material-symbols-outlined check-icon" *ngIf="stateService.dateOption() === opt">check</span>
+          </button>
+
+          <!-- Custom Date Input controls if Custom is selected -->
+          <div class="custom-date-section" *ngIf="stateService.dateOption() === 'Custom'">
+            <div class="date-input-group">
+              <label>From Date</label>
+              <input type="date" [value]="customFromDate()" (change)="customFromDate.set($any($event.target).value)" />
+            </div>
+            <div class="date-input-group">
+              <label>To Date</label>
+              <input type="date" [value]="customToDate()" (change)="customToDate.set($any($event.target).value)" />
+            </div>
+            <button class="btn-apply-custom" (click)="applyCustomDateRange()">Apply Date</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter Button & Popover -->
+    <div class="popover-wrapper">
+      <button 
+        class="filter-button" 
+        [class.active]="isFilterModalOpen() || stateService.activeFilterCount() > 0" 
+        (click)="toggleFilterModal($event)"
+        aria-label="Open Filter Options">
+        <span class="material-symbols-outlined">filter_alt</span>
+        <span class="label">Filter</span>
+        <span class="filter-badge" *ngIf="stateService.activeFilterCount() > 0">{{ stateService.activeFilterCount() }}</span>
+      </button>
+
+      <!-- Filter Panel Popover -->
+      <div class="popover-menu filter-popover" *ngIf="isFilterModalOpen()" (click)="$event.stopPropagation()">
+        <div class="popover-header">
+          <h3>FILTER</h3>
+          <button class="close-btn" (click)="isFilterModalOpen.set(false)" aria-label="Close filters">
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+
+        <div class="popover-body">
+          <!-- 1. Payment Method -->
+          <div class="filter-group">
+            <label class="group-title">Payment Method</label>
+            <div class="chip-group">
+              <button 
+                *ngFor="let method of paymentMethods"
+                type="button"
+                class="chip-btn"
+                [class.selected]="draftFilters().paymentMethod === method"
+                (click)="setDraftPaymentMethod(method)">
+                {{ method }}
+              </button>
+            </div>
+          </div>
+
+          <!-- 2. Customer -->
+          <div class="filter-group">
+            <label class="group-title">Customer</label>
+            <div class="chip-group">
+              <button 
+                *ngFor="let cType of customerTypes"
+                type="button"
+                class="chip-btn"
+                [class.selected]="draftFilters().customerType === cType.value"
+                (click)="setDraftCustomerType(cType.value)">
+                {{ cType.label }}
+              </button>
+            </div>
+          </div>
+
+          <!-- 3. Billed By -->
+          <div class="filter-group">
+            <label class="group-title">Billed By</label>
+            <div class="chip-group">
+              <button 
+                *ngFor="let bOpt of billedByOptions"
+                type="button"
+                class="chip-btn"
+                [class.selected]="draftFilters().billedBy === bOpt.value"
+                (click)="setDraftBilledBy(bOpt.value)">
+                {{ bOpt.label }}
+              </button>
+            </div>
+          </div>
+
+          <!-- 4. Bill Amount Range -->
+          <div class="filter-group">
+            <label class="group-title">Bill Amount (₹)</label>
+            <div class="amount-range-inputs">
+              <input 
+                type="number" 
+                placeholder="Min ₹" 
+                [value]="draftFilters().minAmount !== null ? draftFilters().minAmount : ''"
+                (input)="updateDraftMinAmount($event)" />
+              <span class="dash">—</span>
+              <input 
+                type="number" 
+                placeholder="Max ₹" 
+                [value]="draftFilters().maxAmount !== null ? draftFilters().maxAmount : ''"
+                (input)="updateDraftMaxAmount($event)" />
+            </div>
+          </div>
+        </div>
+
+        <div class="popover-footer">
+          <button type="button" class="btn-reset" (click)="resetFilters()">Reset</button>
+          <button type="button" class="btn-apply" (click)="applyFilters()">Apply</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Export Button -->
+    <button class="export-button" (click)="onExport()" aria-label="Export Bills">
+      <span class="material-symbols-outlined">file_upload</span>
+      <span class="label">Export</span>
     </button>
-    <button class="filter-button">
-      <span class="material-symbols-outlined">filter_alt</span>
-      <span class="label">Filter</span>
-    </button>
+
   </div>
+</div>
+
+<!-- Backdrop overlay to dismiss popovers -->
+<div 
+  class="popover-backdrop" 
+  *ngIf="isDateDropdownOpen() || isFilterModalOpen()" 
+  (click)="closeAllPopovers()">
 </div>
