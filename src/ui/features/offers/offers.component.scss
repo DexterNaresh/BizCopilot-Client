@@ -1,0 +1,734 @@
+@import '../../theme/breakpoints';
+
+// Design System Tokens Mapping
+$color-primary: var(--color-primary, #6366F1);
+$color-primary-hover: var(--color-primary-hover, #4F46E5);
+$gradient-primary: var(--gradient-primary, linear-gradient(135deg, #6366F1, #4F46E5));
+$color-primary-light: var(--color-primary-light, rgba(99, 102, 241, 0.4));
+$color-primary-bg: var(--color-primary-bg, rgba(99, 102, 241, 0.1));
+
+$color-surface: var(--color-surface, #FFFFFF);
+$color-surface-hover: var(--color-surface-hover, #F1F5F9);
+$color-canvas: var(--color-bg-canvas, #F8FAFC);
+$color-background: $color-canvas;
+$color-text-main: var(--color-text-primary, #0F172A);
+$color-text-secondary: var(--color-text-secondary, #475569);
+$color-border: var(--color-border, #E2E8F0);
+$color-success: var(--color-success, #10B981);
+$color-success-bg: var(--color-success-bg, rgba(16, 185, 129, 0.1));
+$color-error: var(--color-error, #EF4444);
+
+$shadow-sm: var(--shadow-sm, 0 1px 3px rgba(0,0,0,0.05));
+$shadow-card: var(--shadow-card, 0 4px 6px -1px rgba(0,0,0,0.05));
+$shadow-premium: var(--shadow-premium, 0 20px 30px -10px rgba(15, 23, 42, 0.08));
+$radius-card: var(--radius-card, 20px);
+$radius-key: var(--radius-key, 12px);
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin mask-icon($size: 24px, $color: $color-text-secondary) {
+  width: $size;
+  height: $size;
+  background-color: $color;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+}
+
+// Host
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background-color: $color-canvas;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.offers-dashboard {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+// ---------------------------
+// Header
+// ---------------------------
+.offers-header-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 32px;
+  background: linear-gradient(135deg, $color-surface 0%, $color-surface-hover 100%);
+  border-bottom: 1px solid $color-border;
+  
+  @include tablet {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  @include desktop {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.offers-content-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: clamp(16px, 2vh, 32px) clamp(16px, 2vw, 32px);
+}
+
+.header-text {
+  .page-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: $color-text-main;
+  }
+  
+  .page-subtitle {
+    margin: 4px 0 0;
+    font-size: 14px;
+    color: $color-text-secondary;
+  }
+}
+
+.btn-create-offer {
+  @include flex-center;
+  gap: 8px;
+  background: $gradient-primary;
+  color: #ffffff;
+  border: none;
+  border-radius: $radius-key;
+  padding: 12px 24px;
+  font-size: var(--font-md, 16px);
+  font-weight: 600;
+  box-shadow: 0 4px 12px $color-primary-light;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px $color-primary-light;
+  }
+  
+  .plus-icon {
+    font-size: 18px;
+    line-height: 1;
+  }
+}
+
+// ---------------------------
+// Summary Cards
+// ---------------------------
+.summary-cards {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 4px; // for scrollbar if any
+  
+  // Hide scrollbar but keep functionality if squeezed
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.summary-card {
+  flex: 1 1 0;
+  min-width: 150px;
+  position: relative;
+  background-color: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-card;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: $shadow-card;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  
+  // Premium gradient strip
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: $gradient-primary;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  &:hover {
+    box-shadow: $shadow-premium;
+    transform: translateY(-3px);
+    border-color: transparent;
+    &::before { opacity: 1; }
+  }
+  
+  .card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    @include flex-center;
+    
+    &.total-icon {
+      background-color: $color-primary-bg;
+      .icon-inner {
+        @include mask-icon(20px, $color-primary);
+      }
+    }
+    
+    &.active-icon {
+      background-color: $color-success-bg;
+      .status-dot {
+        width: 14px; height: 14px; border-radius: 50%;
+        background-color: $color-success;
+      }
+    }
+    
+    &.inactive-icon {
+      background-color: rgba(239, 68, 68, 0.1); // Error BG
+      .status-dot {
+        width: 14px; height: 14px; border-radius: 50%;
+        background-color: $color-error;
+      }
+    }
+  }
+  
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    
+    .card-value {
+      font-size: var(--font-2xl, 28px);
+      font-weight: 700;
+      color: $color-text-main;
+      line-height: 1.2;
+    }
+    
+    .card-label {
+      font-size: var(--font-sm, 13px);
+      color: $color-text-secondary;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+  }
+}
+
+// ---------------------------
+// Search & Filter
+// ---------------------------
+.search-filter-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+
+  @include tablet {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    
+    .search-bar-container {
+      flex: 1;
+      max-width: 400px;
+    }
+  }
+
+  @include desktop {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    
+    .search-bar-container {
+      flex: 1;
+      max-width: 500px;
+    }
+  }
+}
+
+.search-bar-container {
+  display: flex;
+  gap: 12px;
+  
+  .search-input-wrapper {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: $color-surface;
+    border-radius: $radius-key;
+    padding: 0 16px;
+    height: 48px;
+    box-shadow: $shadow-sm;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+    
+    &:focus-within {
+      border-color: $color-primary;
+      box-shadow: 0 0 0 3px $color-primary-bg;
+    }
+    
+    .search-icon {
+      @include mask-icon(20px, $color-text-secondary);
+      flex-shrink: 0;
+    }
+    
+    .search-input {
+      flex: 1;
+      border: none;
+      background: none;
+      padding: 0 12px;
+      height: 100%;
+      font-size: var(--font-base, 14px);
+      color: $color-text-main;
+      outline: none;
+      
+      &::placeholder {
+        color: var(--color-text-disabled, #CBD5E1);
+      }
+    }
+  }
+  
+  .btn-filter-mobile {
+    width: 48px;
+    height: 48px;
+    border: 1px solid $color-border;
+    border-radius: $radius-key;
+    background-color: $color-surface;
+    box-shadow: $shadow-sm;
+    @include flex-center;
+    cursor: pointer;
+    flex-shrink: 0;
+    
+    .filter-icon {
+      @include mask-icon(20px, $color-text-main);
+    }
+    
+    @include desktop {
+      display: none; 
+    }
+  }
+}
+
+.filters-row {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding: 4px 4px 8px 4px; // room for shadow
+  
+  &::-webkit-scrollbar { display: none; }
+  -ms-overflow-style: none; 
+  scrollbar-width: none;
+  
+  .filter-dropdown {
+    flex: 0 0 auto; 
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: $color-surface;
+    border: 1px solid transparent;
+    box-shadow: $shadow-sm;
+    border-radius: 999px; // Pill shape
+    padding: 0 32px 0 18px;
+    height: 38px;
+    font-size: 13px;
+    font-weight: 500;
+    color: $color-text-main;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.2s ease;
+    
+    // Fake chevron using background image since it's a native select
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23475569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 14px;
+    
+    &:hover {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    
+    &:focus {
+      border-color: $color-primary;
+    }
+  }
+}
+
+
+
+
+// ---------------------------
+// View Switching Logic
+// ---------------------------
+.offers-table-container {
+  display: none; 
+  background-color: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-card;
+  overflow: hidden;
+  box-shadow: $shadow-card;
+  margin-bottom: 32px;
+  
+  @include tablet {
+    display: block; // Show on tablet
+  }
+  @include desktop {
+    display: block; // Show on desktop
+  }
+}
+
+.offers-mobile-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  
+  @include tablet {
+    display: none; // Hidden on tablet
+  }
+  @include desktop {
+    display: none; // Hidden on desktop
+  }
+}
+
+// ---------------------------
+// Desktop/Tablet Table
+// ---------------------------
+.offers-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  
+  th, td {
+    padding: 16px;
+    border-bottom: 1px solid $color-border;
+    font-size: 14px;
+  }
+  
+  th {
+    background-color: $color-background;
+    color: $color-text-secondary;
+    font-weight: 600;
+
+    .th-content {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      user-select: none;
+      
+      &:hover .sort-icon {
+        background-color: $color-text-main;
+      }
+    }
+    
+    .sort-icon {
+      @include mask-icon(16px, $color-text-secondary);
+      transition: background-color 0.2s;
+    }
+  }
+  
+  tbody tr {
+    &:last-child td {
+      border-bottom: none;
+    }
+    &:hover {
+      background-color: rgba(0,0,0,0.01);
+    }
+  }
+  
+  .offer-name-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    
+    .name {
+      font-weight: 600;
+      color: $color-text-main;
+    }
+    .desc {
+      font-size: 12px;
+      color: $color-text-secondary;
+    }
+  }
+  
+  .badge-type {
+    background-color: rgba(91, 59, 235, 0.08); // Primary light
+    color: $color-primary;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-block;
+  }
+  
+  .status-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    
+    .status-text {
+      font-size: 13px;
+      font-weight: 500;
+      color: $color-text-secondary;
+    }
+    
+    .toggle-switch {
+      width: 36px;
+      height: 20px;
+      background-color: $color-border;
+      border-radius: 10px;
+      position: relative;
+      transition: background-color 0.2s;
+      
+      &::after {
+        content: '';
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 16px;
+        height: 16px;
+        background-color: #fff;
+        border-radius: 50%;
+        transition: transform 0.2s;
+      }
+    }
+    
+    &.active {
+      .status-text { color: $color-success; }
+      .toggle-switch {
+        background-color: $color-success;
+        &::after {
+          transform: translateX(16px);
+        }
+      }
+    }
+  }
+  
+  .actions-cell {
+    display: flex;
+    gap: 8px;
+    
+    .btn-icon {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      border-radius: 4px;
+      @include flex-center;
+      
+      &:hover {
+        background-color: $color-border;
+      }
+      
+      &.edit .icon { @include mask-icon(20px, $color-text-secondary); }
+      &.delete .icon { @include mask-icon(20px, $color-error); }
+    }
+  }
+}
+
+// ---------------------------
+// Mobile Offer Card
+// ---------------------------
+.mobile-offer-card {
+  background-color: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-card;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: $shadow-sm;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    box-shadow: $shadow-premium;
+    transform: translateY(-2px);
+    border-color: $color-primary-light;
+  }
+  
+  .card-info-area {
+    display: flex;
+    padding: 16px;
+  }
+  
+  .info-left {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; // ensure intrinsic width
+    
+    .seq-badge {
+      font-size: 12px;
+      color: $color-text-secondary;
+      background-color: $color-background;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    
+    .name-desc {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: 12px;
+      
+      .offer-name {
+        font-size: 16px;
+        font-weight: 600;
+        color: $color-text-main;
+      }
+      
+      .offer-desc {
+        font-size: 13px;
+        color: $color-text-secondary;
+        line-height: 1.4;
+      }
+    }
+    
+    .offer-type-badge {
+      font-size: 12px;
+      font-weight: 600;
+      color: $color-primary;
+      background-color: rgba(91, 59, 235, 0.08);
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+  }
+  
+  .info-divider {
+    width: 1px;
+    background-color: $color-border;
+    margin: 0 16px;
+  }
+  
+  .info-right {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    justify-content: center; // vertical center in area
+    
+    .detail-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      
+      .detail-icon {
+        @include mask-icon(16px, $color-text-secondary);
+        flex-shrink: 0;
+        margin-top: 2px; // optical align
+      }
+      
+      .detail-text {
+        font-size: 13px;
+        color: $color-text-main;
+        line-height: 1.4;
+      }
+    }
+  }
+  
+  .card-action-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    border-top: 1px solid $color-border;
+    background-color: $color-background;
+    
+    .status-toggle-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      
+      .status-label {
+        font-size: 13px;
+        font-weight: 600;
+        color: $color-text-secondary;
+      }
+      
+      .toggle-switch-mobile {
+        width: 40px;
+        height: 24px;
+        background-color: $color-border;
+        border-radius: 12px;
+        position: relative;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        
+        .knob {
+          position: absolute;
+          top: 2px;
+          left: 2px;
+          width: 20px;
+          height: 20px;
+          background-color: #fff;
+          border-radius: 50%;
+          transition: transform 0.2s;
+          box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+      }
+      
+      // When parent .status-toggle-container has active state
+      // (Handled via class binding on toggle-switch-mobile)
+      .toggle-switch-mobile.active {
+        background-color: $color-success;
+        .knob {
+          transform: translateX(16px);
+        }
+      }
+    }
+    
+    // Add logic to make text green if active
+    &:has(.toggle-switch-mobile.active) {
+      .status-label { color: $color-success; }
+    }
+    
+    .action-buttons {
+      display: flex;
+      gap: 16px;
+      
+      .btn-text {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background: none;
+        border: none;
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        padding: 4px;
+        
+        &.edit {
+          color: $color-text-main;
+          .icon { @include mask-icon(16px, $color-text-main); }
+        }
+        
+        &.delete {
+          color: $color-error;
+          .icon { @include mask-icon(16px, $color-error); }
+        }
+      }
+    }
+  }
+}

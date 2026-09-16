@@ -1,0 +1,593 @@
+<!-- IF MOBILE: Render the 8-step wizard -->
+<ng-container *ngIf="isMobile; else desktopView">
+  <app-create-offer-mobile 
+    [offerForm]="offerForm" 
+    [currentStep]="currentStep"
+    [totalSteps]="totalSteps"
+    (next)="nextStep()"
+    (prev)="prevStep()"
+    (goToStep)="goToStep($event)"
+    (cancel)="onCancel()"
+    (save)="onSaveOffer()">
+  </app-create-offer-mobile>
+</ng-container>
+
+<!-- ELSE: Render Desktop / Tablet Single-Page Form -->
+<ng-template #desktopView>
+  <div class="create-offer-desktop" [formGroup]="offerForm">
+    <div class="content-area">
+      <!-- Header Area -->
+      <div class="header-nav">
+        <button type="button" class="btn-back" (click)="onCancel()">
+          <span class="back-icon">←</span> Back to Offers
+        </button>
+        <h1 class="page-title">Create Offer</h1>
+        <p class="page-subtitle">Create a new offer to attract customers and grow your business</p>
+      </div>
+
+      <!-- Main Two-Column Layout -->
+      <div class="form-layout-container">
+        
+        <!-- LEFT: Configuration Sections 1 to 6 -->
+        <div class="main-configuration">
+          
+          <!-- Section 1: Basic Information -->
+          <div class="section-card">
+            <div class="section-header">
+              <h2 class="section-title"><span class="section-num">1</span> Basic Information</h2>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label>Offer Name <span class="required">*</span></label>
+                <input type="text" formControlName="name" placeholder="e.g. Juice Fest 20%" [class.invalid]="offerForm.get('name')?.invalid && offerForm.get('name')?.touched">
+                <div class="error-msg" *ngIf="offerForm.get('name')?.invalid && offerForm.get('name')?.touched">Offer Name is required.</div>
+              </div>
+              <div class="form-group">
+                <label>Short Description <span class="optional">(Optional)</span></label>
+                <input type="text" formControlName="description" placeholder="e.g. Get 20% off on all juices">
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 2: Select Offer Type -->
+          <div class="section-card">
+            <div class="section-header">
+              <h2 class="section-title"><span class="section-num">2</span> Select Offer Type</h2>
+              <p class="section-subtitle">Choose the promotion type for this offer.</p>
+            </div>
+            
+            <div class="offer-types-grid">
+              <div class="offer-type-card" [class.selected]="offerForm.get('type')?.value === 'Percentage Off'" (click)="offerForm.get('type')?.setValue('Percentage Off')">
+                <div class="checkmark">✓</div>
+                <div class="icon">
+                  <div class="svg-icon" style="-webkit-mask-image: url('/assets/icons/offers/percent.svg'); mask-image: url('/assets/icons/offers/percent.svg');"></div>
+                </div>
+                <div class="title">Percentage Off</div>
+                <div class="subtitle">Discount by percentage</div>
+              </div>
+
+              <div class="offer-type-card" [class.selected]="offerForm.get('type')?.value === 'Flat Discount'" (click)="offerForm.get('type')?.setValue('Flat Discount')">
+                <div class="checkmark">✓</div>
+                <div class="icon">
+                  <span style="font-weight: 700;">₹</span>
+                </div>
+                <div class="title">Flat Discount</div>
+                <div class="subtitle">Fixed amount discount</div>
+              </div>
+
+              <div class="offer-type-card" [class.selected]="offerForm.get('type')?.value === 'Buy X Get Y'" (click)="offerForm.get('type')?.setValue('Buy X Get Y')">
+                <div class="checkmark">✓</div>
+                <div class="icon">
+                  <div class="svg-icon" style="-webkit-mask-image: url('/assets/icons/offers/card_giftcard.svg'); mask-image: url('/assets/icons/offers/card_giftcard.svg');"></div>
+                </div>
+                <div class="title">Buy X Get Y</div>
+                <div class="subtitle">Buy items and get free items</div>
+              </div>
+
+              <div class="offer-type-card" [class.selected]="offerForm.get('type')?.value === 'Quantity Discount'" (click)="offerForm.get('type')?.setValue('Quantity Discount')">
+                <div class="checkmark">✓</div>
+                <div class="icon">
+                  <div class="svg-icon" style="-webkit-mask-image: url('/assets/icons/offers/category.svg'); mask-image: url('/assets/icons/offers/category.svg');"></div>
+                </div>
+                <div class="title">Quantity Discount</div>
+                <div class="subtitle">Discount based on quantity</div>
+              </div>
+
+              <div class="offer-type-card" [class.selected]="offerForm.get('type')?.value === 'Spend & Save'" (click)="offerForm.get('type')?.setValue('Spend & Save')">
+                <div class="checkmark">✓</div>
+                <div class="icon">
+                  <div class="svg-icon" style="-webkit-mask-image: url('/assets/icons/offers/receipt_long.svg'); mask-image: url('/assets/icons/offers/receipt_long.svg');"></div>
+                </div>
+                <div class="title">Spend & Save</div>
+                <div class="subtitle">Discount on minimum bill</div>
+              </div>
+
+              <div class="offer-type-card" [class.selected]="offerForm.get('type')?.value === 'Tiered Offer'" (click)="offerForm.get('type')?.setValue('Tiered Offer')">
+                <div class="checkmark">✓</div>
+                <div class="icon">
+                  <div class="svg-icon" style="-webkit-mask-image: url('/assets/icons/offers/bar_chart.svg'); mask-image: url('/assets/icons/offers/bar_chart.svg');"></div>
+                </div>
+                <div class="title">Tiered Offer</div>
+                <div class="subtitle">Multiple levels of discount</div>
+              </div>
+
+              <div class="offer-type-card" [class.selected]="offerForm.get('type')?.value === 'Bundle / Combo'" (click)="offerForm.get('type')?.setValue('Bundle / Combo')">
+                <div class="checkmark">✓</div>
+                <div class="icon">
+                  <div class="svg-icon" style="-webkit-mask-image: url('/assets/icons/offers/inventory_2.svg'); mask-image: url('/assets/icons/offers/inventory_2.svg');"></div>
+                </div>
+                <div class="title">Bundle / Combo</div>
+                <div class="subtitle">Special price for a bundle</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 3: Dynamic Offer Configuration Header per Specification Rule -->
+          <div class="section-card" formGroupName="config">
+            <div class="section-header">
+              <h2 class="section-title">
+                <span class="section-num">3</span> 
+                Offer Configuration
+              </h2>
+              <p class="section-subtitle" *ngIf="offerForm.get('type')?.value === 'Percentage Off'">Set the discount details for Percentage Off</p>
+              <p class="section-subtitle" *ngIf="offerForm.get('type')?.value === 'Flat Discount'">Set the discount details for Flat Discount</p>
+              <p class="section-subtitle" *ngIf="offerForm.get('type')?.value === 'Buy X Get Y'">Configure the buy and get quantities/items.</p>
+              <p class="section-subtitle" *ngIf="offerForm.get('type')?.value === 'Quantity Discount'">Set discounts based on quantity.</p>
+              <p class="section-subtitle" *ngIf="offerForm.get('type')?.value === 'Spend & Save'">Set a minimum bill amount and discount.</p>
+              <p class="section-subtitle" *ngIf="offerForm.get('type')?.value === 'Tiered Offer'">Set multiple discount levels.</p>
+              <p class="section-subtitle" *ngIf="offerForm.get('type')?.value === 'Bundle / Combo'">Configure the products/items that form the bundle.</p>
+            </div>
+            
+            <!-- 3A: Percentage Off -->
+            <ng-container *ngIf="offerForm.get('type')?.value === 'Percentage Off'">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Discount Percentage <span class="required">*</span></label>
+                  <div class="input-with-icon">
+                    <input type="number" formControlName="discountPercentage" placeholder="20" class="has-suffix">
+                    <span class="suffix">%</span>
+                  </div>
+                  <small class="helper-text">Enter discount percentage (e.g. 20 for 20%)</small>
+                </div>
+                <div class="form-group">
+                  <label>Maximum Discount <span class="optional">(Optional)</span></label>
+                  <div class="input-with-icon">
+                    <span class="prefix">₹</span>
+                    <input type="number" formControlName="maxDiscount" placeholder="200" class="has-prefix">
+                  </div>
+                  <small class="helper-text">Maximum discount amount per bill</small>
+                </div>
+              </div>
+            </ng-container>
+
+            <!-- 3B: Flat Discount -->
+            <ng-container *ngIf="offerForm.get('type')?.value === 'Flat Discount'">
+              <div class="form-group" style="max-width: 320px;">
+                <label>Discount Amount <span class="required">*</span></label>
+                <div class="input-with-icon">
+                  <span class="prefix">₹</span>
+                  <input type="number" formControlName="discountAmount" placeholder="500" class="has-prefix">
+                </div>
+                <small class="helper-text">Fixed cash discount applied to the bill</small>
+              </div>
+            </ng-container>
+
+            <!-- 3C: Buy X Get Y -->
+            <ng-container *ngIf="offerForm.get('type')?.value === 'Buy X Get Y'">
+              <div class="config-split-grid">
+                <div class="config-box">
+                  <div class="box-tag buy-tag">BUY</div>
+                  <div class="form-row">
+                    <div class="form-group" style="flex: 0 0 90px;">
+                      <label>Quantity *</label>
+                      <input type="number" formControlName="buyQuantity" placeholder="1">
+                    </div>
+                    <div class="form-group">
+                      <label>Item / Product / Category</label>
+                      <select formControlName="buyItem">
+                        <option *ngFor="let p of offerService.getProducts()" [value]="p.name">{{ p.name }} (Product)</option>
+                        <option *ngFor="let c of offerService.getCategories()" [value]="c.name">{{ c.name }} (Category)</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="config-box">
+                  <div class="box-tag get-tag">GET</div>
+                  <div class="form-row">
+                    <div class="form-group" style="flex: 0 0 90px;">
+                      <label>Quantity *</label>
+                      <input type="number" formControlName="getQuantity" placeholder="1">
+                    </div>
+                    <div class="form-group">
+                      <label>Item / Product / Category</label>
+                      <select formControlName="getItem">
+                        <option *ngFor="let p of offerService.getProducts()" [value]="p.name">{{ p.name }} (Product)</option>
+                        <option *ngFor="let c of offerService.getCategories()" [value]="c.name">{{ c.name }} (Category)</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <!-- 3D: Quantity Discount -->
+            <ng-container *ngIf="offerForm.get('type')?.value === 'Quantity Discount'">
+              <div class="tiers-header">
+                <label>Quantity Tiers</label>
+                <span class="subtitle-text">Configure quantity tiers and discount percentages</span>
+              </div>
+              <div class="tiers-table" formArrayName="quantityTiers">
+                <div class="tier-row" *ngFor="let tier of quantityTiers.controls; let i = index" [formGroupName]="i">
+                  <div class="tier-field">
+                    <span class="tier-label">Quantity</span>
+                    <div class="input-with-icon">
+                      <input type="number" formControlName="minQty" placeholder="2" class="has-suffix">
+                      <span class="suffix">+ units</span>
+                    </div>
+                  </div>
+                  <div class="tier-field">
+                    <span class="tier-label">Discount</span>
+                    <div class="input-with-icon">
+                      <input type="number" formControlName="discountPercentage" placeholder="5" class="has-suffix">
+                      <span class="suffix">%</span>
+                    </div>
+                  </div>
+                  <button type="button" class="btn-remove-tier" (click)="removeQuantityTier(i)" title="Remove tier">✕</button>
+                </div>
+              </div>
+              <button type="button" class="btn-add-tier" (click)="addQuantityTier()">+ Add Tier</button>
+            </ng-container>
+
+            <!-- 3E: Spend & Save -->
+            <ng-container *ngIf="offerForm.get('type')?.value === 'Spend & Save'">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Minimum Bill Amount <span class="required">*</span></label>
+                  <div class="input-with-icon">
+                    <span class="prefix">₹</span>
+                    <input type="number" formControlName="minBillAmount" placeholder="500" class="has-prefix">
+                  </div>
+                  <small class="helper-text">Minimum bill required to activate discount</small>
+                </div>
+                <div class="form-group">
+                  <label>Discount <span class="required">*</span></label>
+                  <div class="input-with-icon">
+                    <input type="number" formControlName="spendSaveDiscount" placeholder="10" class="has-suffix">
+                    <span class="suffix">%</span>
+                  </div>
+                  <small class="helper-text">Percentage off given on meeting minimum spend</small>
+                </div>
+              </div>
+            </ng-container>
+
+            <!-- 3F: Tiered Offer -->
+            <ng-container *ngIf="offerForm.get('type')?.value === 'Tiered Offer'">
+              <div class="tiers-header">
+                <label>Spend Tiers</label>
+                <span class="subtitle-text">Configure spending levels and discount rewards</span>
+              </div>
+              <div class="tiers-table" formArrayName="spendTiers">
+                <div class="tier-row" *ngFor="let tier of spendTiers.controls; let i = index" [formGroupName]="i">
+                  <div class="tier-field">
+                    <span class="tier-label">Minimum Spend</span>
+                    <div class="input-with-icon">
+                      <span class="prefix">₹</span>
+                      <input type="number" formControlName="minSpend" placeholder="500" class="has-prefix">
+                    </div>
+                  </div>
+                  <div class="tier-field">
+                    <span class="tier-label">Reward</span>
+                    <div class="input-with-icon">
+                      <input type="number" formControlName="rewardPercentage" placeholder="10" class="has-suffix">
+                      <span class="suffix">%</span>
+                    </div>
+                  </div>
+                  <button type="button" class="btn-remove-tier" (click)="removeSpendTier(i)" title="Remove tier">✕</button>
+                </div>
+              </div>
+              <button type="button" class="btn-add-tier" (click)="addSpendTier()">+ Add Tier</button>
+            </ng-container>
+
+            <!-- 3G: Bundle / Combo -->
+            <ng-container *ngIf="offerForm.get('type')?.value === 'Bundle / Combo'">
+              <div class="form-group" style="margin-bottom: 20px;">
+                <label>Bundle Items</label>
+                <div class="pills-box">
+                  <span class="pill" *ngFor="let p of getSelectedBundleObjects()">
+                    {{ p.name }}
+                    <button type="button" class="pill-remove" (click)="toggleBundleProduct(p)">✕</button>
+                  </span>
+                  <div class="add-bundle-picker">
+                    <select (change)="toggleBundleProduct({ id: $any($event.target).value }); $any($event.target).value=''">
+                      <option value="" disabled selected>+ Add Product to Bundle</option>
+                      <option *ngFor="let prod of offerService.getProducts()" [value]="prod.id" [disabled]="isBundleProductSelected(prod.id)">
+                        {{ prod.name }} (₹{{ prod.price }})
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Bundle Reward</label>
+                <input type="text" formControlName="bundleReward" placeholder="e.g. Fixed Combo Price ₹180 or Free Drink">
+              </div>
+            </ng-container>
+
+          </div>
+
+          <!-- Section 4: Applies To -->
+          <div class="section-card">
+            <div class="section-header">
+              <h2 class="section-title"><span class="section-num">4</span> Applies To</h2>
+              <p class="section-subtitle">Choose where this offer can be applied.</p>
+            </div>
+            
+            <div class="radio-group" style="margin-bottom: 24px;">
+              <label class="radio-label" [class.active]="offerForm.get('appliesTo')?.value === 'Entire Bill'">
+                <input type="radio" formControlName="appliesTo" value="Entire Bill">
+                <div class="radio-text">
+                  <span class="title">Entire Bill</span>
+                  <span class="subtitle">Applies to the total bill amount</span>
+                </div>
+              </label>
+              <label class="radio-label" [class.active]="offerForm.get('appliesTo')?.value === 'Selected Products'">
+                <input type="radio" formControlName="appliesTo" value="Selected Products">
+                <div class="radio-text">
+                  <span class="title">Selected Products</span>
+                  <span class="subtitle">Applies to specific products</span>
+                </div>
+              </label>
+              <label class="radio-label" [class.active]="offerForm.get('appliesTo')?.value === 'Category'">
+                <input type="radio" formControlName="appliesTo" value="Category">
+                <div class="radio-text">
+                  <span class="title">Category</span>
+                  <span class="subtitle">Applies to a product category</span>
+                </div>
+              </label>
+            </div>
+
+            <!-- Selected Products UI -->
+            <div *ngIf="offerForm.get('appliesTo')?.value === 'Selected Products'" class="applies-content-box">
+              <div class="search-picker-wrapper">
+                <div class="input-with-icon">
+                  <div class="prefix">
+                    <div style="width: 16px; height: 16px; background-color: currentColor; -webkit-mask-image: url('/assets/icons/billing/search.svg'); mask-image: url('/assets/icons/billing/search.svg'); -webkit-mask-size: contain; mask-size: contain; mask-repeat: no-repeat;"></div>
+                  </div>
+                  <input type="text" 
+                         [(ngModel)]="productSearchQuery" 
+                         [ngModelOptions]="{standalone: true}"
+                         (focus)="productDropdownOpen = true"
+                         placeholder="Search and select products..." 
+                         class="has-prefix">
+                </div>
+                <!-- Dropdown -->
+                <div class="search-dropdown" *ngIf="productDropdownOpen">
+                  <div class="dropdown-item" 
+                       *ngFor="let p of getFilteredProducts()" 
+                       [class.selected]="isProductSelected(p.id)"
+                       (click)="toggleProduct(p)">
+                    <span>{{ p.name }}</span>
+                    <span class="price">₹{{ p.price }}</span>
+                    <span class="check" *ngIf="isProductSelected(p.id)">✓</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="selected-pills-header">
+                <span>{{ getSelectedProductObjects().length }} products selected</span>
+                <button type="button" class="btn-clear-all" (click)="clearAllProducts()">✕ Clear All</button>
+              </div>
+
+              <div class="pills-container">
+                <span class="pill" *ngFor="let p of getSelectedProductObjects()">
+                  {{ p.name }}
+                  <button type="button" class="pill-remove" (click)="removeProduct(p.id)">✕</button>
+                </span>
+                <span *ngIf="getSelectedProductObjects().length === 0" class="no-selection-text">No products selected yet. Search above to add.</span>
+              </div>
+            </div>
+            
+            <!-- Category Selection UI (Multi-Select Checkboxes) -->
+            <div *ngIf="offerForm.get('appliesTo')?.value === 'Category'" class="applies-content-box">
+              <div class="input-with-icon" style="margin-bottom: 16px;">
+                <div class="prefix">
+                  <div style="width: 16px; height: 16px; background-color: currentColor; -webkit-mask-image: url('/assets/icons/billing/search.svg'); mask-image: url('/assets/icons/billing/search.svg'); -webkit-mask-size: contain; mask-size: contain; mask-repeat: no-repeat;"></div>
+                </div>
+                <input type="text" 
+                       [(ngModel)]="categorySearchQuery" 
+                       [ngModelOptions]="{standalone: true}"
+                       placeholder="Search categories..." 
+                       class="has-prefix">
+              </div>
+
+              <div class="categories-grid">
+                <label class="category-checkbox-item" *ngFor="let c of getFilteredCategories()" [class.checked]="isCategorySelected(c.id)">
+                  <input type="checkbox" [checked]="isCategorySelected(c.id)" (change)="toggleCategory(c.id)">
+                  <span class="cat-name">{{ c.name }}</span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 5: Conditions (Optional) -->
+          <div class="section-card">
+            <div class="section-header">
+              <h2 class="section-title"><span class="section-num">5</span> Conditions <span style="font-weight: 500; font-size: 16px; color: #6B7280;">(Optional)</span></h2>
+              <p class="section-subtitle">Set minimum requirements for this offer.</p>
+            </div>
+            
+            <div class="conditions-grid">
+              <div class="condition-row">
+                <label class="checkbox-label">
+                  <input type="checkbox" formControlName="hasMinBill">
+                  <div>
+                    <span class="title" style="display: block;">Minimum Bill Amount</span>
+                    <span class="cond-subtitle">Offer applies only if bill amount is at least</span>
+                  </div>
+                </label>
+                <div class="condition-input form-group" *ngIf="offerForm.get('hasMinBill')?.value" formGroupName="config">
+                  <div class="input-with-icon">
+                    <span class="prefix">₹</span>
+                    <input type="number" formControlName="minBillAmount" placeholder="500" class="has-prefix">
+                  </div>
+                </div>
+              </div>
+              
+              <div class="condition-row">
+                <label class="checkbox-label">
+                  <input type="checkbox" formControlName="hasMinQuantity">
+                  <div>
+                    <span class="title" style="display: block;">Minimum Quantity</span>
+                    <span class="cond-subtitle">Offer applies only if minimum quantity is purchased</span>
+                  </div>
+                </label>
+                <div class="condition-input form-group" *ngIf="offerForm.get('hasMinQuantity')?.value">
+                  <div class="input-with-icon">
+                    <input type="number" formControlName="minQuantity" placeholder="5" class="has-suffix">
+                    <span class="suffix">units</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section 6: Schedule -->
+          <div class="section-card">
+            <div class="section-header">
+              <h2 class="section-title"><span class="section-num">6</span> Schedule</h2>
+              <p class="section-subtitle">Set when this offer is valid.</p>
+            </div>
+            
+            <div class="schedule-row">
+              <div class="form-group date-group">
+                <label>Start Date <span class="required">*</span></label>
+                <div class="input-with-icon">
+                  <div class="prefix">
+                    <div style="width: 16px; height: 16px; background-color: currentColor; -webkit-mask-image: url('/assets/icons/offers/calendar_today.svg'); mask-image: url('/assets/icons/offers/calendar_today.svg'); -webkit-mask-size: contain; mask-size: contain; mask-repeat: no-repeat;"></div>
+                  </div>
+                  <input type="date" formControlName="startDate" class="has-prefix no-calendar-icon" [class.invalid]="offerForm.get('startDate')?.invalid && offerForm.get('startDate')?.touched">
+                </div>
+              </div>
+              <div class="form-group date-group">
+                <label>End Date <span class="required">*</span></label>
+                <div class="input-with-icon">
+                  <div class="prefix">
+                    <div style="width: 16px; height: 16px; background-color: currentColor; -webkit-mask-image: url('/assets/icons/offers/calendar_today.svg'); mask-image: url('/assets/icons/offers/calendar_today.svg'); -webkit-mask-size: contain; mask-size: contain; mask-repeat: no-repeat;"></div>
+                  </div>
+                  <input type="date" formControlName="endDate" class="has-prefix no-calendar-icon" [class.invalid]="offerForm.get('endDate')?.invalid && offerForm.get('endDate')?.touched">
+                </div>
+              </div>
+              
+              <div class="form-group days-group">
+                <label>Days of Week</label>
+                <div class="days-chips">
+                  <button type="button" 
+                          class="day-chip" 
+                          *ngFor="let day of allDays" 
+                          [class.active]="isDaySelected(day)"
+                          (click)="toggleDay(day)">
+                    {{ day }}
+                  </button>
+                </div>
+              </div>
+
+              <div class="time-container form-group">
+                <label>Time <span class="optional">(Optional)</span></label>
+                <div class="time-inputs-wrapper">
+                  <div class="input-with-icon">
+                    <div class="prefix">
+                      <div style="width: 16px; height: 16px; background-color: currentColor; -webkit-mask-image: url('/assets/icons/offers/schedule.svg'); mask-image: url('/assets/icons/offers/schedule.svg'); -webkit-mask-size: contain; mask-size: contain; mask-repeat: no-repeat;"></div>
+                    </div>
+                    <input type="time" formControlName="startTime" class="has-prefix no-clock-icon">
+                  </div>
+                  <div class="input-with-icon">
+                    <div class="prefix">
+                      <div style="width: 16px; height: 16px; background-color: currentColor; -webkit-mask-image: url('/assets/icons/offers/schedule.svg'); mask-image: url('/assets/icons/offers/schedule.svg'); -webkit-mask-size: contain; mask-size: contain; mask-repeat: no-repeat;"></div>
+                    </div>
+                    <input type="time" formControlName="endTime" class="has-prefix no-clock-icon">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div> <!-- /main-configuration -->
+
+        <!-- The Offer Summary has been moved to an overlay outside of main-configuration -->
+
+
+      </div> <!-- /form-layout-container -->
+    </div>
+
+    <!-- Footer Actions Fixed Bottom -->
+    <div class="form-actions-container">
+      <div class="form-actions">
+        <button type="button" class="btn-cancel" (click)="onCancel()">Cancel</button>
+        <button type="button" class="btn-preview" (click)="showPreviewOverlay = true">Preview</button>
+        <button type="button" class="btn-save" (click)="onSaveOffer()">Save Offer</button>
+      </div>
+    </div>
+    
+    <!-- Preview Overlay Modal -->
+    <div class="preview-overlay" *ngIf="showPreviewOverlay">
+      <div class="preview-modal">
+        <div class="modal-header">
+          <div>
+            <h2 class="summary-title">Offer Summary</h2>
+            <p class="summary-subtitle">Review your offer details</p>
+          </div>
+          <button class="btn-close" (click)="showPreviewOverlay = false">✕</button>
+        </div>
+        
+        <div class="summary-details">
+          <div class="summary-item">
+            <span class="label">Offer Name</span>
+            <span class="value">{{ offerForm.get('name')?.value || '-' }}</span>
+          </div>
+          <div class="summary-item">
+            <span class="label">Description</span>
+            <span class="value">{{ offerForm.get('description')?.value || '-' }}</span>
+          </div>
+          <div class="summary-item">
+            <span class="label">Type</span>
+            <span class="value">{{ offerForm.get('type')?.value || '-' }}</span>
+          </div>
+          <div class="summary-item">
+            <span class="label">Discount</span>
+            <span class="value">{{ getBenefitText() }}</span>
+          </div>
+          <div class="summary-item">
+            <span class="label">Applies To</span>
+            <span class="value">
+              {{ offerForm.get('appliesTo')?.value }}
+              <span class="sub-value text-blue" *ngIf="offerForm.get('appliesTo')?.value !== 'Entire Bill'">{{ getAppliesToText() }}</span>
+            </span>
+          </div>
+          <div class="summary-item">
+            <span class="label">Conditions</span>
+            <span class="value">
+              <span *ngIf="!offerForm.get('hasMinBill')?.value && !offerForm.get('hasMinQuantity')?.value">None</span>
+              <span *ngIf="offerForm.get('hasMinBill')?.value">Min. Bill: ₹{{ offerForm.get('config.minBillAmount')?.value }}<br></span>
+              <span *ngIf="offerForm.get('hasMinQuantity')?.value">Min. Qty: {{ offerForm.get('minQuantity')?.value }} units</span>
+            </span>
+          </div>
+          <div class="summary-item">
+            <span class="label">Validity</span>
+            <span class="value">
+              {{ offerForm.get('startDate')?.value || '-' }} – {{ offerForm.get('endDate')?.value || '-' }}<br>
+              <span class="sub-value" *ngIf="offerForm.get('selectedDays')?.value?.length">
+                {{ offerForm.get('selectedDays')?.value?.join(', ') }}
+              </span>
+              <span class="sub-value" *ngIf="offerForm.get('startTime')?.value">
+                {{ offerForm.get('startTime')?.value }} – {{ offerForm.get('endTime')?.value }}
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-backdrop" (click)="showPreviewOverlay = false"></div>
+    </div>
+    
+  </div>
+</ng-template>

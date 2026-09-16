@@ -1,0 +1,198 @@
+<div class="offers-dashboard">
+  <div class="offers-header-container">
+    <div class="header-text">
+      <h1 class="page-title">Offers</h1>
+      <p class="page-subtitle">Create and manage offers to grow your business</p>
+    </div>
+    <button class="btn-create-offer" routerLink="/offers/create">
+      <span class="plus-icon">+</span> Create Offer
+    </button>
+  </div>
+  
+  <div class="offers-content-area">
+
+  <div class="summary-cards">
+    <div class="summary-card">
+      <div class="card-icon total-icon">
+        <div class="icon-inner" style="-webkit-mask-image: url('assets/icons/offers/local_offer.svg'); mask-image: url('assets/icons/offers/local_offer.svg');"></div>
+      </div>
+      <div class="card-content">
+        <span class="card-value">{{ totalOffers() }}</span>
+        <span class="card-label">Total Offers</span>
+      </div>
+    </div>
+    
+    <div class="summary-card">
+      <div class="card-icon active-icon">
+        <div class="status-dot green"></div>
+      </div>
+      <div class="card-content">
+        <span class="card-value">{{ activeOffers() }}</span>
+        <span class="card-label">Active Offers</span>
+      </div>
+    </div>
+
+    <div class="summary-card">
+      <div class="card-icon inactive-icon">
+        <div class="status-dot red"></div>
+      </div>
+      <div class="card-content">
+        <span class="card-value">{{ inactiveOffers() }}</span>
+        <span class="card-label">Inactive Offers</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="search-filter-section">
+    <div class="search-bar-container">
+      <div class="search-input-wrapper">
+        <div class="search-icon" style="-webkit-mask-image: url('assets/icons/billing/search.svg'); mask-image: url('assets/icons/billing/search.svg');"></div>
+        <input type="text" class="search-input" placeholder="Search offers by name or keyword..." [ngModel]="searchQuery()" (ngModelChange)="searchQuery.set($event)" />
+      </div>
+      <button class="btn-filter-mobile">
+        <div class="filter-icon" style="-webkit-mask-image: url('assets/icons/common/filter_list.svg'); mask-image: url('assets/icons/common/filter_list.svg');"></div>
+      </button>
+    </div>
+
+    <div class="filters-row">
+      <select class="filter-dropdown" [ngModel]="filterType()" (ngModelChange)="filterType.set($event)">
+        <option value="All">All Types</option>
+        <option value="Percentage Off">Percentage Off</option>
+        <option value="Flat Discount">Flat Discount</option>
+        <option value="Buy X Get Y">Buy X Get Y</option>
+      </select>
+      
+      <select class="filter-dropdown" [ngModel]="filterAppliesTo()" (ngModelChange)="filterAppliesTo.set($event)">
+        <option value="All">All Applies To</option>
+        <option value="Entire Bill">Entire Bill</option>
+        <option value="Selected Products">Selected Products</option>
+        <option value="Category">Category</option>
+      </select>
+      
+      <select class="filter-dropdown" [ngModel]="filterStatus()" (ngModelChange)="filterStatus.set($event)">
+        <option value="All">All Status</option>
+        <option value="Active">Active</option>
+        <option value="Inactive">Inactive</option>
+      </select>
+    </div>
+  </div>
+
+
+
+  <!-- Desktop/Tablet Table View -->
+  <div class="offers-table-container">
+    <table class="offers-table">
+      <thead>
+        <tr>
+          <th><div class="th-content">Seq <div class="sort-icon" style="-webkit-mask-image: url('assets/icons/common/unfold_more.svg'); mask-image: url('assets/icons/common/unfold_more.svg');"></div></div></th>
+          <th><div class="th-content">Offer Name <div class="sort-icon" style="-webkit-mask-image: url('assets/icons/common/unfold_more.svg'); mask-image: url('assets/icons/common/unfold_more.svg');"></div></div></th>
+          <th><div class="th-content">Type <div class="sort-icon" style="-webkit-mask-image: url('assets/icons/common/unfold_more.svg'); mask-image: url('assets/icons/common/unfold_more.svg');"></div></div></th>
+          <th><div class="th-content">Benefit <div class="sort-icon" style="-webkit-mask-image: url('assets/icons/common/unfold_more.svg'); mask-image: url('assets/icons/common/unfold_more.svg');"></div></div></th>
+          <th><div class="th-content">Applies To <div class="sort-icon" style="-webkit-mask-image: url('assets/icons/common/unfold_more.svg'); mask-image: url('assets/icons/common/unfold_more.svg');"></div></div></th>
+          <th><div class="th-content">Validity <div class="sort-icon" style="-webkit-mask-image: url('assets/icons/common/unfold_more.svg'); mask-image: url('assets/icons/common/unfold_more.svg');"></div></div></th>
+          <th><div class="th-content">Status <div class="sort-icon" style="-webkit-mask-image: url('assets/icons/common/unfold_more.svg'); mask-image: url('assets/icons/common/unfold_more.svg');"></div></div></th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let offer of paginatedOffers()">
+          <td>{{ offer.seq }}</td>
+          <td>
+            <div class="offer-name-cell">
+              <span class="name">{{ offer.name }}</span>
+              <span class="desc">{{ offer.description }}</span>
+            </div>
+          </td>
+          <td><span class="badge-type">{{ offer.type }}</span></td>
+          <td>{{ offer.benefit }}</td>
+          <td>{{ offer.appliesTo }}</td>
+          <td>{{ offer.validity }}</td>
+          <td>
+            <div class="status-toggle" [class.active]="offer.status === 'Active'" (click)="toggleStatus(offer.id)">
+              <span class="status-text">{{ offer.status }}</span>
+              <div class="toggle-switch"></div>
+            </div>
+          </td>
+          <td>
+            <div class="actions-cell">
+              <button class="btn-icon edit" title="Edit">
+                <div class="icon" style="-webkit-mask-image: url('assets/icons/common/edit.svg'); mask-image: url('assets/icons/common/edit.svg');"></div>
+              </button>
+              <button class="btn-icon delete" title="Delete" (click)="deleteOffer(offer.id)">
+                <div class="icon" style="-webkit-mask-image: url('assets/icons/common/delete.svg'); mask-image: url('assets/icons/common/delete.svg');"></div>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Mobile Card List View -->
+  <div class="offers-mobile-list">
+    <div class="mobile-offer-card" *ngFor="let offer of paginatedOffers()">
+      
+      <div class="card-info-area">
+        <div class="info-left">
+          <span class="seq-badge">{{ offer.seq }}</span>
+          <div class="name-desc">
+            <span class="offer-name">{{ offer.name }}</span>
+            <span class="offer-desc">{{ offer.description }}</span>
+          </div>
+          <span class="offer-type-badge">[{{ offer.type }}]</span>
+        </div>
+        
+        <div class="info-divider"></div>
+
+        <div class="info-right">
+          <div class="detail-row">
+            <div class="detail-icon" style="-webkit-mask-image: url('assets/icons/offers/percent.svg'); mask-image: url('assets/icons/offers/percent.svg');"></div>
+            <span class="detail-text">{{ offer.benefit }}</span>
+          </div>
+          <div class="detail-row">
+            <div class="detail-icon" style="-webkit-mask-image: url('assets/icons/offers/category.svg'); mask-image: url('assets/icons/offers/category.svg');"></div>
+            <span class="detail-text">Applies to: {{ offer.appliesToDetails || offer.appliesTo }}</span>
+          </div>
+          <div class="detail-row">
+            <div class="detail-icon" style="-webkit-mask-image: url('assets/icons/offers/calendar_today.svg'); mask-image: url('assets/icons/offers/calendar_today.svg');"></div>
+            <span class="detail-text">{{ offer.validity }}</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card-action-area">
+        <div class="status-toggle-container">
+          <span class="status-label">{{ offer.status }}</span>
+          <div class="toggle-switch-mobile" [class.active]="offer.status === 'Active'" (click)="toggleStatus(offer.id)">
+            <div class="knob"></div>
+          </div>
+        </div>
+        
+        <div class="action-buttons">
+          <button class="btn-text edit">
+            <div class="icon" style="-webkit-mask-image: url('assets/icons/common/edit.svg'); mask-image: url('assets/icons/common/edit.svg');"></div>
+            Edit
+          </button>
+          <button class="btn-text delete" (click)="deleteOffer(offer.id)">
+            <div class="icon" style="-webkit-mask-image: url('assets/icons/common/delete.svg'); mask-image: url('assets/icons/common/delete.svg');"></div>
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Advanced Pagination -->
+  <biz-pagination 
+    [totalItems]="totalFilteredOffers()"
+    [pageSize]="pageSize"
+    [currentPage]="currentPage"
+    [pageSizeOptions]="[10, 20, 50, 100]"
+    itemName="offers"
+    (pageChange)="onPageChange($event)"
+    (pageSizeChange)="onPageSizeChange($event)">
+  </biz-pagination>
+
+  </div> <!-- end content area -->
+
+</div>

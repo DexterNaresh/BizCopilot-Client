@@ -9,6 +9,7 @@ import { CategoriesComponent } from '../features/categories/categories.component
 import { CustomersComponent } from '../features/customers/customers.component';
 import { ReportsComponent } from '../features/reports/reports.component';
 import { OffersComponent } from '../features/offers/offers.component';
+import { CreateOfferComponent } from '../features/offers/create-offer/create-offer.component';
 import { AiAssistantComponent } from '../features/ai-assistant/ai-assistant.component';
 import { SettingsComponent } from '../features/settings/settings.component';
 import { BackupSyncComponent } from '../features/backup-sync/backup-sync.component';
@@ -34,6 +35,7 @@ export const routes: Routes = [
       { path: 'customers', component: CustomersComponent },
       { path: 'reports', component: ReportsComponent },
       { path: 'offers', component: OffersComponent },
+      { path: 'offers/create', component: CreateOfferComponent },
       { path: 'ai-assistant', component: AiAssistantComponent },
       { path: 'settings', component: SettingsComponent },
       { path: 'backup-sync', component: BackupSyncComponent },
