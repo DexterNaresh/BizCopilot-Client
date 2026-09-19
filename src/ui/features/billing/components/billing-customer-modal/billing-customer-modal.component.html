@@ -20,10 +20,10 @@
   <div class="modal-content">
     
     <!-- 1. Search Customer -->
-    <div class="section search-section">
+    <div class="section search-section" [class.has-results]="searchResults !== null">
       <h3>1. Search Customer (name / phone number)</h3>
       
-      <div class="search-input-wrapper">
+      <div class="modal-search-wrapper">
         <biz-icon category="common" name="search" class="search-icon"></biz-icon>
         <input 
           type="text" 

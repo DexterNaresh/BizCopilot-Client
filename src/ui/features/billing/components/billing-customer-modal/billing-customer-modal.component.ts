@@ -76,15 +76,16 @@ export class BillingCustomerModalComponent implements OnInit, OnDestroy {
     }
   }
 
-  private performSearch(term: string) {
-    if (!term || term.trim().length < 2) {
+  private performSearch(term: any) {
+    const termStr = String(term || '');
+    if (termStr.trim().length < 2) {
       this.searchResults = null;
       this.isSearching = false;
       return;
     }
     
     this.isSearching = true;
-    const lowerTerm = term.toLowerCase().trim();
+    const lowerTerm = termStr.toLowerCase().trim();
     
     // Simulate slight delay for realism
     setTimeout(() => {
