@@ -1,0 +1,66 @@
+<div class="kpi-grid">
+  <!-- Total Sales -->
+  <div class="kpi-card">
+    <div class="kpi-icon icon-blue">
+      <span class="material-symbols-outlined">bar_chart</span>
+    </div>
+    <div class="kpi-content">
+      <span class="kpi-label">Total Sales</span>
+      <span class="kpi-value">₹{{ data.totalSales | number:'1.0-0' }}</span>
+      <div class="kpi-trend trend-up">
+        <span class="material-symbols-outlined icon-16">north</span>
+        <span>12%</span>
+        <span class="trend-sub">vs previous day</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Total Bills -->
+  <div class="kpi-card">
+    <div class="kpi-icon icon-green">
+      <span class="material-symbols-outlined">description</span>
+    </div>
+    <div class="kpi-content">
+      <span class="kpi-label">Total Bills</span>
+      <span class="kpi-value">{{ data.totalBills }}</span>
+      <div class="kpi-trend trend-up">
+        <span class="material-symbols-outlined icon-16">north</span>
+        <span>8%</span>
+        <span class="trend-sub">vs previous day</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Average Bill Value -->
+  <div class="kpi-card">
+    <div class="kpi-icon icon-orange">
+      <span class="material-symbols-outlined">currency_rupee</span>
+    </div>
+    <div class="kpi-content">
+      <span class="kpi-label">Average Bill Value</span>
+      <span class="kpi-value">₹{{ data.averageBill | number:'1.2-2' }}</span>
+      <div class="kpi-trend trend-down">
+        <span class="material-symbols-outlined icon-16">north</span>
+        <span>-5%</span>
+        <span class="trend-sub">vs previous day</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Discount Given -->
+  <div class="kpi-card">
+    <div class="kpi-icon icon-pink">
+      <span class="material-symbols-outlined">sell</span>
+    </div>
+    <div class="kpi-content">
+      <span class="kpi-label">Discount Given</span>
+      <span class="kpi-value">₹{{ data.discountGiven | number:'1.0-0' }}</span>
+      <div class="kpi-trend trend-up">
+        <span class="material-symbols-outlined icon-16">north</span>
+        <span>18%</span>
+        <span class="trend-sub">vs previous day</span>
+      </div>
+    </div>
+  </div>
+</div>
+

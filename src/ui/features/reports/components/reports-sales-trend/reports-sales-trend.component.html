@@ -1,0 +1,70 @@
+<div class="trend-card">
+  <div class="trend-header">
+    <div class="header-titles">
+      <h3 class="trend-title">Sales Trend</h3>
+      <p class="trend-subtitle">{{ subtitle }}</p>
+    </div>
+    <div class="trend-metric-badge">
+      <span>Sales Amount (₹)</span>
+      <span class="material-symbols-outlined icon-16">expand_more</span>
+    </div>
+  </div>
+  
+  <div class="chart-container">
+    <!-- Y-Axis Labels -->
+    <div class="y-axis">
+      <span *ngFor="let labelVal of yAxisLabels">₹{{ labelVal | number:'1.0-0' }}</span>
+    </div>
+
+    <!-- Chart Main Plot -->
+    <div class="chart-plot">
+      <!-- Horizontal Grid Lines -->
+      <div class="grid-lines">
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+        <div class="grid-line"></div>
+      </div>
+      
+      <!-- SVG Data Line -->
+      <svg viewBox="0 0 1000 100" preserveAspectRatio="none" class="chart-svg">
+        <defs>
+          <linearGradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stop-color="rgba(99, 102, 241, 0.15)" />
+            <stop offset="100%" stop-color="rgba(99, 102, 241, 0.0)" />
+          </linearGradient>
+        </defs>
+
+        <path [attr.d]="svgPath + ' L 1000,100 L 0,100 Z'" fill="url(#chartGradient)"></path>
+        <path [attr.d]="svgPath" fill="none" stroke="#6366F1" stroke-width="2.5" class="line-path"></path>
+      </svg>
+      
+      <!-- Data Dots & Active Tooltip -->
+      <div class="data-points">
+        <div class="data-point" *ngFor="let point of chartData; let i = index"
+             [class.active]="point.time === activePointTime"
+             [style.left]="(i / (chartData.length - 1)) * 100 + '%'"
+             [style.bottom]="point.yPos + '%'"
+             (mouseenter)="setActivePoint(point.time)"
+             (click)="setActivePoint(point.time)">
+             
+             <!-- Vertical Dashed Line for Active Point -->
+             <div class="active-guide-line" *ngIf="point.time === activePointTime"></div>
+
+             <div class="dot-marker"></div>
+
+             <div class="active-tooltip" *ngIf="point.time === activePointTime">
+                <span class="tooltip-time">{{ point.time }}</span>
+                <span class="tooltip-val">₹{{ point.value | number:'1.0-0' }}</span>
+             </div>
+        </div>
+      </div>
+
+      <!-- X-Axis Labels -->
+      <div class="x-axis">
+        <span *ngFor="let point of chartData" [class.active-label]="point.time === activePointTime">{{ point.time }}</span>
+      </div>
+    </div>
+  </div>
+</div>

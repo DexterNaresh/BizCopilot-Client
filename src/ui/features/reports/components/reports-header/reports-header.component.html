@@ -1,0 +1,38 @@
+<div class="reports-header-container">
+  <div class="header-back">
+    <a class="back-link" routerLink="/reports">
+      <span class="material-symbols-outlined icon-18">arrow_back</span>
+      <span>Back to Reports</span>
+    </a>
+  </div>
+
+  <div class="header-main">
+    <div class="header-titles">
+      <h1 class="page-title">Sales Report</h1>
+      <p class="page-subtitle">View and analyze your sales for the selected period</p>
+    </div>
+    
+    <div class="header-actions">
+      <button class="btn btn-primary btn-export" (click)="toggleExportMenu()">
+        <span class="material-symbols-outlined icon-20">download</span>
+        <span>Export</span>
+        <span class="material-symbols-outlined icon-18">expand_more</span>
+      </button>
+
+      <div class="export-dropdown" *ngIf="isExportOpen">
+        <button class="dropdown-item" (click)="exportAs('pdf')">
+          <span class="material-symbols-outlined icon-18">picture_as_pdf</span>
+          <span>Export as PDF</span>
+        </button>
+        <button class="dropdown-item" (click)="exportAs('excel')">
+          <span class="material-symbols-outlined icon-18">table_view</span>
+          <span>Export as Excel</span>
+        </button>
+        <button class="dropdown-item" (click)="exportAs('csv')">
+          <span class="material-symbols-outlined icon-18">csv</span>
+          <span>Export as CSV</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

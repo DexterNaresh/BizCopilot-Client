@@ -1,160 +1,48 @@
-<div class="reports-container">
-  <!-- Analytics Header -->
-  <div class="reports-header card-glass">
-    <div class="header-left">
-      <h1 class="page-title">Reports & Analytics</h1>
-      <p class="page-subtitle">Track sales performance, revenue trends, and product insights.</p>
+<div class="report-page-container">
+  <app-reports-header></app-reports-header>
+  
+  <app-reports-controls
+    [selectedPeriod]="selectedPeriod"
+    [activeFilterCount]="activeFilterCount"
+    (periodChange)="onPeriodChange($event)"
+    (filterApply)="onFilterApply($event)"
+    (filterClear)="onFilterClear()">
+  </app-reports-controls>
+  
+  <app-reports-kpi [data]="kpiData"></app-reports-kpi>
+  
+  <div class="trend-payment-grid">
+    <div class="trend-section">
+      <app-reports-sales-trend
+        [subtitle]="trendSubtitle"
+        [rawData]="trendRawData">
+      </app-reports-sales-trend>
     </div>
-    <div class="header-right">
-      <div class="date-filter-group">
-        <button 
-          *ngFor="let filter of dateFilters" 
-          class="filter-chip" 
-          [class.active]="activeDateFilter === filter"
-          (click)="activeDateFilter = filter">
-          {{ filter }}
-        </button>
-      </div>
-      <button class="btn btn-outline" (click)="exportReport()">
-        <span class="material-symbols-outlined icon-20">download</span>
-        Export
-      </button>
-    </div>
-  </div>
-
-  <!-- Key Analytics KPI Cards -->
-  <div class="kpi-grid">
-    <div class="kpi-card card-premium">
-      <div class="kpi-header">
-        <span class="kpi-title">Total Sales Revenue</span>
-        <div class="kpi-icon-badge purple">
-          <span class="material-symbols-outlined">payments</span>
-        </div>
-      </div>
-      <div class="kpi-body">
-        <span class="kpi-amount">₹1,42,850.00</span>
-        <span class="kpi-trend positive">
-          <span class="material-symbols-outlined icon-16">trending_up</span>
-          +14.2% vs last period
-        </span>
-      </div>
-    </div>
-
-    <div class="kpi-card card-premium">
-      <div class="kpi-header">
-        <span class="kpi-title">Total Bills Completed</span>
-        <div class="kpi-icon-badge blue">
-          <span class="material-symbols-outlined">receipt_long</span>
-        </div>
-      </div>
-      <div class="kpi-body">
-        <span class="kpi-amount">312</span>
-        <span class="kpi-trend positive">
-          <span class="material-symbols-outlined icon-16">trending_up</span>
-          +8.5% vs last period
-        </span>
-      </div>
-    </div>
-
-    <div class="kpi-card card-premium">
-      <div class="kpi-header">
-        <span class="kpi-title">Average Bill Value</span>
-        <div class="kpi-icon-badge green">
-          <span class="material-symbols-outlined">bar_chart</span>
-        </div>
-      </div>
-      <div class="kpi-body">
-        <span class="kpi-amount">₹457.85</span>
-        <span class="kpi-trend positive">
-          <span class="material-symbols-outlined icon-16">trending_up</span>
-          +5.3% higher basket size
-        </span>
-      </div>
-    </div>
-
-    <div class="kpi-card card-premium">
-      <div class="kpi-header">
-        <span class="kpi-title">Discounts & Offers</span>
-        <div class="kpi-icon-badge orange">
-          <span class="material-symbols-outlined">local_offer</span>
-        </div>
-      </div>
-      <div class="kpi-body">
-        <span class="kpi-amount">₹12,450.00</span>
-        <span class="kpi-trend neutral">
-          Applied on 64 bills
-        </span>
-      </div>
+    <div class="payment-section">
+      <app-reports-payment-methods
+        [totalSales]="kpiData.totalSales"
+        [paymentMethods]="paymentMethodsData">
+      </app-reports-payment-methods>
     </div>
   </div>
-
-  <!-- Middle Split: Payment Modes & Peak Hours -->
-  <div class="analytics-split">
-    <!-- Payment Mode Breakdown -->
-    <div class="chart-card card-premium">
-      <div class="card-header">
-        <h3>Payment Method Distribution</h3>
-        <span class="badge badge-primary">3 Modes</span>
-      </div>
-      <div class="payment-bars">
-        <div class="payment-item">
-          <div class="payment-info">
-            <span class="method-name">UPI / QR Code</span>
-            <span class="method-value">₹82,853 (58%)</span>
-          </div>
-          <div class="progress-bar-bg">
-            <div class="progress-fill upi" style="width: 58%;"></div>
-          </div>
-        </div>
-
-        <div class="payment-item">
-          <div class="payment-info">
-            <span class="method-name">Cash</span>
-            <span class="method-value">₹45,712 (32%)</span>
-          </div>
-          <div class="progress-bar-bg">
-            <div class="progress-fill cash" style="width: 32%;"></div>
-          </div>
-        </div>
-
-        <div class="payment-item">
-          <div class="payment-info">
-            <span class="method-name">Credit / Debit Card</span>
-            <span class="method-value">₹14,285 (10%)</span>
-          </div>
-          <div class="progress-bar-bg">
-            <div class="progress-fill card" style="width: 10%;"></div>
-          </div>
-        </div>
-      </div>
+  
+  <div class="insights-grid">
+    <div class="top-products-section">
+      <app-reports-top-products></app-reports-top-products>
     </div>
-
-    <!-- Top Selling Products Table -->
-    <div class="ranking-card card-premium">
-      <div class="card-header">
-        <h3>Top Selling Products</h3>
-        <span class="badge badge-success">Ranked by Volume</span>
-      </div>
-      <div class="ranking-table-wrapper">
-        <table class="ranking-table">
-          <thead>
-            <tr>
-              <th>Rank</th>
-              <th>Product</th>
-              <th>Units Sold</th>
-              <th>Revenue</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of topProducts">
-              <td><span class="rank-badge" [class.rank-top]="item.rank <= 3">#{{ item.rank }}</span></td>
-              <td class="product-name-cell">{{ item.name }}</td>
-              <td>{{ item.units }} units</td>
-              <td class="revenue-cell">₹{{ item.revenue | number:'1.2-2' }}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <div class="offers-section">
+      <app-reports-offers></app-reports-offers>
     </div>
+  </div>
+  
+  <div class="details-section">
+    <app-reports-sales-details
+      [allRecords]="filteredRecords"
+      [currentPage]="currentPage"
+      [pageSize]="pageSize"
+      (pageChange)="onPageChange($event)"
+      (pageSizeChange)="onPageSizeChange($event)">
+    </app-reports-sales-details>
   </div>
 </div>
+

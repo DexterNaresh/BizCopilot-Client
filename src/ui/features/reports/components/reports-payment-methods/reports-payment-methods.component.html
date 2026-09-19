@@ -1,0 +1,68 @@
+<div class="payments-card">
+  <div class="payments-header">
+    <div class="header-titles">
+      <h3 class="payments-title">Payment Method Breakdown</h3>
+      <p class="payments-subtitle">Total sales by payment method</p>
+    </div>
+    <div class="header-filters">
+      <div class="pill-toggle">
+        <button class="pill-option"
+                [class.active]="sortMode === 'percentage'"
+                (click)="setSortMode('percentage')">By %</button>
+        <button class="pill-option"
+                [class.active]="sortMode === 'amount'"
+                (click)="setSortMode('amount')">By Amount</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- DESKTOP & TABLET VIEW: SVG Donut Chart + Legend -->
+  <div class="payments-body desktop-tablet-view">
+    <!-- SVG Donut Chart -->
+    <div class="donut-wrapper">
+      <svg class="donut-svg" viewBox="0 0 200 200">
+        <g transform="rotate(-90 100 100)">
+          <circle
+            *ngFor="let seg of chartSegments"
+            cx="100"
+            cy="100"
+            r="65"
+            fill="transparent"
+            [attr.stroke]="seg.color"
+            stroke-width="28"
+            [attr.stroke-dasharray]="seg.dashArray"
+            [attr.stroke-dashoffset]="seg.dashOffset"
+            stroke-linecap="butt"
+          />
+        </g>
+        <!-- Center Overlay Text -->
+        <text x="100" y="92" text-anchor="middle" class="center-amount">₹{{ totalSales | number:'1.0-0' }}</text>
+        <text x="100" y="114" text-anchor="middle" class="center-label">Total Sales</text>
+      </svg>
+    </div>
+
+    <!-- Right Side 3-Column Legend (sorted) -->
+    <div class="legend-list">
+      <div class="legend-row" *ngFor="let item of sortedPaymentMethods">
+        <div class="legend-method">
+          <span class="legend-dot" [style.background-color]="item.color"></span>
+          <span class="method-name">{{ item.name }}</span>
+        </div>
+        <div class="legend-percentage">{{ item.percentage }}%</div>
+        <div class="legend-amount">₹{{ item.amount | number:'1.0-0' }}</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOBILE ALONE VIEW: Old Horizontal Progress Bars (sorted) -->
+  <div class="payments-mobile-bars mobile-view">
+    <div class="bar-row" *ngFor="let item of sortedPaymentMethods">
+      <div class="bar-label">{{ item.name }}</div>
+      <div class="bar-track">
+        <div class="bar-fill" [style.width.%]="item.percentage" [style.background-color]="item.color"></div>
+      </div>
+      <div class="bar-percentage">{{ item.percentage }}%</div>
+      <div class="bar-amount">₹{{ item.amount | number:'1.0-0' }}</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,63 @@
+<div class="products-card">
+  <div class="products-header">
+    <div class="header-titles">
+      <h3 class="products-title">{{ cardTitle }}</h3>
+      <p class="products-subtitle">{{ cardSubtitle }}</p>
+    </div>
+    <div class="header-filters">
+      <!-- Direction Toggle: Top / Low -->
+      <div class="pill-toggle">
+        <button class="pill-option"
+                [class.active]="sortDirection === 'top'"
+                (click)="setSortDirection('top')">
+          <span class="material-symbols-outlined icon-14">trending_up</span>
+          Top
+        </button>
+        <button class="pill-option"
+                [class.active]="sortDirection === 'low'"
+                (click)="setSortDirection('low')">
+          <span class="material-symbols-outlined icon-14">trending_down</span>
+          Low
+        </button>
+      </div>
+      <!-- Metric Toggle: Revenue / Units -->
+      <div class="pill-toggle metric-toggle">
+        <button class="pill-option"
+                [class.active]="sortMetric === 'revenue'"
+                (click)="setSortMetric('revenue')">Revenue</button>
+        <button class="pill-option"
+                [class.active]="sortMetric === 'units'"
+                (click)="setSortMetric('units')">Units</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="products-list">
+    <div class="product-item" *ngFor="let product of sortedProducts">
+      
+      <div class="product-rank">
+        <span class="rank-badge" [ngClass]="'rank-' + product.rank">{{ product.rank }}</span>
+      </div>
+
+      <div class="product-info-col">
+        <div class="product-header">
+          <div class="product-name-cat">
+            <span class="product-name">{{ product.name }}</span>
+            <span class="product-category">{{ product.category }}</span>
+          </div>
+          <div class="product-stats">
+            <span class="product-revenue">₹{{ product.revenue | number:'1.0-0' }}</span>
+            <span class="product-units">{{ product.unitsSold }} units</span>
+          </div>
+        </div>
+
+        <div class="product-bar-track">
+          <div class="product-bar-fill" 
+               [style.width.%]="product.percentage" 
+               [ngClass]="'fill-' + product.rank">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

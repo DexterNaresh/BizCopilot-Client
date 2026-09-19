@@ -1,0 +1,144 @@
+.reports-header-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.header-back {
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #6366F1;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    cursor: pointer;
+
+    &:hover {
+      color: #4F46E5;
+      text-decoration: underline;
+    }
+
+    .material-symbols-outlined {
+      font-size: 18px;
+    }
+  }
+}
+
+.header-main {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.header-titles {
+  .page-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: #0F172A;
+    margin: 0 0 4px 0;
+    letter-spacing: -0.02em;
+  }
+  
+  .page-subtitle {
+    font-size: 14px;
+    color: #64748B;
+    margin: 0;
+  }
+}
+
+.header-actions {
+  position: relative;
+
+  .btn-export {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #6366F1;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(99, 102, 241, 0.25);
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background-color: #4F46E5;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
+  .export-dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    z-index: 100;
+    min-width: 200px;
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    padding: 6px 0;
+    display: flex;
+    flex-direction: column;
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 16px;
+      font-size: 13px;
+      color: #334155;
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      cursor: pointer;
+      transition: background 0.15s ease;
+
+      &:hover {
+        background-color: #EEF2FF;
+        color: #4F46E5;
+      }
+    }
+  }
+}
+
+.icon-18 { font-size: 18px; }
+.icon-20 { font-size: 20px; }
+
+@media (max-width: 599px) {
+  .header-main {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .header-actions {
+    display: flex;
+    justify-content: flex-start;
+
+    .btn-export {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .header-titles {
+    .page-title {
+      font-size: 24px;
+    }
+  }
+}

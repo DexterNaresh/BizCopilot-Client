@@ -1,0 +1,54 @@
+<div class="offers-card">
+  <div class="offers-header">
+    <div class="header-titles">
+      <h3 class="offers-title">Offers Performance</h3>
+      <p class="offers-subtitle">Promotion analytics</p>
+    </div>
+    <div class="header-filters">
+      <div class="pill-toggle">
+        <button class="pill-option"
+                *ngFor="let mode of sortModes"
+                [class.active]="sortMode === mode.key"
+                (click)="setSortMode(mode.key)">
+          {{ mode.label }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="offers-grid">
+    <div class="offer-item" *ngFor="let offer of sortedOffers">
+      <div class="offer-header">
+        <div class="offer-name-type">
+          <span class="offer-name">{{ offer.name }}</span>
+          <span class="offer-badge" [ngClass]="offer.type.toLowerCase().replace(' ', '-')">{{ offer.type }}</span>
+        </div>
+        <div class="offer-usage">
+          <span class="material-symbols-outlined icon-16">confirmation_number</span>
+          <span>{{ offer.usageCount }} used</span>
+        </div>
+      </div>
+
+      <div class="offer-metrics">
+        <div class="metric-col">
+          <span class="metric-label">Revenue</span>
+          <span class="metric-value">₹{{ offer.revenue | number:'1.0-0' }}</span>
+        </div>
+        <div class="metric-col">
+          <span class="metric-label">Discount</span>
+          <span class="metric-value text-red">-₹{{ offer.discountGiven | number:'1.0-0' }}</span>
+        </div>
+      </div>
+
+      <div class="offer-conversion">
+        <div class="conversion-header">
+          <span class="conversion-label">Conversion Rate</span>
+          <span class="conversion-value">{{ offer.conversionRate }}%</span>
+        </div>
+        <div class="conversion-track">
+          <div class="conversion-fill" [style.width.%]="offer.conversionRate"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

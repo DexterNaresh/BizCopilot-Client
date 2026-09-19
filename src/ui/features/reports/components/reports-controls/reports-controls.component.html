@@ -1,0 +1,151 @@
+<div class="reports-controls-container">
+  <div class="controls-left">
+    <div class="date-selector-wrapper">
+      <button class="btn btn-outline btn-date" (click)="togglePeriodDropdown()">
+        <span class="material-symbols-outlined icon-20">calendar_today</span>
+        <span class="date-label">{{ selectedPeriod }}</span>
+        <span class="material-symbols-outlined icon-18">expand_more</span>
+      </button>
+
+      <!-- Period Dropdown Menu -->
+      <div class="period-dropdown-menu" *ngIf="isPeriodDropdownOpen">
+        <div 
+          class="dropdown-item" 
+          *ngFor="let p of periods" 
+          [class.active]="p === selectedPeriod"
+          (click)="selectPeriod(p)">
+          <span>{{ p }}</span>
+          <span class="material-symbols-outlined icon-18" *ngIf="p === selectedPeriod">check</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls-right">
+    <!-- Filter Action Button -->
+    <button class="btn btn-outline btn-filter" (click)="toggleFilterModal()">
+      <span class="material-symbols-outlined icon-20">tune</span>
+      <span>Filters</span>
+      <span class="filter-badge" *ngIf="activeFilterCount > 0">{{ activeFilterCount }}</span>
+    </button>
+    
+    <!-- Ask AI Action Button -->
+    <button class="btn btn-ai" (click)="toggleAiModal()">
+      <span class="material-symbols-outlined icon-20">smart_toy</span>
+      <span>Ask AI</span>
+    </button>
+  </div>
+</div>
+
+<!-- FILTER MODAL / BOTTOM SHEET -->
+<div class="modal-backdrop" *ngIf="isFilterModalOpen" (click)="toggleFilterModal()"></div>
+<div class="filter-modal" *ngIf="isFilterModalOpen">
+  <div class="modal-header">
+    <h3 class="modal-title">Report Filters</h3>
+    <button class="btn-icon-close" (click)="toggleFilterModal()">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <!-- Product -->
+    <div class="filter-group">
+      <label class="filter-label">Product</label>
+      <select class="filter-select" [(ngModel)]="filterState.product">
+        <option *ngFor="let prod of productsList" [value]="prod">{{ prod }}</option>
+      </select>
+    </div>
+
+    <!-- Category -->
+    <div class="filter-group">
+      <label class="filter-label">Category</label>
+      <select class="filter-select" [(ngModel)]="filterState.category">
+        <option *ngFor="let cat of categoriesList" [value]="cat">{{ cat }}</option>
+      </select>
+    </div>
+
+    <!-- Customer -->
+    <div class="filter-group">
+      <label class="filter-label">Customer</label>
+      <select class="filter-select" [(ngModel)]="filterState.customer">
+        <option *ngFor="let cust of customersList" [value]="cust">{{ cust }}</option>
+      </select>
+    </div>
+
+    <!-- Offer -->
+    <div class="filter-group">
+      <label class="filter-label">Offer</label>
+      <select class="filter-select" [(ngModel)]="filterState.offer">
+        <option *ngFor="let off of offersList" [value]="off">{{ off }}</option>
+      </select>
+    </div>
+
+    <!-- Payment Method -->
+    <div class="filter-group">
+      <label class="filter-label">Payment Method</label>
+      <select class="filter-select" [(ngModel)]="filterState.paymentMethod">
+        <option *ngFor="let pm of paymentMethodsList" [value]="pm">{{ pm }}</option>
+      </select>
+    </div>
+
+    <!-- Bill Status -->
+    <div class="filter-group">
+      <label class="filter-label">Bill Status</label>
+      <select class="filter-select" [(ngModel)]="filterState.status">
+        <option *ngFor="let st of statusList" [value]="st">{{ st }}</option>
+      </select>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-outline" (click)="clearFilters()">Clear Filters</button>
+    <button class="btn btn-primary" (click)="applyFilters()">Apply Filters</button>
+  </div>
+</div>
+
+<!-- ASK AI MODAL / DRAWER -->
+<div class="modal-backdrop" *ngIf="isAiModalOpen" (click)="toggleAiModal()"></div>
+<div class="ai-modal" *ngIf="isAiModalOpen">
+  <div class="modal-header">
+    <div class="ai-title">
+      <span class="material-symbols-outlined icon-24 color-primary">smart_toy</span>
+      <h3>BizCopilot AI Insights</h3>
+    </div>
+    <button class="btn-icon-close" (click)="toggleAiModal()">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+  </div>
+  <div class="modal-body ai-body">
+    <p class="ai-intro">Ask AI deeper questions about your sales data for <strong>{{ selectedPeriod }}</strong>:</p>
+    <div class="ai-suggestions">
+      <button class="ai-suggestion-chip">Why were sales higher on Monday?</button>
+      <button class="ai-suggestion-chip">Which payment method grew the most?</button>
+      <button class="ai-suggestion-chip">What is the average bill trend?</button>
+    </div>
+  </div>
+</div>
+
+<!-- CUSTOM DATE RANGE MODAL -->
+<div class="modal-backdrop" *ngIf="isCustomDateModalOpen" (click)="isCustomDateModalOpen = false"></div>
+<div class="filter-modal" *ngIf="isCustomDateModalOpen">
+  <div class="modal-header">
+    <h3 class="modal-title">Select Custom Date Range</h3>
+    <button class="btn-icon-close" (click)="isCustomDateModalOpen = false">
+      <span class="material-symbols-outlined">close</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="filter-group">
+      <label class="filter-label">Start Date</label>
+      <input type="date" class="filter-select" [(ngModel)]="startDate" />
+    </div>
+    <div class="filter-group">
+      <label class="filter-label">End Date</label>
+      <input type="date" class="filter-select" [(ngModel)]="endDate" />
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-outline" (click)="isCustomDateModalOpen = false">Cancel</button>
+    <button class="btn btn-primary" (click)="applyCustomDate()">Apply Date Range</button>
+  </div>
+</div>
+
+

@@ -1,0 +1,93 @@
+<div class="details-card">
+  <div class="details-header">
+    <div class="header-titles">
+      <h3 class="details-title">Sales Details</h3>
+      <p class="details-subtitle">Daily sales summary for the selected period</p>
+    </div>
+    <div class="header-action mobile-only">
+      <button class="btn-link">View All</button>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="sales-table">
+      <thead>
+        <tr>
+          <th class="col-id">#</th>
+          <th class="col-date clickable" (click)="toggleDateSort()">
+            <div class="th-content">
+              <span>Date</span>
+              <span class="material-symbols-outlined icon-16">expand_more</span>
+            </div>
+          </th>
+          <th class="col-day">Day</th>
+          <th class="text-right col-bills">Total Bills</th>
+          <th class="text-right col-sales">Sales Amount (₹)</th>
+          <th class="text-right col-discount">Discount Given (₹)</th>
+          <th class="text-right col-avg">Average Bill (₹)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of displayedRecords; let i = index">
+          <td class="col-id cell-muted">{{ row.index }}</td>
+          <td class="col-date font-medium">{{ row.date }}</td>
+          <td class="col-day cell-secondary">{{ row.day }}</td>
+          <td class="text-right col-bills">{{ row.bills }}</td>
+          <td class="text-right col-sales font-semibold">₹{{ row.sales | number:'1.0-0' }}</td>
+          <td class="text-right col-discount">₹{{ row.discountGiven | number:'1.0-0' }}</td>
+          <td class="text-right col-avg">₹{{ row.averageBill | number:'1.2-2' }}</td>
+        </tr>
+        <tr *ngIf="displayedRecords.length === 0">
+          <td colspan="7" class="text-center empty-state">No sales records found for selected period.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- INTERACTIVE PAGINATION BAR -->
+  <div class="pagination-bar">
+    <div class="record-info">
+      Showing {{ startIndex }} – {{ endIndex }} of {{ totalRecords }} records
+    </div>
+
+    <div class="pagination-controls">
+      <!-- Previous Page -->
+      <button 
+        class="page-nav-btn" 
+        [disabled]="currentPage === 1" 
+        (click)="prevPage()"
+        aria-label="Previous Page">
+        <span class="material-symbols-outlined icon-18">chevron_left</span>
+      </button>
+
+      <!-- Page Numbers & Ellipsis -->
+      <ng-container *ngFor="let item of pageItems">
+        <button 
+          *ngIf="item.type === 'page'" 
+          class="page-num-btn" 
+          [class.active]="item.value === currentPage"
+          (click)="goToPage(item.value!)">
+          {{ item.value }}
+        </button>
+        <span *ngIf="item.type === 'dots'" class="page-dots">...</span>
+      </ng-container>
+
+      <!-- Next Page -->
+      <button 
+        class="page-nav-btn" 
+        [disabled]="currentPage === totalPages" 
+        (click)="nextPage()"
+        aria-label="Next Page">
+        <span class="material-symbols-outlined icon-18">chevron_right</span>
+      </button>
+    </div>
+
+    <!-- Items Per Page Dropdown -->
+    <div class="page-size-selector">
+      <select class="page-size-select" [value]="pageSize" (change)="onPageSizeSelect($event)">
+        <option *ngFor="let opt of pageSizeOptions" [value]="opt">{{ opt }} per page</option>
+      </select>
+    </div>
+  </div>
+</div>
+
