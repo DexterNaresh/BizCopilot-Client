@@ -1,0 +1,243 @@
+.home-container {
+  padding: clamp(16px, 2.5vw, 28px);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.hero-banner {
+  padding: 24px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  background: linear-gradient(135deg, rgba(91, 59, 235, 0.08) 0%, rgba(255, 255, 255, 0.9) 100%);
+  border: 1px solid var(--color-primary-light);
+
+  .welcome-title {
+    font-size: clamp(20px, 2.2vw, 26px);
+    font-weight: 800;
+    color: var(--color-text-primary);
+    margin: 0 0 4px 0;
+    letter-spacing: -0.5px;
+  }
+
+  .welcome-subtitle {
+    margin: 0;
+    font-size: var(--font-base);
+    color: var(--color-text-secondary);
+  }
+
+
+}
+
+/* KPI Cards Grid */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.kpi-card {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  .kpi-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    .material-symbols-outlined {
+      font-size: 24px;
+    }
+
+    &.purple { background-color: var(--color-primary-bg); color: var(--color-primary); }
+    &.blue { background-color: var(--color-info-bg); color: var(--color-info); }
+    &.green { background-color: var(--color-success-bg); color: var(--color-success-text); }
+    &.orange { background-color: var(--color-warning-bg); color: var(--color-warning-text); }
+  }
+
+  .kpi-details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1;
+
+    .kpi-label {
+      font-size: var(--font-xs);
+      font-weight: 600;
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .kpi-value-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+
+      .kpi-value {
+        font-size: 20px;
+        font-weight: 800;
+        color: var(--color-text-primary);
+        letter-spacing: -0.3px;
+      }
+    }
+  }
+}
+
+/* Quick Actions */
+.section-container {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+
+  .section-heading {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+}
+
+.quick-actions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.action-tile {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  text-align: left;
+
+  .tile-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4px;
+
+    .material-symbols-outlined { font-size: 22px; }
+    &.purple { background-color: var(--color-primary-bg); color: var(--color-primary); }
+    &.blue { background-color: var(--color-info-bg); color: var(--color-info); }
+    &.green { background-color: var(--color-success-bg); color: var(--color-success-text); }
+    &.orange { background-color: var(--color-warning-bg); color: var(--color-warning-text); }
+  }
+
+  .tile-title {
+    font-size: var(--font-base);
+    font-weight: 700;
+    color: var(--color-text-primary);
+  }
+
+  .tile-desc {
+    font-size: var(--font-xs);
+    color: var(--color-text-secondary);
+  }
+}
+
+/* Dashboard Split Row */
+.dashboard-split {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.copilot-card, .recent-bills-card {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .header-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      h3 { margin: 0; font-size: 16px; font-weight: 700; color: var(--color-text-primary); }
+    }
+
+    h3 { margin: 0; font-size: 16px; font-weight: 700; color: var(--color-text-primary); }
+
+    .btn-link {
+      color: var(--color-primary);
+      font-size: var(--font-sm);
+      font-weight: 600;
+      &:hover { text-decoration: underline; }
+    }
+  }
+}
+
+.insight-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .insight-item {
+    display: flex;
+    gap: 8px;
+    font-size: var(--font-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+
+    .bullet { color: var(--color-primary); font-weight: bold; }
+    strong { color: var(--color-text-primary); }
+  }
+}
+
+
+
+.bills-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .bill-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 14px;
+    background-color: var(--color-bg-canvas);
+    border-radius: var(--radius-key);
+    border: 1px solid var(--color-border);
+
+    .bill-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+
+      .bill-id { font-size: var(--font-sm); font-weight: 700; color: var(--color-text-primary); }
+      .bill-time { font-size: var(--font-xs); color: var(--color-text-secondary); }
+    }
+
+    .bill-meta {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      .bill-amount { font-size: var(--font-sm); font-weight: 700; color: var(--color-text-primary); }
+    }
+  }
+}

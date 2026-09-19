@@ -1,13 +1,13 @@
 // Color Themes
 :root, .theme-purple {
-  --color-primary: #6366F1;
-  --color-primary-hover: #4F46E5;
-  --color-primary-light: rgba(99, 102, 241, 0.1);
+  --color-primary: #5B3BEB;
+  --color-primary-hover: #4B2DC7;
+  --color-primary-light: rgba(91, 59, 235, 0.1);
   --color-primary-bg: #EEF2FF;
   --color-primary-subtle: #E0E7FF;
-  --color-primary-dark: #4338CA;
-  --gradient-primary: linear-gradient(135deg, #6366F1 0%, #4F46E5 100%);
-  --gradient-primary-glow: linear-gradient(135deg, rgba(99, 102, 241, 0.4) 0%, rgba(79, 70, 229, 0.15) 100%);
+  --color-primary-dark: #3B1DB7;
+  --gradient-primary: linear-gradient(135deg, #5B3BEB 0%, #4B2DC7 100%);
+  --gradient-primary-glow: linear-gradient(135deg, rgba(91, 59, 235, 0.4) 0%, rgba(75, 45, 199, 0.15) 100%);
 }
 
 .theme-blue {

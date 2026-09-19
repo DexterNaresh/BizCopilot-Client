@@ -1,6 +1,6 @@
 .billing-layout {
   display: flex;
-  height: 100vh; // Assuming it takes full height of the viewport/container
+  height: 100%; // Inherit from navigation shell
   background-color: var(--color-bg-canvas);
   overflow: hidden;
 }
@@ -9,7 +9,7 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 24px 32px;
+  padding: clamp(16px, 2vh, 32px) clamp(16px, 2vw, 32px);
   overflow: hidden;
   
   .grid-scroll-area {
@@ -23,9 +23,9 @@
 }
 
 .desktop-cart-section {
-  width: 400px;
+  width: clamp(340px, 30vw, 400px);
   flex-shrink: 0;
-  padding: 24px 32px 24px 0;
+  padding: clamp(16px, 2vh, 32px) clamp(16px, 2vw, 32px) clamp(16px, 2vh, 32px) 0;
   display: block; // Visible on desktop
   border-left: 1px solid var(--color-border);
 }
@@ -40,13 +40,7 @@
 
 /* Responsive adjustments */
 @media (max-width: 1024px) {
-  .catalog-section {
-    padding: 20px 24px;
-  }
-  .desktop-cart-section {
-    width: 360px;
-    padding: 20px 24px 20px 0;
-  }
+  // Relying on clamp now
 }
 
 @media (max-width: 768px) {

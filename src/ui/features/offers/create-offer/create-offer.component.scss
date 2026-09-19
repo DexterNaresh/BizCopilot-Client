@@ -90,8 +90,15 @@
 
 /* Section Cards */
 .section-card {
-  padding: 20px 24px 20px 48px;
+  padding: 24px 24px 24px 48px;
   border-bottom: 1px solid var(--color-border);
+  border-left: 4px solid transparent;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  
+  &:hover {
+    border-left-color: var(--color-primary-light);
+    background-color: rgba(99, 102, 241, 0.01);
+  }
   
   &:last-child {
     border-bottom: none;
@@ -114,17 +121,19 @@
     .section-num {
       position: absolute;
       left: -32px;
-      top: -2px;
+      top: -4px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 24px;
-      height: 24px;
-      background-color: var(--color-primary-bg);
-      color: var(--color-primary);
+      width: 28px;
+      height: 28px;
+      background: var(--gradient-primary);
+      color: #FFFFFF;
       border-radius: 50%;
-      font-size: var(--font-sm);
+      font-size: 13px;
       font-weight: 700;
+      box-shadow: 0 4px 10px rgba(91, 59, 235, 0.3);
+      animation: pulse-soft 2s infinite ease-in-out;
     }
   }
   
@@ -133,6 +142,12 @@
     font-size: var(--font-xs);
     color: var(--color-text-secondary);
   }
+}
+
+@keyframes pulse-soft {
+  0% { box-shadow: 0 0 0 0 rgba(91, 59, 235, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(91, 59, 235, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(91, 59, 235, 0); }
 }
 
 /* Form Inputs */
@@ -165,7 +180,7 @@
   input[type="date"],
   input[type="time"],
   select {
-    padding: 8px 12px;
+    padding: 10px 14px;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-key);
     font-size: var(--font-sm);
@@ -228,7 +243,7 @@
     border-radius: 0;
     margin: 0;
     font-size: var(--font-sm);
-    padding: 8px 12px;
+    padding: 10px 14px;
     
     &:focus {
       box-shadow: none;
@@ -269,7 +284,8 @@
     position: relative;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-key);
-    padding: 12px 6px;
+    padding: 16px 8px;
+    min-height: 140px;
     cursor: pointer;
     display: flex;
     flex-direction: column;
@@ -280,15 +296,24 @@
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     
     .icon {
-      width: 32px;
-      height: 32px;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: var(--font-md);
+      font-size: 24px;
       font-weight: 700;
-      color: var(--color-text-primary);
+      margin-bottom: 8px;
       transition: all 0.2s ease;
+      
+      &.color-lavender { background-color: rgba(91, 59, 235, 0.1); color: var(--color-primary); }
+      &.color-green { background-color: rgba(34, 197, 94, 0.1); color: var(--color-success); }
+      &.color-amber { background-color: rgba(245, 158, 11, 0.1); color: #F59E0B; }
+      &.color-blue { background-color: rgba(59, 130, 246, 0.1); color: #3B82F6; }
+      &.color-rose { background-color: rgba(244, 63, 94, 0.1); color: #F43F5E; }
+      &.color-indigo { background-color: rgba(99, 102, 241, 0.1); color: #6366F1; }
+      &.color-teal { background-color: rgba(20, 184, 166, 0.1); color: #14B8A6; }
       
       .svg-icon {
         width: 20px; height: 20px;
@@ -299,17 +324,17 @@
     }
     
     .title {
-      font-size: 11px;
+      font-size: 13px;
       font-weight: 600;
       color: var(--color-text-primary);
-      line-height: 1.1;
+      line-height: 1.2;
     }
     
     .subtitle {
-      font-size: 10px;
+      font-size: 11px;
       color: var(--color-text-muted);
-      line-height: 1.2;
-      display: none; /* Hide on small cards to save space */
+      line-height: 1.3;
+      display: block;
     }
     
     &:hover { 
@@ -349,14 +374,14 @@
 /* Section 3 Config Extensions */
 .config-split-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
   
   .config-box {
     position: relative;
-    padding: 20px;
-    background: #F9FAFB;
-    border: 1px solid #E5E7EB;
+    padding: 24px;
+    background: var(--color-bg-canvas);
+    border: 1px solid var(--color-border);
     border-radius: 12px;
     
     .box-tag {
@@ -367,16 +392,16 @@
       font-size: 12px;
       margin-bottom: 16px;
       
-      &.buy-tag { background-color: #DCFCE7; color: #166534; }
-      &.get-tag { background-color: #FEF3C7; color: #92400E; }
+      &.buy-tag { background-color: rgba(34, 197, 94, 0.1); color: var(--color-success); }
+      &.get-tag { background-color: rgba(245, 158, 11, 0.1); color: #F59E0B; }
     }
   }
 }
 
 .tiers-header {
   margin-bottom: 12px;
-  label { font-size: 14px; font-weight: 600; color: #111827; display: block; }
-  .subtitle-text { font-size: 12px; color: #6B7280; margin-top: 2px; display: block; }
+  label { font-size: 14px; font-weight: 600; color: var(--color-text-primary); display: block; }
+  .subtitle-text { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; display: block; }
 }
 
 .tiers-table {
@@ -391,10 +416,10 @@
     flex-wrap: wrap;
     align-items: center;
     gap: 12px;
-    background: #F9FAFB;
+    background: var(--color-bg-canvas);
     padding: 12px 16px;
     border-radius: 10px;
-    border: 1px solid #E5E7EB;
+    border: 1px solid var(--color-border);
     
     .tier-field {
       flex: 1 1 140px;
@@ -402,20 +427,20 @@
       display: flex;
       flex-direction: column;
       gap: 4px;
-      .tier-label { font-size: 12px; font-weight: 600; color: #4B5563; }
+      .tier-label { font-size: 12px; font-weight: 600; color: var(--color-text-secondary); }
     }
     
     .btn-remove-tier {
       background: none;
       border: none;
-      color: #9CA3AF;
+      color: var(--color-text-muted);
       font-size: 16px;
       cursor: pointer;
       padding: 4px 8px;
       border-radius: 4px;
       margin-top: 16px;
       
-      &:hover { color: #EF4444; background-color: #FEE2E2; }
+      &:hover { color: var(--color-error); background-color: rgba(239, 68, 68, 0.1); }
     }
   }
 }
@@ -597,7 +622,7 @@
 
 .categories-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
   gap: 12px;
   
   .category-checkbox-item {
@@ -633,9 +658,8 @@
 /* Conditions */
 .conditions-grid {
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 20px;
+  flex-direction: column;
+  gap: 16px;
   width: 100%;
 }
 
@@ -644,31 +668,54 @@
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 16px;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    border-color: var(--color-primary-light);
+  }
   
   .checkbox-label {
     display: flex;
-    align-items: center;
-    gap: 8px;
+    align-items: flex-start;
+    gap: 12px;
     font-size: var(--font-sm);
-    font-weight: 500;
     color: var(--color-text-primary);
     cursor: pointer;
+    flex: 1;
     
     input[type="checkbox"] {
-      width: 16px;
-      height: 16px;
+      width: 18px;
+      height: 18px;
+      margin-top: 2px;
       accent-color: var(--color-primary);
       cursor: pointer;
-      margin: 0;
     }
     
-    .cond-subtitle {
-      display: none; /* Hide subtitle to match compact mock */
+    div {
+      display: flex;
+      flex-direction: column;
+      
+      .title {
+        font-weight: 600;
+        font-size: 14px;
+      }
+      
+      .cond-subtitle {
+        display: block;
+        font-size: 12px;
+        color: var(--color-text-secondary);
+        margin-top: 4px;
+      }
     }
   }
   
-  .condition-input { width: 120px; }
+  .condition-input { width: 140px; }
 }
 
 /* Schedule */
@@ -686,8 +733,8 @@
   }
   
   .days-group {
-    flex: 2 1 260px;
-    min-width: 220px;
+    flex: 2 1 200px;
+    min-width: 180px;
     .days-chips {
       display: flex;
       gap: 6px;
@@ -774,10 +821,11 @@
       }
       
       &.btn-save {
-        background-color: var(--color-primary);
-        border: 1px solid var(--color-primary);
+        background: var(--gradient-primary);
+        border: none;
         color: #FFFFFF;
-        &:hover { opacity: 0.9; transform: translateY(-1px); }
+        box-shadow: 0 4px 12px var(--color-primary-light);
+        &:hover { opacity: 0.95; transform: translateY(-1px); box-shadow: 0 6px 16px var(--color-primary-light); }
       }
     }
   }

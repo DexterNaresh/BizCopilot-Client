@@ -14,7 +14,7 @@
   <div class="summary-cards">
     <div class="summary-card">
       <div class="card-icon total-icon">
-        <div class="icon-inner" style="-webkit-mask-image: url('assets/icons/offers/local_offer.svg'); mask-image: url('assets/icons/offers/local_offer.svg');"></div>
+        <span class="material-symbols-outlined icon-inner">local_offer</span>
       </div>
       <div class="card-content">
         <span class="card-value">{{ totalOffers() }}</span>
@@ -46,11 +46,11 @@
   <div class="search-filter-section">
     <div class="search-bar-container">
       <div class="search-input-wrapper">
-        <div class="search-icon" style="-webkit-mask-image: url('assets/icons/billing/search.svg'); mask-image: url('assets/icons/billing/search.svg');"></div>
+        <span class="material-symbols-outlined search-icon">search</span>
         <input type="text" class="search-input" placeholder="Search offers by name or keyword..." [ngModel]="searchQuery()" (ngModelChange)="searchQuery.set($event)" />
       </div>
       <button class="btn-filter-mobile">
-        <div class="filter-icon" style="-webkit-mask-image: url('assets/icons/common/filter_list.svg'); mask-image: url('assets/icons/common/filter_list.svg');"></div>
+        <span class="material-symbols-outlined filter-icon">filter_list</span>
       </button>
     </div>
 
@@ -84,13 +84,13 @@
     <table class="offers-table">
       <thead>
         <tr>
-          <th><div class="th-content">Seq <div class="sort-icon" style="-webkit-mask-image: url('assets/icons/common/unfold_more.svg'); mask-image: url('assets/icons/common/unfold_more.svg');"></div></div></th>
-          <th><div class="th-content">Offer Name <div class="sort-icon" style="-webkit-mask-image: url('assets/icons/common/unfold_more.svg'); mask-image: url('assets/icons/common/unfold_more.svg');"></div></div></th>
-          <th><div class="th-content">Type <div class="sort-icon" style="-webkit-mask-image: url('assets/icons/common/unfold_more.svg'); mask-image: url('assets/icons/common/unfold_more.svg');"></div></div></th>
-          <th><div class="th-content">Benefit <div class="sort-icon" style="-webkit-mask-image: url('assets/icons/common/unfold_more.svg'); mask-image: url('assets/icons/common/unfold_more.svg');"></div></div></th>
-          <th><div class="th-content">Applies To <div class="sort-icon" style="-webkit-mask-image: url('assets/icons/common/unfold_more.svg'); mask-image: url('assets/icons/common/unfold_more.svg');"></div></div></th>
-          <th><div class="th-content">Validity <div class="sort-icon" style="-webkit-mask-image: url('assets/icons/common/unfold_more.svg'); mask-image: url('assets/icons/common/unfold_more.svg');"></div></div></th>
-          <th><div class="th-content">Status <div class="sort-icon" style="-webkit-mask-image: url('assets/icons/common/unfold_more.svg'); mask-image: url('assets/icons/common/unfold_more.svg');"></div></div></th>
+          <th><div class="th-content">Seq <span class="material-symbols-outlined sort-icon">unfold_more</span></div></th>
+          <th><div class="th-content">Offer Name <span class="material-symbols-outlined sort-icon">unfold_more</span></div></th>
+          <th><div class="th-content">Type <span class="material-symbols-outlined sort-icon">unfold_more</span></div></th>
+          <th><div class="th-content">Benefit <span class="material-symbols-outlined sort-icon">unfold_more</span></div></th>
+          <th><div class="th-content">Applies To <span class="material-symbols-outlined sort-icon">unfold_more</span></div></th>
+          <th><div class="th-content">Validity <span class="material-symbols-outlined sort-icon">unfold_more</span></div></th>
+          <th><div class="th-content">Status <span class="material-symbols-outlined sort-icon">unfold_more</span></div></th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -115,11 +115,11 @@
           </td>
           <td>
             <div class="actions-cell">
-              <button class="btn-icon edit" title="Edit">
-                <div class="icon" style="-webkit-mask-image: url('assets/icons/common/edit.svg'); mask-image: url('assets/icons/common/edit.svg');"></div>
+              <button class="btn-icon edit" title="Edit Offer">
+                <span class="material-symbols-outlined icon">edit</span>
               </button>
-              <button class="btn-icon delete" title="Delete" (click)="deleteOffer(offer.id)">
-                <div class="icon" style="-webkit-mask-image: url('assets/icons/common/delete.svg'); mask-image: url('assets/icons/common/delete.svg');"></div>
+              <button class="btn-icon delete" title="Delete Offer" (click)="deleteOffer(offer.id)">
+                <span class="material-symbols-outlined icon">delete</span>
               </button>
             </div>
           </td>
@@ -146,15 +146,15 @@
 
         <div class="info-right">
           <div class="detail-row">
-            <div class="detail-icon" style="-webkit-mask-image: url('assets/icons/offers/percent.svg'); mask-image: url('assets/icons/offers/percent.svg');"></div>
+            <span class="material-symbols-outlined detail-icon">percent</span>
             <span class="detail-text">{{ offer.benefit }}</span>
           </div>
           <div class="detail-row">
-            <div class="detail-icon" style="-webkit-mask-image: url('assets/icons/offers/category.svg'); mask-image: url('assets/icons/offers/category.svg');"></div>
+            <span class="material-symbols-outlined detail-icon">category</span>
             <span class="detail-text">Applies to: {{ offer.appliesToDetails || offer.appliesTo }}</span>
           </div>
           <div class="detail-row">
-            <div class="detail-icon" style="-webkit-mask-image: url('assets/icons/offers/calendar_today.svg'); mask-image: url('assets/icons/offers/calendar_today.svg');"></div>
+            <span class="material-symbols-outlined detail-icon">calendar_today</span>
             <span class="detail-text">{{ offer.validity }}</span>
           </div>
         </div>
@@ -169,14 +169,12 @@
         </div>
         
         <div class="action-buttons">
-          <button class="btn-text edit">
-            <div class="icon" style="-webkit-mask-image: url('assets/icons/common/edit.svg'); mask-image: url('assets/icons/common/edit.svg');"></div>
-            Edit
-          </button>
-          <button class="btn-text delete" (click)="deleteOffer(offer.id)">
-            <div class="icon" style="-webkit-mask-image: url('assets/icons/common/delete.svg'); mask-image: url('assets/icons/common/delete.svg');"></div>
-            Delete
-          </button>
+            <button class="btn-text edit">
+              <span class="material-symbols-outlined icon">edit</span> Edit
+            </button>
+            <button class="btn-text delete" (click)="deleteOffer(offer.id)">
+              <span class="material-symbols-outlined icon">delete</span> Delete
+            </button>
         </div>
       </div>
     </div>

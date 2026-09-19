@@ -32,6 +32,7 @@ export interface ProductUIModel {
   isFavourite: boolean;
   colorHint: string;
   imageUrl?: string;
+  barcode?: string;
 }
 
 @Component({
@@ -111,14 +112,15 @@ export class ProductsComponent implements OnInit {
   private mapToUIModel(p: ProductInfo): ProductUIModel {
     return {
       id: p.product_id,
-      name: p.name,
+      name: p.name || 'Unnamed Product',
       category: p.category || 'Uncategorized',
       price: p.price,
       unit: PRODUCT_UNITS[p.type as ProductUnitKey] || PRODUCT_UNITS.QTY,
       isAvailable: p.available === 1,
       isFavourite: false,
       colorHint: this.getColorForCategory(p.category),
-      imageUrl: environment.seedTestData ? getTestImageUrlForProduct(p.name, p.product_id) : (p.image_url || undefined)
+      imageUrl: environment.seedTestData ? getTestImageUrlForProduct(p.name, p.product_id) : (p.image_url || undefined),
+      barcode: p.barcode || undefined
     };
   }
 
@@ -130,12 +132,17 @@ export class ProductsComponent implements OnInit {
   }
 
   get filteredProducts(): ProductUIModel[] {
+    const term = (this.searchTerm || '').toLowerCase();
     return this.allProducts.filter(p => {
-      const matchesSearch = p.name.toLowerCase().includes(this.searchTerm.toLowerCase());
+      const nameMatch = (p.name || '').toLowerCase().includes(term);
+      const barcodeMatch = (p.barcode || '').toLowerCase().includes(term);
+      const matchesSearch = nameMatch || barcodeMatch;
+      
       let matchesFilter = true;
       if (this.activeFilter === 'available') matchesFilter = p.isAvailable;
       if (this.activeFilter === 'unavailable') matchesFilter = !p.isAvailable;
       if (this.activeFilter === 'favourites') matchesFilter = p.isFavourite;
+      
       return matchesSearch && matchesFilter;
     });
   }

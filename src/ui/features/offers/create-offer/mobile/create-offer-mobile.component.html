@@ -1,7 +1,7 @@
 <form [formGroup]="offerForm" class="mobile-wizard">
   <div class="wizard-header">
     <button type="button" class="btn-back" (click)="prev.emit()">
-      <div class="back-icon"></div> Back to Offers
+      <span class="material-symbols-outlined back-icon">arrow_back</span> Back to Offers
     </button>
     <h1 class="page-title">Create Offer</h1>
     <p class="page-subtitle">{{ getStepSubtitle() }}</p>
@@ -49,7 +49,7 @@
     <div *ngSwitchCase="1" class="mobile-form-card">
       <div class="card-header">
         <div class="step-icon-circle bg-lavender">
-          <div class="svg-icon text-primary" style="-webkit-mask-image: url('/assets/icons/billing/description.svg'); mask-image: url('/assets/icons/billing/description.svg');"></div>
+          <span class="material-symbols-outlined text-primary">description</span>
         </div>
         <div>
           <h2 class="step-title">Basic Information</h2>
@@ -80,7 +80,7 @@
     <div *ngSwitchCase="2" class="mobile-form-card">
       <div class="card-header">
         <div class="step-icon-circle bg-lavender">
-          <div class="svg-icon text-primary" style="-webkit-mask-image: url('/assets/icons/offers/local_offer.svg'); mask-image: url('/assets/icons/offers/local_offer.svg');"></div>
+          <span class="material-symbols-outlined text-primary">local_offer</span>
         </div>
         <div>
           <h2 class="step-title">Select Offer Type</h2>
@@ -91,7 +91,7 @@
       <div class="radio-bar-group">
         <div class="radio-bar" [class.selected]="offerForm.get('type')?.value === 'Percentage Off'" (click)="offerForm.get('type')?.setValue('Percentage Off')">
           <div class="icon-circle bg-lavender text-primary">
-            <div class="svg-icon" style="-webkit-mask-image: url('/assets/icons/offers/percent.svg'); mask-image: url('/assets/icons/offers/percent.svg');"></div>
+            <span style="font-weight: 700; font-size: 18px;">%</span>
           </div>
           <div class="text">
             <div class="title">Percentage Off</div>
@@ -113,7 +113,7 @@
         
         <div class="radio-bar" [class.selected]="offerForm.get('type')?.value === 'Buy X Get Y'" (click)="offerForm.get('type')?.setValue('Buy X Get Y')">
           <div class="icon-circle bg-amber-light text-amber">
-            <div class="svg-icon" style="-webkit-mask-image: url('/assets/icons/cart/shopping_cart.svg'); mask-image: url('/assets/icons/cart/shopping_cart.svg');"></div>
+            <span class="material-symbols-outlined">card_giftcard</span>
           </div>
           <div class="text">
             <div class="title">Buy X Get Y</div>
@@ -124,7 +124,7 @@
         
         <div class="radio-bar" [class.selected]="offerForm.get('type')?.value === 'Quantity Discount'" (click)="offerForm.get('type')?.setValue('Quantity Discount')">
           <div class="icon-circle bg-blue-light text-blue">
-            <div class="svg-icon" style="-webkit-mask-image: url('/assets/icons/offers/inventory_2.svg'); mask-image: url('/assets/icons/offers/inventory_2.svg');"></div>
+            <span style="font-size: 18px;">🛒</span>
           </div>
           <div class="text">
             <div class="title">Quantity Discount</div>
@@ -135,7 +135,7 @@
 
         <div class="radio-bar" [class.selected]="offerForm.get('type')?.value === 'Spend & Save'" (click)="offerForm.get('type')?.setValue('Spend & Save')">
           <div class="icon-circle bg-rose-light text-rose">
-            <div class="svg-icon" style="-webkit-mask-image: url('/assets/icons/offers/local_offer.svg'); mask-image: url('/assets/icons/offers/local_offer.svg');"></div>
+            <span style="font-size: 18px;">🎫</span>
           </div>
           <div class="text">
             <div class="title">Spend & Save</div>
@@ -146,7 +146,7 @@
 
         <div class="radio-bar" [class.selected]="offerForm.get('type')?.value === 'Tiered Offer'" (click)="offerForm.get('type')?.setValue('Tiered Offer')">
           <div class="icon-circle bg-indigo-light text-indigo">
-            <div class="svg-icon" style="-webkit-mask-image: url('/assets/icons/offers/bar_chart.svg'); mask-image: url('/assets/icons/offers/bar_chart.svg');"></div>
+            <span style="font-size: 18px;">📊</span>
           </div>
           <div class="text">
             <div class="title">Tiered Offer</div>
@@ -157,7 +157,7 @@
 
         <div class="radio-bar" [class.selected]="offerForm.get('type')?.value === 'Bundle / Combo'" (click)="offerForm.get('type')?.setValue('Bundle / Combo')">
           <div class="icon-circle bg-teal-light text-teal">
-            <div class="svg-icon" style="-webkit-mask-image: url('/assets/icons/offers/inventory_2.svg'); mask-image: url('/assets/icons/offers/inventory_2.svg');"></div>
+            <span style="font-size: 18px;">📦</span>
           </div>
           <div class="text">
             <div class="title">Bundle / Combo</div>
@@ -171,7 +171,7 @@
     <!-- STEP 3: Configuration (Header icon before type title per spec) -->
     <div *ngSwitchCase="3" class="mobile-form-card" formGroupName="config">
       <div class="card-header">
-        <div class="step-icon config-icon">{{ getTypeIcon() }}</div>
+        <div class="step-icon-circle bg-lavender text-primary">{{ getTypeIcon() }}</div>
         <div>
           <h2 class="step-title">{{ offerForm.get('type')?.value }}</h2>
           <p class="step-subtitle">Set the discount details for this offer.</p>
@@ -324,7 +324,9 @@
     <!-- STEP 4: Applies To -->
     <div *ngSwitchCase="4" class="mobile-form-card">
       <div class="card-header">
-        <div class="step-icon applies-icon">🛒</div>
+        <div class="step-icon-circle bg-lavender">
+          <span class="material-symbols-outlined text-primary">shopping_cart</span>
+        </div>
         <div>
           <h2 class="step-title">Applies To</h2>
           <p class="step-subtitle">Choose where this offer can be applied.</p>
@@ -410,7 +412,7 @@
     <div *ngSwitchCase="5" class="mobile-form-card">
       <div class="card-header">
         <div class="step-icon-circle bg-lavender">
-          <div class="svg-icon text-primary" style="-webkit-mask-image: url('/assets/icons/scale.svg'); mask-image: url('/assets/icons/scale.svg');"></div>
+          <span class="material-symbols-outlined text-primary">scale</span>
         </div>
         <div>
           <h2 class="step-title">Conditions (Optional)</h2>
@@ -478,7 +480,7 @@
     <div *ngSwitchCase="6" class="mobile-form-card">
       <div class="card-header">
         <div class="step-icon-circle bg-lavender">
-          <div class="svg-icon text-primary" style="-webkit-mask-image: url('/assets/icons/calendar.svg'); mask-image: url('/assets/icons/calendar.svg');"></div>
+          <span class="material-symbols-outlined text-primary">calendar_today</span>
         </div>
         <div>
           <h2 class="step-title">Schedule</h2>
@@ -491,7 +493,7 @@
           <label>Start Date <span class="required">*</span></label>
           <div class="input-with-icon">
             <div class="prefix">
-              <div class="svg-icon" style="-webkit-mask-image: url('/assets/icons/offers/calendar_today.svg'); mask-image: url('/assets/icons/offers/calendar_today.svg');"></div>
+              <span class="material-symbols-outlined">calendar_today</span>
             </div>
             <input type="date" formControlName="startDate" class="has-prefix no-icon">
           </div>
@@ -501,7 +503,7 @@
           <label>Start Time <span class="required">*</span></label>
           <div class="input-with-icon">
             <div class="prefix">
-              <div class="svg-icon" style="-webkit-mask-image: url('/assets/icons/offers/schedule.svg'); mask-image: url('/assets/icons/offers/schedule.svg');"></div>
+              <span class="material-symbols-outlined">schedule</span>
             </div>
             <input type="time" formControlName="startTime" class="has-prefix no-icon">
           </div>
@@ -511,7 +513,7 @@
           <label>End Date <span class="optional">(Optional)</span></label>
           <div class="input-with-icon">
             <div class="prefix">
-              <div class="svg-icon" style="-webkit-mask-image: url('/assets/icons/offers/calendar_today.svg'); mask-image: url('/assets/icons/offers/calendar_today.svg');"></div>
+              <span class="material-symbols-outlined">calendar_today</span>
             </div>
             <input type="date" formControlName="endDate" class="has-prefix no-icon">
           </div>
@@ -521,7 +523,7 @@
           <label>End Time <span class="optional">(Optional)</span></label>
           <div class="input-with-icon">
             <div class="prefix">
-              <div class="svg-icon" style="-webkit-mask-image: url('/assets/icons/offers/schedule.svg'); mask-image: url('/assets/icons/offers/schedule.svg');"></div>
+              <span class="material-symbols-outlined">schedule</span>
             </div>
             <input type="time" formControlName="endTime" class="has-prefix no-icon">
           </div>
@@ -537,25 +539,9 @@
         </select>
       </div>
 
-      <div class="status-toggle-box">
-        <div class="status-header">
-          <span class="status-label">Status</span>
-        </div>
-        <div class="toggle-row">
-          <label class="switch">
-            <input type="checkbox" formControlName="status">
-            <span class="slider round"></span>
-          </label>
-          <div class="status-text">
-            <span class="title">Active</span>
-            <span class="subtitle">Offer will be active on the selected date and time.</span>
-          </div>
-        </div>
-      </div>
-
       <div class="info-banner" style="margin-top: 16px;">
         <div class="info-icon">
-          <div class="svg-icon text-primary" style="-webkit-mask-image: url('/assets/icons/info.svg'); mask-image: url('/assets/icons/info.svg');"></div>
+          <span class="material-symbols-outlined text-primary">info</span>
         </div>
         <div class="info-text">
           The offer will be available from {{ offerForm.get('startDate')?.value | date:'dd MMM yyyy' }}, {{ offerForm.get('startTime')?.value || '12:00 AM' }} and will continue until {{ offerForm.get('endDate')?.value | date:'dd MMM yyyy' }}, {{ offerForm.get('endTime')?.value || '11:59 PM' }}.
@@ -571,7 +557,7 @@
         <div class="sec-header">
           <div class="sec-title-wrap">
             <div class="step-icon-circle bg-lavender sm">
-              <div class="svg-icon text-primary" style="-webkit-mask-image: url('/assets/icons/billing/description.svg'); mask-image: url('/assets/icons/billing/description.svg');"></div>
+              <span class="material-symbols-outlined text-primary">description</span>
             </div>
             <span>Basic Details</span>
           </div>
@@ -587,7 +573,7 @@
         <div class="sec-header">
           <div class="sec-title-wrap">
             <div class="step-icon-circle bg-lavender sm">
-              <div class="svg-icon text-primary" style="-webkit-mask-image: url('/assets/icons/offers/percent.svg'); mask-image: url('/assets/icons/offers/percent.svg');"></div>
+              <span class="material-symbols-outlined text-primary">percent</span>
             </div>
             <span>Offer Type & Configuration</span>
           </div>
@@ -603,7 +589,7 @@
         <div class="sec-header">
           <div class="sec-title-wrap">
             <div class="step-icon-circle bg-lavender sm">
-              <div class="svg-icon text-primary" style="-webkit-mask-image: url('/assets/icons/cart/shopping_cart.svg'); mask-image: url('/assets/icons/cart/shopping_cart.svg');"></div>
+              <span class="material-symbols-outlined text-primary">shopping_cart</span>
             </div>
             <span>Applies To</span>
           </div>
@@ -619,7 +605,7 @@
         <div class="sec-header">
           <div class="sec-title-wrap">
             <div class="step-icon-circle bg-lavender sm">
-              <div class="svg-icon text-primary" style="-webkit-mask-image: url('/assets/icons/group.svg'); mask-image: url('/assets/icons/group.svg');"></div>
+              <span class="material-symbols-outlined text-primary">group</span>
             </div>
             <span>Conditions</span>
           </div>
@@ -637,7 +623,7 @@
         <div class="sec-header">
           <div class="sec-title-wrap">
             <div class="step-icon-circle bg-lavender sm">
-              <div class="svg-icon text-primary" style="-webkit-mask-image: url('/assets/icons/offers/calendar_today.svg'); mask-image: url('/assets/icons/offers/calendar_today.svg');"></div>
+              <span class="material-symbols-outlined text-primary">calendar_today</span>
             </div>
             <span>Schedule</span>
           </div>
@@ -679,11 +665,11 @@
 
   <!-- Bottom Sticky Actions (Only for steps 1 to 7) -->
   <div class="sticky-bottom-actions" *ngIf="currentStep < 8">
-    <button *ngIf="currentStep === 1" type="button" class="btn-primary w-100" (click)="next.emit()">Next: Select Offer Type →</button>
+    <button *ngIf="currentStep === 1" type="button" class="btn-primary w-100" (click)="next.emit()">Next</button>
     
     <ng-container *ngIf="currentStep > 1 && currentStep < 7">
       <button type="button" class="btn-secondary" (click)="prev.emit()">Back</button>
-      <button type="button" class="btn-primary" (click)="next.emit()">Next: {{ getNextStepName() }} →</button>
+      <button type="button" class="btn-primary" (click)="next.emit()">Next</button>
     </ng-container>
     
     <ng-container *ngIf="currentStep === 7">

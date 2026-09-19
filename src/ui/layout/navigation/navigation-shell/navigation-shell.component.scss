@@ -1,6 +1,6 @@
 .navigation-shell-layout {
   display: flex;
-  height: 100vh;
+  height: 100dvh;
   width: 100vw;
   overflow: hidden;
   background-color: var(--color-bg-canvas);
@@ -19,6 +19,7 @@
   flex-direction: column;
   overflow-y: auto;
   position: relative;
+  min-height: 0;
 
   > * {
     animation: pageIn 200ms ease-out;

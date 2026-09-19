@@ -1,11 +1,11 @@
 .products-layout {
-      display: flex;
-      gap: 32px;
-      padding: 24px;
-      height: 100%;
-      box-sizing: border-box;
-      background-color: var(--color-bg-canvas);
-    }
+  display: flex;
+  gap: var(--spacing-xl);
+  padding: clamp(16px, 2vh, 32px) clamp(16px, 2vw, 32px);
+  height: 100%;
+  box-sizing: border-box;
+  background-color: var(--color-bg-canvas);
+}
 
     .main-content {
       flex: 1;
@@ -15,8 +15,9 @@
     }
 
     .right-rail {
-      width: 280px;
-      flex-shrink: 0;
+      flex: 0 0 clamp(280px, 30vw, 360px);
+      display: flex;
+      flex-direction: column;
     }
 
     .product-content-area {
@@ -26,29 +27,12 @@
 
 
 
-    .modal-content {
-      background: white;
-      padding: 32px;
-      border-radius: var(--radius-input, 12px);
-      max-width: 500px;
-      width: 100%;
-    }
 
-    .sheet-content {
-      position: absolute;
-      right: 0; top: 0; bottom: 0;
-      background: white;
-      width: 320px;
-      padding: 32px;
-    }
 
     /* Responsive adjustments */
     @media (max-width: 1024px) {
       .right-rail {
-        display: none; /* Hide right rail on tablet and mobile */
-      }
-      .products-layout {
-        padding: 16px;
+        display: none;
       }
     }
     

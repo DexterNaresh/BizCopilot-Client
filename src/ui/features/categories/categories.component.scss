@@ -1,7 +1,7 @@
 .categories-layout {
   display: flex;
-  gap: 32px;
-  padding: 24px;
+  gap: var(--spacing-xl);
+  padding: clamp(16px, 2vh, 32px) clamp(16px, 2vw, 32px);
   height: 100%;
   box-sizing: border-box;
   background-color: var(--color-bg-canvas);
@@ -24,27 +24,11 @@
   margin-bottom: 24px;
 }
 
-.overlay-placeholder {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.5);
-  z-index: 1000;
-}
 
-.sheet-content {
-  position: absolute;
-  right: 0; top: 0; bottom: 0;
-  background: white;
-  width: 320px;
-  padding: 32px;
-}
 
 /* Responsive adjustments */
 @media (max-width: 1024px) {
   .right-rail {
-    display: none; /* Hide right rail on tablet and mobile */
-  }
-  .categories-layout {
-    padding: 16px;
+    display: none;
   }
 }

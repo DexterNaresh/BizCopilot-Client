@@ -1,0 +1,160 @@
+<div class="home-container">
+  <!-- Hero Greeting Header -->
+  <div class="hero-banner card-glass">
+    <div class="hero-text">
+      <h1 class="welcome-title">Welcome back, Owner!</h1>
+      <p class="welcome-subtitle">Here is what's happening with your business today.</p>
+    </div>
+    <div class="hero-actions">
+      <button class="btn btn-primary" (click)="navigateTo('/billing')">
+        <span class="material-symbols-outlined icon-20">receipt_long</span>
+        Start New Bill
+      </button>
+    </div>
+  </div>
+
+  <!-- Key Metrics Row -->
+  <div class="kpi-grid">
+    <div class="kpi-card card-premium">
+      <div class="kpi-icon-wrapper purple">
+        <span class="material-symbols-outlined">payments</span>
+      </div>
+      <div class="kpi-details">
+        <span class="kpi-label">Today's Revenue</span>
+        <div class="kpi-value-row">
+          <span class="kpi-value">₹24,850.00</span>
+          <span class="badge badge-success">+18.5%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="kpi-card card-premium">
+      <div class="kpi-icon-wrapper blue">
+        <span class="material-symbols-outlined">receipt</span>
+      </div>
+      <div class="kpi-details">
+        <span class="kpi-label">Bills Generated</span>
+        <div class="kpi-value-row">
+          <span class="kpi-value">42</span>
+          <span class="badge badge-primary">Active</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="kpi-card card-premium">
+      <div class="kpi-icon-wrapper green">
+        <span class="material-symbols-outlined">local_offer</span>
+      </div>
+      <div class="kpi-details">
+        <span class="kpi-label">Active Offers</span>
+        <div class="kpi-value-row">
+          <span class="kpi-value">3 Live</span>
+          <span class="badge badge-info">Juice Fest</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="kpi-card card-premium">
+      <div class="kpi-icon-wrapper orange">
+        <span class="material-symbols-outlined">group</span>
+      </div>
+      <div class="kpi-details">
+        <span class="kpi-label">Customers Served</span>
+        <div class="kpi-value-row">
+          <span class="kpi-value">156</span>
+          <span class="badge badge-success">+12 new</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Actions Panel -->
+  <div class="section-container">
+    <h2 class="section-heading">Quick Actions</h2>
+    <div class="quick-actions-grid">
+      <button class="action-tile card-premium" (click)="navigateTo('/billing')">
+        <div class="tile-icon purple">
+          <span class="material-symbols-outlined">point_of_sale</span>
+        </div>
+        <span class="tile-title">Create Bill</span>
+        <span class="tile-desc">Fast checkout POS mode</span>
+      </button>
+
+      <button class="action-tile card-premium" (click)="navigateTo('/products')">
+        <div class="tile-icon blue">
+          <span class="material-symbols-outlined">inventory_2</span>
+        </div>
+        <span class="tile-title">Manage Products</span>
+        <span class="tile-desc">Catalog & stock prices</span>
+      </button>
+
+      <button class="action-tile card-premium" (click)="navigateTo('/offers')">
+        <div class="tile-icon green">
+          <span class="material-symbols-outlined">local_offer</span>
+        </div>
+        <span class="tile-title">Offers & Discounts</span>
+        <span class="tile-desc">Promotions & combo deals</span>
+      </button>
+
+      <button class="action-tile card-premium" (click)="navigateTo('/customers')">
+        <div class="tile-icon orange">
+          <span class="material-symbols-outlined">person_add</span>
+        </div>
+        <span class="tile-title">Add Customer</span>
+        <span class="tile-desc">Loyalty & contact profiles</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- AI Copilot Business Summary & Recent Bills Split -->
+  <div class="dashboard-split">
+    <!-- AI Copilot Summary Card -->
+    <div class="copilot-card card-premium">
+      <div class="card-header">
+        <div class="header-title">
+          <span class="material-symbols-outlined icon-primary">smart_toy</span>
+          <h3>BizCopilot AI Insights</h3>
+        </div>
+        <span class="badge badge-primary">Realtime</span>
+      </div>
+      <div class="insight-content">
+        <div class="insight-item">
+          <span class="bullet">•</span>
+          <p><strong>Top Selling:</strong> Fresh Apple Juice generated ₹4,200 in revenue today across 28 bills.</p>
+        </div>
+        <div class="insight-item">
+          <span class="bullet">•</span>
+          <p><strong>Offer Performance:</strong> "Juice Fest 20%" was applied on 14 orders, boosting cart size by 22%.</p>
+        </div>
+        <div class="insight-item">
+          <span class="bullet">•</span>
+          <p><strong>Inventory Alert:</strong> Orange Juice stock is running low (4 units remaining).</p>
+        </div>
+      </div>
+      <button class="btn btn-secondary" (click)="navigateTo('/ai-assistant')">
+        Ask AI Assistant Anything
+        <span class="material-symbols-outlined icon-18">arrow_forward</span>
+      </button>
+    </div>
+
+    <!-- Recent Activity Card -->
+    <div class="recent-bills-card card-premium">
+      <div class="card-header">
+        <h3>Recent Transactions</h3>
+        <button class="btn-link" (click)="navigateTo('/bills')">View All</button>
+      </div>
+      <div class="bills-list">
+        <div class="bill-row" *ngFor="let bill of recentBills">
+          <div class="bill-info">
+            <span class="bill-id">{{ bill.id }}</span>
+            <span class="bill-time">{{ bill.time }} • {{ bill.customer }}</span>
+          </div>
+          <div class="bill-meta">
+            <span class="bill-amount">₹{{ bill.amount | number:'1.2-2' }}</span>
+            <span class="badge badge-success">{{ bill.status }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
