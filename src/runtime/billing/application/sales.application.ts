@@ -5,6 +5,7 @@ import { CompleteSaleRequest, ApplicationResponse, BillInfo } from '@runtime/bil
 import { BillEntity } from '@runtime/billing/models/bill.entity';
 
 import { ISessionService } from '@shared/abstractions/session.service.interface';
+import { IBillRepository } from '@runtime/billing/repositories/bill.repository.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class SalesApplication {
   constructor(
     private billingService: BillingService,
     private IPermissionService: IPermissionService,
-    private ISessionService: ISessionService
+    private ISessionService: ISessionService,
+    private billRepo: IBillRepository
   ) {}
 
   /**
@@ -68,6 +70,23 @@ export class SalesApplication {
           message: msgParts.length > 0 ? msgParts.join(': ') : message
         }
       };
+    }
+  }
+
+  getRecentBills(request: { userId: string, limit: number }): ApplicationResponse<BillInfo[]> {
+    try {
+      const currentUser = this.ISessionService.getCurrentUser();
+      if (!currentUser || currentUser.id !== request.userId) {
+        return { success: false, error: { code: 'PERMISSION_DENIED', message: 'Invalid session.' } };
+      }
+      
+      const bills = this.billRepo.getRecentBills(request.limit);
+      return {
+        success: true,
+        data: bills.map(b => this.mapToInfo(b))
+      };
+    } catch (error: any) {
+      return { success: false, error: { code: 'UNKNOWN_ERROR', message: error.message } };
     }
   }
 

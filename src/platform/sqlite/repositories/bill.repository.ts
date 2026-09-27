@@ -41,4 +41,9 @@ export class SqliteBillRepository extends BaseRepository<BillEntity> implements 
     
     return { bill, items };
   }
+
+  getRecentBills(limit: number): BillEntity[] {
+    const sql = `SELECT * FROM bills ORDER BY created_at DESC LIMIT ?`;
+    return this.db.query<BillEntity>(sql, [limit]);
+  }
 }
