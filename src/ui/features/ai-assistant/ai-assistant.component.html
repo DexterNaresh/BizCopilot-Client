@@ -1,0 +1,40 @@
+<div class="ai-layout" [class.history-open]="showHistory" [class.context-open]="showContext">
+  <!-- Left Panel: Conversation History -->
+  <aside class="ai-history-panel" [class.mobile-open]="showHistory">
+    <app-ai-history
+      [historyGroups]="historyGroups"
+      [activeId]="activeHistoryId"
+      (selectChat)="selectConversation($event)"
+      (newChat)="onNewChat()">
+    </app-ai-history>
+  </aside>
+
+  <!-- Main Panel: Chat Area -->
+  <main class="ai-main-panel">
+    <app-ai-chat-area
+      [messages]="messages"
+      [showInitialState]="showInitialState"
+      [suggestions]="suggestions"
+      (suggestionClick)="onSuggestionClick($event)"
+      (toggleHistory)="toggleHistory()"
+      (toggleContext)="toggleContext()">
+    </app-ai-chat-area>
+  </main>
+
+  <!-- Right Panel: Business Context -->
+  <aside class="ai-context-panel" [class.mobile-open]="showContext">
+    <app-ai-business-context
+      [metrics]="metrics"
+      [attentionItems]="attentionItems"
+      [quickLinks]="quickLinks"
+      (linkClick)="onQuickLinkClick($event)"
+      (close)="toggleContext()">
+    </app-ai-business-context>
+  </aside>
+
+  <!-- Mobile Overlay backdrop -->
+  <div class="mobile-overlay"
+       *ngIf="showHistory || showContext"
+       (click)="showHistory = false; showContext = false">
+  </div>
+</div>

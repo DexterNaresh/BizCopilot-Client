@@ -1,32 +1,24 @@
 .support-panel {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 24px;
 }
 
 .panel-section {
-  background-color: var(--color-surface);
-  border-radius: var(--radius-card, 20px);
-  border: 1px solid var(--color-border);
-  padding: 24px;
-  box-shadow: var(--shadow-sm);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-
-  &:hover {
-    box-shadow: var(--shadow-card);
-    border-color: var(--color-primary-light);
-  }
+  background-color: var(--color-surface, #FFFFFF);
+  border: 1px solid var(--color-border, #EAECEF);
+  border-radius: var(--radius-input, 12px);
+  padding: 20px;
 }
 
 .section-title {
   font-size: var(--font-base);
-  font-weight: 700;
-  color: var(--color-text-primary);
+  font-weight: 600;
+  color: var(--color-text-primary, #111827);
   margin: 0 0 16px 0;
   display: flex;
   align-items: center;
   gap: 8px;
-  letter-spacing: -0.2px;
 }
 
 /* Action List */
@@ -36,55 +28,36 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
 }
 
 .action-btn {
-  width: 100%;
   display: flex;
   align-items: center;
   background: transparent;
   border: none;
-  padding: 10px 14px;
-  margin: 0;
-  border-radius: var(--radius-key, 10px);
+  padding: 0;
   cursor: pointer;
-  color: var(--color-text-primary);
-  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
+  text-align: left;
+}
 
-  &:hover {
-    background-color: var(--color-primary-bg);
-    transform: translateX(2px);
+.icon {
+  font-size: var(--font-lg);
+  color: var(--color-primary, #5B3BEB);
+  margin-right: 12px;
+}
 
-    .label {
-      color: var(--color-primary);
-    }
+.label {
+  flex: 1;
+  font-size: var(--font-base);
+  font-weight: 500;
+  color: var(--color-text-primary, #111827);
+}
 
-    .chevron {
-      color: var(--color-primary);
-      transform: translateX(2px);
-    }
-  }
-
-  .icon {
-    font-size: var(--font-lg);
-    color: var(--color-primary);
-    margin-right: 12px;
-  }
-
-  .label {
-    flex: 1;
-    text-align: left;
-    font-size: var(--font-base);
-    font-weight: 500;
-    transition: color 0.2s;
-  }
-
-  .chevron {
-    font-size: var(--font-lg);
-    color: var(--color-text-muted);
-    transition: all 0.2s ease;
-  }
+.chevron {
+  font-size: var(--font-lg);
+  color: var(--color-text-muted, #9CA3AF);
 }
 
 /* Summary List */
@@ -102,122 +75,82 @@
 
 .summary-label {
   font-size: var(--font-base);
-  color: var(--color-text-secondary);
+  color: var(--color-text-primary, #111827);
   font-weight: 500;
 }
 
 .summary-value {
   font-size: var(--font-base);
-  font-weight: 700;
-  color: var(--color-text-primary);
-
-  &.text-success {
-    color: var(--color-success-text, #10B981);
-  }
-
-  &.text-warning {
-    color: var(--color-warning-text, #F59E0B);
-  }
+  font-weight: 600;
+  color: var(--color-text-primary, #111827);
 }
 
-/* Tip Container */
-.tip-container {
+.summary-value.success {
+  color: var(--color-success-text, #166534);
+}
+
+.summary-value.danger {
+  color: var(--color-error-text, #991B1B);
+}
+
+.summary-value.primary {
+  color: var(--color-primary, #5B3BEB);
+}
+
+/* Tips */
+.tips-icon {
+  color: var(--color-warning, #D97706);
+}
+
+.tips-list {
+  margin: 0;
+  padding-left: 20px;
   display: flex;
+  flex-direction: column;
   gap: 12px;
-  background: var(--color-primary-bg);
-  border: 1px solid var(--color-primary-light);
-  border-radius: var(--radius-key, 12px);
-  padding: 16px;
-
-  .tip-icon {
-    font-size: var(--font-xl);
-    color: var(--color-primary);
-    flex-shrink: 0;
-  }
-
-  .tip-content {
-    font-size: var(--font-sm);
-    line-height: 1.5;
-    color: var(--color-text-secondary);
-
-    strong {
-      color: var(--color-text-primary);
-    }
-  }
 }
 
-    .summary-value {
-      font-size: var(--font-base);
-      font-weight: 600;
-      color: var(--color-text-primary, #111827);
-    }
+.tips-list li {
+  font-size: var(--font-sm);
+  color: var(--color-text-secondary, #6B7280);
+  line-height: 1.5;
+}
 
-    .summary-value.success {
-      color: var(--color-success-text, #166534);
-    }
+/* Upcoming */
+.upcoming-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
 
-    .summary-value.danger {
-      color: var(--color-error-text, #991B1B);
-    }
+.upcoming-header .section-title {
+  margin-bottom: 0;
+}
 
-    .summary-value.primary {
-      color: var(--color-primary, #5B3BEB);
-    }
+.badge-planned {
+  background-color: var(--color-primary-light);
+  color: var(--color-primary, #5B3BEB);
+  padding: 2px 8px;
+  border-radius: var(--radius-input, 12px);
+  font-size: var(--font-xs);
+  font-weight: 600;
+}
 
-    /* Tips */
-    .tips-icon {
-      color: var(--color-warning, #D97706);
-    }
+.roadmap-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-primary, #5B3BEB);
+  font-size: var(--font-sm);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 16px;
+  padding: 0;
+  cursor: pointer;
+}
 
-    .tips-list {
-      margin: 0;
-      padding-left: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    
-    .tips-list li {
-      font-size: var(--font-sm);
-      color: var(--color-text-secondary, #6B7280);
-      line-height: 1.5;
-    }
-
-    /* Upcoming */
-    .upcoming-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-
-    .upcoming-header .section-title {
-      margin-bottom: 0;
-    }
-
-    .badge-planned {
-      background-color: var(--color-primary-light);
-      color: var(--color-primary, #5B3BEB);
-      padding: 2px 8px;
-      border-radius: var(--radius-input, 12px);
-      font-size: var(--font-xs);
-      font-weight: 600;
-    }
-
-    .roadmap-btn {
-      background: transparent;
-      border: none;
-      color: var(--color-primary, #5B3BEB);
-      font-size: var(--font-sm);
-      font-weight: 600;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      margin-top: 16px;
-      padding: 0;
-      cursor: pointer;
-    }
-
-    .roadmap-btn biz-icon {
-      font-size: var(--font-md);
-    }
+.roadmap-btn biz-icon {
+  font-size: var(--font-md);
+}

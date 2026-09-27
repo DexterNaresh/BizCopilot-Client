@@ -1,0 +1,216 @@
+<div class="chat-container">
+  <!-- Mobile top bar -->
+  <div class="mobile-bar">
+    <button class="icon-btn" (click)="toggleHistory.emit()">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+    <div class="mobile-title">
+      <span class="material-symbols-outlined sparkle">auto_awesome</span>
+      AI Assistant
+    </div>
+    <button class="icon-btn" (click)="toggleContext.emit()">
+      <span class="material-symbols-outlined">info</span>
+    </button>
+  </div>
+
+  <!-- Chat Card -->
+  <div class="chat-card">
+    <div class="messages-scroll">
+
+      <!-- Initial State -->
+      <div class="initial-state" *ngIf="showInitialState">
+        <div class="hero-icon-wrap">
+          <span class="material-symbols-outlined hero-icon">smart_toy</span>
+        </div>
+        <h1 class="hero-title">AI Business Assistant</h1>
+        <p class="hero-sub">Ask anything about your business. I can help you understand sales, customers, products, offers and more.</p>
+
+        <div class="suggestion-grid">
+          <button class="suggestion-chip" *ngFor="let s of suggestions" (click)="onSuggestionClick(s)">
+            <span class="material-symbols-outlined chip-icon" [class]="s.color">{{ s.icon }}</span>
+            <span class="chip-text">{{ s.text }}</span>
+            <span class="material-symbols-outlined chip-arrow">chevron_right</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Header when in conversation -->
+      <div class="conv-header" *ngIf="!showInitialState">
+        <div class="conv-header-icon">
+          <span class="material-symbols-outlined">smart_toy</span>
+        </div>
+        <div class="conv-header-text">
+          <h2>AI Business Assistant</h2>
+          <p>Ask anything about your business. I can help you understand sales, customers, products, offers and more.</p>
+        </div>
+      </div>
+
+      <!-- Suggestion chips when in conversation -->
+      <div class="suggestion-row" *ngIf="!showInitialState">
+        <button class="suggestion-pill" *ngFor="let s of suggestions" (click)="onSuggestionClick(s)">
+          <span class="material-symbols-outlined pill-icon" [class]="s.color">{{ s.icon }}</span>
+          {{ s.text }}
+        </button>
+      </div>
+
+      <!-- Messages -->
+      <ng-container *ngFor="let msg of messages">
+        <!-- User Message -->
+        <div class="message user-msg" *ngIf="msg.type === 'user'">
+          <div class="user-bubble">
+            <span class="user-text">{{ msg.text }}</span>
+            <span class="msg-time">{{ msg.time }}</span>
+          </div>
+          <div class="user-avatar">RS</div>
+        </div>
+
+        <!-- AI Message -->
+        <div class="message ai-msg" *ngIf="msg.type === 'ai'">
+          <div class="ai-avatar-wrap">
+            <span class="material-symbols-outlined">smart_toy</span>
+          </div>
+          <div class="ai-content">
+            <p class="ai-text">{{ msg.text }}</p>
+
+            <!-- KPI Row -->
+            <div class="kpi-row" *ngIf="msg.metrics?.length">
+              <div class="kpi-card" *ngFor="let m of msg.metrics">
+                <div class="kpi-icon" [style.background]="m.iconBg" [style.color]="m.iconColor">
+                  <span class="material-symbols-outlined">{{ m.icon }}</span>
+                </div>
+                <div class="kpi-data">
+                  <div class="kpi-value">
+                    {{ m.value }}
+                    <span class="kpi-trend" [class.down]="m.trendDir === 'down'" [class.up]="m.trendDir === 'up'">{{ m.trend }}</span>
+                  </div>
+                  <div class="kpi-label">{{ m.label }} <span class="vs">vs last week</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chart placeholder -->
+            <div class="chart-box" *ngIf="msg.metrics?.length">
+              <div class="chart-top">
+                <span class="chart-title">Sales Trend — Today vs Last Tuesday</span>
+                <div class="chart-legend">
+                  <span class="leg"><span class="dot primary"></span> Today</span>
+                  <span class="leg"><span class="dot muted"></span> Last Tuesday</span>
+                </div>
+              </div>
+              <div class="chart-visual">
+                <svg viewBox="0 0 560 160" preserveAspectRatio="xMidYMid meet">
+                  <!-- Y-axis labels -->
+                  <text x="25" y="18" class="axis-label">40K</text>
+                  <text x="25" y="55" class="axis-label">30K</text>
+                  <text x="25" y="92" class="axis-label">20K</text>
+                  <text x="25" y="129" class="axis-label">10K</text>
+                  <text x="30" y="155" class="axis-label">0</text>
+                  <!-- Grid lines -->
+                  <line x1="50" y1="14" x2="540" y2="14" class="grid"/>
+                  <line x1="50" y1="51" x2="540" y2="51" class="grid"/>
+                  <line x1="50" y1="88" x2="540" y2="88" class="grid"/>
+                  <line x1="50" y1="125" x2="540" y2="125" class="grid"/>
+                  <!-- Bars: Today (purple) + Last Tue (light) -->
+                  <rect x="70" y="140" width="16" height="10" rx="2" fill="#5B3BEB"/>
+                  <rect x="90" y="142" width="16" height="8" rx="2" fill="#C7D2FE"/>
+                  <rect x="140" y="100" width="16" height="50" rx="2" fill="#5B3BEB"/>
+                  <rect x="160" y="85" width="16" height="65" rx="2" fill="#C7D2FE"/>
+                  <rect x="210" y="55" width="16" height="95" rx="2" fill="#5B3BEB"/>
+                  <rect x="230" y="40" width="16" height="110" rx="2" fill="#C7D2FE"/>
+                  <rect x="280" y="70" width="16" height="80" rx="2" fill="#5B3BEB"/>
+                  <rect x="300" y="25" width="16" height="125" rx="2" fill="#C7D2FE"/>
+                  <rect x="350" y="95" width="16" height="55" rx="2" fill="#5B3BEB"/>
+                  <rect x="370" y="35" width="16" height="115" rx="2" fill="#C7D2FE"/>
+                  <rect x="420" y="80" width="16" height="70" rx="2" fill="#5B3BEB"/>
+                  <rect x="440" y="50" width="16" height="100" rx="2" fill="#C7D2FE"/>
+                  <rect x="490" y="90" width="16" height="60" rx="2" fill="#5B3BEB"/>
+                  <rect x="510" y="60" width="16" height="90" rx="2" fill="#C7D2FE"/>
+                  <!-- X-axis labels -->
+                  <text x="85" y="155" class="axis-label" text-anchor="middle">8 AM</text>
+                  <text x="155" y="155" class="axis-label" text-anchor="middle">10 AM</text>
+                  <text x="225" y="155" class="axis-label" text-anchor="middle">12 PM</text>
+                  <text x="295" y="155" class="axis-label" text-anchor="middle">2 PM</text>
+                  <text x="365" y="155" class="axis-label" text-anchor="middle">4 PM</text>
+                  <text x="435" y="155" class="axis-label" text-anchor="middle">6 PM</text>
+                  <text x="505" y="155" class="axis-label" text-anchor="middle">8 PM</text>
+                  <!-- Annotation -->
+                  <rect x="280" y="4" rx="4" ry="4" width="170" height="22" fill="#FEF2F2" stroke="#FCA5A5" stroke-width="0.5"/>
+                  <text x="365" y="18" font-size="10" fill="#DC2626" font-weight="600" text-anchor="middle">↓ 35% lower bills between 2–5 PM</text>
+                  <line x1="280" y1="26" x2="280" y2="70" stroke="#FCA5A5" stroke-width="1" stroke-dasharray="3"/>
+                  <line x1="450" y1="26" x2="450" y2="80" stroke="#FCA5A5" stroke-width="1" stroke-dasharray="3"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Analysis Grid -->
+            <div class="analysis-grid" *ngIf="msg.reasons?.length || msg.actions?.length">
+              <div class="analysis-col" *ngIf="msg.reasons?.length">
+                <h4 class="analysis-heading">
+                  <span class="material-symbols-outlined heading-icon">psychology</span> Key Reasons
+                </h4>
+                <div class="reason-item" *ngFor="let r of msg.reasons">
+                  <div class="reason-icon" [style.background]="r.iconBg" [style.color]="r.iconColor">
+                    <span class="material-symbols-outlined">{{ r.icon }}</span>
+                  </div>
+                  <div class="reason-body">
+                    <strong>{{ r.title }}</strong>
+                    <span>{{ r.detail }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="analysis-col" *ngIf="msg.actions?.length">
+                <h4 class="analysis-heading">
+                  <span class="material-symbols-outlined heading-icon">lightbulb</span> What You Can Do
+                </h4>
+                <div class="action-item" *ngFor="let a of msg.actions">
+                  <div class="action-num">{{ a.num }}</div>
+                  <span class="action-text">{{ a.text }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Evidence -->
+            <div class="evidence-bar" *ngIf="msg.evidence?.length">
+              <div class="evidence-left">
+                <span class="material-symbols-outlined ev-icon">description</span>
+                <span class="ev-label">Based on:</span>
+                <span class="ev-source" *ngFor="let e of msg.evidence; let last = last">
+                  {{ e }}<span *ngIf="!last"> • </span>
+                </span>
+              </div>
+              <div class="evidence-right">
+                <span class="ev-time">{{ msg.time }}</span>
+                <button class="ev-btn"><span class="material-symbols-outlined">thumb_up</span></button>
+                <button class="ev-btn"><span class="material-symbols-outlined">thumb_down</span></button>
+              </div>
+            </div>
+
+            <!-- Follow-up chips -->
+            <div class="follow-up-row" *ngIf="msg.followUps?.length">
+              <button class="follow-chip" *ngFor="let f of msg.followUps" [class]="f.color">
+                <span class="material-symbols-outlined">{{ f.icon }}</span>
+                {{ f.label }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+
+    <!-- Composer -->
+    <div class="composer-area">
+      <div class="composer-box">
+        <button class="attach-btn"><span class="material-symbols-outlined">attach_file</span></button>
+        <input type="text"
+               [(ngModel)]="composerText"
+               (keyup.enter)="onSend()"
+               placeholder="Ask a follow-up question..."
+               class="composer-input">
+        <button class="send-btn" [class.active]="composerText.trim()" (click)="onSend()">
+          <span class="material-symbols-outlined">send</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

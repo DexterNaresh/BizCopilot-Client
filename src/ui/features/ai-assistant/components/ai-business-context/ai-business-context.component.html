@@ -1,0 +1,114 @@
+<div class="context-container">
+  <div class="header">
+    <div class="title-row">
+      <span class="material-symbols-outlined sparkle">smart_toy</span>
+      <h2 class="title">Business Context</h2>
+      <button class="close-btn" (click)="close.emit()">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <div class="dropdown-wrapper">
+      <select class="context-dropdown">
+        <option>Today</option>
+        <option>Yesterday</option>
+        <option>This Week</option>
+      </select>
+      <span class="material-symbols-outlined dropdown-chevron">expand_more</span>
+    </div>
+  </div>
+
+  <div class="scroll-area">
+    <!-- Metrics -->
+    <div class="metrics-section">
+      <div class="metric-row">
+        <div class="metric-icon green">
+          <span class="material-symbols-outlined">payments</span>
+        </div>
+        <div class="metric-info">
+          <div class="metric-val-row">
+            <span class="metric-value">{{ formattedSales }}</span>
+            <span class="trend down">↓ 18%</span>
+          </div>
+          <span class="metric-label">Sales</span>
+        </div>
+      </div>
+
+      <div class="metric-row">
+        <div class="metric-icon blue">
+          <span class="material-symbols-outlined">receipt_long</span>
+        </div>
+        <div class="metric-info">
+          <div class="metric-val-row">
+            <span class="metric-value">{{ metrics.totalBills }}</span>
+            <span class="trend down">↓ 12%</span>
+          </div>
+          <span class="metric-label">Bills</span>
+        </div>
+      </div>
+
+      <div class="metric-row">
+        <div class="metric-icon orange">
+          <span class="material-symbols-outlined">payments</span>
+        </div>
+        <div class="metric-info">
+          <div class="metric-val-row">
+            <span class="metric-value">{{ formattedAvg }}</span>
+            <span class="trend down">↓ 7%</span>
+          </div>
+          <span class="metric-label">Average Bill</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Attention -->
+    <div class="section" *ngIf="attentionItems.length > 0">
+      <h3 class="section-title">Attention</h3>
+      <div class="attention-list">
+        <button class="attention-item" *ngFor="let a of attentionItems" (click)="linkClick.emit({ icon: a.icon, label: a.label, route: a.route, color: a.color })">
+          <div class="att-left">
+            <div class="att-icon" [class]="a.color">
+              <span class="material-symbols-outlined">{{ a.icon }}</span>
+            </div>
+            <div class="att-text">
+              <span class="att-primary">{{ a.label }}</span>
+              <span class="att-secondary">{{ a.sublabel }}</span>
+            </div>
+          </div>
+          <span class="material-symbols-outlined chevron">chevron_right</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="section">
+      <h3 class="section-title">Quick Links</h3>
+      <div class="links-list">
+        <button class="link-item" *ngFor="let l of quickLinks" (click)="linkClick.emit(l)">
+          <div class="link-left">
+            <div class="link-icon" [class]="l.color">
+              <span class="material-symbols-outlined">{{ l.icon }}</span>
+            </div>
+            <span>{{ l.label }}</span>
+          </div>
+          <span class="material-symbols-outlined chevron">chevron_right</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Tip -->
+    <div class="tip-card">
+      <div class="tip-header">
+        <div class="tip-icon-wrap">
+          <span class="material-symbols-outlined">lightbulb</span>
+        </div>
+        <h3 class="tip-title">Tip</h3>
+      </div>
+      <p class="tip-text">Try asking questions in natural language, for example:</p>
+      <ul class="tip-examples">
+        <li>"Which products sold the most this week?"</li>
+        <li>"How are my offers performing?"</li>
+        <li>"Compare this week vs last week"</li>
+      </ul>
+    </div>
+  </div>
+</div>
