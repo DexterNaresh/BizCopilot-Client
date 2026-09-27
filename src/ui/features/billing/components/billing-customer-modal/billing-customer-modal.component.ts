@@ -1,10 +1,13 @@
-import { Component, EventEmitter, OnInit, Output, OnDestroy } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, OnDestroy, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged, takeUntil } from 'rxjs/operators';
 import { BizIconComponent } from '../../../../shared/components/biz-icon/biz-icon.component';
 import { BillingCustomer } from '../../services/billing-state.service';
+import { CustomerApplication } from '@runtime/customer/application/customer.application';
+import { ISessionService } from '@shared/abstractions/session.service.interface';
+import { ToastService } from '../../../../shared/services/toast.service';
 
 @Component({
   selector: 'app-billing-customer-modal',
@@ -16,15 +19,6 @@ import { BillingCustomer } from '../../services/billing-state.service';
 export class BillingCustomerModalComponent implements OnInit, OnDestroy {
   @Output() close = new EventEmitter<void>();
   @Output() confirm = new EventEmitter<BillingCustomer | null>();
-
-  // Mock data
-  private MOCK_CUSTOMERS: BillingCustomer[] = [
-    { id: 'CUST001', name: 'Ravi Kumar', phone: '9876543210', createdAt: 'Since 12 Jan 2024' },
-    { id: 'CUST002', name: 'Ramesh Mehta', phone: '9876511111', createdAt: 'Since 15 Feb 2024' },
-    { id: 'CUST003', name: 'Anita Sharma', phone: '9876522222', createdAt: 'Since 01 Mar 2024' },
-    { id: 'CUST004', name: 'Anil Gupta', phone: '9876533333', createdAt: 'Since 10 Mar 2024' },
-    { id: 'CUST005', name: 'Rahul Desai', phone: '9876544444', createdAt: 'Since 20 Apr 2024' }
-  ];
 
   // Search State
   searchTerm: string = '';
@@ -41,13 +35,25 @@ export class BillingCustomerModalComponent implements OnInit, OnDestroy {
   newCustomerName = '';
   newCustomerPhone = '';
   newCustomerNotes = '';
-  
+
   private destroy$ = new Subject<void>();
+
+  constructor(
+    @Inject(CustomerApplication) private customerApp: CustomerApplication,
+    @Inject(ISessionService) private sessionService: ISessionService,
+    private toastService: ToastService
+  ) { }
+
+  get currentUserId(): string {
+    const user = this.sessionService.getCurrentUser();
+    if (!user) throw new Error('No active session');
+    return user.id;
+  }
 
   ngOnInit() {
     this.searchSubject.pipe(
       takeUntil(this.destroy$),
-      debounceTime(500),
+      debounceTime(300),
       distinctUntilChanged()
     ).subscribe(term => {
       this.performSearch(term);
@@ -83,25 +89,28 @@ export class BillingCustomerModalComponent implements OnInit, OnDestroy {
       this.isSearching = false;
       return;
     }
-    
+
     this.isSearching = true;
     const lowerTerm = termStr.toLowerCase().trim();
-    
-    // Simulate slight delay for realism
-    setTimeout(() => {
-      this.searchResults = this.MOCK_CUSTOMERS.filter(c => {
-        const matchesName = c.name.toLowerCase().includes(lowerTerm);
-        const matchesPhone = c.phone?.includes(lowerTerm);
-        if (this.searchMode === 'name') {
-          return matchesName;
-        }
-        return matchesName || matchesPhone;
-      });
-      this.isSearching = false;
-    }, 150);
+
+    const response = this.customerApp.searchCustomers({ userId: this.currentUserId, query: lowerTerm });
+
+    if (response.success && response.data) {
+      this.searchResults = response.data.map(c => ({
+        id: c.customer_id,
+        name: c.name,
+        phone: c.phone || '',
+        createdAt: c.created_at ? new Date(c.created_at).toLocaleDateString() : 'Just now'
+      }));
+    } else {
+      this.searchResults = [];
+    }
+
+    this.isSearching = false;
   }
 
   getInitials(name: string): string {
+    if (!name) return '??';
     return name
       .split(' ')
       .map(n => n[0])
@@ -123,16 +132,27 @@ export class BillingCustomerModalComponent implements OnInit, OnDestroy {
   useEnteredCustomer() {
     if (!this.newCustomerName.trim()) return;
 
-    const newCust: BillingCustomer = {
-      id: `CUST${Date.now()}`,
+    const response = this.customerApp.createCustomer({
+      userId: this.currentUserId,
       name: this.newCustomerName.trim(),
       phone: this.newCustomerPhone.trim(),
-      notes: this.newCustomerNotes.trim(),
-      createdAt: 'Just now'
-    };
-    
-    this.selectedCustomer = newCust;
-    this.isWalkIn = false;
+      email: null
+    });
+
+    if (response.success && response.data) {
+      const c = response.data;
+      this.selectedCustomer = {
+        id: c.customer_id,
+        name: c.name,
+        phone: c.phone || '',
+        notes: this.newCustomerNotes.trim(),
+        createdAt: 'Just now'
+      };
+      this.isWalkIn = false;
+      this.toastService.success('Customer created successfully');
+    } else {
+      this.toastService.error(response.error?.message || 'Failed to create customer');
+    }
   }
 
   onConfirm() {

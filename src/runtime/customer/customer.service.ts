@@ -15,6 +15,17 @@ export class CustomerService {
     @Inject(IIdentityService) private IIdentityService: IIdentityService
   ) {}
 
+  searchCustomers(query: string = ''): CustomerEntity[] {
+    const all = this.customerRepository.findAll();
+    const term = query.toLowerCase().trim();
+    if (!term) return all.filter(c => c.status !== 'ARCHIVED');
+    
+    return all.filter(c => 
+      c.status !== 'ARCHIVED' && 
+      (c.name.toLowerCase().includes(term) || (c.phone && c.phone.includes(term)))
+    );
+  }
+
   createCustomer(request: CustomerCreateRequest): CustomerEntity {
     if (!request.name || request.name.trim() === '') {
       throw new ValidationException('Customer name is required.');

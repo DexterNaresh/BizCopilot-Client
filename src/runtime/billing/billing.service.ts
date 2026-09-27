@@ -13,13 +13,14 @@ import { CompleteSaleRequest } from '@runtime/billing/application/dto/sales.dto'
 import { BillEntity, BillItemEntity } from '@runtime/billing/models/bill.entity';
 import { BillNumberFormatter } from './formatting/bill-number.formatter';
 import { SequenceType } from '@shared/abstractions/sequence.service.interface';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BillingService {
   // UUID for the permanently initialized Walk-In Customer
-  public readonly WALK_IN_CUSTOMER_ID = '00000000-0000-0000-0000-000000000000';
+  public readonly WALK_IN_CUSTOMER_ID = environment.walkInCustomerId;
 
     constructor(
     @Inject(IBillRepository) private billRepo: IBillRepository,

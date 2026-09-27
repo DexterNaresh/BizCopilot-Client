@@ -35,7 +35,7 @@ export class ProductService {
         type: request.type || 'QTY',
         price: request.price,
         category: request.category,
-        barcode: request.barcode,
+        barcode: request.barcode?.trim() || null,
         available: 1,
         status: 'ACTIVE',
         image_url: request.image_url || null,
@@ -64,7 +64,7 @@ export class ProductService {
       type: request.type || existingProduct.type,
       price: request.price,
       category: request.category,
-      barcode: request.barcode,
+      barcode: request.barcode?.trim() || null,
       image_url: request.image_url !== undefined ? request.image_url : existingProduct.image_url
     };
 

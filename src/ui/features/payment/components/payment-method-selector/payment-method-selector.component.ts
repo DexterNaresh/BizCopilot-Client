@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BizIconComponent } from '../../../../shared/components/biz-icon/biz-icon.component';
+import { PaymentMethod } from '../../../../../shared/enums/payment-method.enum';
 
-export type PaymentMethodType = 'CASH' | 'UPI' | 'CARD' | 'MIXED';
+export type PaymentMethodType = PaymentMethod;
 
 interface PaymentMethodOption {
-  id: PaymentMethodType;
+  id: PaymentMethod;
   label: string;
   icon: string;
 }
@@ -18,14 +19,14 @@ interface PaymentMethodOption {
   styleUrls: ['./payment-method-selector.component.scss']
 })
 export class PaymentMethodSelectorComponent {
-  @Input() selectedMethod: PaymentMethodType = 'CASH';
+  @Input() selectedMethod: PaymentMethodType = PaymentMethod.CASH;
   @Output() methodSelected = new EventEmitter<PaymentMethodType>();
 
   methods: PaymentMethodOption[] = [
-    { id: 'CASH', label: 'Cash', icon: 'numbers' },
-    { id: 'UPI', label: 'UPI', icon: 'barcode_scanner' },
-    { id: 'CARD', label: 'Card', icon: 'devices' },
-    { id: 'MIXED', label: 'Mixed', icon: 'grid_view' }
+    { id: PaymentMethod.CASH, label: 'Cash', icon: 'numbers' },
+    { id: PaymentMethod.UPI, label: 'UPI', icon: 'barcode_scanner' },
+    { id: PaymentMethod.CARD, label: 'Card', icon: 'devices' },
+    { id: PaymentMethod.MIXED, label: 'Mixed', icon: 'grid_view' }
   ];
 
   selectMethod(methodId: PaymentMethodType) {

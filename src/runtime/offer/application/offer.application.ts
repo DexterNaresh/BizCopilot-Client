@@ -16,6 +16,13 @@ export class OfferApplication {
     private ISessionService: ISessionService
   ) {}
 
+  getAllOffers(request: { userId: string }): ApplicationResponse<OfferInfo[]> {
+    return this.executeWithPermission(request.userId, 'OFFER_READ', () => {
+      const offers = this.offerService.getAllOffers();
+      return offers.map(o => this.mapToInfo(o));
+    });
+  }
+
   createOffer(request: OfferCreateRequest): ApplicationResponse<OfferInfo> {
     return this.executeWithPermission(request.userId, 'OFFER_CREATE', () => {
       return this.mapToInfo(this.offerService.createOffer(request));

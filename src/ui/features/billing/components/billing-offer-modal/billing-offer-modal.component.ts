@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, Inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BizIconComponent } from '../../../../shared/components/biz-icon/biz-icon.component';
+import { OfferApplication } from '@runtime/offer/application/offer.application';
+import { ISessionService } from '@shared/abstractions/session.service.interface';
 
 export interface AvailableOffer {
   code: string;
@@ -17,40 +19,47 @@ export interface AvailableOffer {
 })
 export class BillingOfferModalComponent implements OnInit {
   @Input() currentAppliedOfferCode: string | null = null;
+  @Input() subtotal: number = 0;
   @Output() close = new EventEmitter<void>();
   @Output() applyOffer = new EventEmitter<AvailableOffer | null>();
 
   selectedOfferCode: string | null = null;
+  offers: AvailableOffer[] = [];
 
-  // Hardcoded mock data for the UI presentation phase
-  offers: AvailableOffer[] = [
-    {
-      code: 'BUYMORE10',
-      description: '10% off on orders above ₹500',
-      savingAmount: 45.50
-    },
-    {
-      code: 'SAVE20',
-      description: '20% off on orders above ₹1,000',
-      savingAmount: 120.00
-    },
-    {
-      code: 'BIGSAVE500',
-      description: '₹500 off on bills above ₹2,000',
-      savingAmount: 500.00
-    },
-    {
-      code: 'FRESH5',
-      description: 'Flat ₹5 off on eligible orders',
-      savingAmount: 5.00
-    }
-  ];
+  constructor(
+    @Inject(OfferApplication) private offerApp: OfferApplication,
+    @Inject(ISessionService) private sessionService: ISessionService
+  ) { }
+
+  get currentUserId(): string {
+    const user = this.sessionService.getCurrentUser();
+    if (!user) throw new Error('No active session');
+    return user.id;
+  }
 
   ngOnInit(): void {
-    // Sort offers by saving amount descending
-    this.offers.sort((a, b) => b.savingAmount - a.savingAmount);
-    
-    // Initialize selection with the currently applied offer
+    const response = this.offerApp.getAllOffers({ userId: this.currentUserId });
+    if (response.success && response.data) {
+      // Filter for ACTIVE offers and calculate savingAmount
+      this.offers = response.data
+        .filter(o => o.status === 'ACTIVE')
+        .map(o => {
+          let savings = 0;
+          if (o.discount_flat) savings += o.discount_flat;
+          if (o.discount_percentage) savings += (this.subtotal * o.discount_percentage) / 100;
+
+          if (savings > this.subtotal) savings = this.subtotal;
+
+          return {
+            code: o.name,
+            description: o.description || o.name,
+            savingAmount: savings
+          };
+        });
+
+      this.offers.sort((a, b) => b.savingAmount - a.savingAmount);
+    }
+
     this.selectedOfferCode = this.currentAppliedOfferCode;
   }
 

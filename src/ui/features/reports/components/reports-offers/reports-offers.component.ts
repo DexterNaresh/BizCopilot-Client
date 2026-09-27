@@ -1,14 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-export interface OfferPerformance {
-  name: string;
-  type: string;
-  usageCount: number;
-  revenue: number;
-  discountGiven: number;
-  conversionRate: number;
-}
+
+import { OfferPerformance } from '@runtime/report/application/dto/report.dto';
 
 type OfferSortMode = 'most-used' | 'best-conversion' | 'highest-revenue';
 
@@ -20,14 +14,7 @@ type OfferSortMode = 'most-used' | 'best-conversion' | 'highest-revenue';
   styleUrls: ['./reports-offers.component.scss']
 })
 export class ReportsOffersComponent {
-  @Input() offers: OfferPerformance[] = [
-    { name: 'Morning Coffee 10%', type: 'Percentage', usageCount: 85, revenue: 24500, discountGiven: 2450, conversionRate: 68 },
-    { name: 'Weekend Special', type: 'Flat Amount', usageCount: 42, revenue: 31000, discountGiven: 4200, conversionRate: 45 },
-    { name: 'Buy 1 Get 1 Bakery', type: 'BOGO', usageCount: 38, revenue: 12400, discountGiven: 3800, conversionRate: 82 },
-    { name: 'Student Discount', type: 'Percentage', usageCount: 24, revenue: 6800, discountGiven: 1020, conversionRate: 55 },
-    { name: 'Happy Hour 20%', type: 'Percentage', usageCount: 60, revenue: 18600, discountGiven: 3720, conversionRate: 72 },
-    { name: 'New Customer Flat ₹50', type: 'Flat Amount', usageCount: 15, revenue: 4500, discountGiven: 750, conversionRate: 90 }
-  ];
+  @Input() offers: OfferPerformance[] = [];
 
   sortMode: OfferSortMode = 'most-used';
 

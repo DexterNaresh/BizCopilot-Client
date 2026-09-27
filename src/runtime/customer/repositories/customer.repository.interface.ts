@@ -3,6 +3,7 @@ import { CustomerEntity } from '../models/customer.entity';
 @Injectable()
 export abstract class ICustomerRepository {
   abstract findById(id: string): CustomerEntity | null;
+  abstract findAll(): CustomerEntity[];
   abstract findByPhone(phone: string): CustomerEntity | null;
   abstract saveNewCustomer(customer: CustomerEntity): CustomerEntity;
   abstract update(id: string, customer: CustomerEntity): void;

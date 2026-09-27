@@ -1,15 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-export interface SalesDetailRow {
-  index: number;
-  date: string;
-  day: string;
-  bills: number;
-  sales: number;
-  discountGiven: number;
-  averageBill: number;
-}
+
+import { SalesDetailRow } from '@runtime/report/application/dto/report.dto';
 
 @Component({
   selector: 'app-reports-sales-details',
@@ -19,18 +12,7 @@ export interface SalesDetailRow {
   styleUrls: ['./reports-sales-details.component.scss']
 })
 export class ReportsSalesDetailsComponent {
-  @Input() allRecords: SalesDetailRow[] = [
-    { index: 1, date: '25 Aug 2025', day: 'Mon', bills: 128, sales: 24680, discountGiven: 1240, averageBill: 192.86 },
-    { index: 2, date: '24 Aug 2025', day: 'Sun', bills: 116, sales: 21420, discountGiven: 980, averageBill: 184.65 },
-    { index: 3, date: '23 Aug 2025', day: 'Sat', bills: 121, sales: 23180, discountGiven: 1120, averageBill: 191.57 },
-    { index: 4, date: '22 Aug 2025', day: 'Fri', bills: 98, sales: 18760, discountGiven: 820, averageBill: 191.43 },
-    { index: 5, date: '21 Aug 2025', day: 'Thu', bills: 104, sales: 20340, discountGiven: 940, averageBill: 195.58 },
-    { index: 6, date: '20 Aug 2025', day: 'Wed', bills: 110, sales: 22100, discountGiven: 1050, averageBill: 200.91 },
-    { index: 7, date: '19 Aug 2025', day: 'Tue', bills: 115, sales: 22800, discountGiven: 1100, averageBill: 198.26 },
-    { index: 8, date: '18 Aug 2025', day: 'Mon', bills: 125, sales: 24100, discountGiven: 1200, averageBill: 192.80 },
-    { index: 9, date: '17 Aug 2025', day: 'Sun', bills: 108, sales: 20500, discountGiven: 890, averageBill: 189.81 },
-    { index: 10, date: '16 Aug 2025', day: 'Sat', bills: 130, sales: 25800, discountGiven: 1350, averageBill: 198.46 }
-  ];
+  @Input() allRecords: SalesDetailRow[] = [];
 
   @Input() currentPage: number = 1;
   @Input() pageSize: number = 5;

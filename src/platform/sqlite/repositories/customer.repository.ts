@@ -16,6 +16,10 @@ export class SqliteCustomerRepository extends BaseRepository<CustomerEntity> imp
     return super.findById(id);
   }
 
+  override findAll(): CustomerEntity[] {
+    return super.findAll();
+  }
+
   findByPhone(phone: string): CustomerEntity | null {
     const sql = `SELECT * FROM ${this.tableName} WHERE phone = ?`;
     return this.db.queryOne<CustomerEntity>(sql, [phone]);

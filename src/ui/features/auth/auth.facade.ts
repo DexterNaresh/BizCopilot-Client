@@ -1,5 +1,7 @@
 import { Injectable, signal, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { ISessionService } from '@shared/abstractions/session.service.interface';
+import { UserRole } from '@shared/models/user.model';
 
 export enum AuthState {
   Idle = 'idle',
@@ -13,6 +15,7 @@ export enum AuthState {
 })
 export class AuthFacade {
   private router = inject(Router);
+  private sessionService = inject(ISessionService);
 
   // State
   public pin = signal<string>('');
@@ -69,6 +72,14 @@ export class AuthFacade {
       if (this.pin() === '1234') {
         this.state.set(AuthState.Success);
         console.log('Authentication Successful! Navigating to Role-based Home...');
+        
+        // Start an authenticated session
+        this.sessionService.startSession({
+          id: 'TEST-USER-0000',
+          name: 'Demo Owner',
+          role: UserRole.OWNER
+        });
+        
         this.router.navigate(['/home']);
       } else {
         this.state.set(AuthState.Error);

@@ -42,7 +42,7 @@ export class AddProductModalComponent implements OnInit {
     if (this.editProduct) {
       this.productForm.patchValue({
         name: this.editProduct.name,
-        type: this.editProduct.unit || 'Qty',
+        type: this.editProduct.type || 'Qty',
         price: this.editProduct.price,
         description: this.editProduct.description || '',
         category: this.editProduct.category || '',

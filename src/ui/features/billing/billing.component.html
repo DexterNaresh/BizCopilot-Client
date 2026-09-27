@@ -94,6 +94,7 @@
   <app-billing-offer-modal
     *ngIf="showOfferModal"
     [currentAppliedOfferCode]="currentAppliedOfferCode"
+    [subtotal]="(subtotal$ | async) ?? 0"
     (close)="showOfferModal = false"
     (applyOffer)="onApplyOffer($event)">
   </app-billing-offer-modal>

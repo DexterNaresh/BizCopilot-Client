@@ -59,12 +59,16 @@ ProductApplication
 CustomerApplication
 - Create
 - Update
+- Archive
 - Search
 
 OfferApplication
+- Create
+- Update
+- Change Status
+- GetAllOffers
 - Apply
 - Validate
-- Manage
 
 ReportApplication
 - Reports

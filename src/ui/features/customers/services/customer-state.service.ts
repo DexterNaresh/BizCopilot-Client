@@ -1,4 +1,7 @@
-import { Injectable, signal, computed } from '@angular/core';
+import { Injectable, signal, computed, Inject } from '@angular/core';
+import { CustomerApplication } from '@runtime/customer/application/customer.application';
+import { ISessionService } from '@shared/abstractions/session.service.interface';
+import { ToastService } from '../../../shared/services/toast.service';
 
 export interface Customer {
   id: string;
@@ -15,7 +18,7 @@ export interface BillItem {
   seqNo: number;
   name: string;
   quantity: number;
-  unit: string; // 'Qty', 'Kg', 'L', 'Pkt'
+  unit: string; 
   unitPrice: number;
   total: number;
 }
@@ -39,49 +42,8 @@ export interface Bill {
   providedIn: 'root'
 })
 export class CustomerStateService {
-  // Mock Indian POS Data
-  private mockCustomers: Customer[] = [
-    { id: 'c1', seqNo: 1, name: 'Arun Kumar', phone: '+91 98765 43210', billsCount: 12, totalSpent: 8450, lastVisit: new Date('2026-08-18T10:30:00'), isActive: true },
-    { id: 'c2', seqNo: 2, name: 'Priya Stores', phone: '+91 98452 11890', billsCount: 8, totalSpent: 5720, lastVisit: new Date('2026-08-16T14:15:00'), isActive: true },
-    { id: 'c3', seqNo: 3, name: 'Ravi', phone: '+91 90031 22441', billsCount: 21, totalSpent: 14280, lastVisit: new Date('2026-08-15T09:45:00'), isActive: true },
-    { id: 'c4', seqNo: 4, name: 'Meena', phone: '+91 98840 55321', billsCount: 5, totalSpent: 2150, lastVisit: new Date('2026-08-12T16:20:00'), isActive: false },
-    { id: 'c5', seqNo: 5, name: 'Karthik', phone: '+91 87541 23698', billsCount: 2, totalSpent: 980, lastVisit: new Date('2026-08-10T11:00:00'), isActive: true },
-    { id: 'c6', seqNo: 6, name: 'Lakshmi Traders', phone: '+91 99401 55677', billsCount: 34, totalSpent: 28450, lastVisit: new Date('2026-08-09T17:30:00'), isActive: true },
-    { id: 'c7', seqNo: 7, name: 'Sanjay', phone: '+91 91763 88421', billsCount: 1, totalSpent: 450, lastVisit: new Date('2026-08-05T12:15:00'), isActive: true },
-    { id: 'c8', seqNo: 8, name: 'Deepa', phone: null, billsCount: 4, totalSpent: 1800, lastVisit: new Date('2026-08-01T15:40:00'), isActive: true },
-    { id: 'c9', seqNo: 9, name: 'Rajesh', phone: '+91 80562 11234', billsCount: 9, totalSpent: 6200, lastVisit: new Date('2026-07-28T10:05:00'), isActive: false },
-    { id: 'c10', seqNo: 10, name: 'Anitha', phone: '+91 98409 33215', billsCount: 15, totalSpent: 11500, lastVisit: new Date('2026-07-25T14:50:00'), isActive: true },
-    { id: 'c11', seqNo: 11, name: 'Kumar', phone: '+91 94440 88765', billsCount: 3, totalSpent: 1250, lastVisit: new Date('2026-07-20T09:30:00'), isActive: true },
-    { id: 'c12', seqNo: 12, name: 'Vignesh', phone: '+91 99625 44123', billsCount: 7, totalSpent: 4100, lastVisit: new Date('2026-07-15T16:10:00'), isActive: true },
-  ];
-
-  // Mock Bills Data
-  private mockBills: Bill[] = [
-    {
-      id: 'b1',
-      billNumber: '#BC-20260818-0042',
-      customerId: 'c1',
-      status: 'Completed',
-      date: new Date('2026-08-18T19:42:00'),
-      items: [
-        { seqNo: 1, name: 'Basmati Rice', quantity: 2, unit: 'Qty', unitPrice: 120, total: 240 },
-        { seqNo: 2, name: 'Sugar', quantity: 1.5, unit: 'Kg', unitPrice: 48, total: 72 },
-        { seqNo: 3, name: 'Cooking Oil', quantity: 0.75, unit: 'L', unitPrice: 150, total: 112.5 },
-        { seqNo: 4, name: 'Maggi Noodles', quantity: 3, unit: 'Pkt', unitPrice: 35, total: 105 },
-        { seqNo: 5, name: 'Soap', quantity: 5, unit: 'Qty', unitPrice: 20, total: 100 },
-        { seqNo: 6, name: 'Detergent', quantity: 1, unit: 'Kg', unitPrice: 120, total: 120 },
-      ],
-      subtotal: 749.50,
-      discount: 50.00,
-      offer: 20.00,
-      tax: 0.00,
-      total: 679.50,
-      paymentMethod: 'UPI'
-    }
-  ];
-
   // State Signals
-  readonly customers = signal<Customer[]>(this.mockCustomers);
+  readonly customers = signal<Customer[]>([]);
   readonly selectedCustomerId = signal<string | null>(null);
   readonly selectedBillId = signal<string | null>(null);
   readonly searchTerm = signal<string>('');
@@ -90,6 +52,37 @@ export class CustomerStateService {
   readonly itemsPerPage = signal<number>(10);
   readonly isAddCustomerModalOpen = signal<boolean>(false);
   readonly editingCustomer = signal<Customer | null>(null);
+
+  constructor(
+    @Inject(CustomerApplication) private customerApp: CustomerApplication,
+    @Inject(ISessionService) private sessionService: ISessionService,
+    private toastService: ToastService
+  ) {}
+
+  get currentUserId(): string {
+    const user = this.sessionService.getCurrentUser();
+    if (!user) throw new Error('No active session');
+    return user.id;
+  }
+
+  loadCustomers() {
+    const response = this.customerApp.searchCustomers({ userId: this.currentUserId, query: '' });
+    if (response.success && response.data) {
+      const mapped = response.data
+        .filter(c => c.is_system === 0) // Hide Walk-In customer from this list
+        .map((c, index) => ({
+          id: c.customer_id,
+          seqNo: index + 1,
+          name: c.name,
+          phone: c.phone,
+          billsCount: 0, // Placeholder until report aggregation
+          totalSpent: 0, // Placeholder until report aggregation
+          lastVisit: new Date(c.created_at),
+          isActive: c.status !== 'ARCHIVED'
+        }));
+      this.customers.set(mapped);
+    }
+  }
 
   // Derived State (Computed)
   readonly filteredCustomers = computed(() => {
@@ -129,19 +122,17 @@ export class CustomerStateService {
     return this.customers().find(c => c.id === id) || null;
   });
 
-  readonly selectedBill = computed(() => {
-    const id = this.selectedBillId();
-    if (!id) return null;
-    return this.mockBills.find(b => b.id === id) || null;
+  readonly selectedBill = computed<Bill | null>(() => {
+    return null; // Mock bills removed
   });
 
   // KPI Computations
   readonly kpiData = computed(() => {
     const all = this.customers();
     const active = all.filter(c => c.isActive).length;
+    const now = new Date();
     
-    // Calculate new customers this month (mock logic: assuming anything in Aug 2026 is recent)
-    const newThisMonth = all.filter(c => c.billsCount <= 2 && c.lastVisit.getMonth() === 7).length; 
+    const newThisMonth = all.filter(c => c.lastVisit.getMonth() === now.getMonth() && c.lastVisit.getFullYear() === now.getFullYear()).length; 
 
     return {
       totalCustomers: all.length,
@@ -153,12 +144,12 @@ export class CustomerStateService {
   // Actions
   updateSearch(term: string) {
     this.searchTerm.set(term);
-    this.currentPage.set(1); // Reset to page 1 on search
+    this.currentPage.set(1);
   }
 
   updateFilter(filter: 'All' | 'Active' | 'Inactive') {
     this.statusFilter.set(filter);
-    this.currentPage.set(1); // Reset to page 1 on filter
+    this.currentPage.set(1);
   }
 
   setPage(page: number) {
@@ -181,17 +172,24 @@ export class CustomerStateService {
   }
 
   toggleCustomerStatus(id: string) {
-    this.customers.update(list => 
-      list.map(c => c.id === id ? { ...c, isActive: !c.isActive } : c)
-    );
+    const customer = this.customers().find(c => c.id === id);
+    if (!customer) return;
+
+    if (customer.isActive) {
+      this.deactivateCustomer(id);
+    } else {
+      this.toastService.info('Reactivation is not supported yet.');
+    }
   }
 
   deactivateCustomer(id: string) {
-    // In actual implementation, this would show a dialog first.
-    // For the service action, it sets isActive to false.
-    this.customers.update(list => 
-      list.map(c => c.id === id ? { ...c, isActive: false } : c)
-    );
+    const response = this.customerApp.archiveCustomer({ userId: this.currentUserId, customer_id: id });
+    if (response.success) {
+      this.toastService.success('Customer deactivated');
+      this.loadCustomers();
+    } else {
+      this.toastService.error(response.error?.message || 'Failed to deactivate customer');
+    }
   }
 
   selectBill(id: string) {
@@ -213,60 +211,39 @@ export class CustomerStateService {
   }
 
   async editCustomer(id: string, name: string, phone: string | null, notes: string | null): Promise<boolean> {
-    // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 600));
-
-    const currentCustomers = this.customers();
-    
-    // Check duplicate phone (if provided)
-    if (phone) {
-      const isDuplicate = currentCustomers.some(c => c.phone === phone && c.id !== id);
-      if (isDuplicate) {
-        return false;
-      }
-    }
-
-    this.customers.update(list => 
-      list.map(c => c.id === id ? { ...c, name, phone } : c)
-    );
-    return true;
-  }
-
-  // Returns true if successful, false if duplicate
-  async addCustomer(name: string, phone: string | null, notes: string | null): Promise<boolean> {
-    // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 600));
-
-    const currentCustomers = this.customers();
-    
-    // Check duplicate phone (if provided)
-    if (phone) {
-      const isDuplicate = currentCustomers.some(c => c.phone === phone);
-      if (isDuplicate) {
-        return false;
-      }
-    }
-
-    const nextSeqNo = currentCustomers.length > 0 
-      ? Math.max(...currentCustomers.map(c => c.seqNo)) + 1 
-      : 1;
-
-    const newCustomer: Customer = {
-      id: `c${Date.now()}`,
-      seqNo: nextSeqNo,
+    const response = this.customerApp.updateCustomer({
+      userId: this.currentUserId,
+      customer_id: id,
       name,
       phone,
-      billsCount: 0,
-      totalSpent: 0,
-      lastVisit: new Date(), // Just created
-      isActive: true
-    };
-
-    // Prepend to list
-    this.customers.set([newCustomer, ...currentCustomers]);
+      email: null
+    });
     
-    // Add notes to a separate entity if we had one, but the mock Customer interface doesn't have notes.
-    // We will just create the customer.
-    return true;
+    if (response.success) {
+      this.toastService.success('Customer updated');
+      this.loadCustomers();
+      return true;
+    } else {
+      this.toastService.error(response.error?.message || 'Failed to update customer');
+      return false;
+    }
+  }
+
+  async addCustomer(name: string, phone: string | null, notes: string | null): Promise<boolean> {
+    const response = this.customerApp.createCustomer({
+      userId: this.currentUserId,
+      name,
+      phone,
+      email: null
+    });
+
+    if (response.success) {
+      this.toastService.success('Customer created');
+      this.loadCustomers();
+      return true;
+    } else {
+      this.toastService.error(response.error?.message || 'Failed to create customer');
+      return false;
+    }
   }
 }

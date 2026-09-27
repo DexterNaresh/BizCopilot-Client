@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+
 export interface KpiData {
   totalSales: number;
   totalBills: number;
@@ -17,9 +18,9 @@ export interface KpiData {
 })
 export class ReportsKpiComponent {
   @Input() data: KpiData = {
-    totalSales: 24680,
-    totalBills: 128,
-    averageBill: 192.86,
-    discountGiven: 1240
+    totalSales: 0,
+    totalBills: 0,
+    averageBill: 0,
+    discountGiven: 0
   };
 }

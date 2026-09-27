@@ -8,6 +8,8 @@ import { ISessionService } from '@shared/abstractions/session.service.interface'
 import { OnInit } from '@angular/core';
 import { ThemeService } from '../shared/services/theme.service';
 
+import { environment } from '../../environments/environment';
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -19,13 +21,13 @@ export class AppComponent implements OnInit {
   constructor(
     private sessionService: ISessionService,
     private themeService: ThemeService
-  ) {}
+  ) { }
 
   ngOnInit() {
     // Start dummy session for local dev
-    if (!this.sessionService.getCurrentUser()) {
+    if (!this.sessionService.getCurrentUser() && environment.seedTestData) {
       this.sessionService.startSession({
-        id: '00000000-0000-0000-0000-000000000000',
+        id: (environment as any).testUserId || 'TEST-USER-0000',
         name: 'Dummy Owner',
         role: UserRole.OWNER
       });

@@ -1,109 +1,113 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, Inject } from '@angular/core';
 import { Offer } from '../models/offer.model';
+import { OfferApplication } from '@runtime/offer/application/offer.application';
+import { ISessionService } from '@shared/abstractions/session.service.interface';
+import { ProductApplication } from '@runtime/product/application/product.application';
+import { CategoryApplication } from '@runtime/category/application/category.application';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OfferService {
-  private initialOffers: Offer[] = [
-    {
-      id: '1',
-      seq: '01',
-      name: 'Juice Fest 20%',
-      description: 'Get 20% off on all juices',
-      type: 'Percentage Off',
-      benefit: '20% off (Max ₹200)',
-      appliesTo: 'Category',
-      appliesToDetails: 'Juices',
-      validity: '01 Sep 2026 – 30 Sep 2026',
-      status: 'Active'
-    },
-    {
-      id: '2',
-      seq: '02',
-      name: 'Breakfast Combo',
-      description: 'Juice + Sandwich Combo',
-      type: 'Bundle / Combo',
-      benefit: '₹120',
-      appliesTo: 'Selected Products',
-      appliesToDetails: 'Juice, Sandwich',
-      validity: '01 Sep 2026 – 30 Sep 2026',
-      status: 'Active'
-    },
-    {
-      id: '3',
-      seq: '03',
-      name: 'Weekend Special',
-      description: 'Flat ₹50 off on minimum bill of ₹500',
-      type: 'Flat Discount',
-      benefit: '₹50 off (Min ₹500)',
-      appliesTo: 'Entire Bill',
-      validity: 'Weekends only',
-      status: 'Inactive'
-    }
-  ];
+  private offersSignal = signal<Offer[]>([]);
 
-  private offersSignal = signal<Offer[]>(this.initialOffers);
+  constructor(
+    @Inject(OfferApplication) private offerApp: OfferApplication,
+    @Inject(ProductApplication) private productApp: ProductApplication,
+    @Inject(CategoryApplication) private categoryApp: CategoryApplication,
+    @Inject(ISessionService) private sessionService: ISessionService
+  ) {
+    this.loadOffers();
+  }
+
+  get currentUserId(): string {
+    const user = this.sessionService.getCurrentUser();
+    if (!user) throw new Error('No active session');
+    return user.id;
+  }
 
   get offers() {
     return this.offersSignal.asReadonly();
   }
 
+  loadOffers() {
+    const response = this.offerApp.getAllOffers({ userId: this.currentUserId });
+    if (response.success && response.data) {
+      const mappedOffers = response.data.map((o, index) => ({
+        id: o.offer_id,
+        seq: (index + 1).toString().padStart(2, '0'),
+        name: o.name,
+        description: o.description || '',
+        type: o.discount_percentage ? 'Percentage Off' : 'Flat Discount',
+        benefit: o.discount_percentage ? `${o.discount_percentage}% off` : `₹${o.discount_flat} off`,
+        appliesTo: o.category ? 'Category' : 'Entire Bill',
+        appliesToDetails: o.category || '',
+        validity: `${o.valid_from ? o.valid_from.split('T')[0] : 'Always'} – ${o.valid_until ? o.valid_until.split('T')[0] : 'Always'}`,
+        status: o.status === 'ACTIVE' ? 'Active' : 'Inactive'
+      }));
+      this.offersSignal.set(mappedOffers as any);
+    }
+  }
+
   toggleStatus(offerId: string) {
-    this.offersSignal.update(offers => 
-      offers.map(o => o.id === offerId 
-        ? { ...o, status: o.status === 'Active' ? 'Inactive' : 'Active' } 
-        : o
-      )
-    );
+    const offer = this.offersSignal().find(o => o.id === offerId);
+    if (!offer) return;
+    
+    const newStatus = offer.status === 'Active' ? 'INACTIVE' : 'ACTIVE';
+    const response = this.offerApp.changeStatus({
+      userId: this.currentUserId,
+      offer_id: offerId,
+      status: newStatus
+    });
+
+    if (response.success) {
+      this.loadOffers();
+    }
   }
 
   deleteOffer(offerId: string) {
-    this.offersSignal.update(offers => offers.filter(o => o.id !== offerId));
+    // Note: The Application Contract for Offer doesn't define 'Delete', only 'Change Status'.
+    // Typically we would archive it, so let's just mark it INACTIVE.
+    const response = this.offerApp.changeStatus({
+      userId: this.currentUserId,
+      offer_id: offerId,
+      status: 'ARCHIVED'
+    });
+    if (response.success) {
+      this.loadOffers();
+    }
   }
 
-  // Mock Data for Create Offer UI
-  private mockProducts = [
-    { id: 'p1', name: 'Apple Juice', price: 120 },
-    { id: 'p2', name: 'Orange Juice', price: 100 },
-    { id: 'p3', name: 'Mango Juice', price: 150 },
-    { id: 'p4', name: 'Sandwich', price: 80 }
-  ];
-
-  private mockCategories = [
-    { id: 'c1', name: 'Beverages' },
-    { id: 'c2', name: 'Fresh Juices' },
-    { id: 'c3', name: 'Snacks' },
-    { id: 'c4', name: 'Desserts' },
-    { id: 'c5', name: 'Combos' },
-    { id: 'c6', name: 'Others' }
-  ];
-
   getProducts() {
-    return this.mockProducts;
+    const response = this.productApp.getAllProducts({ userId: this.currentUserId });
+    if (response.success && response.data) {
+      return response.data.map(p => ({ id: p.product_id, name: p.name, price: p.price }));
+    }
+    return [];
   }
 
   getCategories() {
-    return this.mockCategories;
+    const response = this.categoryApp.getAllCategories({ userId: this.currentUserId });
+    if (response.success && response.data) {
+      return response.data.map(c => ({ id: c.name, name: c.name }));
+    }
+    return [];
   }
 
   addOffer(offer: Partial<Offer>) {
-    const nextId = (this.offersSignal().length + 1).toString();
-    const nextSeq = nextId.padStart(2, '0');
-    const newOffer: Offer = {
-      id: nextId,
-      seq: nextSeq,
+    const response = this.offerApp.createOffer({
+      userId: this.currentUserId,
       name: offer.name || 'Untitled Offer',
       description: offer.description || '',
-      type: offer.type || 'Percentage Off',
-      benefit: offer.benefit || 'Custom Offer',
-      appliesTo: offer.appliesTo || 'Entire Bill',
-      appliesToDetails: offer.appliesToDetails || '',
-      validity: offer.validity || 'Valid',
-      status: 'Active'
-    };
+      category: offer.appliesTo === 'Category' ? offer.appliesToDetails : undefined,
+      discount_percentage: offer.type === 'Percentage Off' ? parseFloat(offer.benefit || '0') : null,
+      discount_flat: offer.type === 'Flat Discount' ? parseFloat(offer.benefit || '0') : null,
+      valid_from: new Date().toISOString(), // Simplified for now
+      valid_until: null
+    });
 
-    this.offersSignal.update(offers => [newOffer, ...offers]);
+    if (response.success) {
+      this.loadOffers();
+    }
   }
 }
-

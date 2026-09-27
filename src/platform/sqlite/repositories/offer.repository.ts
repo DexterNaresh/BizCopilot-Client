@@ -16,6 +16,10 @@ export class SqliteOfferRepository extends BaseRepository<OfferEntity> implement
     return super.findById(id);
   }
 
+  override findAll(): OfferEntity[] {
+    return super.findAll();
+  }
+
   findActiveByCategory(category: string): OfferEntity[] {
     const sql = `SELECT * FROM ${this.tableName} WHERE category = ? AND status = 'ACTIVE'`;
     return this.db.query<OfferEntity>(sql, [category]);

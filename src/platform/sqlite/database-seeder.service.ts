@@ -15,6 +15,9 @@ export class DatabaseSeederService {
     console.log('[DatabaseSeeder] Seeding café demo data...');
     this.seedCategories();
     this.seedProducts();
+    this.seedOffers();
+    this.seedCustomers();
+    this.seedBills();
     console.log('[DatabaseSeeder] Café demo data seeded successfully.');
   }
 
@@ -133,5 +136,155 @@ export class DatabaseSeederService {
 
     // Update the sequence
     this.dbService.execute(`UPDATE sequences SET next_value = ? WHERE sequence_name = 'PRODUCT_CODE'`, [codeSeq]);
+  }
+
+  private seedOffers() {
+    const offers = [
+      { name: 'Morning Coffee 10%', category: 'Percentage', discount_percentage: 10, discount_flat: 0 },
+      { name: 'Weekend Special', category: 'Flat Amount', discount_percentage: 0, discount_flat: 50 },
+      { name: 'Buy 1 Get 1 Bakery', category: 'BOGO', discount_percentage: 100, discount_flat: 0 },
+      { name: 'Student Discount', category: 'Percentage', discount_percentage: 15, discount_flat: 0 },
+      { name: 'Happy Hour 20%', category: 'Percentage', discount_percentage: 20, discount_flat: 0 },
+      { name: 'New Customer Flat ₹50', category: 'Flat Amount', discount_percentage: 0, discount_flat: 50 }
+    ];
+
+    for (const offer of offers) {
+      const id = this.identityService.generateId();
+      this.dbService.execute(`
+        INSERT OR IGNORE INTO offers (offer_id, name, category, discount_percentage, discount_flat, status, valid_from, valid_until, created_at)
+        VALUES (?, ?, ?, ?, ?, 'ACTIVE', datetime('now', '-30 days'), datetime('now', '+30 days'), datetime('now'))
+      `, [id, offer.name, offer.category, offer.discount_percentage, offer.discount_flat]);
+    }
+  }
+
+  private seedCustomers() {
+    const customersCount = this.dbService.query<{count: number}>("SELECT COUNT(*) as count FROM customers WHERE is_system = 0")[0].count;
+    if (customersCount > 0) return;
+
+    const testCustomers = [
+      { name: 'Arun Kumar', phone: '9876543210' },
+      { name: 'Priya Stores', phone: '9845211890' },
+      { name: 'Ravi', phone: '9003122441' },
+      { name: 'Meena', phone: '9884055321' },
+      { name: 'Karthik', phone: '8754123698' },
+      { name: 'Lakshmi Traders', phone: '9940155677' },
+      { name: 'Sanjay', phone: '9176388421' },
+      { name: 'Deepa', phone: '8056211234' },
+      { name: 'Anitha', phone: '9840933215' },
+      { name: 'Kumar', phone: '9444088765' }
+    ];
+
+    for (const c of testCustomers) {
+      const id = this.identityService.generateId();
+      this.dbService.execute(`
+        INSERT OR IGNORE INTO customers (customer_id, name, phone, email, is_system, status, created_at)
+        VALUES (?, ?, ?, NULL, 0, 'ACTIVE', datetime('now', '-15 days'))
+      `, [id, c.name, c.phone]);
+    }
+  }
+
+  private seedBills() {
+    // Check if bills exist
+    const billsCount = this.dbService.query<{count: number}>("SELECT COUNT(*) as count FROM bills")[0].count;
+    if (billsCount > 0) return;
+
+    console.log('[DatabaseSeeder] Generating mock bills...');
+
+    // Fetch products to use in bills
+    const products = this.dbService.query<{product_id: string, name: string, type: string, price: number}>("SELECT product_id, name, type, price FROM products");
+    if (products.length === 0) return;
+
+    // Fetch offers
+    const offers = this.dbService.query<{offer_id: string, name: string, category: string, discount_percentage: number, discount_flat: number}>("SELECT offer_id, name, category, discount_percentage, discount_flat FROM offers");
+
+    let billCodeSeq = 1;
+    const paymentMethods = ['UPI', 'Cash', 'Card', 'Mixed'];
+    const now = new Date();
+
+    // Generate 30 days of data
+    for (let dayOffset = 30; dayOffset >= 0; dayOffset--) {
+      const date = new Date(now);
+      date.setDate(date.getDate() - dayOffset);
+      const dateStr = date.toISOString().split('T')[0];
+
+      // 5 to 15 bills per day
+      const billsToday = Math.floor(Math.random() * 10) + 5; 
+
+      for (let b = 0; b < billsToday; b++) {
+        const billId = this.identityService.generateId();
+        const billNumber = '#B-' + billCodeSeq.toString().padStart(4, '0');
+        billCodeSeq++;
+
+        // Random time between 8 AM and 10 PM
+        const hour = Math.floor(Math.random() * 14) + 8;
+        const min = Math.floor(Math.random() * 60);
+        const createdAt = `${dateStr} ${hour.toString().padStart(2, '0')}:${min.toString().padStart(2, '0')}:00`;
+
+        const paymentMethod = paymentMethods[Math.floor(Math.random() * paymentMethods.length)];
+
+        let subtotal = 0;
+        const billItems = [];
+        const numItems = Math.floor(Math.random() * 5) + 1; // 1 to 5 items
+
+        for (let i = 0; i < numItems; i++) {
+          const product = products[Math.floor(Math.random() * products.length)];
+          const quantity = Math.floor(Math.random() * 3) + 1;
+          const total = product.price * quantity;
+          subtotal += total;
+
+          billItems.push({
+            id: this.identityService.generateId(),
+            product_id: product.product_id,
+            product_name: product.name,
+            product_type: product.type,
+            quantity: quantity,
+            price_per_unit: product.price,
+            discount: 0,
+            total: total
+          });
+        }
+
+        // Apply random offer to ~30% of bills
+        let discountTotal = 0;
+        if (Math.random() > 0.7 && offers.length > 0) {
+           const offer = offers[Math.floor(Math.random() * offers.length)];
+           if (offer.discount_percentage > 0) {
+             discountTotal = subtotal * (offer.discount_percentage / 100);
+           } else if (offer.discount_flat > 0) {
+             discountTotal = offer.discount_flat;
+           }
+        }
+        
+        if (discountTotal > subtotal) discountTotal = subtotal; // safety
+        const taxableAmount = subtotal - discountTotal;
+        const taxTotal = taxableAmount * 0.05; // 5% tax
+        const grandTotal = taxableAmount + taxTotal;
+
+        // Fetch customers to randomly assign to bills (50% walk-in, 50% registered)
+        let customerId = 'WALK-IN-0000';
+        if (Math.random() > 0.5) {
+          const allCustomers = this.dbService.query<{customer_id: string}>("SELECT customer_id FROM customers WHERE is_system = 0");
+          if (allCustomers.length > 0) {
+            customerId = allCustomers[Math.floor(Math.random() * allCustomers.length)].customer_id;
+          }
+        }
+
+        // Insert Bill
+        this.dbService.execute(`
+          INSERT INTO bills (bill_id, bill_number, device_id, user_id, session_id, customer_id, subtotal, discount_total, tax_total, grand_total, payment_method, status, created_at)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'COMPLETED', ?)
+        `, [billId, billNumber, 'DEV-01', 'TEST-USER-0000', 'SESS-01', customerId, subtotal, discountTotal, taxTotal, grandTotal, paymentMethod, createdAt]);
+
+        // Insert Bill Items
+        for (const item of billItems) {
+          this.dbService.execute(`
+            INSERT INTO bill_items (bill_item_id, bill_id, product_id, product_name, product_type, quantity, price_per_unit, discount, total)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+          `, [item.id, billId, item.product_id, item.product_name, item.product_type, item.quantity, item.price_per_unit, item.discount, item.total]);
+        }
+      }
+    }
+
+    this.dbService.execute(`UPDATE sequences SET next_value = ? WHERE sequence_name = 'BILL_NUMBER'`, [billCodeSeq]);
   }
 }

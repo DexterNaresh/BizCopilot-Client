@@ -16,6 +16,13 @@ export class CustomerApplication {
     private ISessionService: ISessionService
   ) {}
 
+  searchCustomers(request: { userId: string, query?: string }): ApplicationResponse<CustomerInfo[]> {
+    return this.executeWithPermission(request.userId, 'CUSTOMER_READ', () => {
+      const customers = this.customerService.searchCustomers(request.query || '');
+      return customers.map(c => this.mapToInfo(c));
+    });
+  }
+
   createCustomer(request: CustomerCreateRequest): ApplicationResponse<CustomerInfo> {
     return this.executeWithPermission(request.userId, 'CUSTOMER_CREATE', () => {
       return this.mapToInfo(this.customerService.createCustomer(request));

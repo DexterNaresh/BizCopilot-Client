@@ -87,11 +87,13 @@ export class BillingComponent implements OnInit {
   ngOnInit() {
     this.loadCategories();
     this.loadProducts();
+    this.state.refreshCartPrices();
   }
 
   get currentUserId(): string {
     const user = this.sessionService.getCurrentUser();
-    return user ? user.id : '00000000-0000-0000-0000-000000000000';
+    if (!user) throw new Error('No active session');
+    return user.id;
   }
 
   private loadCategories() {
@@ -117,7 +119,7 @@ export class BillingComponent implements OnInit {
           name: p.name,
           category: p.category || 'Uncategorized',
           price: p.price,
-          unit: PRODUCT_UNITS[p.type as ProductUnitKey] || PRODUCT_UNITS.QTY,
+          unit: (Object.values(PRODUCT_UNITS).includes(p.type as any) ? p.type : PRODUCT_UNITS.QTY) as any,
           isAvailable: p.available === 1,
           isFavourite: false, // Defaulting to false, you could persist this later
           colorHint: this.getColorForCategory(p.category),
@@ -160,7 +162,8 @@ export class BillingComponent implements OnInit {
 
   onAddProduct(product: BillingProduct) {
     // Determine initial qty based on unit
-    const initialQty = ['Kg', 'Ltr', 'Meter'].includes(product.unit) ? 1.000 : 1;
+    const fractionalUnits: string[] = [PRODUCT_UNITS.KG, PRODUCT_UNITS.LTR, PRODUCT_UNITS.METER];
+    const initialQty = fractionalUnits.includes(product.unit) ? 1.000 : 1;
     this.state.addToCart(product, initialQty);
   }
 
@@ -213,10 +216,10 @@ export class BillingComponent implements OnInit {
       });
 
       if (!isConfirmed) return;
-      
+
       this.state.holdCurrentBill();
     }
-    
+
     this.state.resumeBill(heldBillId);
     this.showHoldBillsModal = false;
   }

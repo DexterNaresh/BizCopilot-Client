@@ -1,5 +1,5 @@
 import { Injectable, computed, signal } from '@angular/core';
-
+import { environment } from '../../../../environments/environment';
 export type DateFilterOption = 'Today' | 'Yesterday' | 'This Week' | 'This Month' | 'Last Month' | 'Custom';
 export type PaymentMethodFilter = 'All' | 'Cash' | 'UPI' | 'Card' | 'Mixed';
 export type CustomerTypeFilter = 'All' | 'WalkIn' | 'Named';
@@ -141,7 +141,9 @@ export class RecentBillsStateService {
   });
 
   constructor() {
-    this.seedMockData();
+    if (environment.seedTestData) {
+      this.seedMockData();
+    }
   }
 
   // Actions

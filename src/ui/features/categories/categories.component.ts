@@ -74,7 +74,8 @@ export class CategoriesComponent implements OnInit {
 
   get currentUserId(): string {
     const user = this.sessionService.getCurrentUser();
-    return user ? user.id : '00000000-0000-0000-0000-000000000000';
+    if (!user) throw new Error('No active session');
+    return user.id;
   }
 
   loadCategories() {

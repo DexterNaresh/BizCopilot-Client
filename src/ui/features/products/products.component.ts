@@ -86,7 +86,8 @@ export class ProductsComponent implements OnInit {
 
   get currentUserId(): string {
     const user = this.sessionService.getCurrentUser();
-    return user ? user.id : '00000000-0000-0000-0000-000000000000';
+    if (!user) throw new Error('No active session');
+    return user.id;
   }
 
   loadProducts() {
@@ -115,7 +116,7 @@ export class ProductsComponent implements OnInit {
       name: p.name || 'Unnamed Product',
       category: p.category || 'Uncategorized',
       price: p.price,
-      unit: PRODUCT_UNITS[p.type as ProductUnitKey] || PRODUCT_UNITS.QTY,
+      unit: (Object.values(PRODUCT_UNITS).includes(p.type as any) ? p.type : PRODUCT_UNITS.QTY) as any,
       isAvailable: p.available === 1,
       isFavourite: false,
       colorHint: this.getColorForCategory(p.category),

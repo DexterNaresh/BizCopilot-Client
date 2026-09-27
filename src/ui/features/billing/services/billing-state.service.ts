@@ -1,6 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ILocalStorageService } from '@shared/abstractions/storage.service';
+import { ProductApplication } from '@runtime/product/application/product.application';
+import { ISessionService } from '@shared/abstractions/session.service.interface';
 
 export interface BillingProduct {
   id: string;
@@ -66,8 +68,58 @@ export class BillingStateService {
 
   private readonly HELD_BILLS_STORAGE_KEY = 'bizcopilot_held_bills';
 
-  constructor(private storageService: ILocalStorageService) {
+  constructor(
+    private storageService: ILocalStorageService,
+    @Inject(ProductApplication) private productApp: ProductApplication,
+    @Inject(ISessionService) private sessionService: ISessionService
+  ) {
     this.loadHeldBills();
+  }
+
+  get currentCustomer(): BillingCustomer | null {
+    return this.customerSubject.value;
+  }
+
+  get currentUserId(): string {
+    const user = this.sessionService.getCurrentUser();
+    if (!user) throw new Error('No active session');
+    return user.id;
+  }
+
+  refreshCartPrices() {
+    if (this.cartItems.length === 0) return;
+    
+    const productIds = this.cartItems.map(item => item.product.id);
+    const response = this.productApp.getProductsByIds({ userId: this.currentUserId, productIds });
+    
+    if (response.success && response.data) {
+      const productMap = new Map(response.data.map(p => [p.product_id, p]));
+      
+      let changed = false;
+      const updatedCart = this.cartItems.map(item => {
+        const liveProduct = productMap.get(item.product.id);
+        if (liveProduct) {
+          if (item.product.price !== liveProduct.price || item.product.isAvailable !== (liveProduct.available === 1)) {
+            changed = true;
+            return {
+              ...item,
+              product: {
+                ...item.product,
+                price: liveProduct.price,
+                isAvailable: liveProduct.available === 1
+              },
+              lineTotal: liveProduct.price * item.quantity
+            };
+          }
+        }
+        return item;
+      });
+
+      if (changed) {
+        this.cartItemsSubject.next(updatedCart);
+        this.recalculateTotals();
+      }
+    }
   }
 
   get cartItems() {

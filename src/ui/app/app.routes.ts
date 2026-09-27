@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { SetupWizardComponent } from '../features/setup/setup-wizard/setup-wizard.component';
+import { authGuard } from '../features/auth/guards/auth.guard';
 import { LoginShellComponent } from '../features/auth/components/login-shell/login-shell.component';
 import { AppShellComponent } from '../layout/app-shell/app-shell.component';
 import { HomeComponent } from '../features/home/home.component';
@@ -27,6 +28,7 @@ export const routes: Routes = [
   {
     path: '',
     component: AppShellComponent,
+    canActivate: [authGuard],
     children: [
       { path: 'home', component: HomeComponent },
       { path: 'billing', component: BillingComponent },

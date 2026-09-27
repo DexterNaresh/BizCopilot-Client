@@ -3,7 +3,7 @@ import { ReportService } from '@runtime/report/report.service';
 import { IPermissionService } from '@shared/abstractions/permission.service.interface';
 import { ISessionService } from '@shared/abstractions/session.service.interface';
 import { ApplicationResponse } from '@runtime/billing/application/dto/sales.dto';
-import { ReportFilterRequest, TrendFilterRequest, SalesSummaryResult, SalesTrendResult } from '@runtime/report/application/dto/report.dto';
+import { ReportFilterRequest, TrendFilterRequest, SalesSummaryResult, SalesTrendResult, SalesDetailRow, PaymentMethodData, ProductPerformance, OfferPerformance } from '@runtime/report/application/dto/report.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +24,30 @@ export class ReportApplication {
   getSalesTrend(request: TrendFilterRequest): ApplicationResponse<SalesTrendResult> {
     return this.executeWithPermission(request.userId, 'REPORT_VIEW', () => {
       return this.reportService.getSalesTrend(request);
+    });
+  }
+
+  getSalesDetails(request: ReportFilterRequest): ApplicationResponse<SalesDetailRow[]> {
+    return this.executeWithPermission(request.userId, 'REPORT_VIEW', () => {
+      return this.reportService.getSalesDetails(request);
+    });
+  }
+
+  getPaymentMethodBreakdown(request: ReportFilterRequest): ApplicationResponse<PaymentMethodData[]> {
+    return this.executeWithPermission(request.userId, 'REPORT_VIEW', () => {
+      return this.reportService.getPaymentMethodBreakdown(request);
+    });
+  }
+
+  getTopProducts(request: ReportFilterRequest): ApplicationResponse<ProductPerformance[]> {
+    return this.executeWithPermission(request.userId, 'REPORT_VIEW', () => {
+      return this.reportService.getTopProducts(request);
+    });
+  }
+
+  getOffersPerformance(request: ReportFilterRequest): ApplicationResponse<OfferPerformance[]> {
+    return this.executeWithPermission(request.userId, 'REPORT_VIEW', () => {
+      return this.reportService.getOffersPerformance(request);
     });
   }
 

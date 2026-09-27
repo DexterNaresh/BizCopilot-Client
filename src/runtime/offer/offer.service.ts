@@ -14,6 +14,10 @@ export class OfferService {
     @Inject(IIdentityService) private IIdentityService: IIdentityService
   ) {}
 
+  getAllOffers(): OfferEntity[] {
+    return this.offerRepository.findAll();
+  }
+
   createOffer(request: OfferCreateRequest): OfferEntity {
     this.validateDiscount(request.discount_percentage, request.discount_flat);
 

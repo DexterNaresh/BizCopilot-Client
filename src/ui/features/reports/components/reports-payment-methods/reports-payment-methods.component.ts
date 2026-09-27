@@ -1,14 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-export interface PaymentMethodData {
-  name: string;
-  percentage: number;
-  amount: number;
-  color: string;
-  dashArray?: string;
-  dashOffset?: string;
-}
+
+import { PaymentMethodData } from '@runtime/report/application/dto/report.dto';
 
 type PaymentSortMode = 'percentage' | 'amount';
 
@@ -20,14 +14,9 @@ type PaymentSortMode = 'percentage' | 'amount';
   styleUrls: ['./reports-payment-methods.component.scss']
 })
 export class ReportsPaymentMethodsComponent {
-  @Input() totalSales: number = 24680;
+  @Input() totalSales: number = 0;
   
-  @Input() paymentMethods: PaymentMethodData[] = [
-    { name: 'UPI', percentage: 42, amount: 10366, color: '#6366F1' },
-    { name: 'Cash', percentage: 28, amount: 6910, color: '#10B981' },
-    { name: 'Card', percentage: 20, amount: 4936, color: '#0088FF' },
-    { name: 'Mixed', percentage: 10, amount: 2468, color: '#F59E0B' }
-  ];
+  @Input() paymentMethods: PaymentMethodData[] = [];
 
   sortMode: PaymentSortMode = 'percentage';
 

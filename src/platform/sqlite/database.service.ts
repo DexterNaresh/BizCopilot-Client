@@ -193,7 +193,7 @@ export class DatabaseService implements IDatabaseService {
     // Initialize Walk-In Customer
     this.execute(`
       INSERT OR IGNORE INTO customers (customer_id, name, phone, is_system, status, created_at)
-      VALUES ('00000000-0000-0000-0000-000000000000', 'Walk-In Customer', '1', 1, 'ACTIVE', datetime('now'));
+      VALUES ('${environment.walkInCustomerId}', 'Walk-In Customer', '1', 1, 'ACTIVE', datetime('now'));
     `);
 
     // Initialize Sequences

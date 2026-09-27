@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CustomerHeaderComponent } from './components/customer-header/customer-header.component';
 import { CustomerKpiComponent } from './components/customer-kpi/customer-kpi.component';
@@ -25,6 +25,10 @@ import { CustomerStateService } from './services/customer-state.service';
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.scss']
 })
-export class CustomersComponent {
+export class CustomersComponent implements OnInit {
   state = inject(CustomerStateService);
+
+  ngOnInit() {
+    this.state.loadCustomers();
+  }
 }
