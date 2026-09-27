@@ -1,39 +1,62 @@
 .home-container {
-  padding: 32px;
-  max-width: 1440px;
+  padding: clamp(16px, 3vw, 32px);
+  max-width: 1600px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: clamp(16px, 2vw, 24px);
+  box-sizing: border-box;
+  width: 100%;
 }
 
 .home-banner-row {
   display: block;
+  width: 100%;
 }
 
 .home-row-1 {
   display: grid;
-  grid-template-columns: minmax(320px, 1fr) 2fr;
-  gap: 24px;
+  grid-template-columns: minmax(280px, 340px) 1fr;
+  gap: clamp(16px, 2vw, 24px);
+  align-items: stretch;
+}
+
+.new-bill-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+.metrics-wrapper {
+  display: flex;
+  flex-direction: column;
 }
 
 .home-row-2 {
   display: block;
+  width: 100%;
 }
 
 .home-row-3 {
   display: grid;
-  grid-template-columns: 1fr 1.5fr 1fr;
-  gap: 24px;
+  grid-template-columns: 1fr 1.3fr 1fr;
+  gap: clamp(16px, 2vw, 24px);
+  align-items: stretch;
 }
 
 .home-row-4 {
   display: block;
+  width: 100%;
+}
+
+@media (max-width: 1200px) {
+  .home-row-3 {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 @media (max-width: 1023px) {
   .home-container {
-    padding: 24px;
+    padding: 20px 16px;
   }
   .home-row-1 {
     grid-template-columns: 1fr;
@@ -45,10 +68,9 @@
 
 @media (max-width: 599px) {
   .home-container {
-    padding: 16px;
-    gap: 16px;
-  }
-  .home-row-1, .home-row-2, .home-row-3, .home-row-4 {
+    padding: 16px 12px;
+    padding-bottom: clamp(70px, 12vh, 90px); /* Clearance for mobile bottom navbar */
     gap: 16px;
   }
 }
+

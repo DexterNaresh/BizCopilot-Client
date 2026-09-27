@@ -15,6 +15,7 @@ import { ReportApplication } from '@runtime/report/application/report.applicatio
 import { ProductApplication } from '@runtime/product/application/product.application';
 import { SalesApplication } from '@runtime/billing/application/sales.application';
 import { ISessionService } from '@shared/abstractions/session.service.interface';
+import { BillingStateService } from '@ui/features/billing/services/billing-state.service';
 
 @Component({
   selector: 'app-home',
@@ -40,28 +41,47 @@ export class HomeComponent implements OnInit {
   private productApp = inject(ProductApplication);
   private salesApp = inject(SalesApplication);
   private sessionService = inject(ISessionService);
+  private billingStateService = inject(BillingStateService);
   private datePipe = inject(DatePipe);
 
   loaded = false;
+  userName = 'Owner';
+  businessName = 'Green Bites Café';
+  greetingPrefix = 'Good day';
   metrics = { totalSales: 0, totalBills: 0, avgBill: 0, discountGiven: 0 };
   attention = { billsOnHold: 0, productsUnavailable: 0 };
   recentBills: any[] = [];
 
   ngOnInit() {
+    this.calculateGreeting();
     this.loadDashboardData();
+  }
+
+  private calculateGreeting() {
+    const hour = new Date().getHours();
+    if (hour < 12) {
+      this.greetingPrefix = 'Good morning';
+    } else if (hour < 17) {
+      this.greetingPrefix = 'Good afternoon';
+    } else {
+      this.greetingPrefix = 'Good evening';
+    }
   }
 
   loadDashboardData() {
     const user = this.sessionService.getCurrentUser();
-    if (!user) {
-      this.loaded = true;
-      return;
+    if (user) {
+      this.userName = user.name || 'Owner';
     }
 
-    const todayStr = new Date().toISOString().split('T')[0];
+    const userId = user?.id || 'TEST-USER-0000';
+    const now = new Date();
+    const todayStr = now.toISOString().split('T')[0];
+    const fromDate = `${todayStr} 00:00:00`;
+    const toDate = `${todayStr} 23:59:59`;
 
-    // 1. Load Metrics
-    const metricsRes = this.reportApp.getSalesSummary({ userId: user.id, from_date: todayStr, to_date: todayStr });
+    // 1. Load Metrics for Today
+    const metricsRes = this.reportApp.getSalesSummary({ userId, from_date: fromDate, to_date: toDate });
     if (metricsRes.success && metricsRes.data) {
       const sales = metricsRes.data.totalSales || 0;
       const bills = metricsRes.data.totalBills || 0;
@@ -74,7 +94,7 @@ export class HomeComponent implements OnInit {
     }
 
     // 2. Load Activity (Recent bills)
-    const activityRes = this.salesApp.getRecentBills({ userId: user.id, limit: 5 });
+    const activityRes = this.salesApp.getRecentBills({ userId, limit: 5 });
     if (activityRes.success && activityRes.data) {
       this.recentBills = activityRes.data.map(b => ({
         time: this.datePipe.transform(b.created_at, 'h:mm a') || '',
@@ -84,8 +104,10 @@ export class HomeComponent implements OnInit {
       }));
     }
 
-    // 3. Load Attention (unavailable products)
-    const productsRes = this.productApp.getAllProducts({ userId: user.id });
+    // 3. Load Attention (held bills & unavailable products)
+    this.attention.billsOnHold = this.billingStateService.heldBills?.length || 0;
+
+    const productsRes = this.productApp.getAllProducts({ userId });
     if (productsRes.success && productsRes.data) {
       this.attention.productsUnavailable = productsRes.data.filter(p => p.available === 0 || p.status !== 'ACTIVE').length;
     }
@@ -97,3 +119,4 @@ export class HomeComponent implements OnInit {
     this.router.navigate([path]);
   }
 }
+

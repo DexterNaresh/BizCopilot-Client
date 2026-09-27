@@ -12,13 +12,13 @@ import { CommonModule } from '@angular/common';
           <span class="material-symbols-outlined icon">monitor_heart</span>
           Business Status
         </h3>
-        <p class="subtitle">Your system is running smoothly</p>
+        <p class="subtitle">Your POS is running smoothly</p>
       </div>
       
       <div class="status-grid">
         <div class="status-item">
-          <div class="icon-circle">
-            <span class="material-symbols-outlined">check_circle</span>
+          <div class="icon-circle emerald">
+            <span class="material-symbols-outlined icon">check_circle</span>
           </div>
           <div class="text">
             <div class="title">Billing Ready</div>
@@ -29,8 +29,8 @@ import { CommonModule } from '@angular/common';
         <div class="divider"></div>
         
         <div class="status-item">
-          <div class="icon-circle">
-            <span class="material-symbols-outlined">check_circle</span>
+          <div class="icon-circle indigo">
+            <span class="material-symbols-outlined icon">sync</span>
           </div>
           <div class="text">
             <div class="title">Sync Up to Date</div>
@@ -41,8 +41,8 @@ import { CommonModule } from '@angular/common';
         <div class="divider"></div>
         
         <div class="status-item">
-          <div class="icon-circle">
-            <span class="material-symbols-outlined">check_circle</span>
+          <div class="icon-circle sky">
+            <span class="material-symbols-outlined icon">print</span>
           </div>
           <div class="text">
             <div class="title">Printer Ready</div>
@@ -54,79 +54,101 @@ import { CommonModule } from '@angular/common';
   `,
   styles: [`
     .status-container {
-      background: white;
-      border: 1px solid #E5E7EB;
-      border-radius: 12px;
-      padding: 24px;
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: var(--radius-card, 16px);
+      padding: clamp(16px, 2vw, 22px) clamp(20px, 2.5vw, 28px);
       display: flex;
       align-items: center;
-      gap: 32px;
+      gap: clamp(20px, 3vw, 36px);
+      box-shadow: var(--shadow-sm, 0 1px 3px rgba(0,0,0,0.05));
     }
+
     .header {
-      width: 250px;
+      min-width: 200px;
     }
+
     .section-title {
-      margin: 0 0 4px 0;
-      font-size: 16px;
+      margin: 0 0 2px 0;
+      font-size: clamp(15px, 1.4vw, 17px);
       font-weight: 700;
-      color: #111827;
+      color: #0F172A;
       display: flex;
       align-items: center;
       gap: 8px;
+      letter-spacing: -0.01em;
     }
+
     .section-title .icon {
-      color: #059669; /* green */
+      color: #10B981;
+      font-size: 20px;
     }
+
     .subtitle {
       margin: 0;
-      font-size: 13px;
-      color: #6B7280;
+      font-size: 12px;
+      color: #64748B;
+      font-weight: 400;
     }
+
     .status-grid {
       display: flex;
       flex: 1;
-      justify-content: space-between;
+      justify-content: space-around;
       align-items: center;
     }
+
     .status-item {
       display: flex;
       align-items: center;
       gap: 12px;
     }
+
     .icon-circle {
-      color: #16A34A;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-shrink: 0;
     }
-    .icon-circle .material-symbols-outlined {
-      font-size: 32px;
+
+    .icon-circle.emerald { background: #ECFDF5; color: #10B981; }
+    .icon-circle.indigo { background: #EEF2FF; color: #4F46F5; }
+    .icon-circle.sky { background: #E0F2FE; color: #0284C7; }
+
+    .icon-circle .icon {
+      font-size: 20px;
     }
+
     .title {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
-      color: #111827;
+      color: #0F172A;
     }
+
     .desc {
-      font-size: 12px;
-      color: #6B7280;
+      font-size: 11px;
+      color: #64748B;
     }
+
     .divider {
       width: 1px;
       height: 32px;
-      background: #E5E7EB;
+      background: #E2E8F0;
     }
-    
+
     @media (max-width: 1023px) {
       .status-container {
         flex-direction: column;
         align-items: flex-start;
-        gap: 20px;
+        gap: 16px;
       }
       .status-grid {
         flex-direction: column;
         align-items: flex-start;
-        gap: 16px;
+        gap: 14px;
         width: 100%;
       }
       .divider {
@@ -137,3 +159,4 @@ import { CommonModule } from '@angular/common';
   `]
 })
 export class HomeStatusComponent {}
+

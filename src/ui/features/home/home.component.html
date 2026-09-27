@@ -1,7 +1,12 @@
 <div class="home-container" *ngIf="loaded">
   
   <div class="home-banner-row">
-    <app-home-banner></app-home-banner>
+    <app-home-banner
+      [userName]="userName"
+      [businessName]="businessName"
+      [greetingPrefix]="greetingPrefix"
+      (onAskAi)="navigateTo('ai-assistant')">
+    </app-home-banner>
   </div>
 
   <div class="home-row-1">
@@ -31,12 +36,14 @@
     
     <app-home-activity 
       [recentBills]="recentBills"
-      (onViewAll)="navigateTo('reports')">
+      (onViewAll)="navigateTo('reports')"
+      (onBillClick)="navigateTo('billing')">
     </app-home-activity>
     
     <app-home-ai-brief
       [metrics]="metrics"
-      [attention]="attention">
+      [attention]="attention"
+      (onAskAi)="navigateTo('ai-assistant')">
     </app-home-ai-brief>
   </div>
 
@@ -45,3 +52,4 @@
   </div>
 
 </div>
+

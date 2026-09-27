@@ -18,6 +18,7 @@ export class DatabaseSeederService {
     this.seedOffers();
     this.seedCustomers();
     this.seedBills();
+    this.seedHeldBills();
     console.log('[DatabaseSeeder] Café demo data seeded successfully.');
   }
 
@@ -128,10 +129,11 @@ export class DatabaseSeederService {
       const code = 'PRD-' + codeSeq.toString().padStart(4, '0');
       codeSeq++;
 
+      const isUnavailable = p.name === 'Cold Brew' || p.name === 'Almond Danish' ? 0 : 1;
       this.dbService.execute(`
         INSERT OR IGNORE INTO products (product_id, product_code, name, type, price, category, barcode, available, status, created_at)
-        VALUES (?, ?, ?, ?, ?, ?, NULL, 1, 'ACTIVE', datetime('now'))
-      `, [id, code, p.name, p.type, p.price, p.category]);
+        VALUES (?, ?, ?, ?, ?, ?, NULL, ?, 'ACTIVE', datetime('now'))
+      `, [id, code, p.name, p.type, p.price, p.category, isUnavailable]);
     }
 
     // Update the sequence
@@ -286,5 +288,48 @@ export class DatabaseSeederService {
     }
 
     this.dbService.execute(`UPDATE sequences SET next_value = ? WHERE sequence_name = 'BILL_NUMBER'`, [billCodeSeq]);
+  }
+
+  private seedHeldBills() {
+    try {
+      const existing = localStorage.getItem('bizcopilot_held_bills');
+      if (!existing || existing === '[]') {
+        const heldBills = [
+          {
+            id: 'HOLD-101',
+            billNumber: 'Bill #1042',
+            timestamp: new Date(Date.now() - 30 * 60000).toISOString(),
+            itemCount: 2,
+            subtotal: 380,
+            discount: 0,
+            total: 380,
+            cartItems: []
+          },
+          {
+            id: 'HOLD-102',
+            billNumber: 'Bill #1043',
+            timestamp: new Date(Date.now() - 15 * 60000).toISOString(),
+            itemCount: 3,
+            subtotal: 540,
+            discount: 0,
+            total: 540,
+            cartItems: []
+          },
+          {
+            id: 'HOLD-103',
+            billNumber: 'Bill #1044',
+            timestamp: new Date(Date.now() - 5 * 60000).toISOString(),
+            itemCount: 1,
+            subtotal: 180,
+            discount: 0,
+            total: 180,
+            cartItems: []
+          }
+        ];
+        localStorage.setItem('bizcopilot_held_bills', JSON.stringify(heldBills));
+      }
+    } catch (e) {
+      console.warn('Could not seed held bills to localStorage', e);
+    }
   }
 }

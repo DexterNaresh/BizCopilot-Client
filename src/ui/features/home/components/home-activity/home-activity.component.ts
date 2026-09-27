@@ -9,22 +9,40 @@ import { CommonModule } from '@angular/common';
     <div class="activity-container">
       <div class="header">
         <h3 class="section-title">Today's Activity</h3>
-        <a class="view-all" href="javascript:void(0)" (click)="onViewAll.emit()">View All</a>
+        <button class="view-all-btn" (click)="onViewAll.emit()" role="button" aria-label="View all bills">
+          <span>View All</span>
+          <span class="material-symbols-outlined arrow">arrow_forward</span>
+        </button>
       </div>
       
       <div class="activity-card">
-        <div class="activity-list">
-          <div class="activity-item" *ngFor="let bill of recentBills">
+        <div class="activity-list" *ngIf="recentBills && recentBills.length > 0; else emptyActivity">
+          <div 
+            class="activity-item" 
+            *ngFor="let bill of recentBills"
+            (click)="onBillClick.emit(bill)"
+            (keydown.enter)="onBillClick.emit(bill)"
+            (keydown.space)="onBillClick.emit(bill)"
+            role="button"
+            tabindex="0">
             <div class="time">{{ bill.time }}</div>
             <div class="bill-id">{{ bill.id }}</div>
             <div class="amount">{{ bill.amount | currency:'INR':'symbol-narrow':'1.0-0' }}</div>
-            <div class="badge" [ngClass]="bill.method.toLowerCase()">
+            <div class="badge" [ngClass]="(bill.method || 'cash').toLowerCase()">
               <span class="dot"></span>
               {{ bill.method }}
             </div>
             <span class="material-symbols-outlined chevron">chevron_right</span>
           </div>
         </div>
+
+        <ng-template #emptyActivity>
+          <div class="empty-state">
+            <span class="material-symbols-outlined empty-icon">receipt_long</span>
+            <div class="empty-title">No bills yet today</div>
+            <div class="empty-sub">Completed bills will appear here.</div>
+          </div>
+        </ng-template>
       </div>
     </div>
   `,
@@ -32,105 +50,176 @@ import { CommonModule } from '@angular/common';
     .activity-container {
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 12px;
       height: 100%;
     }
+
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
+
     .section-title {
       margin: 0;
-      font-size: 18px;
+      font-size: clamp(16px, 1.5vw, 18px);
       font-weight: 700;
-      color: #111827;
+      color: #0F172A;
+      letter-spacing: -0.01em;
     }
-    .view-all {
-      font-size: 14px;
-      color: #5B3BEB;
-      text-decoration: none;
-      font-weight: 500;
+
+    .view-all-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: none;
+      border: none;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--color-primary, #5B3BEB);
+      cursor: pointer;
+      padding: 2px 6px;
+      border-radius: var(--radius-sm, 6px);
+      transition: background-color 0.2s;
     }
+
+    .view-all-btn:hover {
+      background: var(--color-primary-light, rgba(91, 59, 235, 0.08));
+    }
+
+    .view-all-btn .arrow {
+      font-size: 16px;
+    }
+
     .activity-card {
-      background: white;
-      border: 1px solid #E5E7EB;
-      border-radius: 12px;
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: var(--radius-card, 16px);
       flex: 1;
       overflow: hidden;
+      box-shadow: var(--shadow-sm, 0 1px 3px rgba(0,0,0,0.05));
+      display: flex;
+      flex-direction: column;
     }
+
     .activity-list {
       display: flex;
       flex-direction: column;
     }
+
     .activity-item {
       display: flex;
       align-items: center;
       padding: 12px 16px;
-      border-bottom: 1px solid #F3F4F6;
+      border-bottom: 1px solid #F1F5F9;
       gap: 12px;
       cursor: pointer;
+      transition: background-color 0.15s cubic-bezier(0.16, 1, 0.3, 1);
     }
+
     .activity-item:last-child {
       border-bottom: none;
     }
+
     .activity-item:hover {
-      background: #F9FAFB;
+      background: #F8FAFC;
     }
+
+    .activity-item:hover .chevron {
+      transform: translateX(3px);
+      color: var(--color-primary, #5B3BEB);
+    }
+
     .time {
-      font-size: 13px;
-      color: #6B7280;
-      width: 70px;
-    }
-    .bill-id {
-      font-size: 14px;
+      font-size: 12px;
+      color: #64748B;
       font-weight: 500;
-      color: #374151;
+      min-width: 68px;
+    }
+
+    .bill-id {
+      font-size: 13px;
+      font-weight: 600;
+      color: #0F172A;
       flex: 1;
     }
+
     .amount {
-      font-size: 14px;
-      font-weight: 600;
-      color: #111827;
-      width: 60px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #0F172A;
       text-align: right;
+      min-width: 65px;
     }
+
     .badge {
-      display: flex;
+      display: inline-flex;
       align-items: center;
-      gap: 6px;
-      padding: 4px 8px;
-      border-radius: 12px;
-      font-size: 12px;
-      font-weight: 500;
-      width: 60px;
-      justify-content: flex-start;
+      gap: 5px;
+      padding: 3px 8px;
+      border-radius: var(--radius-full, 999px);
+      font-size: 11px;
+      font-weight: 600;
+      min-width: 58px;
+      justify-content: center;
     }
-    .badge.upi { background: #E0E7FF; color: #4338CA; }
+
+    .badge.upi { background: #EEF2FF; color: #4338CA; }
     .badge.upi .dot { background: #4338CA; }
-    .badge.cash { background: #DCFCE7; color: #15803D; }
-    .badge.cash .dot { background: #15803D; }
+
+    .badge.cash { background: #ECFDF5; color: #047857; }
+    .badge.cash .dot { background: #047857; }
+
     .badge.card { background: #E0F2FE; color: #0369A1; }
     .badge.card .dot { background: #0369A1; }
-    
+
+    .badge.mixed { background: #FFFBEB; color: #B45309; }
+    .badge.mixed .dot { background: #B45309; }
+
     .dot {
-      width: 6px;
-      height: 6px;
+      width: 5px;
+      height: 5px;
       border-radius: 50%;
     }
+
     .chevron {
-      color: #9CA3AF;
+      color: #94A3B8;
       font-size: 18px;
+      transition: transform 0.2s, color 0.2s;
+    }
+
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px;
+      text-align: center;
+      gap: 6px;
+      flex: 1;
+    }
+
+    .empty-icon {
+      font-size: 32px;
+      color: #94A3B8;
+      margin-bottom: 4px;
+    }
+
+    .empty-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: #0F172A;
+    }
+
+    .empty-sub {
+      font-size: 12px;
+      color: #64748B;
     }
   `]
 })
 export class HomeActivityComponent {
-  @Input() recentBills: any[] = [
-    { time: '10:42 AM', id: '#1042', amount: 850, method: 'UPI' },
-    { time: '10:31 AM', id: '#1041', amount: 320, method: 'Cash' },
-    { time: '10:18 AM', id: '#1040', amount: 1240, method: 'Card' },
-    { time: '09:56 AM', id: '#1039', amount: 560, method: 'UPI' },
-    { time: '09:21 AM', id: '#1038', amount: 420, method: 'Cash' }
-  ];
+  @Input() recentBills: any[] = [];
   @Output() onViewAll = new EventEmitter<void>();
+  @Output() onBillClick = new EventEmitter<any>();
 }
+
